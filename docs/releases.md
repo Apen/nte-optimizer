@@ -1,9 +1,30 @@
 # Release process
 
-## Publish with GitHub Actions
+## Publish from a Git tag
 
-The **Release** workflow creates a real entry in the repository's GitHub
-Releases page. From the GitHub repository:
+Push a semantic version tag to create a GitHub Release automatically:
+
+```powershell
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Tags must use `vMAJOR.MINOR.PATCH`, with an optional suffix such as
+`v1.0.0-preview.1`. A suffix automatically marks the GitHub Release as a
+prerelease.
+
+The **Release** workflow validates the version, builds and tests the Windows
+application, smoke-tests the portable archive, creates the GitHub Release, and
+attaches both files:
+
+```text
+nte-optimizer-windows.zip
+nte-optimizer-windows.zip.sha256
+```
+
+## Publish manually
+
+The same workflow can be started without creating the tag locally:
 
 1. open **Actions**;
 2. select **Release**;
@@ -12,17 +33,8 @@ Releases page. From the GitHub repository:
 5. select whether the version is a prerelease;
 6. run the workflow.
 
-The workflow validates the version, builds and tests the Windows application,
-smoke-tests the portable archive, creates the Git tag and GitHub Release, and
-attaches both files:
-
-```text
-nte-optimizer-windows.zip
-nte-optimizer-windows.zip.sha256
-```
-
-The workflow also keeps the same files as a temporary GitHub Actions artifact.
-A version tag must be unique: use a new version when publishing another test or
+Both triggers also keep the package as a temporary GitHub Actions artifact. A
+version tag must be unique: use a new version when publishing another test or
 release.
 
 ## Build a local release
