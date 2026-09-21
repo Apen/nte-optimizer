@@ -1,0 +1,110 @@
+{
+  "schema_version": 2,
+  "id": "edgar",
+  "name": "Edgar",
+  "main_stats": [
+    "HealUp",
+    "HPMaxUp",
+    "MagBase",
+    "UnbalIntensityBase"
+  ],
+  "stats": [
+    "HPMaxUp",
+    "HPMaxAdd",
+    "MagBase",
+    "UnbalIntensityBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 50000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 1000,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.05,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 0.5,
+      "percent": true
+    },
+    {
+      "property_id": "MagBase",
+      "label": "Cycle Intensity",
+      "minimum": 50,
+      "percent": false
+    },
+    {
+      "property_id": "UnbalIntensityBase",
+      "label": "Break Intensity",
+      "minimum": 50,
+      "percent": false
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Thea's Night Tavern",
+    "Speedy Hedgehog"
+  ],
+  "character": {
+    "character_id": 1021,
+    "grid_id": "character_1021"
+  },
+  "builds": [
+    {
+      "id": "edgar",
+      "name": "DPS",
+      "main_stats": [
+        "HealUp",
+        "HPMaxUp",
+        "MagBase",
+        "UnbalIntensityBase"
+      ],
+      "stats": [
+        "HPMaxUp",
+        "HPMaxAdd",
+        "MagBase",
+        "UnbalIntensityBase"
+      ],
+      "weights": {
+        "HPMaxAdd": 0.85,
+        "HPMaxUp": 1,
+        "MagBase": 0.7,
+        "UnbalIntensityBase": 0.55
+      },
+      "variants": [
+        {
+          "id": "edgar",
+          "name": "Edgar — Thea's Night Tavern",
+          "preferred_sets": [
+            {
+              "set_id": "Suit9",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "edgar_speedy_hedgehog",
+          "name": "Edgar — Speedy Hedgehog",
+          "preferred_sets": [
+            {
+              "set_id": "Suit11",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

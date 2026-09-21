@@ -1,0 +1,113 @@
+{
+  "schema_version": 2,
+  "id": "hotori",
+  "name": "Hotori",
+  "main_stats": [
+    "CritBase",
+    "DamageUpCosmosBase",
+    "CritDamageBase",
+    "AtkUp"
+  ],
+  "stats": [
+    "CritDamageBase",
+    "CritBase",
+    "DamageUpGeneralBase",
+    "AtkUp",
+    "AtkAdd"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2100,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.7,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 0.9,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpCosmosBase",
+      "label": "Cosmos DMG",
+      "minimum": 0.5,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Lost Radiance",
+    "Speedy Hedgehog"
+  ],
+  "character": {
+    "character_id": 1052,
+    "grid_id": "character_1052"
+  },
+  "builds": [
+    {
+      "id": "hotori",
+      "name": "DPS",
+      "main_stats": [
+        "CritBase",
+        "DamageUpCosmosBase",
+        "CritDamageBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "CritBase",
+        "DamageUpGeneralBase",
+        "AtkUp",
+        "AtkAdd"
+      ],
+      "weights": {
+        "AtkAdd": 0.4,
+        "AtkUp": 0.55,
+        "CritBase": 0.85,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.7
+      },
+      "variants": [
+        {
+          "id": "hotori",
+          "name": "Hotori — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "hotori_speedy_hedgehog",
+          "name": "Hotori — Speedy Hedgehog",
+          "preferred_sets": [
+            {
+              "set_id": "Suit11",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

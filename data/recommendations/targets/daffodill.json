@@ -1,0 +1,105 @@
+{
+  "schema_version": 2,
+  "id": "daffodill",
+  "name": "Daffodil",
+  "main_stats": [
+    "CritBase",
+    "CritDamageBase",
+    "UnbalIntensityBase",
+    "DamageUpChaosBase"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp",
+    "DamageUpGeneralBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2300,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.45,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 0.9,
+      "percent": true
+    },
+    {
+      "property_id": "UnbalIntensityBase",
+      "label": "Break Intensity",
+      "minimum": 150,
+      "percent": false
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpChaosBase",
+      "label": "Chaos DMG",
+      "minimum": 0.5,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Diabolos"
+  ],
+  "character": {
+    "character_id": 1054,
+    "grid_id": "character_1054"
+  },
+  "builds": [
+    {
+      "id": "daffodill",
+      "name": "DPS",
+      "main_stats": [
+        "CritBase",
+        "CritDamageBase",
+        "UnbalIntensityBase",
+        "DamageUpChaosBase"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp",
+        "DamageUpGeneralBase"
+      ],
+      "weights": {
+        "AtkUp": 0.7,
+        "CritBase": 1,
+        "CritDamageBase": 0.85,
+        "DamageUpGeneralBase": 0.55
+      },
+      "variants": [
+        {
+          "id": "daffodill",
+          "name": "Daffodil — Diabolos",
+          "preferred_sets": [
+            {
+              "set_id": "Suit1",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

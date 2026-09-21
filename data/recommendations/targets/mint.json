@@ -1,0 +1,107 @@
+{
+  "schema_version": 2,
+  "id": "mint",
+  "name": "Mint",
+  "main_stats": [
+    "DamageUpNatureBase",
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 17000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2000,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.6,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpNatureBase",
+      "label": "Anima DMG",
+      "minimum": 0.475,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Fireflies and the Forest",
+    "Shadow Creed"
+  ],
+  "character": {
+    "character_id": 1019,
+    "grid_id": "character_1019"
+  },
+  "builds": [
+    {
+      "id": "mint",
+      "name": "DPS",
+      "main_stats": [
+        "DamageUpNatureBase",
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp"
+      ],
+      "weights": {
+        "AtkUp": 0.7,
+        "CritBase": 1,
+        "CritDamageBase": 0.85
+      },
+      "variants": [
+        {
+          "id": "mint",
+          "name": "Mint — Fireflies and the Forest",
+          "preferred_sets": [
+            {
+              "set_id": "Suit2",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "mint_shadow_creed",
+          "name": "Mint — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

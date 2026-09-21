@@ -1,0 +1,126 @@
+{
+  "schema_version": 2,
+  "id": "sakiri",
+  "name": "Sakiri",
+  "main_stats": [
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp",
+    "DamageUpIncantationBase",
+    "MagBase",
+    "UnbalIntensityBase"
+  ],
+  "stats": [
+    "CritDamageBase",
+    "CritBase",
+    "AtkUp",
+    "AtkAdd",
+    "UnbalIntensityBase",
+    "MagBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2300,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.5,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1,
+      "percent": true
+    },
+    {
+      "property_id": "UnbalIntensityBase",
+      "label": "Break Intensity",
+      "minimum": 50,
+      "percent": false
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpIncantationBase",
+      "label": "Incantation DMG",
+      "minimum": 0.54,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Speedy Hedgehog",
+    "Crimson: Twin Butterflies"
+  ],
+  "character": {
+    "character_id": 1003,
+    "grid_id": "character_1003"
+  },
+  "builds": [
+    {
+      "id": "sakiri",
+      "name": "DPS",
+      "main_stats": [
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp",
+        "DamageUpIncantationBase",
+        "MagBase",
+        "UnbalIntensityBase"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "CritBase",
+        "AtkUp",
+        "AtkAdd",
+        "UnbalIntensityBase",
+        "MagBase"
+      ],
+      "weights": {
+        "AtkAdd": 0.7,
+        "AtkUp": 0.85,
+        "CritBase": 1,
+        "CritDamageBase": 1,
+        "MagBase": 0.55,
+        "UnbalIntensityBase": 0.55
+      },
+      "variants": [
+        {
+          "id": "sakiri",
+          "name": "Sakiri — Speedy Hedgehog",
+          "preferred_sets": [
+            {
+              "set_id": "Suit11",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "sakiri_crimson_twin_butterflies",
+          "name": "Sakiri — Crimson: Twin Butterflies",
+          "preferred_sets": [
+            {
+              "set_id": "Suit4",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

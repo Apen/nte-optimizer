@@ -1,0 +1,127 @@
+{
+  "schema_version": 2,
+  "id": "haniel",
+  "name": "Haniel",
+  "main_stats": [
+    "CritBase",
+    "DamageUpPsycheBase",
+    "CritDamageBase",
+    "UnbalIntensityBase"
+  ],
+  "stats": [
+    "CritDamageBase",
+    "DamageUpGeneralBase",
+    "CritBase",
+    "AtkUp",
+    "UnbalIntensityBase",
+    "AtkAdd"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 17000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2300,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.5,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 0.9,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.15,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpPsycheBase",
+      "label": "Psyche DMG",
+      "minimum": 0.2,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Speedy Hedgehog",
+    "Fireflies and the Forest",
+    "Devil's Blood: Curse"
+  ],
+  "character": {
+    "character_id": 1020,
+    "grid_id": "character_1020"
+  },
+  "builds": [
+    {
+      "id": "haniel",
+      "name": "DPS",
+      "main_stats": [
+        "CritBase",
+        "DamageUpPsycheBase",
+        "CritDamageBase",
+        "UnbalIntensityBase"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "DamageUpGeneralBase",
+        "CritBase",
+        "AtkUp",
+        "UnbalIntensityBase",
+        "AtkAdd"
+      ],
+      "weights": {
+        "AtkAdd": 0.25,
+        "AtkUp": 0.55,
+        "CritBase": 0.7,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.85,
+        "UnbalIntensityBase": 0.4
+      },
+      "variants": [
+        {
+          "id": "haniel",
+          "name": "Haniel — Speedy Hedgehog",
+          "preferred_sets": [
+            {
+              "set_id": "Suit11",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "haniel_devil_s_blood_curse",
+          "name": "Haniel — Devil's Blood: Curse",
+          "preferred_sets": [
+            {
+              "set_id": "Suit3",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "haniel_fireflies_and_the_forest",
+          "name": "Haniel — Fireflies and the Forest",
+          "preferred_sets": [
+            {
+              "set_id": "Suit2",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

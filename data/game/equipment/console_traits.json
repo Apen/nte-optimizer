@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "traits": [
+    {
+      "character_id": 1033,
+      "area": 3,
+      "property_id": "DefUp",
+      "value_per_module": 0.12
+    },
+    {
+      "character_id": 1023,
+      "area": 3,
+      "property_id": "CritBase",
+      "value_per_module": 0.075
+    },
+    {
+      "character_id": 1039,
+      "area": 2,
+      "property_id": "HPMaxUp",
+      "value_per_module": 0.06
+    },
+    {
+      "character_id": 1051,
+      "area": 3,
+      "property_id": "AtkUp",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1020,
+      "area": 3,
+      "property_id": "AtkUp",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1025,
+      "area": 3,
+      "property_id": "AtkUp",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1052,
+      "area": 3,
+      "property_id": "DamageUpCosmosBase",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1019,
+      "area": 3,
+      "property_id": "CritBase",
+      "value_per_module": 0.075
+    },
+    {
+      "character_id": 1010,
+      "area": 2,
+      "property_id": "CritBase",
+      "value_per_module": 0.06
+    },
+    {
+      "character_id": 1003,
+      "area": 3,
+      "property_id": "DamageUpIncantationBase",
+      "value_per_module": 0.09
+    },
+    {
+      "character_id": 1071,
+      "area": 3,
+      "property_id": "CritDamageBase",
+      "value_per_module": 0.16
+    },
+    {
+      "character_id": 1073,
+      "area": 3,
+      "property_id": "DamageUpCosmosBase",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1054,
+      "area": 3,
+      "property_id": "DamageUpChaosBase",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1021,
+      "area": 3,
+      "property_id": "HPMaxUp",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1055,
+      "area": 2,
+      "property_id": "CritBase",
+      "value_per_module": 0.06
+    },
+    {
+      "character_id": 1004,
+      "area": 3,
+      "property_id": "DamageUpChaosBase",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1070,
+      "area": 3,
+      "property_id": "AtkUp",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1075,
+      "area": 3,
+      "property_id": "AtkUp",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1072,
+      "area": 3,
+      "property_id": "CritBase",
+      "value_per_module": 0.08
+    },
+    {
+      "character_id": 1076,
+      "area": 3,
+      "property_id": "CritDamageBase",
+      "value_per_module": 0.16
+    },
+    {
+      "character_id": 1008,
+      "area": 3,
+      "property_id": "AtkUp",
+      "value_per_module": 0.1
+    },
+    {
+      "character_id": 1036,
+      "area": 3,
+      "property_id": "CritDamageBase",
+      "value_per_module": 0.16
+    }
+  ]
+}

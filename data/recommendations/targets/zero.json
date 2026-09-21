@@ -1,0 +1,219 @@
+{
+  "schema_version": 2,
+  "id": "zero",
+  "name": "Zero",
+  "main_stats": [
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp"
+  ],
+  "stats": [
+    "CritDamageBase",
+    "CritBase",
+    "DamageUpGeneralBase",
+    "AtkUp"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2000,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.45,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 0.9,
+      "percent": true
+    },
+    {
+      "property_id": "MagBase",
+      "label": "Cycle Intensity",
+      "minimum": 250,
+      "percent": false
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Speedy Hedgehog",
+    "Devil's Blood: Curse",
+    "Lost Radiance",
+    "Fireflies and the Forest",
+    "Shadow Creed"
+  ],
+  "character": {
+    "character_id": 1046,
+    "grid_id": "character_1046"
+  },
+  "builds": [
+    {
+      "id": "zero",
+      "name": "DPS",
+      "main_stats": [
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "CritBase",
+        "DamageUpGeneralBase",
+        "AtkUp"
+      ],
+      "weights": {
+        "AtkUp": 0.55,
+        "CritBase": 0.85,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.7
+      },
+      "variants": [
+        {
+          "id": "zero",
+          "name": "Zero — DPS — Speedy Hedgehog",
+          "preferred_sets": [
+            {
+              "set_id": "Suit11",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zero_devil_s_blood_curse",
+          "name": "Zero — DPS — Devil's Blood: Curse",
+          "preferred_sets": [
+            {
+              "set_id": "Suit3",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zero_fireflies_and_the_forest",
+          "name": "Zero — DPS — Fireflies and the Forest",
+          "preferred_sets": [
+            {
+              "set_id": "Suit2",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zero_lost_radiance",
+          "name": "Zero — DPS — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zero_shadow_creed",
+          "name": "Zero — DPS — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zero_dps",
+      "name": "DPS",
+      "main_stats": [
+        "MagBase",
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "MagBase",
+        "CritBase",
+        "CritDamageBase",
+        "DamageUpGeneralBase",
+        "AtkUp",
+        "AtkAdd"
+      ],
+      "weights": {
+        "AtkAdd": 0.25,
+        "AtkUp": 0.4,
+        "CritBase": 0.85,
+        "CritDamageBase": 0.7,
+        "DamageUpGeneralBase": 0.55,
+        "MagBase": 1
+      },
+      "variants": [
+        {
+          "id": "zero_dps",
+          "name": "Zero — DPS — Speedy Hedgehog",
+          "preferred_sets": [
+            {
+              "set_id": "Suit11",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zero_dps_devil_s_blood_curse",
+          "name": "Zero — DPS — Devil's Blood: Curse",
+          "preferred_sets": [
+            {
+              "set_id": "Suit3",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zero_dps_fireflies_and_the_forest",
+          "name": "Zero — DPS — Fireflies and the Forest",
+          "preferred_sets": [
+            {
+              "set_id": "Suit2",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zero_dps_lost_radiance",
+          "name": "Zero — DPS — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zero_dps_shadow_creed",
+          "name": "Zero — DPS — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

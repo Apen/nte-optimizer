@@ -1,0 +1,249 @@
+{
+  "forks": {
+    "fork_Arachne": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_BitGame": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_BitterCake": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_BlackBook": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_BlastCandy": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_BoxingCandy": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Butterfly": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Castle": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Crowbar": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_DemonBlade": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Door": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_GoldRecord": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_GoldWool": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Kite": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_KnightCandy": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_LunarPhase": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_MotorCandy": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Nakupeda": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_NestBird": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_PaperPlane": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_PoliceRat": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Prokaryon": {
+      "quality": "BLUE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Rose": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_ThiefCandy": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_TigerTally": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Time": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_Whale": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_appliance": {
+      "quality": "BLUE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_bopu": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_dustbin": {
+      "quality": "BLUE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_jiaojuan": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_jingmotingyuan": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_koinobori": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_lingganzhongjiezhe": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_mamen": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_mofeikesi": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_moon": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_nonos": {
+      "quality": "BLUE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_oulaquantao": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_rishi": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_snowman": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_spider": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_tuansanlang": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_vine": {
+      "quality": "BLUE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_worldrain": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_wuhuakuang": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_wushoutieyu": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_yaodao": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    },
+    "fork_yuren": {
+      "quality": "PURPLE",
+      "max_breakthrough": 6,
+      "max_star": 5
+    }
+  }
+}

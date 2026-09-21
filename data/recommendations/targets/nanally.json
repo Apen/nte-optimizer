@@ -1,0 +1,129 @@
+{
+  "schema_version": 2,
+  "id": "nanally",
+  "name": "Nanally",
+  "main_stats": [
+    "DamageUpNatureBase",
+    "CritDamageBase",
+    "AtkUp",
+    "CritBase"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2200,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.85,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpNatureBase",
+      "label": "Anima DMG",
+      "minimum": 0.475,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Fireflies and the Forest",
+    "Shadow Creed",
+    "Lost Radiance",
+    "Devil's Blood: Curse"
+  ],
+  "character": {
+    "character_id": 1010,
+    "grid_id": "character_1010"
+  },
+  "builds": [
+    {
+      "id": "nanally",
+      "name": "DPS",
+      "main_stats": [
+        "DamageUpNatureBase",
+        "CritDamageBase",
+        "AtkUp",
+        "CritBase"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp"
+      ],
+      "weights": {
+        "AtkUp": 0.7,
+        "CritBase": 1,
+        "CritDamageBase": 0.85
+      },
+      "variants": [
+        {
+          "id": "nanally",
+          "name": "Nanally — Fireflies and the Forest",
+          "preferred_sets": [
+            {
+              "set_id": "Suit2",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "nanally_devil_s_blood_curse",
+          "name": "Nanally — Devil's Blood: Curse",
+          "preferred_sets": [
+            {
+              "set_id": "Suit3",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "nanally_lost_radiance",
+          "name": "Nanally — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "nanally_shadow_creed",
+          "name": "Nanally — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

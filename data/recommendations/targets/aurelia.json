@@ -1,0 +1,121 @@
+{
+  "schema_version": 2,
+  "id": "aurelia",
+  "name": "Aurelia",
+  "main_stats": [
+    "CritBase",
+    "AtkUp",
+    "DamageUpPsycheBase",
+    "CritDamageBase"
+  ],
+  "stats": [
+    "CritDamageBase",
+    "CritBase",
+    "AtkUp",
+    "DamageUpGeneralBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 17000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2500,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.6,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 0.9,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.15,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpPsycheBase",
+      "label": "Psyche DMG",
+      "minimum": 0.3,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Devil's Blood: Curse",
+    "Lost Radiance",
+    "Shadow Creed"
+  ],
+  "character": {
+    "character_id": 1070,
+    "grid_id": "character_1070"
+  },
+  "builds": [
+    {
+      "id": "aurelia",
+      "name": "DPS",
+      "main_stats": [
+        "CritBase",
+        "AtkUp",
+        "DamageUpPsycheBase",
+        "CritDamageBase"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "CritBase",
+        "AtkUp",
+        "DamageUpGeneralBase"
+      ],
+      "weights": {
+        "AtkUp": 0.7,
+        "CritBase": 0.85,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.55
+      },
+      "variants": [
+        {
+          "id": "aurelia",
+          "name": "Aurelia — Devil's Blood: Curse",
+          "preferred_sets": [
+            {
+              "set_id": "Suit3",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "aurelia_lost_radiance",
+          "name": "Aurelia — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "aurelia_shadow_creed",
+          "name": "Aurelia — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

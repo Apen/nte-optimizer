@@ -1,0 +1,255 @@
+{
+  "schema_version": 2,
+  "id": "zankou",
+  "name": "Zankou",
+  "main_stats": [
+    "CritDamageBase",
+    "MagBase",
+    "DamageUpIncantationBase",
+    "CritBase",
+    "AtkUp"
+  ],
+  "stats": [
+    "CritDamageBase",
+    "MagBase",
+    "CritBase",
+    "DamageUpGeneralBase",
+    "AtkUp",
+    "UnbalIntensityBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2000,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.6,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 2,
+      "percent": true
+    },
+    {
+      "property_id": "MagBase",
+      "label": "Cycle Intensity",
+      "minimum": 200,
+      "percent": false
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpIncantationBase",
+      "label": "Incantation DMG",
+      "minimum": 0.1,
+      "percent": true
+    }
+  ],
+  "arcs": [
+    {
+      "rank": 1,
+      "name": "Ravenous Blade",
+      "base_atk": 570,
+      "stats": {
+        "CritBase": 0.24
+      }
+    },
+    {
+      "rank": 2,
+      "name": "Contemplative Cat",
+      "base_atk": 512,
+      "stats": {
+        "CritDamageBase": 0.44
+      }
+    },
+    {
+      "rank": 3,
+      "name": "Watch Your Heads!",
+      "base_atk": 475,
+      "stats": {
+        "CritDamageBase": 0.4
+      }
+    },
+    {
+      "rank": 4,
+      "name": "Fluff of Finesse",
+      "base_atk": 512,
+      "stats": {
+        "AtkUp": 0.275
+      }
+    },
+    {
+      "rank": 5,
+      "name": "Failing You, Heavy in My Heart",
+      "base_atk": 475,
+      "stats": {
+        "UnbalIntensityBase": 120
+      }
+    }
+  ],
+  "sets": [
+    "Crimson: Twin Butterflies",
+    "Lost Radiance",
+    "Shadow Creed"
+  ],
+  "notes": [
+    "Crimson 4-piece: 6% ATK per stack, up to 6 stacks (36%).",
+    "Base kit grants 100 Cycle Intensity while Zankou is on the team."
+  ],
+  "character": {
+    "character_id": 1036,
+    "grid_id": "zankou",
+    "current_stats": {
+      "CritBase": 0,
+      "MagBase": 100
+    },
+    "base_stats": {
+      "AtkBase": 660,
+      "CritBase": 0.05,
+      "CritDamageBase": 0.5,
+      "DefBase": 909,
+      "HPMaxBase": 15514
+    },
+    "console_trait": {
+      "area": 3,
+      "property_id": "CritDamageBase",
+      "value_per_module": 0.16
+    }
+  },
+  "builds": [
+    {
+      "id": "zankou",
+      "name": "DPS",
+      "main_stats": [
+        "CritDamageBase",
+        "MagBase",
+        "DamageUpIncantationBase",
+        "CritBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "MagBase",
+        "CritBase",
+        "DamageUpGeneralBase",
+        "AtkUp",
+        "UnbalIntensityBase"
+      ],
+      "weights": {
+        "AtkUp": 0.55,
+        "CritBase": 0.85,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.7,
+        "MagBase": 0.85,
+        "UnbalIntensityBase": 0.4
+      },
+      "variants": [
+        {
+          "id": "zankou",
+          "name": "Zankou — DPS — Crimson: Twin Butterflies",
+          "preferred_sets": [
+            {
+              "set_id": "Suit4",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zankou_lost_radiance",
+          "name": "Zankou — DPS — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zankou_shadow_creed",
+          "name": "Zankou — DPS — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zankou_sub_dps",
+      "name": "SubDPS",
+      "main_stats": [
+        "CritDamageBase",
+        "MagBase",
+        "DamageUpIncantationBase",
+        "CritBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "MagBase",
+        "DamageUpGeneralBase",
+        "CritBase",
+        "AtkUp",
+        "UnbalIntensityBase"
+      ],
+      "weights": {
+        "AtkUp": 0.7,
+        "CritBase": 0.85,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.85,
+        "MagBase": 0.85,
+        "UnbalIntensityBase": 0.55
+      },
+      "variants": [
+        {
+          "id": "zankou_sub_dps",
+          "name": "Zankou — SubDPS — Crimson: Twin Butterflies",
+          "preferred_sets": [
+            {
+              "set_id": "Suit4",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zankou_sub_dps_lost_radiance",
+          "name": "Zankou — SubDPS — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zankou_sub_dps_shadow_creed",
+          "name": "Zankou — SubDPS — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

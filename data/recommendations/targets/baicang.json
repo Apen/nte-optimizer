@@ -1,0 +1,127 @@
+{
+  "schema_version": 2,
+  "id": "baicang",
+  "name": "Baicang",
+  "main_stats": [
+    "DamageUpIncantationBase",
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp",
+    "UnbalIntensityBase"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp",
+    "DamageUpGeneralBase",
+    "AtkAdd",
+    "UnbalIntensityBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2000,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.75,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1,
+      "percent": true
+    },
+    {
+      "property_id": "UnbalIntensityBase",
+      "label": "Break Intensity",
+      "minimum": 25,
+      "percent": false
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpIncantationBase",
+      "label": "Incantation DMG",
+      "minimum": 0.475,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Crimson: Twin Butterflies",
+    "Shadow Creed"
+  ],
+  "notes": [
+    "Crimson 4-piece: 6% ATK per stack, up to 6 stacks (36%)."
+  ],
+  "character": {
+    "character_id": 1023,
+    "grid_id": "character_1023"
+  },
+  "builds": [
+    {
+      "id": "baicang",
+      "name": "DPS",
+      "main_stats": [
+        "DamageUpIncantationBase",
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp",
+        "UnbalIntensityBase"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp",
+        "DamageUpGeneralBase",
+        "AtkAdd",
+        "UnbalIntensityBase"
+      ],
+      "weights": {
+        "AtkAdd": 0.55,
+        "AtkUp": 0.7,
+        "CritBase": 1,
+        "CritDamageBase": 0.85,
+        "DamageUpGeneralBase": 0.7,
+        "UnbalIntensityBase": 0.4
+      },
+      "variants": [
+        {
+          "id": "baicang",
+          "name": "Baicang — Crimson: Twin Butterflies",
+          "preferred_sets": [
+            {
+              "set_id": "Suit4",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "baicang_shadow_creed",
+          "name": "Baicang — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": 2,
+  "id": "jiuyuan",
+  "name": "Jiuyuan",
+  "main_stats": [
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp",
+    "DamageUpNatureBase"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2200,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.8,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpNatureBase",
+      "label": "Anima DMG",
+      "minimum": 0.35,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Fireflies and the Forest",
+    "Devil's Blood: Curse",
+    "Street Boxer",
+    "Shadow Creed"
+  ],
+  "character": {
+    "character_id": 1055,
+    "grid_id": "character_1055"
+  },
+  "builds": [
+    {
+      "id": "jiuyuan",
+      "name": "DPS",
+      "main_stats": [
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp",
+        "DamageUpNatureBase"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp"
+      ],
+      "weights": {
+        "AtkUp": 0.7,
+        "CritBase": 1,
+        "CritDamageBase": 0.85
+      },
+      "variants": [
+        {
+          "id": "jiuyuan",
+          "name": "Jiuyuan — Fireflies and the Forest",
+          "preferred_sets": [
+            {
+              "set_id": "Suit2",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "jiuyuan_devil_s_blood_curse",
+          "name": "Jiuyuan — Devil's Blood: Curse",
+          "preferred_sets": [
+            {
+              "set_id": "Suit3",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "jiuyuan_shadow_creed",
+          "name": "Jiuyuan — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "jiuyuan_street_boxer",
+          "name": "Jiuyuan — Street Boxer",
+          "preferred_sets": [
+            {
+              "set_id": "Suit5",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

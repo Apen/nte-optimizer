@@ -1,0 +1,105 @@
+{
+  "schema_version": 2,
+  "id": "fadia",
+  "name": "Fadia",
+  "main_stats": [
+    "HPMaxUp",
+    "DamageUpPsychicallyBase",
+    "DamageUpPsycheBase"
+  ],
+  "stats": [
+    "HPMaxUp",
+    "HPMaxAdd",
+    "DamageUpGeneralBase",
+    "CritBase",
+    "CritDamageBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 60000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 1200,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.05,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 0.5,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.2,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Tiny Big Adventure",
+    "Quiet Manor"
+  ],
+  "character": {
+    "character_id": 1039,
+    "grid_id": "character_1039"
+  },
+  "builds": [
+    {
+      "id": "fadia",
+      "name": "DPS",
+      "main_stats": [
+        "HPMaxUp",
+        "DamageUpPsychicallyBase",
+        "DamageUpPsycheBase"
+      ],
+      "stats": [
+        "HPMaxUp",
+        "HPMaxAdd",
+        "DamageUpGeneralBase",
+        "CritBase",
+        "CritDamageBase"
+      ],
+      "weights": {
+        "CritBase": 0.55,
+        "CritDamageBase": 0.4,
+        "DamageUpGeneralBase": 0.7,
+        "HPMaxAdd": 0.85,
+        "HPMaxUp": 1
+      },
+      "variants": [
+        {
+          "id": "fadia",
+          "name": "Fadia — Tiny Big Adventure",
+          "preferred_sets": [
+            {
+              "set_id": "Suit10",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "fadia_quiet_manor",
+          "name": "Fadia — Quiet Manor",
+          "preferred_sets": [
+            {
+              "set_id": "Suit12",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

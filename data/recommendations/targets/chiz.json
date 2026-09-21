@@ -1,0 +1,116 @@
+{
+  "schema_version": 2,
+  "id": "chiz",
+  "name": "Chiz",
+  "main_stats": [
+    "DamageUpCosmosBase",
+    "CritDamageBase",
+    "DamageUpGeneralBase",
+    "AtkUp"
+  ],
+  "stats": [
+    "CritDamageBase",
+    "DamageUpGeneralBase",
+    "AtkUp",
+    "AtkAdd"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2000,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.4,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.2,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpCosmosBase",
+      "label": "Cosmos DMG",
+      "minimum": 0.55,
+      "percent": true
+    }
+  ],
+  "arcs": [
+    {
+      "rank": 2,
+      "name": "Contemplative Cat",
+      "refinement": "M5"
+    }
+  ],
+  "sets": [
+    "Lost Radiance",
+    "Shadow Creed"
+  ],
+  "character": {
+    "character_id": 1073,
+    "grid_id": "character_1073"
+  },
+  "builds": [
+    {
+      "id": "chiz",
+      "name": "DPS",
+      "main_stats": [
+        "DamageUpCosmosBase",
+        "CritDamageBase",
+        "DamageUpGeneralBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "DamageUpGeneralBase",
+        "AtkUp",
+        "AtkAdd"
+      ],
+      "weights": {
+        "AtkAdd": 0.55,
+        "AtkUp": 0.7,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.85
+      },
+      "variants": [
+        {
+          "id": "chiz",
+          "name": "Chiz — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "chiz_shadow_creed",
+          "name": "Chiz — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

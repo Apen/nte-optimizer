@@ -1,0 +1,115 @@
+{
+  "schema_version": 2,
+  "id": "iroi",
+  "name": "Iroi",
+  "main_stats": [
+    "MagBase",
+    "DamageUpNatureBase",
+    "CritDamageBase",
+    "CritBase",
+    "AtkUp"
+  ],
+  "stats": [
+    "MagBase",
+    "CritDamageBase",
+    "CritBase",
+    "DamageUpGeneralBase",
+    "AtkUp"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2900,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.3,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 0.7,
+      "percent": true
+    },
+    {
+      "property_id": "MagBase",
+      "label": "Cycle Intensity",
+      "minimum": 150,
+      "percent": false
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Speedy Hedgehog",
+    "Fireflies and the Forest"
+  ],
+  "character": {
+    "character_id": 1075,
+    "grid_id": "character_1075"
+  },
+  "builds": [
+    {
+      "id": "iroi",
+      "name": "DPS",
+      "main_stats": [
+        "MagBase",
+        "DamageUpNatureBase",
+        "CritDamageBase",
+        "CritBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "MagBase",
+        "CritDamageBase",
+        "CritBase",
+        "DamageUpGeneralBase",
+        "AtkUp"
+      ],
+      "weights": {
+        "AtkUp": 0.4,
+        "CritBase": 0.7,
+        "CritDamageBase": 0.85,
+        "DamageUpGeneralBase": 0.55,
+        "MagBase": 1
+      },
+      "variants": [
+        {
+          "id": "iroi",
+          "name": "Iroi — Speedy Hedgehog",
+          "preferred_sets": [
+            {
+              "set_id": "Suit11",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "iroi_fireflies_and_the_forest",
+          "name": "Iroi — Fireflies and the Forest",
+          "preferred_sets": [
+            {
+              "set_id": "Suit2",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

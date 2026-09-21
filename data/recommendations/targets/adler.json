@@ -1,0 +1,115 @@
+{
+  "schema_version": 2,
+  "id": "adler",
+  "name": "Adler",
+  "main_stats": [
+    "DefUp",
+    "DefAdd",
+    "UnbalIntensityBase",
+    "MagBase",
+    "DamageUpGeneralBase"
+  ],
+  "stats": [
+    "DefUp",
+    "DefAdd",
+    "UnbalIntensityBase",
+    "MagBase",
+    "DamageUpGeneralBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 1000,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.05,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 0.5,
+      "percent": true
+    },
+    {
+      "property_id": "MagBase",
+      "label": "Cycle Intensity",
+      "minimum": 50,
+      "percent": false
+    },
+    {
+      "property_id": "UnbalIntensityBase",
+      "label": "Break Intensity",
+      "minimum": 75,
+      "percent": false
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Kingdom's Guard",
+    "Speedy Hedgehog"
+  ],
+  "character": {
+    "character_id": 1033,
+    "grid_id": "character_1033"
+  },
+  "builds": [
+    {
+      "id": "adler",
+      "name": "DPS",
+      "main_stats": [
+        "DefUp",
+        "DefAdd",
+        "UnbalIntensityBase",
+        "MagBase",
+        "DamageUpGeneralBase"
+      ],
+      "stats": [
+        "DefUp",
+        "DefAdd",
+        "UnbalIntensityBase",
+        "MagBase",
+        "DamageUpGeneralBase"
+      ],
+      "weights": {
+        "DamageUpGeneralBase": 0.4,
+        "DefAdd": 0.85,
+        "DefUp": 1,
+        "MagBase": 0.55,
+        "UnbalIntensityBase": 0.7
+      },
+      "variants": [
+        {
+          "id": "adler",
+          "name": "Adler — Kingdom's Guard",
+          "preferred_sets": [
+            {
+              "set_id": "Suit7",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "adler_speedy_hedgehog",
+          "name": "Adler — Speedy Hedgehog",
+          "preferred_sets": [
+            {
+              "set_id": "Suit11",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

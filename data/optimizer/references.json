@@ -1,0 +1,21 @@
+{
+  "AtkAdd": 80,
+  "AtkUp": 0.12,
+  "CritBase": 0.064,
+  "CritDamageBase": 0.128,
+  "DamageUpGeneralBase": 0.12,
+  "DamageUpChaosBase": 0.12,
+  "DamageUpCosmosBase": 0.12,
+  "DamageUpIncantationBase": 0.12,
+  "DamageUpLakshanaBase": 0.12,
+  "DamageUpNatureBase": 0.12,
+  "DamageUpPsycheBase": 0.12,
+  "DamageUpPsychicallyBase": 0.12,
+  "DefAdd": 80,
+  "DefUp": 0.12,
+  "HealUp": 0.069,
+  "HPMaxAdd": 800,
+  "HPMaxUp": 0.12,
+  "MagBase": 12,
+  "UnbalIntensityBase": 12
+}

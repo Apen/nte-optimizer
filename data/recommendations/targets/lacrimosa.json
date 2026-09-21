@@ -1,0 +1,112 @@
+{
+  "schema_version": 2,
+  "id": "lacrimosa",
+  "name": "Lacrimosa",
+  "main_stats": [
+    "CritBase",
+    "DamageUpChaosBase",
+    "CritDamageBase",
+    "AtkUp"
+  ],
+  "stats": [
+    "CritDamageBase",
+    "CritBase",
+    "DamageUpGeneralBase",
+    "AtkUp"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2200,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.5,
+      "maximum": 0.8,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpChaosBase",
+      "label": "Chaos DMG",
+      "minimum": 0.5,
+      "maximum": 0.875,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Diabolos",
+    "Shadow Creed"
+  ],
+  "character": {
+    "character_id": 1004,
+    "grid_id": "character_1004"
+  },
+  "builds": [
+    {
+      "id": "lacrimosa",
+      "name": "DPS",
+      "main_stats": [
+        "CritBase",
+        "DamageUpChaosBase",
+        "CritDamageBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "CritBase",
+        "DamageUpGeneralBase",
+        "AtkUp"
+      ],
+      "weights": {
+        "AtkUp": 0.55,
+        "CritBase": 0.85,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.7
+      },
+      "variants": [
+        {
+          "id": "lacrimosa",
+          "name": "Lacrimosa — Diabolos",
+          "preferred_sets": [
+            {
+              "set_id": "Suit1",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "lacrimosa_shadow_creed",
+          "name": "Lacrimosa — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

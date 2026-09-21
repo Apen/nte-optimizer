@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "sets": [
+    {
+      "id": "Suit1",
+      "inventory_set_id": "suit1",
+      "required_geometries": [
+        "V_2",
+        "L_3_BR",
+        "L_3_TL",
+        "H_4"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "DamageUpChaosBase",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [
+            {
+              "property_id": "ResistanceIgnoreChaosBase",
+              "value": 0.12,
+              "percent": true
+            }
+          ],
+          "conditional_stats": [
+            {
+              "property_id": "ResistanceIgnoreChaosBase",
+              "value": 0.12,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit2",
+      "inventory_set_id": "suit2",
+      "required_geometries": [
+        "H_2",
+        "V_3",
+        "L_3_TR",
+        "Trap_4_V"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "DamageUpNatureBase",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [],
+          "conditional_stats": [
+            {
+              "property_id": "CritDamageBase",
+              "value": 0.56,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit3",
+      "inventory_set_id": "suit3",
+      "required_geometries": [
+        "V_2",
+        "V_3",
+        "L_3_BR",
+        "Trap_4_V"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "DamageUpPsycheBase",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [
+            {
+              "property_id": "DamageUpGeneralBase",
+              "value": 0.18,
+              "percent": true
+            }
+          ],
+          "conditional_stats": [
+            {
+              "property_id": "DamageUpGeneralBase",
+              "value": 0.18,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit4",
+      "inventory_set_id": "suit4",
+      "required_geometries": [
+        "V_2",
+        "H_3",
+        "L_3_TL",
+        "Trap_4_H"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "DamageUpIncantationBase",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [],
+          "conditional_stats": [
+            {
+              "property_id": "AtkUp",
+              "value": 0.36,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit5",
+      "inventory_set_id": "suit5",
+      "required_geometries": [
+        "H_2",
+        "H_3",
+        "L_3_BL",
+        "Trap_4_H"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "DamageUpLakshanaBase",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [
+            {
+              "property_id": "CritBase",
+              "value": 0.14,
+              "percent": true
+            }
+          ],
+          "conditional_stats": [
+            {
+              "property_id": "CritBase",
+              "value": 0.14,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit6",
+      "inventory_set_id": "suit6",
+      "required_geometries": [
+        "H_2",
+        "L_3_TR",
+        "L_3_BL",
+        "V_4"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "DamageUpCosmosBase",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [],
+          "conditional_stats": [
+            {
+              "property_id": "DefenseIgnoreBase",
+              "value": 0.25,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit7",
+      "inventory_set_id": "suit7",
+      "required_geometries": [
+        "H_3",
+        "V_3",
+        "L_3_BL",
+        "L_3_TL"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "DefUp",
+              "value": 0.15,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [
+            {
+              "property_id": "ShieldEfficiency",
+              "value": 0.2,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit8",
+      "inventory_set_id": "suit8",
+      "required_geometries": [
+        "H_2",
+        "V_2",
+        "H_4",
+        "Trap_4_V"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "AtkUp",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [],
+          "conditional_stats": [
+            {
+              "property_id": "AtkUp",
+              "value": 0.25,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit9",
+      "inventory_set_id": "suit9",
+      "required_geometries": [
+        "H_3",
+        "V_3",
+        "L_3_TR",
+        "L_3_BR"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "HPMaxUp",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [
+            {
+              "property_id": "HealUp",
+              "value": 0.2,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit10",
+      "inventory_set_id": "suit10",
+      "required_geometries": [
+        "H_2",
+        "V_2",
+        "H_4",
+        "Trap_4_H"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "HPMaxUp",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [],
+          "conditional_stats": [
+            {
+              "property_id": "HPMaxUp",
+              "value": 0.4,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit11",
+      "inventory_set_id": "suit11",
+      "required_geometries": [
+        "L_3_TR",
+        "L_3_BR",
+        "L_3_BL",
+        "L_3_TL"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "ChargeGetEfficiencyBase",
+              "value": 0.12,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [],
+          "conditional_stats": [
+            {
+              "property_id": "AtkUp",
+              "value": 0.15,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Suit12",
+      "inventory_set_id": "suit12",
+      "required_geometries": [
+        "H_2",
+        "V_2",
+        "V_4",
+        "Trap_4_V"
+      ],
+      "bonuses": [
+        {
+          "count": 2,
+          "score": 1,
+          "stats": [
+            {
+              "property_id": "DamageUpPsychicallyBase",
+              "value": 0.1,
+              "percent": true
+            }
+          ]
+        },
+        {
+          "count": 4,
+          "score": 3,
+          "stats": [],
+          "conditional_stats": [
+            {
+              "property_id": "DamageUpPsychicallyBase",
+              "value": 0.36,
+              "percent": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

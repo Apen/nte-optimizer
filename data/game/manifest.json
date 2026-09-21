@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "characters/base_stats.json",
+      "schema_version": 1,
+      "sha256": "6897afefe445421ccaf294d181c4254b9a4df0d5d95794bc942e579531b5c299",
+      "sources": [
+        "generated/base_stats.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "characters/decode.json",
+      "schema_version": 1,
+      "sha256": "dc4f855db734c40ac800d5897e4ef2929abd6cea2131721a607a277cc503c61c",
+      "sources": [
+        "datamine/data/characters/manifest.json",
+        "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
+        "overrides/game-data.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "combat/damage.json",
+      "schema_version": 1,
+      "sha256": "a8f3584aa7462045dd4d2386ba7c805b3e4c2a0a8044e9954cb0f8666e943fc3",
+      "sources": [
+        "generated/combat_catalog_draft.json",
+        "datamine/data/characters/manifest.json",
+        "overrides/combat-rules.json"
+      ],
+      "status": "partial",
+      "warnings": [
+        "Seuls les effets poss\u00E9dant des coefficients d\u0027attaque directs et v\u00E9rifiables sont publi\u00E9s."
+      ]
+    },
+    {
+      "path": "equipment/arcs.json",
+      "schema_version": 1,
+      "sha256": "f0aa5119d14e12fc4ba3bf52c825ba5898b054b2622685364c8be0135eb2dfa8",
+      "sources": [
+        "generated/fork_stats.json",
+        "overrides/equipment-projections.json"
+      ],
+      "status": "partial",
+      "warnings": [
+        "Les projections de passifs interpr\u00E9t\u00E9es sont conserv\u00E9es dans overrides/equipment-projections.json et valid\u00E9es contre le catalogue datamin\u00E9."
+      ]
+    },
+    {
+      "path": "equipment/console_traits.json",
+      "schema_version": 1,
+      "sha256": "00018e046000dd14218be5c4218d95b7adaf10090939c3955c928e802488b0d7",
+      "sources": [
+        "datamine/data/catalogs/DataTable/Equipment/DT_CharacterEquipmentSlotsData.json",
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_EquipmentModifySlotsEffect.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "equipment/decode.json",
+      "schema_version": 1,
+      "sha256": "633ddef677eaee23eb75382e14b7bf0577c5457457b643e7a1dda752ac4957a7",
+      "sources": [
+        "datamine/data/catalogs/DataTable/Equipment/DT_Equipment.json",
+        "datamine/data/catalogs/DataTable/Equipment/CT_EquipmentBaseAttribute.json",
+        "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentSuitData.json",
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
+        "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentShapeFeatureData.json",
+        "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentPlanData.json",
+        "datamine/data/equipment/en.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "equipment/grids.json",
+      "schema_version": 1,
+      "sha256": "1dfbc63168b83af8095c040bc0ad937e5afcccff966869cd1ab68ff8b738c425",
+      "sources": [
+        "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentPlanData.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "equipment/sets.json",
+      "schema_version": 1,
+      "sha256": "1fbc5c25e2e3a19e6963e3e082fd034d2c55b17237d1c479fc13ecafc0958064",
+      "sources": [
+        "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentSuitData.json",
+        "overrides/equipment-projections.json"
+      ],
+      "status": "partial",
+      "warnings": [
+        "Les projections structur\u00E9es des bonus sont conserv\u00E9es dans overrides/equipment-projections.json et valid\u00E9es contre le catalogue datamin\u00E9."
+      ]
+    },
+    {
+      "path": "equipment/shapes.json",
+      "schema_version": 1,
+      "sha256": "f53dc32926fec6b1f6daf37b2569210a106dc529c12ea4aaf99ed4629c39d0e2",
+      "sources": [
+        "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentShapeFeatureData.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "forks/decode.json",
+      "schema_version": 1,
+      "sha256": "e447f194fcff3686317f8f72800d396502d7ec768fba611d1273c8354dd563ef",
+      "sources": [
+        "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "locales/en.json",
+      "schema_version": 1,
+      "sha256": "fd058d5399872a49cf8c9de71d761b5748552f22226fddd0f5999ceb5b6fa62f",
+      "sources": [
+        "datamine/data/localization/en.json",
+        "datamine/data/datatables/DataTable/Character/DT_Character.json",
+        "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json",
+        "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentSuitData.json",
+        "config/locales.json",
+        "overrides/locales.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "locales/fr.json",
+      "schema_version": 1,
+      "sha256": "573651108e913b8eb93c01a9b380d6a9c5bc3992243386a38bf8bc74ad4bf469",
+      "sources": [
+        "datamine/data/localization/fr.json",
+        "datamine/data/datatables/DataTable/Character/DT_Character.json",
+        "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json",
+        "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentSuitData.json",
+        "config/locales.json",
+        "overrides/locales.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "resources/decode.json",
+      "schema_version": 1,
+      "sha256": "f3536d0f5686a2d274374ae1ed3fc8726acaed55e831508bb93d783000b8b970",
+      "sources": [
+        "datamine/data/inventory/DataTable/Inventory/DT_ItemConfig.json",
+        "datamine/data/inventory/DataTable/Inventory/DT_CapitalItemConfig.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    }
+  ]
+}

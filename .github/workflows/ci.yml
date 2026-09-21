@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Check Go module files
+        run: go mod tidy -diff
+
+      - name: Vet Go code
+        run: go vet ./...
+
+      - name: Build and test release
+        shell: pwsh
+        run: ./scripts/build-app.ps1
+
+      - name: Verify portable package
+        shell: pwsh
+        run: |
+          $release = "build/release/nte-optimizer"
+          $archive = "build/release/nte-optimizer-windows.zip"
+          $checksum = "$archive.sha256"
+          $required = @(
+            "$release/nte-optimizer.exe",
+            "$release/nte-scan.exe",
+            "$release/data",
+            $archive,
+            $checksum
+          )
+          foreach ($path in $required) {
+            if (-not (Test-Path -LiteralPath $path)) {
+              throw "Missing portable package entry: $path"
+            }
+          }
+          $expectedHash = ((Get-Content -LiteralPath $checksum -Raw).Trim() -split '\s+')[0]
+          $actualHash = (Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($expectedHash -ne $actualHash) {
+            throw "Portable archive checksum mismatch."
+          }
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $zip = [System.IO.Compression.ZipFile]::OpenRead((Resolve-Path $archive))
+          try {
+            $entries = @($zip.Entries.FullName)
+            foreach ($entry in @("nte-optimizer.exe", "nte-scan.exe")) {
+              if ($entry -notin $entries) {
+                throw "Missing archive entry: $entry"
+              }
+            }
+            if (-not ($entries | Where-Object { $_ -like "data/*" })) {
+              throw "Missing data directory in portable archive."
+            }
+          }
+          finally {
+            $zip.Dispose()
+          }

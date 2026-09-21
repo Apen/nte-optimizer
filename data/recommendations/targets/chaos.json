@@ -1,0 +1,111 @@
+{
+  "schema_version": 2,
+  "id": "chaos",
+  "name": "Chaos",
+  "main_stats": [
+    "DamageUpLakshanaBase",
+    "CritDamageBase",
+    "AtkUp",
+    "CritBase"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "DamageUpGeneralBase",
+    "AtkUp"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2000,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.64,
+      "maximum": 0.74,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1.6,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.15,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpLakshanaBase",
+      "label": "Lakshana DMG",
+      "minimum": 0.675,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Street Boxer",
+    "Shadow Creed"
+  ],
+  "character": {
+    "character_id": 1071,
+    "grid_id": "character_1071"
+  },
+  "builds": [
+    {
+      "id": "chaos",
+      "name": "DPS",
+      "main_stats": [
+        "DamageUpLakshanaBase",
+        "CritDamageBase",
+        "AtkUp",
+        "CritBase"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "DamageUpGeneralBase",
+        "AtkUp"
+      ],
+      "weights": {
+        "AtkUp": 0.55,
+        "CritBase": 1,
+        "CritDamageBase": 0.85,
+        "DamageUpGeneralBase": 0.7
+      },
+      "variants": [
+        {
+          "id": "chaos",
+          "name": "Chaos — Street Boxer",
+          "preferred_sets": [
+            {
+              "set_id": "Suit5",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "chaos_shadow_creed",
+          "name": "Chaos — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

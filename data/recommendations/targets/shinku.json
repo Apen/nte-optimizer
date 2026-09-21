@@ -1,0 +1,124 @@
+{
+  "schema_version": 2,
+  "id": "shinku",
+  "name": "Shinku",
+  "main_stats": [
+    "CritBase",
+    "CritDamageBase",
+    "AtkUp",
+    "DamageUpCosmosBase"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "DamageUpGeneralBase",
+    "AtkUp",
+    "AtkAdd"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2000,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.75,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1.5,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.15,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpCosmosBase",
+      "label": "Cosmos DMG",
+      "minimum": 0.1,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Lost Radiance",
+    "Street Boxer",
+    "Fireflies and the Forest"
+  ],
+  "character": {
+    "character_id": 1076,
+    "grid_id": "character_1076"
+  },
+  "builds": [
+    {
+      "id": "shinku",
+      "name": "DPS",
+      "main_stats": [
+        "CritBase",
+        "CritDamageBase",
+        "AtkUp",
+        "DamageUpCosmosBase"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "DamageUpGeneralBase",
+        "AtkUp",
+        "AtkAdd"
+      ],
+      "weights": {
+        "AtkAdd": 0.4,
+        "AtkUp": 0.55,
+        "CritBase": 1,
+        "CritDamageBase": 0.85,
+        "DamageUpGeneralBase": 0.7
+      },
+      "variants": [
+        {
+          "id": "shinku",
+          "name": "Shinku — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "shinku_fireflies_and_the_forest",
+          "name": "Shinku — Fireflies and the Forest",
+          "preferred_sets": [
+            {
+              "set_id": "Suit2",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "shinku_street_boxer",
+          "name": "Shinku — Street Boxer",
+          "preferred_sets": [
+            {
+              "set_id": "Suit5",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "schema_version": 2,
+  "id": "hathor",
+  "name": "Hathor",
+  "main_stats": [
+    "DamageUpLakshanaBase",
+    "CritDamageBase",
+    "CritBase",
+    "AtkUp"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "DamageUpGeneralBase",
+    "AtkUp",
+    "AtkAdd"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2500,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.3,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1.2,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.15,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpLakshanaBase",
+      "label": "Lakshana DMG",
+      "minimum": 0.625,
+      "percent": true
+    }
+  ],
+  "arcs": [],
+  "sets": [
+    "Street Boxer",
+    "Devil's Blood: Curse",
+    "Fireflies and the Forest",
+    "Shadow Creed"
+  ],
+  "notes": [
+    "Crimson 4-piece: 6% ATK per stack, up to 6 stacks (36%)."
+  ],
+  "character": {
+    "character_id": 1025,
+    "grid_id": "character_1025"
+  },
+  "builds": [
+    {
+      "id": "hathor",
+      "name": "DPS",
+      "main_stats": [
+        "DamageUpLakshanaBase",
+        "CritDamageBase",
+        "CritBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "DamageUpGeneralBase",
+        "AtkUp",
+        "AtkAdd"
+      ],
+      "weights": {
+        "AtkAdd": 0.4,
+        "AtkUp": 0.55,
+        "CritBase": 1,
+        "CritDamageBase": 0.85,
+        "DamageUpGeneralBase": 0.7
+      },
+      "variants": [
+        {
+          "id": "hathor",
+          "name": "Hathor — Street Boxer",
+          "preferred_sets": [
+            {
+              "set_id": "Suit5",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "hathor_devil_s_blood_curse",
+          "name": "Hathor — Devil's Blood: Curse",
+          "preferred_sets": [
+            {
+              "set_id": "Suit3",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "hathor_fireflies_and_the_forest",
+          "name": "Hathor — Fireflies and the Forest",
+          "preferred_sets": [
+            {
+              "set_id": "Suit2",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "hathor_shadow_creed",
+          "name": "Hathor — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

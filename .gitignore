@@ -1,0 +1,8 @@
+/input/
+/workspace/
+/*coverage*.out
+/build/
+/frontend/node_modules/
+/frontend/.npm-cache/
+/frontend/dist/*
+!/frontend/dist/.gitkeep

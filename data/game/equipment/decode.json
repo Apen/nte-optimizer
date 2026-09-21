@@ -1,0 +1,3621 @@
+{
+  "attributes": {
+    "AtkAdd": {},
+    "AtkBase": {},
+    "AtkUp": {},
+    "ChargeGetEfficiencyBase": {},
+    "Collect": {},
+    "Comfort": {},
+    "CritAdd": {},
+    "CritBase": {},
+    "CritDamageAdd": {},
+    "CritDamageBase": {},
+    "DamageResistChaos": {},
+    "DamageResistCosmos": {},
+    "DamageResistIncantation": {},
+    "DamageResistLakshana": {},
+    "DamageResistNature": {},
+    "DamageResistPsyche": {},
+    "DamageResistPsychically": {},
+    "DamageUpChaosBase": {},
+    "DamageUpCosmosBase": {},
+    "DamageUpGeneralAdd": {},
+    "DamageUpGeneralBase": {},
+    "DamageUpIncantationBase": {},
+    "DamageUpLakshanaBase": {},
+    "DamageUpNatureBase": {},
+    "DamageUpPsycheBase": {},
+    "DamageUpPsychicallyBase": {},
+    "DefAdd": {},
+    "DefBase": {},
+    "DefIgnore": {},
+    "DefUp": {},
+    "Fortune": {},
+    "HPMaxAdd": {},
+    "HPMaxBase": {},
+    "HPMaxUp": {},
+    "HealBeUp": {},
+    "HealUp": {},
+    "Love": {},
+    "Mag": {},
+    "MagAdd": {},
+    "MagBase": {},
+    "MagUp": {},
+    "ReactionAnHunDamageUp": {},
+    "ReactionGeneralDamageUp": {},
+    "ReactionGuangLingDamageUp": {},
+    "ReactionZhouAnDamageUp": {},
+    "StrengthMax": {},
+    "TenacityAntiDestroyEfficiency": {},
+    "TenacityDestroyEfficiency": {},
+    "TenacityMax": {},
+    "UnbalIntensity": {},
+    "UnbalIntensityAdd": {},
+    "UnbalIntensityBase": {},
+    "UnbalIntensityUp": {}
+  },
+  "curves": {
+    "AtkAdd_1_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        3.0
+      ],
+      [
+        2.0,
+        3.0
+      ],
+      [
+        3.0,
+        4.0
+      ],
+      [
+        4.0,
+        4.0
+      ],
+      [
+        5.0,
+        5.0
+      ],
+      [
+        6.0,
+        5.0
+      ],
+      [
+        7.0,
+        6.0
+      ],
+      [
+        8.0,
+        6.0
+      ],
+      [
+        9.0,
+        7.0
+      ],
+      [
+        10.0,
+        7.0
+      ],
+      [
+        11.0,
+        8.0
+      ],
+      [
+        12.0,
+        8.0
+      ],
+      [
+        13.0,
+        9.0
+      ],
+      [
+        14.0,
+        9.0
+      ],
+      [
+        15.0,
+        10.0
+      ],
+      [
+        16.0,
+        10.0
+      ],
+      [
+        17.0,
+        11.0
+      ],
+      [
+        18.0,
+        11.0
+      ],
+      [
+        20.0,
+        13.0
+      ]
+    ],
+    "AtkAdd_1_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        4.0
+      ],
+      [
+        1.0,
+        5.0
+      ],
+      [
+        2.0,
+        5.0
+      ],
+      [
+        4.0,
+        7.0
+      ],
+      [
+        5.0,
+        7.0
+      ],
+      [
+        7.0,
+        9.0
+      ],
+      [
+        8.0,
+        9.0
+      ],
+      [
+        20.0,
+        21.0
+      ]
+    ],
+    "AtkAdd_1_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        3.0
+      ],
+      [
+        4.0,
+        6.0
+      ],
+      [
+        5.0,
+        6.0
+      ],
+      [
+        9.0,
+        10.0
+      ],
+      [
+        10.0,
+        10.0
+      ],
+      [
+        19.0,
+        19.0
+      ],
+      [
+        20.0,
+        17.0
+      ]
+    ],
+    "AtkAdd_2_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        5.0
+      ],
+      [
+        20.0,
+        25.0
+      ]
+    ],
+    "AtkAdd_2_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        8.0
+      ],
+      [
+        1.0,
+        10.0
+      ],
+      [
+        2.0,
+        11.0
+      ],
+      [
+        4.0,
+        15.0
+      ],
+      [
+        5.0,
+        16.0
+      ],
+      [
+        7.0,
+        20.0
+      ],
+      [
+        8.0,
+        21.0
+      ],
+      [
+        10.0,
+        25.0
+      ],
+      [
+        11.0,
+        26.0
+      ],
+      [
+        13.0,
+        30.0
+      ],
+      [
+        14.0,
+        31.0
+      ],
+      [
+        16.0,
+        35.0
+      ],
+      [
+        17.0,
+        36.0
+      ],
+      [
+        20.0,
+        42.0
+      ]
+    ],
+    "AtkAdd_2_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        6.0
+      ],
+      [
+        1.0,
+        8.0
+      ],
+      [
+        3.0,
+        10.0
+      ],
+      [
+        4.0,
+        12.0
+      ],
+      [
+        6.0,
+        14.0
+      ],
+      [
+        7.0,
+        16.0
+      ],
+      [
+        9.0,
+        18.0
+      ],
+      [
+        10.0,
+        20.0
+      ],
+      [
+        12.0,
+        22.0
+      ],
+      [
+        13.0,
+        24.0
+      ],
+      [
+        15.0,
+        26.0
+      ],
+      [
+        16.0,
+        28.0
+      ],
+      [
+        18.0,
+        30.0
+      ],
+      [
+        20.0,
+        34.0
+      ]
+    ],
+    "AtkAdd_3_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        7.0
+      ],
+      [
+        1.0,
+        9.0
+      ],
+      [
+        2.0,
+        10.0
+      ],
+      [
+        3.0,
+        12.0
+      ],
+      [
+        4.0,
+        13.0
+      ],
+      [
+        5.0,
+        15.0
+      ],
+      [
+        6.0,
+        16.0
+      ],
+      [
+        7.0,
+        18.0
+      ],
+      [
+        8.0,
+        19.0
+      ],
+      [
+        9.0,
+        21.0
+      ],
+      [
+        10.0,
+        22.0
+      ],
+      [
+        11.0,
+        24.0
+      ],
+      [
+        12.0,
+        25.0
+      ],
+      [
+        13.0,
+        27.0
+      ],
+      [
+        14.0,
+        28.0
+      ],
+      [
+        15.0,
+        30.0
+      ],
+      [
+        16.0,
+        31.0
+      ],
+      [
+        17.0,
+        33.0
+      ],
+      [
+        18.0,
+        34.0
+      ],
+      [
+        20.0,
+        38.0
+      ]
+    ],
+    "AtkAdd_3_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        12.0
+      ],
+      [
+        1.0,
+        15.0
+      ],
+      [
+        2.0,
+        17.0
+      ],
+      [
+        3.0,
+        20.0
+      ],
+      [
+        4.0,
+        22.0
+      ],
+      [
+        5.0,
+        25.0
+      ],
+      [
+        6.0,
+        27.0
+      ],
+      [
+        7.0,
+        30.0
+      ],
+      [
+        8.0,
+        32.0
+      ],
+      [
+        9.0,
+        35.0
+      ],
+      [
+        10.0,
+        37.0
+      ],
+      [
+        11.0,
+        40.0
+      ],
+      [
+        12.0,
+        42.0
+      ],
+      [
+        13.0,
+        45.0
+      ],
+      [
+        14.0,
+        47.0
+      ],
+      [
+        15.0,
+        50.0
+      ],
+      [
+        16.0,
+        52.0
+      ],
+      [
+        17.0,
+        55.0
+      ],
+      [
+        18.0,
+        57.0
+      ],
+      [
+        20.0,
+        63.0
+      ]
+    ],
+    "AtkAdd_3_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        10.0
+      ],
+      [
+        20.0,
+        50.0
+      ]
+    ],
+    "AtkAdd_4_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        10.0
+      ],
+      [
+        20.0,
+        50.0
+      ]
+    ],
+    "AtkAdd_4_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        16.0
+      ],
+      [
+        1.0,
+        20.0
+      ],
+      [
+        3.0,
+        26.0
+      ],
+      [
+        4.0,
+        30.0
+      ],
+      [
+        6.0,
+        36.0
+      ],
+      [
+        7.0,
+        40.0
+      ],
+      [
+        8.0,
+        43.0
+      ],
+      [
+        9.0,
+        47.0
+      ],
+      [
+        11.0,
+        53.0
+      ],
+      [
+        12.0,
+        57.0
+      ],
+      [
+        14.0,
+        63.0
+      ],
+      [
+        15.0,
+        67.0
+      ],
+      [
+        17.0,
+        73.0
+      ],
+      [
+        18.0,
+        77.0
+      ],
+      [
+        19.0,
+        80.0
+      ],
+      [
+        20.0,
+        84.0
+      ]
+    ],
+    "AtkAdd_4_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        13.0
+      ],
+      [
+        1.0,
+        16.0
+      ],
+      [
+        2.0,
+        18.0
+      ],
+      [
+        4.0,
+        24.0
+      ],
+      [
+        5.0,
+        26.0
+      ],
+      [
+        7.0,
+        32.0
+      ],
+      [
+        8.0,
+        34.0
+      ],
+      [
+        11.0,
+        43.0
+      ],
+      [
+        12.0,
+        45.0
+      ],
+      [
+        14.0,
+        51.0
+      ],
+      [
+        15.0,
+        53.0
+      ],
+      [
+        17.0,
+        59.0
+      ],
+      [
+        18.0,
+        61.0
+      ],
+      [
+        20.0,
+        67.0
+      ]
+    ],
+    "AtkUp_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.045
+      ],
+      [
+        6.0,
+        0.099
+      ],
+      [
+        15.0,
+        0.18
+      ],
+      [
+        16.0,
+        0.189
+      ],
+      [
+        19.0,
+        0.216
+      ],
+      [
+        20.0,
+        0.225
+      ]
+    ],
+    "AtkUp_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.075
+      ],
+      [
+        2.0,
+        0.105
+      ],
+      [
+        14.0,
+        0.285
+      ],
+      [
+        17.0,
+        0.33
+      ],
+      [
+        20.0,
+        0.375
+      ]
+    ],
+    "AtkUp_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "CritBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.036
+      ],
+      [
+        4.0,
+        0.0648
+      ],
+      [
+        8.0,
+        0.0936
+      ],
+      [
+        20.0,
+        0.18
+      ]
+    ],
+    "CritBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "CritBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.048
+      ],
+      [
+        20.0,
+        0.24
+      ]
+    ],
+    "CritDamageBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.072
+      ],
+      [
+        4.0,
+        0.1296
+      ],
+      [
+        8.0,
+        0.1872
+      ],
+      [
+        20.0,
+        0.36
+      ]
+    ],
+    "CritDamageBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.12
+      ],
+      [
+        4.0,
+        0.216
+      ],
+      [
+        5.0,
+        0.24
+      ],
+      [
+        14.0,
+        0.456
+      ],
+      [
+        19.0,
+        0.576
+      ],
+      [
+        20.0,
+        0.6
+      ]
+    ],
+    "CritDamageBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.096
+      ],
+      [
+        20.0,
+        0.48
+      ]
+    ],
+    "DamageUpChaosBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.045
+      ],
+      [
+        6.0,
+        0.099
+      ],
+      [
+        15.0,
+        0.18
+      ],
+      [
+        16.0,
+        0.189
+      ],
+      [
+        19.0,
+        0.216
+      ],
+      [
+        20.0,
+        0.225
+      ]
+    ],
+    "DamageUpChaosBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.075
+      ],
+      [
+        2.0,
+        0.105
+      ],
+      [
+        14.0,
+        0.285
+      ],
+      [
+        17.0,
+        0.33
+      ],
+      [
+        20.0,
+        0.375
+      ]
+    ],
+    "DamageUpChaosBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "DamageUpCosmosBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.045
+      ],
+      [
+        6.0,
+        0.099
+      ],
+      [
+        15.0,
+        0.18
+      ],
+      [
+        16.0,
+        0.189
+      ],
+      [
+        19.0,
+        0.216
+      ],
+      [
+        20.0,
+        0.225
+      ]
+    ],
+    "DamageUpCosmosBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.075
+      ],
+      [
+        2.0,
+        0.105
+      ],
+      [
+        14.0,
+        0.285
+      ],
+      [
+        17.0,
+        0.33
+      ],
+      [
+        20.0,
+        0.375
+      ]
+    ],
+    "DamageUpCosmosBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "DamageUpIncantationBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.045
+      ],
+      [
+        6.0,
+        0.099
+      ],
+      [
+        15.0,
+        0.18
+      ],
+      [
+        16.0,
+        0.189
+      ],
+      [
+        19.0,
+        0.216
+      ],
+      [
+        20.0,
+        0.225
+      ]
+    ],
+    "DamageUpIncantationBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.075
+      ],
+      [
+        2.0,
+        0.105
+      ],
+      [
+        14.0,
+        0.285
+      ],
+      [
+        17.0,
+        0.33
+      ],
+      [
+        20.0,
+        0.375
+      ]
+    ],
+    "DamageUpIncantationBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "DamageUpLakshanaBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.045
+      ],
+      [
+        6.0,
+        0.099
+      ],
+      [
+        15.0,
+        0.18
+      ],
+      [
+        16.0,
+        0.189
+      ],
+      [
+        19.0,
+        0.216
+      ],
+      [
+        20.0,
+        0.225
+      ]
+    ],
+    "DamageUpLakshanaBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.075
+      ],
+      [
+        2.0,
+        0.105
+      ],
+      [
+        14.0,
+        0.285
+      ],
+      [
+        17.0,
+        0.33
+      ],
+      [
+        20.0,
+        0.375
+      ]
+    ],
+    "DamageUpLakshanaBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "DamageUpNatureBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.045
+      ],
+      [
+        6.0,
+        0.099
+      ],
+      [
+        15.0,
+        0.18
+      ],
+      [
+        16.0,
+        0.189
+      ],
+      [
+        19.0,
+        0.216
+      ],
+      [
+        20.0,
+        0.225
+      ]
+    ],
+    "DamageUpNatureBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.075
+      ],
+      [
+        2.0,
+        0.105
+      ],
+      [
+        14.0,
+        0.285
+      ],
+      [
+        17.0,
+        0.33
+      ],
+      [
+        20.0,
+        0.375
+      ]
+    ],
+    "DamageUpNatureBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "DamageUpPsycheBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.045
+      ],
+      [
+        6.0,
+        0.099
+      ],
+      [
+        15.0,
+        0.18
+      ],
+      [
+        16.0,
+        0.189
+      ],
+      [
+        19.0,
+        0.216
+      ],
+      [
+        20.0,
+        0.225
+      ]
+    ],
+    "DamageUpPsycheBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.075
+      ],
+      [
+        2.0,
+        0.105
+      ],
+      [
+        14.0,
+        0.285
+      ],
+      [
+        17.0,
+        0.33
+      ],
+      [
+        20.0,
+        0.375
+      ]
+    ],
+    "DamageUpPsycheBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "DamageUpPsychicallyBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.045
+      ],
+      [
+        6.0,
+        0.099
+      ],
+      [
+        15.0,
+        0.18
+      ],
+      [
+        16.0,
+        0.189
+      ],
+      [
+        19.0,
+        0.216
+      ],
+      [
+        20.0,
+        0.225
+      ]
+    ],
+    "DamageUpPsychicallyBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.075
+      ],
+      [
+        2.0,
+        0.105
+      ],
+      [
+        14.0,
+        0.285
+      ],
+      [
+        17.0,
+        0.33
+      ],
+      [
+        20.0,
+        0.375
+      ]
+    ],
+    "DamageUpPsychicallyBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "DefUp_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.063
+      ],
+      [
+        6.0,
+        0.1386
+      ],
+      [
+        10.0,
+        0.189
+      ],
+      [
+        17.0,
+        0.2772
+      ],
+      [
+        20.0,
+        0.315
+      ]
+    ],
+    "DefUp_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.105
+      ],
+      [
+        5.0,
+        0.21
+      ],
+      [
+        15.0,
+        0.42
+      ],
+      [
+        16.0,
+        0.441
+      ],
+      [
+        20.0,
+        0.525
+      ]
+    ],
+    "DefUp_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.084
+      ],
+      [
+        11.0,
+        0.2688
+      ],
+      [
+        14.0,
+        0.3192
+      ],
+      [
+        15.0,
+        0.336
+      ],
+      [
+        18.0,
+        0.3864
+      ],
+      [
+        20.0,
+        0.42
+      ]
+    ],
+    "HPMaxAdd_1_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        33.0
+      ],
+      [
+        2.0,
+        47.0
+      ],
+      [
+        3.0,
+        53.0
+      ],
+      [
+        5.0,
+        67.0
+      ],
+      [
+        6.0,
+        73.0
+      ],
+      [
+        9.0,
+        94.0
+      ],
+      [
+        10.0,
+        100.0
+      ],
+      [
+        12.0,
+        114.0
+      ],
+      [
+        13.0,
+        120.0
+      ],
+      [
+        16.0,
+        141.0
+      ],
+      [
+        17.0,
+        147.0
+      ],
+      [
+        20.0,
+        168.0
+      ]
+    ],
+    "HPMaxAdd_1_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        56.0
+      ],
+      [
+        4.0,
+        100.0
+      ],
+      [
+        5.0,
+        112.0
+      ],
+      [
+        9.0,
+        156.0
+      ],
+      [
+        10.0,
+        168.0
+      ],
+      [
+        14.0,
+        212.0
+      ],
+      [
+        15.0,
+        224.0
+      ],
+      [
+        19.0,
+        268.0
+      ],
+      [
+        20.0,
+        280.0
+      ]
+    ],
+    "HPMaxAdd_1_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        44.0
+      ],
+      [
+        20.0,
+        224.0
+      ]
+    ],
+    "HPMaxAdd_2_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        67.0
+      ],
+      [
+        1.0,
+        80.0
+      ],
+      [
+        2.0,
+        94.0
+      ],
+      [
+        4.0,
+        120.0
+      ],
+      [
+        5.0,
+        134.0
+      ],
+      [
+        6.0,
+        147.0
+      ],
+      [
+        7.0,
+        161.0
+      ],
+      [
+        8.0,
+        174.0
+      ],
+      [
+        9.0,
+        188.0
+      ],
+      [
+        10.0,
+        201.0
+      ],
+      [
+        11.0,
+        215.0
+      ],
+      [
+        13.0,
+        241.0
+      ],
+      [
+        14.0,
+        255.0
+      ],
+      [
+        15.0,
+        268.0
+      ],
+      [
+        16.0,
+        282.0
+      ],
+      [
+        17.0,
+        295.0
+      ],
+      [
+        18.0,
+        309.0
+      ],
+      [
+        19.0,
+        322.0
+      ],
+      [
+        20.0,
+        336.0
+      ]
+    ],
+    "HPMaxAdd_2_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        112.0
+      ],
+      [
+        2.0,
+        156.0
+      ],
+      [
+        3.0,
+        179.0
+      ],
+      [
+        4.0,
+        201.0
+      ],
+      [
+        5.0,
+        224.0
+      ],
+      [
+        7.0,
+        268.0
+      ],
+      [
+        8.0,
+        291.0
+      ],
+      [
+        9.0,
+        313.0
+      ],
+      [
+        10.0,
+        336.0
+      ],
+      [
+        12.0,
+        380.0
+      ],
+      [
+        13.0,
+        403.0
+      ],
+      [
+        14.0,
+        425.0
+      ],
+      [
+        15.0,
+        448.0
+      ],
+      [
+        17.0,
+        492.0
+      ],
+      [
+        18.0,
+        515.0
+      ],
+      [
+        19.0,
+        537.0
+      ],
+      [
+        20.0,
+        560.0
+      ]
+    ],
+    "HPMaxAdd_2_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        89.0
+      ],
+      [
+        7.0,
+        215.0
+      ],
+      [
+        8.0,
+        232.0
+      ],
+      [
+        20.0,
+        448.0
+      ]
+    ],
+    "HPMaxAdd_3_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        100.0
+      ],
+      [
+        1.0,
+        120.0
+      ],
+      [
+        2.0,
+        141.0
+      ],
+      [
+        7.0,
+        241.0
+      ],
+      [
+        8.0,
+        262.0
+      ],
+      [
+        13.0,
+        362.0
+      ],
+      [
+        14.0,
+        383.0
+      ],
+      [
+        19.0,
+        483.0
+      ],
+      [
+        20.0,
+        504.0
+      ]
+    ],
+    "HPMaxAdd_3_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        168.0
+      ],
+      [
+        1.0,
+        201.0
+      ],
+      [
+        2.0,
+        235.0
+      ],
+      [
+        3.0,
+        268.0
+      ],
+      [
+        5.0,
+        336.0
+      ],
+      [
+        6.0,
+        369.0
+      ],
+      [
+        7.0,
+        403.0
+      ],
+      [
+        8.0,
+        436.0
+      ],
+      [
+        10.0,
+        504.0
+      ],
+      [
+        11.0,
+        537.0
+      ],
+      [
+        12.0,
+        571.0
+      ],
+      [
+        13.0,
+        604.0
+      ],
+      [
+        15.0,
+        672.0
+      ],
+      [
+        16.0,
+        705.0
+      ],
+      [
+        17.0,
+        739.0
+      ],
+      [
+        18.0,
+        772.0
+      ],
+      [
+        20.0,
+        840.0
+      ]
+    ],
+    "HPMaxAdd_3_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        134.0
+      ],
+      [
+        3.0,
+        215.0
+      ],
+      [
+        4.0,
+        241.0
+      ],
+      [
+        11.0,
+        430.0
+      ],
+      [
+        12.0,
+        456.0
+      ],
+      [
+        20.0,
+        672.0
+      ]
+    ],
+    "HPMaxAdd_4_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        134.0
+      ],
+      [
+        3.0,
+        215.0
+      ],
+      [
+        4.0,
+        241.0
+      ],
+      [
+        11.0,
+        430.0
+      ],
+      [
+        12.0,
+        456.0
+      ],
+      [
+        20.0,
+        672.0
+      ]
+    ],
+    "HPMaxAdd_4_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        224.0
+      ],
+      [
+        1.0,
+        268.0
+      ],
+      [
+        5.0,
+        448.0
+      ],
+      [
+        6.0,
+        492.0
+      ],
+      [
+        10.0,
+        672.0
+      ],
+      [
+        11.0,
+        716.0
+      ],
+      [
+        15.0,
+        896.0
+      ],
+      [
+        16.0,
+        940.0
+      ],
+      [
+        20.0,
+        1120.0
+      ]
+    ],
+    "HPMaxAdd_4_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        179.0
+      ],
+      [
+        1.0,
+        215.0
+      ],
+      [
+        2.0,
+        250.0
+      ],
+      [
+        7.0,
+        430.0
+      ],
+      [
+        8.0,
+        465.0
+      ],
+      [
+        13.0,
+        645.0
+      ],
+      [
+        14.0,
+        680.0
+      ],
+      [
+        20.0,
+        896.0
+      ]
+    ],
+    "HPMaxUp_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.045
+      ],
+      [
+        6.0,
+        0.099
+      ],
+      [
+        15.0,
+        0.18
+      ],
+      [
+        16.0,
+        0.189
+      ],
+      [
+        19.0,
+        0.216
+      ],
+      [
+        20.0,
+        0.225
+      ]
+    ],
+    "HPMaxUp_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.075
+      ],
+      [
+        2.0,
+        0.105
+      ],
+      [
+        14.0,
+        0.285
+      ],
+      [
+        17.0,
+        0.33
+      ],
+      [
+        20.0,
+        0.375
+      ]
+    ],
+    "HPMaxUp_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.06
+      ],
+      [
+        4.0,
+        0.108
+      ],
+      [
+        5.0,
+        0.12
+      ],
+      [
+        14.0,
+        0.228
+      ],
+      [
+        19.0,
+        0.288
+      ],
+      [
+        20.0,
+        0.3
+      ]
+    ],
+    "HealUp_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.0414
+      ],
+      [
+        1.0,
+        0.0496
+      ],
+      [
+        5.0,
+        0.0828
+      ],
+      [
+        6.0,
+        0.091
+      ],
+      [
+        10.0,
+        0.1242
+      ],
+      [
+        11.0,
+        0.1324
+      ],
+      [
+        12.0,
+        0.1407
+      ],
+      [
+        15.0,
+        0.1656
+      ],
+      [
+        16.0,
+        0.1738
+      ],
+      [
+        19.0,
+        0.1987
+      ],
+      [
+        20.0,
+        0.207
+      ]
+    ],
+    "HealUp_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        0.069
+      ],
+      [
+        2.0,
+        0.0966
+      ],
+      [
+        5.0,
+        0.138
+      ],
+      [
+        20.0,
+        0.345
+      ]
+    ],
+    "HealUp_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        0.0552
+      ],
+      [
+        2.0,
+        0.0772
+      ],
+      [
+        3.0,
+        0.0883
+      ],
+      [
+        4.0,
+        0.0993
+      ],
+      [
+        5.0,
+        0.1104
+      ],
+      [
+        7.0,
+        0.1324
+      ],
+      [
+        8.0,
+        0.1435
+      ],
+      [
+        9.0,
+        0.1545
+      ],
+      [
+        10.0,
+        0.1656
+      ],
+      [
+        11.0,
+        0.1766
+      ],
+      [
+        12.0,
+        0.1876
+      ],
+      [
+        13.0,
+        0.1987
+      ],
+      [
+        14.0,
+        0.2097
+      ],
+      [
+        15.0,
+        0.2208
+      ],
+      [
+        16.0,
+        0.2318
+      ],
+      [
+        17.0,
+        0.2428
+      ],
+      [
+        18.0,
+        0.2539
+      ],
+      [
+        19.0,
+        0.2649
+      ],
+      [
+        20.0,
+        0.276
+      ]
+    ],
+    "MagBase_2_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        20.0
+      ],
+      [
+        20.0,
+        420.0
+      ]
+    ],
+    "MagBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        21.0
+      ],
+      [
+        1.0,
+        25.0
+      ],
+      [
+        2.0,
+        30.0
+      ],
+      [
+        4.0,
+        38.0
+      ],
+      [
+        5.0,
+        43.0
+      ],
+      [
+        7.0,
+        51.0
+      ],
+      [
+        8.0,
+        56.0
+      ],
+      [
+        10.0,
+        64.0
+      ],
+      [
+        11.0,
+        69.0
+      ],
+      [
+        13.0,
+        77.0
+      ],
+      [
+        14.0,
+        82.0
+      ],
+      [
+        16.0,
+        90.0
+      ],
+      [
+        17.0,
+        95.0
+      ],
+      [
+        19.0,
+        103.0
+      ],
+      [
+        20.0,
+        108.0
+      ]
+    ],
+    "MagBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        36.0
+      ],
+      [
+        4.0,
+        64.0
+      ],
+      [
+        5.0,
+        72.0
+      ],
+      [
+        9.0,
+        100.0
+      ],
+      [
+        10.0,
+        108.0
+      ],
+      [
+        14.0,
+        136.0
+      ],
+      [
+        15.0,
+        144.0
+      ],
+      [
+        19.0,
+        172.0
+      ],
+      [
+        20.0,
+        180.0
+      ]
+    ],
+    "MagBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        28.0
+      ],
+      [
+        3.0,
+        46.0
+      ],
+      [
+        4.0,
+        51.0
+      ],
+      [
+        7.0,
+        69.0
+      ],
+      [
+        8.0,
+        74.0
+      ],
+      [
+        11.0,
+        92.0
+      ],
+      [
+        12.0,
+        97.0
+      ],
+      [
+        15.0,
+        115.0
+      ],
+      [
+        16.0,
+        120.0
+      ],
+      [
+        20.0,
+        144.0
+      ]
+    ],
+    "ReactionAnHunDamageUp_2_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.01
+      ],
+      [
+        4.0,
+        0.05
+      ],
+      [
+        5.0,
+        0.06
+      ],
+      [
+        11.0,
+        0.12
+      ],
+      [
+        19.0,
+        0.2
+      ],
+      [
+        20.0,
+        0.21
+      ]
+    ],
+    "ReactionGeneralDamageUp_2_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.01
+      ],
+      [
+        4.0,
+        0.05
+      ],
+      [
+        5.0,
+        0.06
+      ],
+      [
+        11.0,
+        0.12
+      ],
+      [
+        19.0,
+        0.2
+      ],
+      [
+        20.0,
+        0.21
+      ]
+    ],
+    "ReactionGuangLingDamageUp_2_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.01
+      ],
+      [
+        4.0,
+        0.05
+      ],
+      [
+        5.0,
+        0.06
+      ],
+      [
+        11.0,
+        0.12
+      ],
+      [
+        19.0,
+        0.2
+      ],
+      [
+        20.0,
+        0.21
+      ]
+    ],
+    "ReactionZhouAnDamageUp_2_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        0.01
+      ],
+      [
+        4.0,
+        0.05
+      ],
+      [
+        5.0,
+        0.06
+      ],
+      [
+        11.0,
+        0.12
+      ],
+      [
+        19.0,
+        0.2
+      ],
+      [
+        20.0,
+        0.21
+      ]
+    ],
+    "UnbalIntensityBase_Core_ITEM_QUALITY_BLUE": [
+      [
+        0.0,
+        21.0
+      ],
+      [
+        1.0,
+        25.0
+      ],
+      [
+        2.0,
+        30.0
+      ],
+      [
+        4.0,
+        38.0
+      ],
+      [
+        5.0,
+        43.0
+      ],
+      [
+        7.0,
+        51.0
+      ],
+      [
+        8.0,
+        56.0
+      ],
+      [
+        10.0,
+        64.0
+      ],
+      [
+        11.0,
+        69.0
+      ],
+      [
+        13.0,
+        77.0
+      ],
+      [
+        14.0,
+        82.0
+      ],
+      [
+        16.0,
+        90.0
+      ],
+      [
+        17.0,
+        95.0
+      ],
+      [
+        19.0,
+        103.0
+      ],
+      [
+        20.0,
+        108.0
+      ]
+    ],
+    "UnbalIntensityBase_Core_ITEM_QUALITY_ORANGE": [
+      [
+        0.0,
+        36.0
+      ],
+      [
+        4.0,
+        64.0
+      ],
+      [
+        5.0,
+        72.0
+      ],
+      [
+        9.0,
+        100.0
+      ],
+      [
+        10.0,
+        108.0
+      ],
+      [
+        14.0,
+        136.0
+      ],
+      [
+        15.0,
+        144.0
+      ],
+      [
+        19.0,
+        172.0
+      ],
+      [
+        20.0,
+        180.0
+      ]
+    ],
+    "UnbalIntensityBase_Core_ITEM_QUALITY_PURPLE": [
+      [
+        0.0,
+        28.0
+      ],
+      [
+        3.0,
+        46.0
+      ],
+      [
+        4.0,
+        51.0
+      ],
+      [
+        7.0,
+        69.0
+      ],
+      [
+        8.0,
+        74.0
+      ],
+      [
+        11.0,
+        92.0
+      ],
+      [
+        12.0,
+        97.0
+      ],
+      [
+        15.0,
+        115.0
+      ],
+      [
+        16.0,
+        120.0
+      ],
+      [
+        20.0,
+        144.0
+      ]
+    ]
+  },
+  "items": {
+    "Attack_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit8",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Attack_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit8",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Attack_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit8",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Chaos_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit1",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Chaos_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit1",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Chaos_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit1",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Cosmos_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit6",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Cosmos_guide_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit6",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Cosmos_guide_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit6",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Cosmos_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit6",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Cosmos_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit6",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "GetEfficiency_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit11",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "GetEfficiency_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit11",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "GetEfficiency_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit11",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Heal_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit9",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Heal_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit9",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Heal_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit9",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Incantation_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit4",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Incantation_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit4",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Incantation_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit4",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Lakshana_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit5",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Lakshana_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit5",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Lakshana_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit5",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Mag_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit10",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Mag_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit10",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Mag_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit10",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Nature_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit2",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Nature_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit2",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Nature_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit2",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Psyche_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit3",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Psyche_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit3",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Psyche_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit3",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Psychically_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit12",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Psychically_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit12",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Psychically_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit12",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Shield_blue": {
+      "kind": "core",
+      "quality": "blue",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit7",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Shield_orange": {
+      "kind": "core",
+      "quality": "orange",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit7",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "Shield_purple": {
+      "kind": "core",
+      "quality": "purple",
+      "geometry": "Core",
+      "grid": null,
+      "suit": "Suit7",
+      "max_level": 20,
+      "main_count": 1,
+      "sub_count": 4
+    },
+    "cell2_style1_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "Hen2",
+      "grid": 2,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell2_style1_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "Hen2",
+      "grid": 2,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell2_style1_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "Hen2",
+      "grid": 2,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell2_style2_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "Shu2",
+      "grid": 2,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell2_style2_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "Shu2",
+      "grid": 2,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell2_style2_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "Shu2",
+      "grid": 2,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style1_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "Hen3",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style1_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "Hen3",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style1_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "Hen3",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style2_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "Shu3",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style2_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "Shu3",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style2_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "Shu3",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style3_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "ZhiJiao1",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style3_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "ZhiJiao1",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style3_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "ZhiJiao1",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style4_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "ZhiJiao2",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style4_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "ZhiJiao2",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style4_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "ZhiJiao2",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style5_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "ZhiJiao3",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style5_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "ZhiJiao3",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style5_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "ZhiJiao3",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style6_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "ZhiJiao4",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style6_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "ZhiJiao4",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell3_style6_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "ZhiJiao4",
+      "grid": 3,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style1_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "Hen4",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style1_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "Hen4",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style1_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "Hen4",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style2_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "Shu4",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style2_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "Shu4",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style2_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "Shu4",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style5_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "Z3",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style5_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "Z3",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style5_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "Z3",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style6_1_Blue": {
+      "kind": "module",
+      "quality": "blue",
+      "geometry": "Z4",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style6_1_Orange": {
+      "kind": "module",
+      "quality": "orange",
+      "geometry": "Z4",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    },
+    "cell4_style6_1_Purple": {
+      "kind": "module",
+      "quality": "purple",
+      "geometry": "Z4",
+      "grid": 4,
+      "suit": null,
+      "max_level": 20,
+      "main_count": 2,
+      "sub_count": 4
+    }
+  },
+  "shapes": {
+    "Hen2": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": 1,
+          "row": 0
+        }
+      ]
+    },
+    "Hen3": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": -1,
+          "row": 0
+        },
+        {
+          "column": 1,
+          "row": 0
+        }
+      ]
+    },
+    "Hen4": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": -1,
+          "row": 0
+        },
+        {
+          "column": 1,
+          "row": 0
+        },
+        {
+          "column": 2,
+          "row": 0
+        }
+      ]
+    },
+    "Shu2": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": 0,
+          "row": 1
+        }
+      ]
+    },
+    "Shu3": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": 0,
+          "row": -1
+        },
+        {
+          "column": 0,
+          "row": 1
+        }
+      ]
+    },
+    "Shu4": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": 0,
+          "row": -1
+        },
+        {
+          "column": 0,
+          "row": 1
+        },
+        {
+          "column": 0,
+          "row": 2
+        }
+      ]
+    },
+    "Z3": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": 1,
+          "row": 0
+        },
+        {
+          "column": -1,
+          "row": 1
+        },
+        {
+          "column": 0,
+          "row": 1
+        }
+      ]
+    },
+    "Z4": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": 1,
+          "row": 0
+        },
+        {
+          "column": 1,
+          "row": -1
+        },
+        {
+          "column": 0,
+          "row": 1
+        }
+      ]
+    },
+    "ZhiJiao1": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": 0,
+          "row": 1
+        },
+        {
+          "column": 1,
+          "row": 1
+        }
+      ]
+    },
+    "ZhiJiao2": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": 1,
+          "row": 0
+        },
+        {
+          "column": 0,
+          "row": 1
+        }
+      ]
+    },
+    "ZhiJiao3": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": 1,
+          "row": 0
+        },
+        {
+          "column": 1,
+          "row": 1
+        }
+      ]
+    },
+    "ZhiJiao4": {
+      "cells": [
+        {
+          "column": 0,
+          "row": 0
+        },
+        {
+          "column": -1,
+          "row": 1
+        },
+        {
+          "column": 0,
+          "row": 1
+        }
+      ]
+    }
+  },
+  "suits": {
+    "Suit1": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): Chaos DMG \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Ignores 12% of enemies\u0027 Chaos Resistance. Ignores 24% of enemies\u0027 Chaos Resistance for 20s after the wearer participates in Nova or Scorch reactions."
+        }
+      ],
+      "name_en": "Diabolos"
+    },
+    "Suit10": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): HP \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Increases wearer\u0027s Max HP by 4% when taking damage, up to 10 stacks. Each stack lasts 10s. Casting Ultimate instantly grants 10 stacks."
+        }
+      ],
+      "name_en": "Tiny Big Adventure"
+    },
+    "Suit11": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): Charge Efficiency \u002B12%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Increases all allies\u0027 ATK by 15% for 20s after the wearer casts Ultimate. Effect does not stack."
+        }
+      ],
+      "name_en": "Speedy Hedgehog"
+    },
+    "Suit12": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): Mental DMG \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Grants wearer a 12% Mental DMG Bonus per Basic Attack, up to 3 stacks. Each stack lasts 6s."
+        }
+      ],
+      "name_en": "Quiet Manor"
+    },
+    "Suit2": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): Anima DMG \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Increases wearer\u0027s CRIT DMG by 8% when a nearby enemy takes Anima DMG from the Team, up to 7 stacks. Each stack lasts 10s. Effect remains active when the character is off-field."
+        }
+      ],
+      "name_en": "Fireflies and the Forest"
+    },
+    "Suit3": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): Psyche DMG \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Increases wearer\u0027s DMG by 18%. The bonus becomes 36% against units affected by Nova or Stain."
+        }
+      ],
+      "name_en": "Devil\u0027s Blood: Curse"
+    },
+    "Suit4": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): Incantation DMG \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Increases wearer\u0027s ATK by 6% when a nearby enemy takes Incantation DMG from the Team, up to 6 stacks. Each stack lasts 10s. Effect remains active when the character is off-field."
+        }
+      ],
+      "name_en": "Crimson: Twin Butterflies"
+    },
+    "Suit5": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): Lakshana DMG \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Increases Crit Chance by 14%. After the team triggers Remora or Stain, increases Crit Chance by an extra 14% for 20s."
+        }
+      ],
+      "name_en": "Street Boxer"
+    },
+    "Suit6": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): Cosmos DMG \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Ignores 25% of enemies\u0027 DEF for 20s after the wearer casts Ultimate. Effect does not stack."
+        }
+      ],
+      "name_en": "Lost Radiance"
+    },
+    "Suit7": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): DEF \u002B15%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Increases wearer\u0027s shields by 20%."
+        }
+      ],
+      "name_en": "Kingdom\u0027s Guard"
+    },
+    "Suit8": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): ATK \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Increases wearer\u0027s ATK by 25% for 20s after casting a Skill."
+        }
+      ],
+      "name_en": "Shadow Creed"
+    },
+    "Suit9": {
+      "effects": [
+        {
+          "count": 2,
+          "text_en": "Epic (2): HP \u002B10%."
+        },
+        {
+          "count": 4,
+          "text_en": "Legendary (4): Increases wearer\u0027s Healing Bonus by 20%."
+        }
+      ],
+      "name_en": "Thea\u0027s Night Tavern"
+    }
+  }
+}
