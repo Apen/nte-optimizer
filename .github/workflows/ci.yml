@@ -37,15 +37,15 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Build and test release
+        shell: pwsh
+        run: ./scripts/build-app.ps1
+
       - name: Check Go module files
         run: go mod tidy -diff
 
       - name: Vet Go code
         run: go vet ./...
-
-      - name: Build and test release
-        shell: pwsh
-        run: ./scripts/build-app.ps1
 
       - name: Verify portable package
         shell: pwsh
