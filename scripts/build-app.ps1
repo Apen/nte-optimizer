@@ -46,18 +46,6 @@ if ($Quality) {
     }
 }
 
-Write-Host "[TEST] Go and production data" -ForegroundColor Cyan
-Push-Location $projectDir
-try {
-    & go test ./...
-    if ($LASTEXITCODE -ne 0) {
-        throw "Go tests or production data validation failed with exit code $LASTEXITCODE."
-    }
-}
-finally {
-    Pop-Location
-}
-
 Write-Host "[BUILD] Frontend React" -ForegroundColor Cyan
 Push-Location $frontendDir
 try {
@@ -68,6 +56,18 @@ try {
     & npm run build
     if ($LASTEXITCODE -ne 0) {
         throw "Frontend build failed with exit code $LASTEXITCODE."
+    }
+}
+finally {
+    Pop-Location
+}
+
+Write-Host "[TEST] Go and production data" -ForegroundColor Cyan
+Push-Location $projectDir
+try {
+    & go test ./...
+    if ($LASTEXITCODE -ne 0) {
+        throw "Go tests or production data validation failed with exit code $LASTEXITCODE."
     }
 }
 finally {
