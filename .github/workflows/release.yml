@@ -1,0 +1,104 @@
+name: Release
+
+run-name: Release ${{ inputs.version }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version tag to publish, for example v1.0.0
+        required: true
+        type: string
+      prerelease:
+        description: Publish as a prerelease
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Validate version
+        id: version
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          $version = $env:RELEASE_VERSION.Trim()
+          if ($version -notmatch '^v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$') {
+            throw "Version must use a tag such as v1.0.0 or v1.0.0-preview.1."
+          }
+          "value=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build and smoke-test release
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.value }}
+        run: ./scripts/build-app.ps1 -Version $env:RELEASE_VERSION -SmokeTest
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nte-optimizer-${{ steps.version.outputs.value }}-windows
+          path: |
+            build/release/nte-optimizer-windows.zip
+            build/release/nte-optimizer-windows.zip.sha256
+          if-no-files-found: error
+
+      - name: Publish GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ steps.version.outputs.value }}
+          IS_PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          $archive = "build/release/nte-optimizer-windows.zip"
+          $checksum = "$archive.sha256"
+          $arguments = @(
+            "release", "create", $env:RELEASE_VERSION,
+            "$archive#Windows portable archive",
+            "$checksum#SHA-256 checksum",
+            "--repo", $env:GITHUB_REPOSITORY,
+            "--target", $env:GITHUB_SHA,
+            "--title", "NTE Optimizer $env:RELEASE_VERSION",
+            "--generate-notes"
+          )
+          if ($env:IS_PRERELEASE -eq "true") {
+            $arguments += "--prerelease"
+          }
+          & gh @arguments
+          if ($LASTEXITCODE -ne 0) {
+            throw "GitHub release publication failed with exit code $LASTEXITCODE."
+          }

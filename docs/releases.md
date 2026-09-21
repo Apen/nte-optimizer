@@ -1,5 +1,30 @@
 # Release process
 
+## Publish with GitHub Actions
+
+The **Release** workflow creates a real entry in the repository's GitHub
+Releases page. From the GitHub repository:
+
+1. open **Actions**;
+2. select **Release**;
+3. choose **Run workflow**;
+4. enter a version such as `v1.0.0` or `v1.0.0-preview.1`;
+5. select whether the version is a prerelease;
+6. run the workflow.
+
+The workflow validates the version, builds and tests the Windows application,
+smoke-tests the portable archive, creates the Git tag and GitHub Release, and
+attaches both files:
+
+```text
+nte-optimizer-windows.zip
+nte-optimizer-windows.zip.sha256
+```
+
+The workflow also keeps the same files as a temporary GitHub Actions artifact.
+A version tag must be unique: use a new version when publishing another test or
+release.
+
 ## Build a local release
 
 From a clean repository root:
