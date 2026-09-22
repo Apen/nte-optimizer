@@ -22,7 +22,7 @@ func RunContext(ctx context.Context, installDir, stateDir string, seconds int) e
 
 func run(ctx context.Context, installDir, stateDir string, seconds int, elevate elevatedRunner) error {
 	if runtime.GOOS != "windows" {
-		return fmt.Errorf("la capture automatique est disponible uniquement sous Windows")
+		return fmt.Errorf("guided capture is available only on Windows")
 	}
 	if seconds < 10 {
 		seconds = 10
@@ -33,7 +33,7 @@ func run(ctx context.Context, installDir, stateDir string, seconds int, elevate 
 	}
 	outputDir := OutputDir(stateDir)
 	if err := os.MkdirAll(outputDir, 0o755); err != nil {
-		return fmt.Errorf("création du dossier de sortie du scanner: %w", err)
+		return fmt.Errorf("create scanner output directory: %w", err)
 	}
 	cancelFile, err := reserveCancelFile(stateDir)
 	if err != nil {
@@ -54,18 +54,18 @@ func run(ctx context.Context, installDir, stateDir string, seconds int, elevate 
 
 func reserveCancelFile(stateDir string) (string, error) {
 	if err := os.MkdirAll(stateDir, 0o755); err != nil {
-		return "", fmt.Errorf("création du dossier utilisateur: %w", err)
+		return "", fmt.Errorf("create user directory: %w", err)
 	}
 	file, err := os.CreateTemp(stateDir, ".scan-cancel-*")
 	if err != nil {
-		return "", fmt.Errorf("préparation du signal d'annulation: %w", err)
+		return "", fmt.Errorf("prepare cancellation signal: %w", err)
 	}
 	path := file.Name()
 	if err := file.Close(); err != nil {
 		return "", err
 	}
 	if err := os.Remove(path); err != nil {
-		return "", fmt.Errorf("préparation du signal d'annulation: %w", err)
+		return "", fmt.Errorf("prepare cancellation signal: %w", err)
 	}
 	return path, nil
 }
@@ -87,5 +87,5 @@ func findHelper(projectDir string) (string, error) {
 			return candidate, nil
 		}
 	}
-	return "", fmt.Errorf("nte-scan.exe est introuvable; relance scripts\\build-app.ps1 pour construire l'application et son scanner")
+	return "", fmt.Errorf("nte-scan.exe was not found; run scripts\\build-app.ps1 to build the application and scanner")
 }

@@ -94,7 +94,7 @@ func (s OptimizerService) damageAnalysis(character *decoded.Character, build opt
 		Approximation: "outer_realm",
 		Provenance: damage.Provenance{
 			Confidence: damage.ConfidenceDocumented,
-			Source:     "profil par défaut: boss niveau 80",
+			Source:     "default profile: level 80 boss",
 		},
 	}
 	analysis.Enemy = enemy
@@ -185,42 +185,42 @@ type groupDescriptor struct {
 func damageGroupDescriptor(id string) (groupDescriptor, bool) {
 	switch {
 	case strings.Contains(id, "reaction_scorch"):
-		return groupDescriptor{"scorch", "Scorch", "Tick de la réaction Incantation + Chaos de Zankou", "reaction", "reaction", 3}, true
+		return groupDescriptor{"scorch", "Scorch", "Tick triggered by Zankou's Incantation + Chaos reaction", "reaction", "reaction", 3}, true
 	case strings.Contains(id, "SkillForce"):
 		// This GE carries the forced break payload, not a meaningful damage hit.
 		return groupDescriptor{}, false
 	case strings.Contains(id, "DotUltra"):
-		return groupDescriptor{"vile-ash", "Vile Ash", "Tick du DoT appliqué par Bloodfeast Reverie", "dot", "dot", 10}, true
+		return groupDescriptor{"vile-ash", "Vile Ash", "DoT tick applied by Bloodfeast Reverie", "dot", "dot", 10}, true
 	case strings.Contains(id, "DotDamage"):
-		return groupDescriptor{"heartwrench", "Heartwrench", "Tick du DoT appliqué et propagé par Zankou", "dot", "dot", 10}, true
+		return groupDescriptor{"heartwrench", "Heartwrench", "DoT tick applied and spread by Zankou", "dot", "dot", 10}, true
 	case strings.Contains(id, "ForceUltraSkill"):
-		return groupDescriptor{"inferno-enhanced", "Inferno Flamenco renforcé", "Tous les coups de l'ultime renforcé", "direct", "ultimate", 0}, true
+		return groupDescriptor{"inferno-enhanced", "Enhanced Inferno Flamenco", "All hits of the enhanced ultimate", "direct", "ultimate", 0}, true
 	case strings.Contains(id, "MagicUltraSkill"):
-		return groupDescriptor{"bloodfeast", "Bloodfeast Reverie", "Tous les coups de l'ultime en forme Illusion", "direct", "ultimate", 0}, true
+		return groupDescriptor{"bloodfeast", "Bloodfeast Reverie", "All ultimate hits in Illusion form", "direct", "ultimate", 0}, true
 	case strings.Contains(id, "UltraSkill"):
-		return groupDescriptor{"inferno", "Inferno Flamenco", "Tous les coups de l'ultime", "direct", "ultimate", 0}, true
+		return groupDescriptor{"inferno", "Inferno Flamenco", "All ultimate hits", "direct", "ultimate", 0}, true
 	case strings.Contains(id, "Skill1"):
-		return groupDescriptor{"sanguine-normal", "Sanguine Dash", "Tous les coups de la version normale", "direct", "skill", 0}, true
+		return groupDescriptor{"sanguine-normal", "Sanguine Dash", "All hits of the normal version", "direct", "skill", 0}, true
 	case strings.Contains(id, "Skill2"):
-		return groupDescriptor{"sanguine-enhanced", "Sanguine Dash renforcé", "Tous les coups de la version renforcée", "direct", "skill", 0}, true
+		return groupDescriptor{"sanguine-enhanced", "Enhanced Sanguine Dash", "All hits of the enhanced version", "direct", "skill", 0}, true
 	case strings.Contains(id, "Skill3"):
-		return groupDescriptor{"soulcross-normal", "Soulcross", "Tous les coups de la version normale", "direct", "skill", 0}, true
+		return groupDescriptor{"soulcross-normal", "Soulcross", "All hits of the normal version", "direct", "skill", 0}, true
 	case strings.Contains(id, "Skill4"):
-		return groupDescriptor{"soulcross-enhanced", "Soulcross renforcé", "Tous les coups de la version renforcée", "direct", "skill", 0}, true
+		return groupDescriptor{"soulcross-enhanced", "Enhanced Soulcross", "All hits of the enhanced version", "direct", "skill", 0}, true
 	case strings.Contains(id, "MagicMelee"):
-		return groupDescriptor{"nightmare-waltz", "Nightmare Waltz", "Combo complet en forme Illusion", "direct", "basic_attack", 0}, true
+		return groupDescriptor{"nightmare-waltz", "Nightmare Waltz", "Full combo in Illusion form", "direct", "basic_attack", 0}, true
 	case numberedMelee.MatchString(id):
-		return groupDescriptor{"wildfire", "Wildfire", "Combo complet en forme Réalité", "direct", "basic_attack", 0}, true
+		return groupDescriptor{"wildfire", "Wildfire", "Full combo in Reality form", "direct", "basic_attack", 0}, true
 	case strings.Contains(id, "MagicBranch"):
-		return groupDescriptor{"moonfall", "Moonfall", "Tous les coups de l'attaque maintenue", "direct", "charged_attack", 0}, true
+		return groupDescriptor{"moonfall", "Moonfall", "All hits of the charged attack", "direct", "charged_attack", 0}, true
 	case strings.Contains(id, "Branch"):
-		return groupDescriptor{"flickering-shadow", "Flickering Shadow", "Tous les coups de l'attaque maintenue", "direct", "charged_attack", 0}, true
+		return groupDescriptor{"flickering-shadow", "Flickering Shadow", "All hits of the charged attack", "direct", "charged_attack", 0}, true
 	case strings.Contains(id, "PerfectEvadeAttack"):
-		return groupDescriptor{"voidstep", "Voidstep", "Riposte complète après esquive critique", "direct", "dodge_counter", 0}, true
+		return groupDescriptor{"voidstep", "Voidstep", "Full counter after a critical dodge", "direct", "dodge_counter", 0}, true
 	case strings.Contains(id, "AirAttack"):
-		return groupDescriptor{"broken-twigs", "Broken Twigs", "Attaque plongeante", "direct", "plunging_attack", 0}, true
+		return groupDescriptor{"broken-twigs", "Broken Twigs", "Plunging attack", "direct", "plunging_attack", 0}, true
 	case strings.Contains(id, "QTE"):
-		return groupDescriptor{"stoked-flame", "Stoked Flame", "Compétence de soutien complète", "direct", "qte", 0}, true
+		return groupDescriptor{"stoked-flame", "Stoked Flame", "Full support skill", "direct", "qte", 0}, true
 	default:
 		return groupDescriptor{}, false
 	}

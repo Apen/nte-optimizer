@@ -16,6 +16,11 @@ import (
 type pktmonRunner func(args ...string) error
 type captureWaiter func(context.Context, time.Duration) error
 
+const (
+	loginReadyMessage      = "Capture ready. Click Login in NTE now."
+	captureAnalysisMessage = "\nCapture window finished. Analyzing data..."
+)
+
 func runPktmon(args ...string) error {
 	cmd := exec.Command("pktmon", args...)
 	cmd.Stdout, cmd.Stderr = os.Stdout, os.Stderr
@@ -34,7 +39,7 @@ func captureMode(ctx context.Context, name string) error {
 	}
 	dir = filepath.Join(dir, "input")
 	if err := os.MkdirAll(dir, 0755); err != nil {
-		return fmt.Errorf("création du dossier input: %w", err)
+		return fmt.Errorf("create input directory: %w", err)
 	}
 	if err := cleanInputDirectory(dir); err != nil {
 		return err
@@ -42,38 +47,42 @@ func captureMode(ctx context.Context, name string) error {
 	etl := filepath.Join(dir, name+".etl")
 	pcap := filepath.Join(dir, name+".pcapng")
 	if _, err := os.Stat(etl); err == nil {
-		return fmt.Errorf("%s existe déjà", etl)
+		return fmt.Errorf("%s already exists", etl)
 	}
 	if _, err := os.Stat(pcap); err == nil {
-		return fmt.Errorf("%s existe déjà", pcap)
+		return fmt.Errorf("%s already exists", pcap)
 	}
 
-	fmt.Printf("Démarrage de la capture %q...\n", name)
+	// A forcibly closed scanner cannot run its deferred cleanup and may leave the
+	// pktmon driver capture active. Stop any stale session before starting a new
+	// one; no active session is a harmless condition here.
+	_ = runPktmon("stop")
+	fmt.Printf("Starting capture %q...\n", name)
 	if err := runPktmon("start", "--capture", "--pkt-size", "0", "--file-name", etl); err != nil {
-		return fmt.Errorf("pktmon n'a pas démarré (ouvre PowerShell en administrateur): %w", err)
+		return fmt.Errorf("pktmon failed to start (open PowerShell as administrator): %w", err)
 	}
 	stopCapture := pktmonStopper(runPktmon)
 	defer stopCapture()
 
-	fmt.Println("Capture active. Clique maintenant sur UN objet dans NTE.")
-	fmt.Println("Quand c'est fait, reviens ici et appuie sur Entrée (ou Ctrl+C).")
+	fmt.Println("Capture is active. Click ONE item in NTE now.")
+	fmt.Println("When finished, return here and press Enter (or Ctrl+C).")
 	done := make(chan struct{})
 	go func() { _, _ = bufio.NewReader(os.Stdin).ReadString('\n'); close(done) }()
 	select {
 	case <-done:
 	case <-ctx.Done():
-		fmt.Println("\nArrêt demandé...")
+		fmt.Println("\nStop requested...")
 	}
 
 	if err := stopCapture(); err != nil {
-		return fmt.Errorf("impossible d'arrêter pktmon: %w", err)
+		return fmt.Errorf("failed to stop pktmon: %w", err)
 	}
 
-	fmt.Println("Conversion en PCAPNG...")
+	fmt.Println("Converting to PCAPNG...")
 	if err := runPktmon("etl2pcap", etl, "--out", pcap); err != nil {
-		return fmt.Errorf("conversion impossible: %w", err)
+		return fmt.Errorf("conversion failed: %w", err)
 	}
-	fmt.Printf("Capture prête : %s\n", pcap)
+	fmt.Printf("Capture ready: %s\n", pcap)
 	return nil
 }
 
@@ -97,36 +106,40 @@ func captureLoginAutoWithDependencies(ctx context.Context, name string, maxDurat
 	}
 	dir = filepath.Join(dir, "input")
 	if err := os.MkdirAll(dir, 0755); err != nil {
-		return "", fmt.Errorf("création du dossier input: %w", err)
+		return "", fmt.Errorf("create input directory: %w", err)
 	}
 	if err := cleanInputDirectory(dir); err != nil {
 		return "", err
 	}
 	etl, pcap := filepath.Join(dir, name+".etl"), filepath.Join(dir, name+".pcapng")
 	if _, err := os.Stat(etl); err == nil {
-		return "", fmt.Errorf("%s existe déjà", etl)
+		return "", fmt.Errorf("%s already exists", etl)
 	}
 	if _, err := os.Stat(pcap); err == nil {
-		return "", fmt.Errorf("%s existe déjà", pcap)
+		return "", fmt.Errorf("%s already exists", pcap)
 	}
+	// Recover from a previous helper that was closed before its deferred stop ran.
+	// The command is intentionally best-effort because no active capture is the
+	// normal state on a clean launch.
+	_ = run("stop")
 	if err := run("start", "--capture", "--pkt-size", "0", "--file-name", etl); err != nil {
-		return "", fmt.Errorf("pktmon n'a pas démarré (ouvre PowerShell en administrateur): %w", err)
+		return "", fmt.Errorf("pktmon failed to start (approve the administrator prompt): %w", err)
 	}
 	stopCapture := pktmonStopper(run)
 	defer stopCapture()
-	fmt.Println("Capture prête. Clique sur Connexion dans NTE maintenant.")
+	fmt.Println(loginReadyMessage)
 	if maxDuration < 10*time.Second {
 		maxDuration = 10 * time.Second
 	}
 	if err := wait(ctx, maxDuration); err != nil {
-		return "", fmt.Errorf("capture interrompue: %w", err)
+		return "", fmt.Errorf("capture interrupted: %w", err)
 	}
-	fmt.Println("\nFenêtre de capture terminée, analyse en cours…")
+	fmt.Println(captureAnalysisMessage)
 	if err := stopCapture(); err != nil {
-		return "", fmt.Errorf("impossible d'arrêter pktmon: %w", err)
+		return "", fmt.Errorf("failed to stop pktmon: %w", err)
 	}
 	if err := run("etl2pcap", etl, "--out", pcap); err != nil {
-		return "", fmt.Errorf("conversion impossible: %w", err)
+		return "", fmt.Errorf("conversion failed: %w", err)
 	}
 	return pcap, nil
 }
@@ -140,7 +153,7 @@ func waitForLoginCapture(ctx context.Context, maxDuration time.Duration) error {
 		case <-ctx.Done():
 			return ctx.Err()
 		case <-ticker.C:
-			fmt.Printf("\rÉcoute du login… %ds/%ds", elapsed, totalSeconds)
+			fmt.Printf("\rWaiting for login traffic... %ds/%ds", elapsed, totalSeconds)
 		}
 	}
 	return nil
@@ -158,18 +171,18 @@ func pktmonStopper(run pktmonRunner) func() error {
 func cleanInputDirectory(dir string) error {
 	abs, err := filepath.Abs(dir)
 	if err != nil {
-		return fmt.Errorf("résolution du dossier input: %w", err)
+		return fmt.Errorf("resolve input directory: %w", err)
 	}
 	if !strings.EqualFold(filepath.Base(abs), "input") || filepath.Dir(abs) == abs {
-		return fmt.Errorf("refus de nettoyer un dossier non sécurisé: %s", abs)
+		return fmt.Errorf("refusing to clean an unsafe directory: %s", abs)
 	}
 	entries, err := os.ReadDir(abs)
 	if err != nil {
-		return fmt.Errorf("lecture du dossier input: %w", err)
+		return fmt.Errorf("read input directory: %w", err)
 	}
 	for _, entry := range entries {
 		if err := os.RemoveAll(filepath.Join(abs, entry.Name())); err != nil {
-			return fmt.Errorf("nettoyage de %s: %w", entry.Name(), err)
+			return fmt.Errorf("clean %s: %w", entry.Name(), err)
 		}
 	}
 	return nil
@@ -179,7 +192,7 @@ func removeCaptureFiles(pcap string) error {
 	paths := []string{pcap, strings.TrimSuffix(pcap, filepath.Ext(pcap)) + ".etl"}
 	for _, path := range paths {
 		if err := os.Remove(path); err != nil && !os.IsNotExist(err) {
-			return fmt.Errorf("suppression de la capture %s: %w", filepath.Base(path), err)
+			return fmt.Errorf("remove capture %s: %w", filepath.Base(path), err)
 		}
 	}
 	return nil

@@ -100,11 +100,11 @@ func TestPrepareCartridgesRequiresEligibleStrategySet(t *testing.T) {
 	profile := scoring.Character{Name: "Test", PreferredSets: []scoring.SetPreference{{SetID: "preferred"}}}
 	sets := optimizer.SetCatalog{Definitions: map[string]optimizer.SetDefinition{"preferred": {InventorySetID: "inventory-set"}}}
 	service := OptimizerService{}
-	if _, err := service.prepareCartridges(nil, profile, sets, true, searchPlan{solverMode: "objective", approximate: true}, 1); err == nil || !strings.Contains(err.Error(), "stratégie sélectionnée") {
+	if _, err := service.prepareCartridges(nil, profile, sets, true, searchPlan{solverMode: "objective", approximate: true}, 1); err == nil || !strings.Contains(err.Error(), "selected strategy set") {
 		t.Fatalf("missing cartridge error = %v", err)
 	}
 	service.WeightOverrides = &WeightOverrides{MainStats: []string{"Crit"}}
-	if _, err := service.prepareCartridges(nil, profile, sets, true, searchPlan{solverMode: "objective", approximate: true}, 1); err == nil || !strings.Contains(err.Error(), "stats principales") {
+	if _, err := service.prepareCartridges(nil, profile, sets, true, searchPlan{solverMode: "objective", approximate: true}, 1); err == nil || !strings.Contains(err.Error(), "selected set and main stats") {
 		t.Fatalf("missing custom cartridge error = %v", err)
 	}
 }

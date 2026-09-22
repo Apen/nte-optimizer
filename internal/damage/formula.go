@@ -111,10 +111,10 @@ func Calculate(characterLevel int, stats Stats, enemy Enemy, instance Instance) 
 		Provenance: instance.Provenance,
 	}
 	if !exactDefense {
-		result.Warnings = append(result.Warnings, "défense ennemie approximée à partir du niveau")
+		result.Warnings = append(result.Warnings, "enemy defense estimated from level")
 	}
 	if instance.Provenance.Confidence == ConfidenceInferred || instance.Provenance.Confidence == ConfidenceUnknown {
-		result.Warnings = append(result.Warnings, "règle de dégâts non confirmée")
+		result.Warnings = append(result.Warnings, "unconfirmed damage rule")
 	}
 	return result
 }

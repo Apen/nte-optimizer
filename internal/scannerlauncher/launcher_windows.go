@@ -32,7 +32,7 @@ func runElevatedWithRunner(helper, projectDir, outputDir, cancelFile string, sec
 		if message == "" {
 			message = err.Error()
 		}
-		return fmt.Errorf("le scanner administrateur n'a pas terminé correctement: %s", message)
+		return fmt.Errorf("the administrator scanner did not finish successfully: %s", message)
 	}
 	return nil
 }

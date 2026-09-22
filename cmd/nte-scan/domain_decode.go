@@ -27,7 +27,7 @@ func udpPayloads(packets []timedUDPPacket) [][]byte {
 func decodeEquipmentDomain(report *udpReport, rawPayloads [][]byte, streams []invStream, completed []completedMessage, catalogPath string) {
 	catalog, err := loadEquipmentCatalog(catalogPath)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "avertissement catalogue équipement:", err)
+		fmt.Fprintln(os.Stderr, "equipment catalog warning:", err)
 		return
 	}
 	decoded := map[itemNetID]inventoryItem{}
@@ -62,7 +62,7 @@ func decodeEquipmentDomain(report *udpReport, rawPayloads [][]byte, streams []in
 func decodeCharacterDomain(report *udpReport, rawPayloads [][]byte, streams []invStream, completed []completedMessage, equipmentCatalogPath, characterCatalogPath string, probeCharacters bool) {
 	catalog, err := loadCharacterCatalog(characterCatalogPath)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "avertissement catalogue personnages:", err)
+		fmt.Fprintln(os.Stderr, "character catalog warning:", err)
 		return
 	}
 	decoded := map[itemNetID]characterItem{}
@@ -115,7 +115,7 @@ func decodeCharacterDomain(report *udpReport, rawPayloads [][]byte, streams []in
 func decodeWeaponDomain(report *udpReport, rawPayloads [][]byte, streams []invStream, catalogPath string) {
 	catalog, err := loadForkCatalog(catalogPath)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "avertissement catalogue armes:", err)
+		fmt.Fprintln(os.Stderr, "Arc catalog warning:", err)
 		return
 	}
 	decoded := map[itemNetID]weaponItem{}
@@ -154,7 +154,7 @@ func decodeWeaponDomain(report *udpReport, rawPayloads [][]byte, streams []invSt
 func decodeResourceDomain(report *udpReport, rawPayloads [][]byte, streams []invStream, catalogPath string) {
 	catalog, err := loadResourceCatalog(catalogPath)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "avertissement catalogue ressources:", err)
+		fmt.Fprintln(os.Stderr, "resource catalog warning:", err)
 		return
 	}
 	decoded := map[itemNetID]resourceItem{}

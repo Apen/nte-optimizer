@@ -46,7 +46,7 @@ func TestCaptureLoginCancellationAlwaysStopsPktmon(t *testing.T) {
 	if err == nil {
 		t.Fatal("cancelled capture returned no error")
 	}
-	if len(commands) != 2 || commands[0][0] != "start" || commands[1][0] != "stop" {
+	if len(commands) != 3 || commands[0][0] != "stop" || commands[1][0] != "start" || commands[2][0] != "stop" {
 		t.Fatalf("unexpected pktmon lifecycle: %#v", commands)
 	}
 }
@@ -64,7 +64,16 @@ func TestCaptureLoginNominalLifecycle(t *testing.T) {
 	if filepath.Base(pcap) != "test.pcapng" {
 		t.Fatalf("pcap = %q", pcap)
 	}
-	assertCommandNames(t, commands, "start", "stop", "etl2pcap")
+	assertCommandNames(t, commands, "stop", "start", "stop", "etl2pcap")
+}
+
+func TestGuidedCaptureInstructionsAreEnglish(t *testing.T) {
+	if loginReadyMessage != "Capture ready. Click Login in NTE now." {
+		t.Fatalf("unexpected login instruction: %q", loginReadyMessage)
+	}
+	if captureAnalysisMessage != "\nCapture window finished. Analyzing data..." {
+		t.Fatalf("unexpected analysis instruction: %q", captureAnalysisMessage)
+	}
 }
 
 func TestCaptureLoginFailureLifecycle(t *testing.T) {
@@ -74,10 +83,10 @@ func TestCaptureLoginFailureLifecycle(t *testing.T) {
 		waitErr       error
 		wantCommands  []string
 	}{
-		{name: "start", failedCommand: "start", wantCommands: []string{"start"}},
-		{name: "wait", waitErr: errors.New("wait failed"), wantCommands: []string{"start", "stop"}},
-		{name: "stop", failedCommand: "stop", wantCommands: []string{"start", "stop"}},
-		{name: "conversion", failedCommand: "etl2pcap", wantCommands: []string{"start", "stop", "etl2pcap"}},
+		{name: "start", failedCommand: "start", wantCommands: []string{"stop", "start"}},
+		{name: "wait", waitErr: errors.New("wait failed"), wantCommands: []string{"stop", "start", "stop"}},
+		{name: "stop", failedCommand: "stop", wantCommands: []string{"stop", "start", "stop"}},
+		{name: "conversion", failedCommand: "etl2pcap", wantCommands: []string{"stop", "start", "stop", "etl2pcap"}},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {

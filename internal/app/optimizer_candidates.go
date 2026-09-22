@@ -175,9 +175,9 @@ func (s OptimizerService) prepareCartridges(cartridges []nte.Cartridge, profile 
 	requiresCartridge := (!plan.approximate || plan.solverMode == "objective") && eligibleModules > 0 && len(allowedSets) > 0
 	if requiresCartridge && len(pool.available) == 0 {
 		if s.WeightOverrides != nil {
-			return cartridgePool{}, fmt.Errorf("aucune cartouche disponible avec le set et les stats principales sélectionnés")
+			return cartridgePool{}, fmt.Errorf("no cartridge is available with the selected set and main stats")
 		}
-		return cartridgePool{}, fmt.Errorf("aucune cartouche disponible pour le set de la stratégie sélectionnée : %s", profile.Name)
+		return cartridgePool{}, fmt.Errorf("no cartridge is available for the selected strategy set: %s", profile.Name)
 	}
 	return pool, nil
 }

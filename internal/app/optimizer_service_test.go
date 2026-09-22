@@ -22,7 +22,7 @@ func TestSelectedStrategyRejectsOtherSetCartridges(t *testing.T) {
 		Cartridges: []nte.Cartridge{{LocalID: "wrong", SetID: "diabolos"}},
 	}
 	_, err := service.optimize(context.Background(), inv, "zankou", nil, true, "fr", "fast", nil)
-	if err == nil || !strings.Contains(err.Error(), "aucune cartouche disponible pour le set") {
+	if err == nil || !strings.Contains(err.Error(), "no cartridge is available for the selected strategy set") {
 		t.Fatalf("wrong set accepted: %v", err)
 	}
 }
@@ -183,7 +183,7 @@ func TestOptimizerRejectsUnsupportedSearchMode(t *testing.T) {
 	for _, mode := range []string{"deep", "balanced", "fast-balanced", "damage-direct", "damage-dot", "damage-reaction", "unknown"} {
 		service := OptimizerService{}
 		_, err := service.optimize(context.Background(), nte.Inventory{}, "zankou", nil, false, "fr", mode, nil)
-		if err == nil || !strings.Contains(err.Error(), "méthode de recherche inconnue") {
+		if err == nil || !strings.Contains(err.Error(), "unknown search method") {
 			t.Fatalf("mode %q: %v", mode, err)
 		}
 	}

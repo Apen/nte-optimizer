@@ -193,13 +193,13 @@ func writeOutputDirWithWriter(dir string, r report, writer func(string, any) err
 	characterValidation := map[string]int{"weaponReferences": characterWeaponRefs, "linkedWeaponReferences": linkedWeapons, "missingWeaponReferences": characterWeaponRefs - linkedWeapons, "observedWeaponBuffs": observedWeaponBuffs, "matchingObservedWeaponBuffs": matchingObservedWeaponBuffs, "mismatchingObservedWeaponBuffs": observedWeaponBuffs - matchingObservedWeaponBuffs}
 	manifest := map[string]any{"format": "nte-scan-output", "formatVersion": 3, "generatedAt": generated, "sourceCapture": r.Input, "files": []string{"character.json", "weapons.json", "equipment.json", "resources.json"}, "validation": map[string]any{"characterWeaponReferences": characterWeaponRefs, "linkedWeaponReferences": linkedWeapons, "missingWeaponReferences": characterWeaponRefs - linkedWeapons, "observedWeaponBuffs": observedWeaponBuffs, "matchingObservedWeaponBuffs": matchingObservedWeaponBuffs, "mismatchingObservedWeaponBuffs": observedWeaponBuffs - matchingObservedWeaponBuffs, "equippedModules": equippedModules, "positionedModules": positionedModules, "missingModulePositions": equippedModules - positionedModules}}
 	resourceStatus := "decoded"
-	resourceNote := "Quantités validées contre le catalogue statique officiel."
+	resourceNote := "Quantities validated against the official static catalog."
 	if len(r.UDP.Resources) == 0 {
 		resourceStatus = "not_present_in_capture"
-		resourceNote = "Aucun enregistrement de ressource validé dans cette capture."
+		resourceNote = "No validated resource record was found in this capture."
 	}
 	resources := domainOutput{resourceStatus, "packet_capture", len(r.UDP.Resources), resourceNote, r.UDP.Resources}
-	characters := characterOutput{"nte-scan-characters", 2, generated, r.Input, "decoded", len(chars), "Une occurrence par personnage avec progression, compétences, état sauvegardé, équipement actif complet et observations au login.", characterValidation, exportCharacters(chars, byChar)}
+	characters := characterOutput{"nte-scan-characters", 2, generated, r.Input, "decoded", len(chars), "One entry per character with progression, skills, saved state, complete active equipment, and login observations.", characterValidation, exportCharacters(chars, byChar)}
 	return scannerexport.PublishWithWriter(dir, []scannerexport.File{
 		{Name: "character.json", Value: characters},
 		{Name: "weapons.json", Value: weapons},

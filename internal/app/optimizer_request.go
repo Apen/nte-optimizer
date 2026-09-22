@@ -23,7 +23,7 @@ func parseSearchPlan(mode string) (searchPlan, error) {
 	case "score", "exact-score":
 		plan.solverMode = "score"
 	default:
-		return searchPlan{}, fmt.Errorf("méthode de recherche inconnue : %s", mode)
+		return searchPlan{}, fmt.Errorf("unknown search method: %s", mode)
 	}
 	return plan, nil
 }

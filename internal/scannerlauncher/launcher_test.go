@@ -121,7 +121,7 @@ func TestRunFailsBeforeElevationWhenHelperIsMissing(t *testing.T) {
 		called = true
 		return nil
 	})
-	if err == nil || !strings.Contains(err.Error(), "introuvable") {
+	if err == nil || !strings.Contains(err.Error(), "was not found") {
 		t.Fatalf("run() error = %v", err)
 	}
 	if called {

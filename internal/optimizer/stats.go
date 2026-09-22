@@ -22,7 +22,7 @@ type StatSummary struct {
 func BuildStatSummary(character scoring.Character, modules []nte.Module, cartridge *nte.Cartridge, set SetDefinition, matched int, additional ...map[string][]nte.Stat) StatSummary {
 	s := StatSummary{
 		Completeness:   "partial",
-		MissingSources: []string{"arme/arc", "éveil et passifs", "affinité et bonus propres au compte"},
+		MissingSources: []string{"weapon/Arc", "awakening and passives", "account-specific affinity and bonuses"},
 		Sources:        map[string]map[string]float64{},
 	}
 	s.Sources["base"] = cloneValues(character.BaseStats)
@@ -64,7 +64,7 @@ func BuildStatSummary(character scoring.Character, modules []nte.Module, cartrid
 		}
 	}
 	if len(s.Sources["weapon"]) > 0 {
-		s.MissingSources = without(s.MissingSources, "arme/arc")
+		s.MissingSources = without(s.MissingSources, "weapon/Arc")
 	}
 	s.Unconditional = sumSources(s.Sources, false)
 	s.WithConditions = sumSources(s.Sources, true)

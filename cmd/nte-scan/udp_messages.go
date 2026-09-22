@@ -30,7 +30,7 @@ func assembleUnrealMessages(report *udpReport, packets []timedUDPPacket, dumpDir
 	assemblyIndex := 0
 	if dumpDir != "" {
 		if err := os.MkdirAll(dumpDir, 0o755); err != nil {
-			fmt.Fprintln(os.Stderr, "avertissement dump UDP:", err)
+			fmt.Fprintln(os.Stderr, "UDP dump warning:", err)
 			dumpDir = ""
 		}
 	}
@@ -120,7 +120,7 @@ func recordAssembly(report *udpReport, buffer bitBuffer, channel uint32, index i
 	if dumpDir != "" {
 		name := fmt.Sprintf("message-%04d-channel-%d-bits-%d.bin", index, channel, buffer.bits)
 		if err := os.WriteFile(filepath.Join(dumpDir, name), buffer.data, 0o644); err != nil {
-			fmt.Fprintln(os.Stderr, "avertissement export:", err)
+			fmt.Fprintln(os.Stderr, "export warning:", err)
 		}
 	}
 	if buffer.exports {

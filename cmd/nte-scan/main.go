@@ -97,22 +97,22 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 	input := flag.String("input", "nte-login.pcapng", "capture PCAPNG")
-	jsonOut := flag.Bool("json", false, "sortie JSON")
-	capture := flag.String("capture", "", "démarre une capture interactive avec ce nom")
-	dumpUDP := flag.String("dump-udp", "", "dossier où exporter les messages UDP reconstruits")
-	catalog := flag.String("catalog", "equipment.json", "catalogue NTE equipment.json")
-	inventoryOut := flag.String("inventory-out", "", "écrit les  objets décodés dans ce fichier JSON")
-	charactersOut := flag.String("characters-out", "", "écrit les personnages décodés dans ce fichier JSON")
-	characterProbeOut := flag.String("character-probe-out", "", "écrit les champs personnage encore inconnus dans ce fichier JSON")
-	characterCatalogPath := flag.String("character-catalog", "characters.json", "catalogue NTE characters.json")
-	weaponsOut := flag.String("weapons-out", "", "écrit les armes décodées dans ce fichier JSON")
-	forkCatalogPath := flag.String("fork-catalog", "forks.json", "catalogue NTE forks.json")
-	resourceCatalogPath := flag.String("resource-catalog", "resources.json", "catalogue NTE resources.json")
-	outputDir := flag.String("output-dir", "", "écrit tous les JSON par domaine dans ce dossier")
-	loginCapture := flag.Bool("login-capture", false, "capture automatiquement le login puis exporte tous les JSON")
-	loginSeconds := flag.Int("login-seconds", 30, "durée maximale de la capture automatique")
-	cancelFile := flag.String("cancel-file", "", "fichier signalant l'annulation de la capture")
-	showVersion := flag.Bool("version", false, "affiche la version puis quitte")
+	jsonOut := flag.Bool("json", false, "print JSON output")
+	capture := flag.String("capture", "", "start an interactive capture with this name")
+	dumpUDP := flag.String("dump-udp", "", "directory for reconstructed UDP messages")
+	catalog := flag.String("catalog", "equipment.json", "NTE equipment.json catalog")
+	inventoryOut := flag.String("inventory-out", "", "write decoded equipment to this JSON file")
+	charactersOut := flag.String("characters-out", "", "write decoded characters to this JSON file")
+	characterProbeOut := flag.String("character-probe-out", "", "write unknown character fields to this JSON file")
+	characterCatalogPath := flag.String("character-catalog", "characters.json", "NTE characters.json catalog")
+	weaponsOut := flag.String("weapons-out", "", "write decoded Arcs to this JSON file")
+	forkCatalogPath := flag.String("fork-catalog", "forks.json", "NTE forks.json catalog")
+	resourceCatalogPath := flag.String("resource-catalog", "resources.json", "NTE resources.json catalog")
+	outputDir := flag.String("output-dir", "", "write all domain JSON files to this directory")
+	loginCapture := flag.Bool("login-capture", false, "capture login traffic and export all JSON files")
+	loginSeconds := flag.Int("login-seconds", 30, "maximum guided capture duration")
+	cancelFile := flag.String("cancel-file", "", "file used to signal capture cancellation")
+	showVersion := flag.Bool("version", false, "print the version and exit")
 	flag.Parse()
 	ctx, cancelFileWatcher := contextWithCancelFile(ctx, *cancelFile)
 	defer cancelFileWatcher()
@@ -145,7 +145,7 @@ func main() {
 	r.UDP = analyzeUDP(unique, 0, *dumpUDP, *catalog, *characterCatalogPath, *forkCatalogPath, *resourceCatalogPath, *characterProbeOut != "")
 	mustScanContext(ctx)
 	if *loginCapture && (r.UDP.DecodedItems == 0 || len(r.UDP.Characters) == 0 || len(r.UDP.Weapons) == 0) {
-		must(fmt.Errorf("capture incomplète: équipements=%d, personnages=%d, armes=%d; relance avec -login-seconds 45", r.UDP.DecodedItems, len(r.UDP.Characters), len(r.UDP.Weapons)))
+		must(fmt.Errorf("incomplete capture: equipment=%d, characters=%d, Arcs=%d; start another guided scan and log in while the capture is active", r.UDP.DecodedItems, len(r.UDP.Characters), len(r.UDP.Weapons)))
 	}
 	if *inventoryOut != "" {
 		b, err := json.MarshalIndent(r.UDP.Items, "", "  ")
@@ -198,37 +198,37 @@ func main() {
 	}
 	if *loginCapture {
 		must(removeCaptureFiles(*input))
-		fmt.Printf("Export de login validé dans %s\n", *outputDir)
+		fmt.Printf("Validated login export written to %s\n", *outputDir)
 	}
 	if *jsonOut {
 		b, _ := json.MarshalIndent(r, "", "  ")
 		fmt.Println(string(b))
 		return
 	}
-	fmt.Printf("NTE scan POC\nCapture: %s\nPaquets pktmon: %d bruts, %d uniques (%d doublons)\nFlux: %s\nTCP réassemblé: %d octets (%d segments)\nFrames: %d\nBlocs LZ4 décodés: %d\nPlus gros bloc: %d octets\n", r.Input, r.RawPackets, r.UniquePackets, r.DuplicateAppearances, r.TCPFlow, r.TCPReassembledBytes, r.TCPSegments, r.Frames, r.LZ4BlocksDecoded, r.LargestDecodedBlock)
-	fmt.Printf("UDP principal: %s\nUDP: %d paquets, %d octets utiles; plus gros paquet %d; pic 100 ms %d octets à +%.3fs\n", r.UDP.Flow, r.UDP.Packets, r.UDP.PayloadBytes, r.UDP.LargestPacket, r.UDP.PeakBurstBytes, r.UDP.PeakAtSeconds)
+	fmt.Printf("NTE scanner\nCapture: %s\npktmon packets: %d raw, %d unique (%d duplicates)\nFlow: %s\nReassembled TCP: %d bytes (%d segments)\nFrames: %d\nDecoded LZ4 blocks: %d\nLargest block: %d bytes\n", r.Input, r.RawPackets, r.UniquePackets, r.DuplicateAppearances, r.TCPFlow, r.TCPReassembledBytes, r.TCPSegments, r.Frames, r.LZ4BlocksDecoded, r.LargestDecodedBlock)
+	fmt.Printf("Primary UDP flow: %s\nUDP: %d packets, %d payload bytes; largest packet %d; 100 ms peak %d bytes at +%.3fs\n", r.UDP.Flow, r.UDP.Packets, r.UDP.PayloadBytes, r.UDP.LargestPacket, r.UDP.PeakBurstBytes, r.UDP.PeakAtSeconds)
 	if len(r.UDP.Readable) > 0 {
-		fmt.Printf("Chaînes UDP: %s\n", strings.Join(r.UDP.Readable, ", "))
+		fmt.Printf("UDP strings: %s\n", strings.Join(r.UDP.Readable, ", "))
 	}
-	fmt.Printf("Unreal reconnu: %d paquets, %d bunches, %d fragments; canaux: %v\n", r.UDP.UnrealPackets, r.UDP.UnrealBunches, r.UDP.PartialBunches, r.UDP.Channels)
-	fmt.Printf("Messages fragmentés reconstruits: %d (%d octets), dont %d uniques (%d octets); indices: %v\n", r.UDP.Assemblies, r.UDP.AssemblyBytes, r.UDP.UniqueAssemblies, r.UDP.UniqueAssemblyBytes, r.UDP.AssemblyHints)
+	fmt.Printf("Recognized Unreal data: %d packets, %d bunches, %d fragments; channels: %v\n", r.UDP.UnrealPackets, r.UDP.UnrealBunches, r.UDP.PartialBunches, r.UDP.Channels)
+	fmt.Printf("Reassembled fragmented messages: %d (%d bytes), including %d unique (%d bytes); hints: %v\n", r.UDP.Assemblies, r.UDP.AssemblyBytes, r.UDP.UniqueAssemblies, r.UDP.UniqueAssemblyBytes, r.UDP.AssemblyHints)
 	if len(r.UDP.ExportNames) > 0 {
 		fmt.Printf("Exports Unreal (%d): %s\n", len(r.UDP.ExportNames), strings.Join(r.UDP.ExportNames, ", "))
 	}
-	fmt.Printf("Blocs marqués exports: %d; blocs décodés: %d\n", r.UDP.ExportBunches, r.UDP.ExportParseSuccess)
+	fmt.Printf("Export-marked blocks: %d; decoded blocks: %d\n", r.UDP.ExportBunches, r.UDP.ExportParseSuccess)
 	fmt.Printf("InventoryComponent GUID: %v\n", r.UDP.InventoryGUIDs)
-	fmt.Printf("Contenus InventoryComponent: %d blocs (%d octets)\n", r.UDP.InventoryPayloads, r.UDP.InventoryBytes)
-	fmt.Printf("RPC PlayerState/256: %d, conteneurs décodés: %d, owners: %v; propriétés inventaire: %v\n", r.UDP.RPC256, r.UDP.RPC256Decoded, r.UDP.RPC256Owners, r.UDP.InventoryProperties)
-	fmt.Printf("Références bit-exactes au GUID inventaire: %d; canaux: %v\n", r.UDP.InventoryGUIDHits, r.UDP.InventoryHitChannels)
-	fmt.Printf("Conteneurs Hotta Inventory décodés: %d\n", r.UDP.InventoryContainers)
-	fmt.Printf("Objets exports enfants de InventoryComponent: %d\n", len(r.UDP.InventoryChildren))
-	fmt.Printf("Objets d'équipement décodés: %d\n", r.UDP.DecodedItems)
-	fmt.Printf("Personnages décodés: %d\n", len(r.UDP.Characters))
-	fmt.Printf("Armes (forks) décodées: %d\n", len(r.UDP.Weapons))
-	fmt.Printf("Ressources décodées: %d\n", len(r.UDP.Resources))
+	fmt.Printf("InventoryComponent payloads: %d blocks (%d bytes)\n", r.UDP.InventoryPayloads, r.UDP.InventoryBytes)
+	fmt.Printf("RPC PlayerState/256: %d, decoded containers: %d, owners: %v; inventory properties: %v\n", r.UDP.RPC256, r.UDP.RPC256Decoded, r.UDP.RPC256Owners, r.UDP.InventoryProperties)
+	fmt.Printf("Bit-exact inventory GUID references: %d; channels: %v\n", r.UDP.InventoryGUIDHits, r.UDP.InventoryHitChannels)
+	fmt.Printf("Decoded Hotta Inventory containers: %d\n", r.UDP.InventoryContainers)
+	fmt.Printf("InventoryComponent child export objects: %d\n", len(r.UDP.InventoryChildren))
+	fmt.Printf("Decoded equipment items: %d\n", r.UDP.DecodedItems)
+	fmt.Printf("Decoded characters: %d\n", len(r.UDP.Characters))
+	fmt.Printf("Decoded Arcs: %d\n", len(r.UDP.Weapons))
+	fmt.Printf("Decoded resources: %d\n", len(r.UDP.Resources))
 	for _, b := range r.Blocks {
 		if len(b.Markers) > 0 {
-			fmt.Printf("  frame %d: %d -> %d octets; composants: %s\n", b.Frame, b.CompressedBytes, b.DecodedBytes, strings.Join(b.Markers, ", "))
+			fmt.Printf("  frame %d: %d -> %d bytes; components: %s\n", b.Frame, b.CompressedBytes, b.DecodedBytes, strings.Join(b.Markers, ", "))
 		}
 		if len(b.Records) > 0 {
 			fmt.Printf("  records frame %d (%d): %s\n", b.Frame, len(b.Records), strings.Join(b.Records, ", "))
@@ -238,7 +238,7 @@ func main() {
 
 func mustScanContext(ctx context.Context) {
 	if err := ctx.Err(); err != nil {
-		must(fmt.Errorf("scan annulé: %w", err))
+		must(fmt.Errorf("scan cancelled: %w", err))
 	}
 }
 
@@ -337,7 +337,7 @@ func asciiStrings(b []byte, min int) []string {
 
 func must(err error) {
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "erreur:", err)
+		fmt.Fprintln(os.Stderr, "error:", err)
 		os.Exit(1)
 	}
 }

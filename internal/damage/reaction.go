@@ -48,7 +48,7 @@ func CalculateScorch(characterLevel int, cycleIntensity, critDamage float64, ene
 		},
 	}
 	if !exactDefense {
-		result.Warnings = append(result.Warnings, "défense ennemie approximée à partir du niveau")
+		result.Warnings = append(result.Warnings, "enemy defense estimated from level")
 	}
 	return result
 }

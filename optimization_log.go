@@ -32,8 +32,8 @@ func (a *DesktopApp) LastOptimizationLog() OptimizationLog {
 
 func (a *DesktopApp) beginOptimizationLog(profileID, mode string, goals map[string]appservice.GoalTuning, pinned, excluded []string, weights *appservice.WeightOverrides) {
 	entries := []OptimizationLogEntry{
-		{Level: "INFO", Stage: "configuration", Message: fmt.Sprintf("profil=%s méthode=%s objectifs=%d", profileID, mode, len(goals))},
-		{Level: "DEBUG", Stage: "contraintes", Message: fmt.Sprintf("modules verrouillés=%d exclus=%d", len(pinned), len(excluded))},
+		{Level: "INFO", Stage: "configuration", Message: fmt.Sprintf("profile=%s method=%s objectives=%d", profileID, mode, len(goals))},
+		{Level: "DEBUG", Stage: "constraints", Message: fmt.Sprintf("locked_modules=%d excluded=%d", len(pinned), len(excluded))},
 	}
 	goalNames := make([]string, 0, len(goals))
 	for name := range goals {
@@ -42,12 +42,12 @@ func (a *DesktopApp) beginOptimizationLog(profileID, mode string, goals map[stri
 	sort.Strings(goalNames)
 	for _, name := range goalNames {
 		goal := goals[name]
-		entries = append(entries, OptimizationLogEntry{Level: "DEBUG", Stage: "objectif", Message: fmt.Sprintf("%s cible=%.4f poids=%.2f maximum=%.4f tolérance=%.2f%% minimum_strict=%t", name, goal.Target, goal.Importance, goal.Maximum, goal.Tolerance*100, goal.StrictMinimum)})
+		entries = append(entries, OptimizationLogEntry{Level: "DEBUG", Stage: "objective", Message: fmt.Sprintf("%s target=%.4f weight=%.2f maximum=%.4f tolerance=%.2f%% strict_minimum=%t", name, goal.Target, goal.Importance, goal.Maximum, goal.Tolerance*100, goal.StrictMinimum)})
 	}
 	if weights != nil {
-		entries = append(entries, OptimizationLogEntry{Level: "DEBUG", Stage: "configuration", Message: fmt.Sprintf("stats principales=%d poids actifs=%d", len(weights.MainStats), positiveWeightCount(weights.Weights))})
+		entries = append(entries, OptimizationLogEntry{Level: "DEBUG", Stage: "configuration", Message: fmt.Sprintf("main_stats=%d active_weights=%d", len(weights.MainStats), positiveWeightCount(weights.Weights))})
 		for _, name := range weights.MainStats {
-			entries = append(entries, OptimizationLogEntry{Level: "DEBUG", Stage: "principale", Message: name})
+			entries = append(entries, OptimizationLogEntry{Level: "DEBUG", Stage: "main_stat", Message: name})
 		}
 		weightNames := make([]string, 0, len(weights.Weights))
 		for name, weight := range weights.Weights {
@@ -57,7 +57,7 @@ func (a *DesktopApp) beginOptimizationLog(profileID, mode string, goals map[stri
 		}
 		sort.Strings(weightNames)
 		for _, name := range weightNames {
-			entries = append(entries, OptimizationLogEntry{Level: "DEBUG", Stage: "poids", Message: fmt.Sprintf("%s=%.2f", name, weights.Weights[name])})
+			entries = append(entries, OptimizationLogEntry{Level: "DEBUG", Stage: "weight", Message: fmt.Sprintf("%s=%.2f", name, weights.Weights[name])})
 		}
 	}
 	a.logMu.Lock()
@@ -85,8 +85,8 @@ func (a *DesktopApp) finishOptimizationLog(result appservice.OptimizationResult,
 	if runErr != nil {
 		log.Status = "error"
 		log.Entries = append(log.Entries,
-			OptimizationLogEntry{Level: "ERROR", Stage: "arrêt", Message: runErr.Error()},
-			OptimizationLogEntry{Level: "DEBUG", Stage: "recherche", Message: fmt.Sprintf("visités=%d total=%d candidats=%d branches écartées=%d durée=%d ms", progress.Visited, progress.Total, progress.Candidates, progress.Pruned, progress.ElapsedMS)},
+			OptimizationLogEntry{Level: "ERROR", Stage: "stop", Message: runErr.Error()},
+			OptimizationLogEntry{Level: "DEBUG", Stage: "search", Message: fmt.Sprintf("visited=%d total=%d candidates=%d pruned=%d duration=%d ms", progress.Visited, progress.Total, progress.Candidates, progress.Pruned, progress.ElapsedMS)},
 		)
 		return
 	}
@@ -96,8 +96,8 @@ func (a *DesktopApp) finishOptimizationLog(result appservice.OptimizationResult,
 		rankingScore = result.Solution.Ranking.Score
 	}
 	log.Entries = append(log.Entries,
-		OptimizationLogEntry{Level: "INFO", Stage: "sélection", Message: fmt.Sprintf("modules inventaire=%d admissibles=%d retenus=%d réservés écartés=%d", result.InventoryModules, result.EligibleCandidates, result.SelectedCandidates, result.ExcludedEquipped)},
-		OptimizationLogEntry{Level: "INFO", Stage: "résultat", Message: fmt.Sprintf("score=%.4f builds=%d complet=%t", rankingScore, len(result.Alternatives)+1, result.Solution.Complete)},
+		OptimizationLogEntry{Level: "INFO", Stage: "selection", Message: fmt.Sprintf("inventory_modules=%d eligible=%d selected=%d reserved_excluded=%d", result.InventoryModules, result.EligibleCandidates, result.SelectedCandidates, result.ExcludedEquipped)},
+		OptimizationLogEntry{Level: "INFO", Stage: "result", Message: fmt.Sprintf("score=%.4f builds=%d complete=%t", rankingScore, len(result.Alternatives)+1, result.Solution.Complete)},
 	)
 	phaseNames := make([]string, 0, len(result.PhaseMS))
 	for name := range result.PhaseMS {
@@ -105,15 +105,15 @@ func (a *DesktopApp) finishOptimizationLog(result appservice.OptimizationResult,
 	}
 	sort.Strings(phaseNames)
 	for _, name := range phaseNames {
-		log.Entries = append(log.Entries, OptimizationLogEntry{Level: "DEBUG", Stage: "temps", Message: fmt.Sprintf("%s=%d ms", name, result.PhaseMS[name])})
+		log.Entries = append(log.Entries, OptimizationLogEntry{Level: "DEBUG", Stage: "timing", Message: fmt.Sprintf("%s=%d ms", name, result.PhaseMS[name])})
 	}
 	m := result.Solution.Metrics
 	log.Entries = append(log.Entries,
-		OptimizationLogEntry{Level: "DEBUG", Stage: "réduction", Message: fmt.Sprintf("entrée=%d retenus=%d dominés=%d profils=%d valeurs=%d", m.InputCandidates, m.RetainedCandidates, m.DominatedCandidates, m.StatProfiles, m.StatValues)},
-		OptimizationLogEntry{Level: "DEBUG", Stage: "recherche", Message: fmt.Sprintf("blueprints=%d théorique=%d avant réduction=%d évalués=%d élagués=%d cache=%t", m.Blueprints, m.Theoretical, m.TheoreticalBeforeReduction, m.Evaluated, m.Pruned, m.CacheHit)},
+		OptimizationLogEntry{Level: "DEBUG", Stage: "reduction", Message: fmt.Sprintf("input=%d retained=%d dominated=%d profiles=%d values=%d", m.InputCandidates, m.RetainedCandidates, m.DominatedCandidates, m.StatProfiles, m.StatValues)},
+		OptimizationLogEntry{Level: "DEBUG", Stage: "search", Message: fmt.Sprintf("blueprints=%d theoretical=%d before_reduction=%d evaluated=%d pruned=%d cache=%t", m.Blueprints, m.Theoretical, m.TheoreticalBeforeReduction, m.Evaluated, m.Pruned, m.CacheHit)},
 	)
 	if !result.Solution.Complete {
-		log.Entries = append(log.Entries, OptimizationLogEntry{Level: "WARN", Stage: "résultat", Message: "optimalité non confirmée : recherche approximative ou interrompue"})
+		log.Entries = append(log.Entries, OptimizationLogEntry{Level: "WARN", Stage: "result", Message: "optimality not confirmed: the search was approximate or interrupted"})
 	}
 }
 

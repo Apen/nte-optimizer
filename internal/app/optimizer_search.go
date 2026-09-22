@@ -70,9 +70,9 @@ func (s OptimizerService) executeSearch(ctx context.Context, request searchReque
 
 	if request.setup.solver.Exact && len(request.selected) > 0 && len(solution.Placements) == 0 {
 		if searchContext.Err() != nil {
-			return searchExecution{}, fmt.Errorf("recherche interrompue avant de trouver un build admissible: %w", searchContext.Err())
+			return searchExecution{}, fmt.Errorf("search interrupted before finding a valid build: %w", searchContext.Err())
 		}
-		return searchExecution{}, fmt.Errorf("aucun build complet ne respecte les formes, minimums tolérés et maximums demandés")
+		return searchExecution{}, fmt.Errorf("no complete build satisfies the required shapes, tolerated minimums, and requested maximums")
 	}
 	return searchExecution{solution: solution, searchMS: time.Since(started).Milliseconds()}, nil
 }

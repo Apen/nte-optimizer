@@ -56,7 +56,7 @@ func (c ForkCatalog) Stats(weapon Weapon) (panel, permanent, conditional []nte.S
 	conditional = definition.ConditionalByStar[star]
 	note = definition.ConditionalNote
 	if note == "" && len(definition.EffectsByStar[star].Parameters) > 0 && len(conditional) == 0 {
-		note = "Effet de l'Arc importé, mais ses conditions ne sont pas encore incluses dans la projection maximale."
+		note = "The Arc effect was imported, but its conditions are not yet included in the maximum projection."
 	}
 	return panel, permanent, conditional, note
 }
