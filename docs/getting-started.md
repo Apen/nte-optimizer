@@ -62,15 +62,13 @@ and the account-specific values decoded at login.
 
 ### Builds
 
-Choose a character strategy, search mode, desired main stat, and stat goals.
+Choose a character strategy, desired main stat, and stat goals.
 Each goal can define a target, tolerance, importance, strict minimum, or strict
 maximum. Modules can be pinned or excluded before starting the search.
 
-**Fast is currently the recommended search method.** It is the most effective
-choice for routine optimization because it produces useful candidates without
-waiting for the much larger search used by Balanced. Balanced can take a very
-long time when an account owns many modules or when a character grid permits
-many geometries, rotations, and placements.
+The optimizer uses a fast objective-oriented search. It reduces the candidate
+space while preserving strong stat, geometry, set, and currently equipped
+options, then explores valid placements and ranks the resulting builds.
 
 The results table ranks valid combinations. Open a result for module placement,
 set activation, stat provenance, conditional effects, and damage estimates.

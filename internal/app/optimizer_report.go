@@ -79,8 +79,8 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 }
 
 func publicOptimizationMode(plan searchPlan) string {
-	if plan.compromise {
-		return "compromise"
+	if plan.solverMode == "objective" {
+		return "fast"
 	}
 	if plan.approximate {
 		return "fast-" + plan.solverMode

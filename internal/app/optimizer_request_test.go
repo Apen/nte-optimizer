@@ -14,11 +14,8 @@ func TestParseSearchPlan(t *testing.T) {
 		mode        string
 		solver      string
 		approximate bool
-		compromise  bool
 	}{
-		{mode: "balanced", solver: "balanced"},
-		{mode: "fast-balanced", solver: "balanced", approximate: true},
-		{mode: "compromise", solver: "balanced", approximate: true, compromise: true},
+		{mode: "fast", solver: "objective", approximate: true},
 		{mode: "score", solver: "score", approximate: true},
 		{mode: "exact-score", solver: "score"},
 	}
@@ -28,13 +25,15 @@ func TestParseSearchPlan(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if got.requestedMode != test.mode || got.solverMode != test.solver || got.approximate != test.approximate || got.compromise != test.compromise {
+			if got.requestedMode != test.mode || got.solverMode != test.solver || got.approximate != test.approximate {
 				t.Fatalf("parseSearchPlan(%q) = %#v", test.mode, got)
 			}
 		})
 	}
-	if _, err := parseSearchPlan("unknown"); err == nil {
-		t.Fatal("unknown search mode was accepted")
+	for _, mode := range []string{"deep", "balanced", "fast-balanced", "unknown"} {
+		if _, err := parseSearchPlan(mode); err == nil {
+			t.Fatalf("removed or unknown search mode %q was accepted", mode)
+		}
 	}
 }
 
@@ -69,7 +68,7 @@ func TestPrepareObjectivesUsesTuningsAndSetGeometry(t *testing.T) {
 	buildTarget := &target.BuildTarget{Goals: []target.Goal{{PropertyID: "Crit", Minimum: .75}, {PropertyID: "Atk", Minimum: 2000}}}
 	profile := scoring.Character{PreferredSets: []scoring.SetPreference{{SetID: "set"}}}
 	sets := optimizer.SetCatalog{Definitions: map[string]optimizer.SetDefinition{"set": {RequiredGeometries: []string{"H_2", "L_3"}}}}
-	objectives, required := prepareObjectives("balanced", buildTarget, map[string]GoalTuning{"Crit": {Importance: .8, Tolerance: .1}}, nil, profile, sets)
+	objectives, required := prepareObjectives("objective", buildTarget, map[string]GoalTuning{"Crit": {Importance: .8, Tolerance: .1}}, nil, profile, sets)
 	if len(objectives) != 1 || objectives[0].PropertyID != "Crit" || objectives[0].Importance != .8 || objectives[0].Tolerance != .1 {
 		t.Fatalf("unexpected objectives: %#v", objectives)
 	}
@@ -85,15 +84,15 @@ func TestPrepareObjectivesPreservesUnweightedHardBounds(t *testing.T) {
 		"Crit": {Importance: .2},
 		"Atk":  {Maximum: 2500, StrictMinimum: true},
 	}
-	objectives, _ := prepareObjectives("balanced", buildTarget, tunings, &WeightOverrides{}, profile, optimizer.SetCatalog{})
+	objectives, _ := prepareObjectives("objective", buildTarget, tunings, &WeightOverrides{}, profile, optimizer.SetCatalog{})
 	if len(objectives) != 2 || objectives[0].Importance != 1 || !objectives[1].StrictMinimum || objectives[1].Maximum != 2500 || objectives[1].Importance != 0 {
 		t.Fatalf("unexpected overridden objectives: %#v", objectives)
 	}
 }
 
-func TestPrepareObjectivesSkipsNonBalancedModes(t *testing.T) {
+func TestPrepareObjectivesSkipsLegacyScoreModes(t *testing.T) {
 	objectives, required := prepareObjectives("score", &target.BuildTarget{Goals: []target.Goal{{PropertyID: "Crit", Minimum: .75}}}, nil, nil, scoring.Character{}, optimizer.SetCatalog{})
 	if len(objectives) != 0 || len(required) != 0 {
-		t.Fatalf("score mode prepared balanced objectives: %#v, %#v", objectives, required)
+		t.Fatalf("score mode prepared objective goals: %#v, %#v", objectives, required)
 	}
 }

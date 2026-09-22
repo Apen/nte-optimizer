@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+// EquipmentTieBreakScale keeps equipment relevance available as a stable
+// tie-breaker without allowing stats already present in objective values to be
+// counted a second time in the primary ranking.
+const EquipmentTieBreakScale = 1e-6
+
 type RankingContribution struct {
 	Source          string  `json:"source,omitempty"`
 	InputPropertyID string  `json:"input_property_id,omitempty"`

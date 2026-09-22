@@ -1,6 +1,6 @@
 export function Profiles(): Promise<Array<{id: string; character_id: number; name: string; grid_id: string; preferred_sets: Array<{set_id: string; priority: number}>; main_weights: Record<string, number>; sub_weights: Record<string, number>; main_stats: string[]; weights: Record<string, number>; caps: Record<string, {soft_cap: number; hard_cap: number; after_soft_scale: number}>; console_trait?: {area: number; property_id: string; value_per_module: number}}>>;
 export function SaveProfileStrategy(profileID: string, settings: {main_stats:string[];weights:Record<string,number>}): Promise<{main_stats:string[];weights:Record<string,number>}>;
-export function SaveProfileSettings(profileID: string, settings: {main_stats:string[];weights:Record<string,number>;goals:Record<string,{target:number;maximum:number;tolerance:number;strict_minimum?:boolean;disabled?:boolean}>;search_mode:string}): Promise<any>;
+export function SaveProfileSettings(profileID: string, settings: {main_stats:string[];weights:Record<string,number>;goals:Record<string,{target:number;maximum:number;tolerance:number;strict_minimum?:boolean;disabled?:boolean}>}): Promise<any>;
 export function ResetProfileStrategy(profileID: string): Promise<void>;
 export function BuildWorkspace(language: string): Promise<any>;
 export function EquipmentCatalog(language: string): Promise<any>;

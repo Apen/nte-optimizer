@@ -13,16 +13,13 @@ type searchPlan struct {
 	requestedMode string
 	solverMode    string
 	approximate   bool
-	compromise    bool
 }
 
 func parseSearchPlan(mode string) (searchPlan, error) {
-	plan := searchPlan{requestedMode: mode, approximate: mode != "balanced" && mode != "exact-score", compromise: mode == "compromise"}
+	plan := searchPlan{requestedMode: mode, approximate: mode != "exact-score"}
 	switch mode {
-	case "balanced":
-		plan.solverMode = "balanced"
-	case "fast-balanced", "compromise":
-		plan.solverMode = "balanced"
+	case "fast":
+		plan.solverMode = "objective"
 	case "score", "exact-score":
 		plan.solverMode = "score"
 	default:
@@ -49,7 +46,7 @@ func applyWeightOverrides(profile scoring.Character, overrides *WeightOverrides)
 func prepareObjectives(mode string, buildTarget *target.BuildTarget, tunings map[string]GoalTuning, overrides *WeightOverrides, profile scoring.Character, sets optimizer.SetCatalog) ([]optimizer.ObjectiveGoal, map[string]bool) {
 	objectives := []optimizer.ObjectiveGoal{}
 	requiredGeometry := map[string]bool{}
-	if mode != "balanced" || buildTarget == nil {
+	if mode != "objective" || buildTarget == nil {
 		return objectives, requiredGeometry
 	}
 	for _, goal := range buildTarget.Goals {

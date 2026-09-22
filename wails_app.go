@@ -65,7 +65,6 @@ func (a *DesktopApp) Profiles() ([]appservice.ProfileSummary, error) {
 			profiles[index].MainStats = settings.MainStats
 			profiles[index].Weights = settings.Weights
 			profiles[index].SavedGoals = settings.Goals
-			profiles[index].SearchMode = settings.SearchMode
 		}
 	}
 	return profiles, nil

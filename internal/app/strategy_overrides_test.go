@@ -42,7 +42,7 @@ func TestProfileSettingsStayIsolatedAndWeightSavePreservesGoals(t *testing.T) {
 	}
 	zankou := WeightOverrides{
 		MainStats: []string{"CritDamageBase"}, Weights: map[string]float64{"CritDamageBase": 1},
-		Goals: map[string]SavedGoalSettings{"CritDamageBase": {Target: 2.1, Maximum: 2.5, Tolerance: .05, Disabled: true}}, SearchMode: "compromise",
+		Goals: map[string]SavedGoalSettings{"CritDamageBase": {Target: 2.1, Maximum: 2.5, Tolerance: .05, Disabled: true}},
 	}
 	if _, err := SaveProfileSettings(dir, "zankou", zankou); err != nil {
 		t.Fatal(err)
@@ -57,7 +57,7 @@ func TestProfileSettingsStayIsolatedAndWeightSavePreservesGoals(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if state.Profiles["zankou"].Weights["CritDamageBase"] != .9 || state.Profiles["zankou"].Goals["CritDamageBase"].Target != 2.1 || !state.Profiles["zankou"].Goals["CritDamageBase"].Disabled || state.Profiles["zankou"].SearchMode != "compromise" {
+	if state.Profiles["zankou"].Weights["CritDamageBase"] != .9 || state.Profiles["zankou"].Goals["CritDamageBase"].Target != 2.1 || !state.Profiles["zankou"].Goals["CritDamageBase"].Disabled {
 		t.Fatalf("Zankou settings were not preserved: %#v", state.Profiles["zankou"])
 	}
 	if state.Profiles["zero"].Weights["MagBase"] != .8 || len(state.Profiles["zero"].Goals) != 0 {

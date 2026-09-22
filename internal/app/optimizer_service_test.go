@@ -16,18 +16,14 @@ import (
 )
 
 func TestSelectedStrategyRejectsOtherSetCartridges(t *testing.T) {
-	for _, mode := range []string{"compromise", "balanced", "fast-balanced"} {
-		t.Run(mode, func(t *testing.T) {
-			service := OptimizerService{DataDir: filepath.Join("..", "..", "data")}
-			inv := nte.Inventory{
-				Modules:    []nte.Module{{LocalID: "piece", Geometry: "H_2", Area: 2}},
-				Cartridges: []nte.Cartridge{{LocalID: "wrong", SetID: "diabolos"}},
-			}
-			_, err := service.optimize(context.Background(), inv, "zankou", nil, true, "fr", mode, nil)
-			if err == nil || !strings.Contains(err.Error(), "aucune cartouche disponible pour le set") {
-				t.Fatalf("wrong set accepted: %v", err)
-			}
-		})
+	service := OptimizerService{DataDir: filepath.Join("..", "..", "data")}
+	inv := nte.Inventory{
+		Modules:    []nte.Module{{LocalID: "piece", Geometry: "H_2", Area: 2}},
+		Cartridges: []nte.Cartridge{{LocalID: "wrong", SetID: "diabolos"}},
+	}
+	_, err := service.optimize(context.Background(), inv, "zankou", nil, true, "fr", "fast", nil)
+	if err == nil || !strings.Contains(err.Error(), "aucune cartouche disponible pour le set") {
+		t.Fatalf("wrong set accepted: %v", err)
 	}
 }
 
@@ -54,7 +50,7 @@ func TestOptimizerServiceProfilesAreStable(t *testing.T) {
 
 func TestPinnedModuleCannotOverrideReservation(t *testing.T) {
 	service := OptimizerService{DataDir: filepath.Join("..", "..", "data"), ReservedModuleIDs: map[string]bool{"reserved": true}, PinnedModuleIDs: map[string]bool{"reserved": true}}
-	_, err := service.optimize(context.Background(), nte.Inventory{Modules: []nte.Module{{LocalID: "reserved", Geometry: "H_2", Area: 2}}}, "zankou", nil, true, "fr", "balanced", nil)
+	_, err := service.optimize(context.Background(), nte.Inventory{Modules: []nte.Module{{LocalID: "reserved", Geometry: "H_2", Area: 2}}}, "zankou", nil, true, "fr", "fast", nil)
 	if err == nil {
 		t.Fatal("reservation overridden by lock")
 	}
@@ -184,7 +180,7 @@ func TestOptimizerServiceExcludesHigherPriorityReservations(t *testing.T) {
 }
 
 func TestOptimizerRejectsUnsupportedSearchMode(t *testing.T) {
-	for _, mode := range []string{"damage-direct", "damage-dot", "damage-reaction", "unknown"} {
+	for _, mode := range []string{"deep", "balanced", "fast-balanced", "damage-direct", "damage-dot", "damage-reaction", "unknown"} {
 		service := OptimizerService{}
 		_, err := service.optimize(context.Background(), nte.Inventory{}, "zankou", nil, false, "fr", mode, nil)
 		if err == nil || !strings.Contains(err.Error(), "méthode de recherche inconnue") {
@@ -194,25 +190,21 @@ func TestOptimizerRejectsUnsupportedSearchMode(t *testing.T) {
 }
 
 func TestRankingExplainsObjectiveTradeoffWithoutChangingPublicScore(t *testing.T) {
-	for _, mode := range []string{"balanced", "fast-balanced", "compromise"} {
-		t.Run(mode, func(t *testing.T) {
-			solution := optimizer.Solution{Score: 1040.5}
-			modules := []OptimizationModule{{Breakdown: scoring.Breakdown{Total: 10}}}
-			normalizePublicScore(&solution, modules, nil)
-			goals := []optimizer.ObjectiveGoal{
-				{PropertyID: "AtkFinal", Minimum: 100, Importance: 2},
-				{PropertyID: "CritBase", Minimum: .5},
-				{PropertyID: "Inactive", Minimum: 0},
-			}
-			explainRanking(&solution, map[string]float64{"AtkFinal": 100, "CritBase": .7}, goals, mode)
-			r := solution.Ranking
-			if solution.Score != 10 || r.Score != 40.5 || r.Equipment != 10 || r.Objectives != 30.5 || math.Abs(r.Structure-1000) > 1e-9 {
-				t.Fatalf("incorrect decomposition: public=%g ranking=%+v", solution.Score, r)
-			}
-			if len(r.Contributions) != 2 || r.Contributions[0].Points != 20 || r.Contributions[1].Points != 10.5 || r.Contributions[1].Importance != 1 {
-				t.Fatalf("incorrect contributions: %+v", r.Contributions)
-			}
-		})
+	solution := optimizer.Solution{Score: 1040.5}
+	modules := []OptimizationModule{{Breakdown: scoring.Breakdown{Total: 10}}}
+	normalizePublicScore(&solution, modules, nil)
+	goals := []optimizer.ObjectiveGoal{
+		{PropertyID: "AtkFinal", Minimum: 100, Importance: 2},
+		{PropertyID: "CritBase", Minimum: .5},
+		{PropertyID: "Inactive", Minimum: 0},
+	}
+	explainRanking(&solution, map[string]float64{"AtkFinal": 100, "CritBase": .7}, goals, "fast")
+	r := solution.Ranking
+	if solution.Score != 10 || r.Score != 30.5 || r.Equipment != 10 || r.Objectives != 30.5 || math.Abs(r.Structure-1000) > 1e-9 {
+		t.Fatalf("incorrect decomposition: public=%g ranking=%+v", solution.Score, r)
+	}
+	if len(r.Contributions) != 2 || r.Contributions[0].Points != 20 || r.Contributions[1].Points != 10.5 || r.Contributions[1].Importance != 1 {
+		t.Fatalf("incorrect contributions: %+v", r.Contributions)
 	}
 }
 
@@ -263,7 +255,7 @@ func TestWeightOverridesDoNotMutateCachedProfile(t *testing.T) {
 		}
 	}
 	service.WeightOverrides = &WeightOverrides{MainStats: []string{"CritDamageBase"}, Weights: map[string]float64{"CritDamageBase": .3}}
-	result, err := service.optimize(context.Background(), nte.Inventory{}, "zankou", nil, true, "fr", "balanced", nil)
+	result, err := service.optimize(context.Background(), nte.Inventory{}, "zankou", nil, true, "fr", "fast", nil)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -73,7 +73,11 @@ func (e CartridgeSetEvaluator) prepareBlueprintEvaluations(geometries []string) 
 			continue
 		}
 		score := scoreForMatched(set.definition.Bonuses, matchedCounts[i]) * set.priority
-		prepared := preparedSet{result: BonusResult{Score: score + set.cartridgeScore, SetBonusScore: score, CartridgeScore: set.cartridgeScore, SetID: set.definition.ID, CartridgeID: set.cartridge.LocalID, MatchedCount: matchedCounts[i]}, moduleSource: -1, traitSource: -1}
+		searchScore := score + set.cartridgeScore
+		if len(e.objectives) > 0 {
+			searchScore *= EquipmentTieBreakScale
+		}
+		prepared := preparedSet{result: BonusResult{Score: searchScore, SetBonusScore: score, CartridgeScore: set.cartridgeScore, SetID: set.definition.ID, CartridgeID: set.cartridge.LocalID, MatchedCount: matchedCounts[i]}, moduleSource: -1, traitSource: -1}
 		prepared.main, prepared.sub = map[string]float64{}, map[string]float64{}
 		addStats(prepared.main, set.cartridge.MainStats)
 		addStats(prepared.sub, set.cartridge.SubStats)

@@ -125,18 +125,13 @@ modules cover one additional cell.
 
 ## Search process
 
-### Choosing a search method
+### Search strategy
 
-**Fast is the recommended mode for current versions of the application.** It
-reduces the candidate space enough to provide the most practical balance of
-result quality and execution time for everyday use.
-
-Balanced retains and evaluates substantially more combinations. Because every
-module may introduce different geometry, rotation, position, set, and stat
-possibilities, its running time can grow quickly with inventory size and grid
-complexity. Balanced is therefore best reserved for deliberate, longer searches
-where the user is prepared to wait or stop the calculation and keep the best
-result found so far.
+The optimizer uses one objective-oriented search strategy. It reduces the
+candidate space enough to provide a practical balance of result quality and
+execution time. Because every module may introduce different geometry,
+rotation, position, set, and stat possibilities, the result is approximate
+unless the retained search space is fully explored.
 
 The optimizer:
 
@@ -166,18 +161,17 @@ The interface deliberately separates three concepts:
 3. **Combat impact** is shown by the damage analysis when structured combat data
    is available for the character.
 
-Fast and Balanced use the same equipment relevance calculation. The difference
-between them is the number of candidates and combinations retained and explored,
-not the meaning of an item's score.
-
-The displayed ranking is the sum of equipment relevance and weighted objective
-utility. Constraints only filter admissible builds: adding a strict minimum
-does not change the score of the same build. Fast search always retains the
-selected character's currently equipped modules, allowing the current build to
-remain a baseline candidate after inventory reduction. Rankings are useful for
-comparing candidates under the same character strategy, but they are not a
-universal quality percentage and should not be compared across unrelated
-profiles.
+The displayed ranking is the weighted objective utility. Final panel values
+already include modules, the cartridge, the Arc, set effects, and character
+bonuses, so equipment relevance is not added to the ranking a second time. It
+remains visible as a diagnostic and is used only as a stable tie-breaker between
+otherwise equivalent candidates. Constraints only filter admissible builds:
+adding a strict minimum does not change the score of the same build. Fast search
+always retains the selected character's currently equipped modules, allowing
+the current build to remain a baseline candidate after inventory reduction.
+Rankings are useful for comparing candidates under the same character strategy,
+but they are not a universal quality percentage and should not be compared
+across unrelated profiles.
 
 ### Basic damage index
 

@@ -226,7 +226,7 @@ func NewObjectiveEvaluator(catalog SetCatalog, cartridges []nte.Cartridge, prefe
 		evaluator.upperBound = 0
 		for _, set := range evaluator.sets {
 			bonus := scoreForMatched(set.definition.Bonuses, len(set.definition.RequiredGeometries)) * set.priority
-			evaluator.upperBound = math.Max(evaluator.upperBound, bonus+set.cartridgeScore+objectiveBound)
+			evaluator.upperBound = math.Max(evaluator.upperBound, (bonus+set.cartridgeScore)*EquipmentTieBreakScale+objectiveBound)
 		}
 		evaluator.upperBound = math.Nextafter(evaluator.upperBound, math.Inf(1))
 	}
@@ -256,6 +256,7 @@ func (e CartridgeSetEvaluator) Evaluate(placements []Placement) BonusResult {
 		}
 		score := setScore + set.cartridgeScore
 		if len(e.objectives) > 0 {
+			score *= EquipmentTieBreakScale
 			selected := make([]nte.Module, 0, len(placements))
 			for _, placement := range placements {
 				if module, ok := e.modules[placement.ModuleID]; ok {

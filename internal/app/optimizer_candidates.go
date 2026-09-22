@@ -50,8 +50,12 @@ func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile 
 			continue
 		}
 		score := scoring.Score(module, profile, refs)
-		pool.raw = append(pool.raw, optimizer.Candidate{Module: module, Score: score})
-		candidate := optimizer.Candidate{Module: module, Score: score}
+		searchScore := score
+		if len(objectives) > 0 {
+			searchScore *= optimizer.EquipmentTieBreakScale
+		}
+		pool.raw = append(pool.raw, optimizer.Candidate{Module: module, Score: searchScore})
+		candidate := optimizer.Candidate{Module: module, Score: searchScore}
 		if len(objectives) > 0 {
 			summary := optimizer.BuildStatSummary(profile, []nte.Module{module}, nil, optimizer.SetDefinition{}, 0, additional)
 			candidate.ObjectiveValues = make(map[string]float64, len(objectives))
@@ -73,7 +77,7 @@ func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile 
 
 func (s OptimizerService) selectModuleCandidates(pool moduleCandidatePool, objectives []optimizer.ObjectiveGoal, freeCells int, config optimizerDataConfig, plan searchPlan) (candidateSelection, error) {
 	perGeometry, perSet := config.Optimize.TopPerGeometry, config.Optimize.TopPerSet
-	if plan.solverMode == "balanced" {
+	if plan.solverMode == "objective" {
 		perGeometry = max(perGeometry, 3)
 		perSet = max(perSet, 3)
 	}
@@ -81,24 +85,11 @@ func (s OptimizerService) selectModuleCandidates(pool moduleCandidatePool, objec
 	if plan.approximate {
 		selected = optimizer.SelectCandidates(pool.eligible, perGeometry, perSet)
 	}
-	if plan.approximate && plan.solverMode == "balanced" && !plan.compromise {
+	if plan.approximate && plan.solverMode == "objective" {
 		selected = optimizer.SelectObjectiveCandidates(pool.eligible, pool.selectionObjectives, max(perGeometry, 4), 1)
 		seedCandidates := optimizer.SelectCandidates(pool.raw, config.Optimize.TopPerGeometry, config.Optimize.TopPerSet)
 		selected = appendUniqueCandidates(selected, seedCandidates)
 		selected = optimizer.PruneDominatedCandidates(selected, objectives, freeCells)
-	}
-	if plan.compromise {
-		selected = optimizer.SelectCompromiseCandidates(pool.eligible, freeCells)
-		hardObjectives := make([]optimizer.ObjectiveGoal, 0, len(objectives))
-		for _, objective := range objectives {
-			if objective.StrictMinimum || objective.Maximum > 0 {
-				hardObjectives = append(hardObjectives, objective)
-			}
-		}
-		if len(hardObjectives) > 0 {
-			hardCandidates := optimizer.SelectObjectiveCandidates(pool.eligible, hardObjectives, max(perGeometry, 4), 2)
-			selected = appendUniqueCandidates(selected, hardCandidates)
-		}
 	}
 	selected = appendPinnedCandidates(selected, pool.eligible, s.PinnedModuleIDs)
 	selected = appendCurrentEquipmentCandidates(selected, pool.current, plan)
@@ -181,7 +172,7 @@ func (s OptimizerService) prepareCartridges(cartridges []nte.Cartridge, profile 
 		}
 		pool.available = append(pool.available, cartridge)
 	}
-	requiresCartridge := (!plan.approximate || plan.solverMode == "balanced") && eligibleModules > 0 && len(allowedSets) > 0
+	requiresCartridge := (!plan.approximate || plan.solverMode == "objective") && eligibleModules > 0 && len(allowedSets) > 0
 	if requiresCartridge && len(pool.available) == 0 {
 		if s.WeightOverrides != nil {
 			return cartridgePool{}, fmt.Errorf("aucune cartouche disponible avec le set et les stats principales sélectionnés")

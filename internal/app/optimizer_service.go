@@ -18,10 +18,9 @@ import (
 // OptimizerService is the UI-agnostic boundary shared by the CLI and Wails.
 // It returns data structures and never writes files or logs by itself.
 type WeightOverrides struct {
-	MainStats  []string                     `json:"main_stats"`
-	Weights    map[string]float64           `json:"weights"`
-	Goals      map[string]SavedGoalSettings `json:"goals,omitempty"`
-	SearchMode string                       `json:"search_mode,omitempty"`
+	MainStats []string                     `json:"main_stats"`
+	Weights   map[string]float64           `json:"weights"`
+	Goals     map[string]SavedGoalSettings `json:"goals,omitempty"`
 }
 
 type SavedGoalSettings struct {
@@ -67,7 +66,6 @@ type ProfileSummary struct {
 	Caps          map[string]scoring.StatCap   `json:"caps"`
 	ConsoleTrait  *scoring.ConsoleTrait        `json:"console_trait,omitempty"`
 	SavedGoals    map[string]SavedGoalSettings `json:"saved_goals,omitempty"`
-	SearchMode    string                       `json:"search_mode,omitempty"`
 }
 
 type OptimizationResult struct {
@@ -195,7 +193,6 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 	if err != nil {
 		return OptimizationResult{}, err
 	}
-	mode = plan.solverMode
 	characters, err := s.loadCharacters()
 	if err != nil {
 		return OptimizationResult{}, err
@@ -255,16 +252,15 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 		}
 		buildTarget = &loaded
 	}
-	objectives, requiredGeometry := prepareObjectives(mode, buildTarget, goalTunings, s.WeightOverrides, profile, setCatalog)
+	objectives, requiredGeometry := prepareObjectives(plan.solverMode, buildTarget, goalTunings, s.WeightOverrides, profile, setCatalog)
 	selectionStarted := time.Now()
 	pool := s.prepareModuleCandidates(inv.Modules, profile, refs, additional, objectives, requiredGeometry, includeEquipped)
-	candidates, rawCandidates := pool.eligible, pool.raw
-	selectionObjectives, excludedEquipped := pool.selectionObjectives, pool.excludedEquipped
+	candidates, excludedEquipped := pool.eligible, pool.excludedEquipped
 	selection, err := s.selectModuleCandidates(pool, objectives, grid.FreeCells(), cfg, plan)
 	if err != nil {
 		return OptimizationResult{}, err
 	}
-	selected, perGeometry := selection.selected, selection.perGeometry
+	selected := selection.selected
 	selectionFinished := time.Now()
 	cartridges, err := s.prepareCartridges(inv.Cartridges, profile, setCatalog, includeEquipped, plan, len(candidates))
 	if err != nil {
@@ -275,9 +271,7 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 	setup := s.prepareSearch(profile, refs, shapeCatalog, setCatalog, cfg, selected, availableCartridges, objectives, additional, plan)
 	searchStarted := time.Now()
 	execution, err := s.executeSearch(ctx, searchRequest{
-		grid: grid, setup: setup, selected: selected, allCandidates: candidates, rawCandidates: rawCandidates,
-		selectionObjectives: selectionObjectives, objectives: objectives, cartridges: availableCartridges,
-		profile: profile, refs: refs, sets: setCatalog, additional: additional, config: cfg, plan: plan, perGeometry: perGeometry,
+		grid: grid, setup: setup, selected: selected,
 	})
 	searchFinished := time.Now()
 	if err != nil {
@@ -292,7 +286,7 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 		includeEquipped: includeEquipped,
 		phaseMilliseconds: map[string]int64{
 			"load_and_context": selectionStarted.Sub(started).Milliseconds(), "selection": selectionFinished.Sub(selectionStarted).Milliseconds(),
-			"evaluator_and_seed": searchStarted.Sub(selectionFinished).Milliseconds(), "search": execution.searchMS, "refinement": execution.refinementMS,
+			"evaluator_and_seed": searchStarted.Sub(selectionFinished).Milliseconds(), "search": execution.searchMS,
 		},
 	})
 	result.PhaseMS["reporting"] = time.Since(searchFinished).Milliseconds()
@@ -462,7 +456,7 @@ func explainRanking(solution *optimizer.Solution, values map[string]float64, goa
 	if solution.Ranking == nil {
 		return
 	}
-	if mode == "balanced" || mode == "fast-balanced" || mode == "compromise" {
+	if mode == "fast" {
 		for _, goal := range goals {
 			if goal.Minimum <= 0 {
 				continue
@@ -477,7 +471,10 @@ func explainRanking(solution *optimizer.Solution, values map[string]float64, goa
 		}
 	}
 	solution.Ranking.Structure -= solution.Ranking.Objectives
-	solution.Ranking.Score = solution.Ranking.Equipment + solution.Ranking.Objectives
+	// Final panel objectives already include every selected piece and set
+	// effect. Equipment relevance remains diagnostic and is only used as an
+	// internal tie-breaker, otherwise the same stats would be rewarded twice.
+	solution.Ranking.Score = solution.Ranking.Objectives
 }
 
 // Final panel goals use the strongest configured weight in their stat family.

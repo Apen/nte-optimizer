@@ -38,7 +38,6 @@ func SaveProfileStrategy(projectDir, profileID string, settings WeightOverrides)
 	}
 	if previous, ok := state.Profiles[profileID]; ok {
 		settings.Goals = previous.Goals
-		settings.SearchMode = previous.SearchMode
 	}
 	return saveProfileSettings(projectDir, profileID, settings, state)
 }
@@ -63,9 +62,6 @@ func saveProfileSettings(projectDir, profileID string, settings WeightOverrides,
 		if property == "" || math.IsNaN(weight) || math.IsInf(weight, 0) || weight < 0 || weight > 10 {
 			return WeightOverrides{}, fmt.Errorf("invalid weight for %s: expected 0 to 10", property)
 		}
-	}
-	if settings.SearchMode != "" && settings.SearchMode != "balanced" && settings.SearchMode != "compromise" && settings.SearchMode != "fast-balanced" {
-		return WeightOverrides{}, fmt.Errorf("invalid search mode %q", settings.SearchMode)
 	}
 	for property, goal := range settings.Goals {
 		if property == "" || !finiteNonNegative(goal.Target) || !finiteNonNegative(goal.Maximum) || math.IsNaN(goal.Tolerance) || math.IsInf(goal.Tolerance, 0) || goal.Tolerance < 0 || goal.Tolerance > .25 {
@@ -99,7 +95,7 @@ func normalizeWeightOverrides(settings WeightOverrides) WeightOverrides {
 	for property, goal := range settings.Goals {
 		goals[property] = goal
 	}
-	return WeightOverrides{MainStats: mainStats, Weights: cloneWeights(settings.Weights), Goals: goals, SearchMode: settings.SearchMode}
+	return WeightOverrides{MainStats: mainStats, Weights: cloneWeights(settings.Weights), Goals: goals}
 }
 
 func finiteNonNegative(value float64) bool {

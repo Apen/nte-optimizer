@@ -109,10 +109,10 @@ Displayed scores are comparison tools for one strategy. They are not a gear
 percentage and are not directly comparable across different characters or
 profiles.
 
-For current versions, **Fast** is the recommended search method for normal use.
-It provides the most practical balance between result quality and waiting time.
-**Balanced** explores a much larger combination space and can take a very long
-time on accounts with large inventories or complex character grids.
+The optimizer uses a fast objective-oriented search that reduces the candidate
+space before exploring valid placements. This provides a practical balance
+between result quality and waiting time despite the large number of geometry,
+rotation, set, and stat combinations.
 
 For formulas, target utility, caps, set scoring, and search behavior, read
 [Optimization model](docs/optimization.md).
