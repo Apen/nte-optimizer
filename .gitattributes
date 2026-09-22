@@ -1,2 +1,5 @@
+go.mod text eol=lf
+go.sum text eol=lf
+
 data/game/*.json text eol=lf
 data/game/**/*.json text eol=lf
