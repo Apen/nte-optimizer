@@ -56,6 +56,23 @@ func TestAppendUniqueCandidatesPreservesOrder(t *testing.T) {
 	}
 }
 
+func TestFastSelectionRetainsCurrentEquipment(t *testing.T) {
+	best := optimizer.Candidate{Module: nte.Module{LocalID: "best", Geometry: "H_2"}, Score: 10}
+	current := optimizer.Candidate{Module: nte.Module{LocalID: "current", Geometry: "H_2", EquippedCharacterID: 1}, Score: 1}
+	pool := moduleCandidatePool{eligible: []optimizer.Candidate{best, current}, raw: []optimizer.Candidate{best, current}, current: []optimizer.Candidate{current}}
+	config := optimizerDataConfig{}
+	config.Optimize.TopPerGeometry = 1
+	config.Optimize.TopPerSet = 1
+	selection, err := (OptimizerService{}).selectModuleCandidates(pool, nil, 4, config, searchPlan{solverMode: "score", approximate: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ids := candidateIDs(selection.selected)
+	if !ids["best"] || !ids["current"] {
+		t.Fatalf("fast selection dropped current equipment: %#v", selection.selected)
+	}
+}
+
 func TestPrepareCartridgesAppliesStrategyAndAvailability(t *testing.T) {
 	service := OptimizerService{
 		WeightOverrides:      &WeightOverrides{MainStats: []string{"Crit"}},

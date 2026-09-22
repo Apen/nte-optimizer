@@ -223,14 +223,10 @@ func NewObjectiveEvaluator(catalog SetCatalog, cartridges []nte.Cartridge, prefe
 				objectiveBound += 10.5 * importance
 			}
 		}
-		area := 0
-		for _, module := range modules {
-			area += max(0, module.Module.Area)
-		}
 		evaluator.upperBound = 0
 		for _, set := range evaluator.sets {
 			bonus := scoreForMatched(set.definition.Bonuses, len(set.definition.RequiredGeometries)) * set.priority
-			evaluator.upperBound = math.Max(evaluator.upperBound, 501*bonus+set.cartridgeScore+objectiveBound+1000*float64(area))
+			evaluator.upperBound = math.Max(evaluator.upperBound, bonus+set.cartridgeScore+objectiveBound)
 		}
 		evaluator.upperBound = math.Nextafter(evaluator.upperBound, math.Inf(1))
 	}
@@ -261,25 +257,20 @@ func (e CartridgeSetEvaluator) Evaluate(placements []Placement) BonusResult {
 		score := setScore + set.cartridgeScore
 		if len(e.objectives) > 0 {
 			selected := make([]nte.Module, 0, len(placements))
-			occupied := 0
 			for _, placement := range placements {
 				if module, ok := e.modules[placement.ModuleID]; ok {
 					selected = append(selected, module)
-					occupied += module.Area
 				}
 			}
 			summary := BuildStatSummary(e.character, selected, &set.cartridge, set.definition, len(matched), e.additional)
 			if e.exact && (exceedsMaximum(summary.Derived, e.objectives) || belowAnyToleranceFloor(summary.Derived, e.objectives)) {
 				continue
 			}
-			// The preferred 4-piece identity remains a build constraint. Its
-			// configured set score is amplified only for search ordering; the
-			// result still reports the ordinary human-readable score.
 			utility := ObjectiveScore(summary.Derived, e.objectives)
 			if e.sourceWeighted() {
 				utility, _ = SourceObjectiveScore(summary.Unconditional, selected, &set.cartridge, e.character, e.objectives)
 			}
-			score += utility + setScore*500 + float64(occupied)*1000
+			score += utility
 		}
 		if score > best.Score {
 			best = BonusResult{Score: score, SetBonusScore: setScore, CartridgeScore: set.cartridgeScore, SetID: set.definition.ID, CartridgeID: set.cartridge.LocalID, MatchedCount: len(matched)}
@@ -324,19 +315,14 @@ func objectiveUtility(value float64, goal ObjectiveGoal) float64 {
 	if importance <= 0 {
 		importance = 1
 	}
-	tolerance := goal.Tolerance
-	if tolerance < 0 {
-		tolerance = 0
-	}
-	floor := 1 - tolerance
 	utility := 0.0
 	switch {
-	case ratio < floor && floor > 0:
-		utility = .9 * ratio / floor
-	case ratio < 1 && tolerance > 0:
-		utility = .9 + .1*(ratio-floor)/tolerance
 	case ratio < 1:
-		utility = ratio
+		// Targets and weights define ranking. Tolerance and strictness only
+		// define feasibility, so toggling a constraint cannot change the score
+		// or candidate preselection of the same build. The fourth-power curve
+		// keeps a meaningful incentive to approach the requested target.
+		utility = math.Pow(ratio, 4)
 	default:
 		// Values above the target remain useful, with diminishing returns.
 		utility = 1 + minFloat(ratio-1, .25)*.2

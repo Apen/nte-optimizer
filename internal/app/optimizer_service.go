@@ -455,7 +455,9 @@ func normalizePublicScore(solution *optimizer.Solution, modules []OptimizationMo
 	solution.Ranking.Structure = solution.Ranking.Score - solution.Score
 }
 
-// Explain the actual search score using the same panel values and utility as the evaluator.
+// Explain the search result using the same panel values and utility as the
+// evaluator. The public ranking deliberately excludes search-only structural
+// guidance so it remains readable and comparable across constraint changes.
 func explainRanking(solution *optimizer.Solution, values map[string]float64, goals []optimizer.ObjectiveGoal, mode string) {
 	if solution.Ranking == nil {
 		return
@@ -475,6 +477,7 @@ func explainRanking(solution *optimizer.Solution, values map[string]float64, goa
 		}
 	}
 	solution.Ranking.Structure -= solution.Ranking.Objectives
+	solution.Ranking.Score = solution.Ranking.Equipment + solution.Ranking.Objectives
 }
 
 // Final panel goals use the strongest configured weight in their stat family.

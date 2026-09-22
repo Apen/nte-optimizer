@@ -4,18 +4,8 @@ import "math"
 
 // All goal utilities are at most 10.5*importance, irrespective of minima,
 // tolerances or caps. A cap penalty is nonpositive. Geometry fixes matched
-// set bonuses; maximum area per slot overestimates the occupancy reward.
+// set bonuses.
 func (e CartridgeSetEvaluator) blueprintUpperBound(geometries []string) float64 {
-	area := 0
-	for _, geometry := range geometries {
-		largest := 0
-		for _, module := range e.modules {
-			if module.Geometry == geometry {
-				largest = max(largest, module.Area)
-			}
-		}
-		area += largest
-	}
 	utility := 0.0
 	for _, goal := range e.objectives {
 		if goal.Minimum > 0 {
@@ -39,7 +29,7 @@ func (e CartridgeSetEvaluator) blueprintUpperBound(geometries []string) float64 
 		bonus := scoreForMatched(set.definition.Bonuses, len(matched)) * set.priority
 		score := bonus + set.cartridgeScore
 		if len(e.objectives) > 0 {
-			score += bonus*500 + utility + float64(area)*1000
+			score += utility
 		}
 		bound = math.Max(bound, score)
 	}

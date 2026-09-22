@@ -51,6 +51,7 @@ type DamageGroup struct {
 	Name               string  `json:"name"`
 	Description        string  `json:"description"`
 	Category           string  `json:"category"`
+	ActionType         string  `json:"action_type"`
 	BuildDamage        float64 `json:"build_damage"`
 	CurrentDamage      float64 `json:"current_damage,omitempty"`
 	BuildNonCrit       float64 `json:"build_non_crit"`
@@ -177,49 +178,49 @@ func applyDamageStatAdditions(stats *damage.Stats, additions map[string]float64)
 var numberedMelee = regexp.MustCompile(`Zankou_Melee[1-6]_`)
 
 type groupDescriptor struct {
-	id, name, description, category string
-	maxStacks                       int
+	id, name, description, category, actionType string
+	maxStacks                                   int
 }
 
 func damageGroupDescriptor(id string) (groupDescriptor, bool) {
 	switch {
 	case strings.Contains(id, "reaction_scorch"):
-		return groupDescriptor{"scorch", "Scorch", "Tick de la réaction Incantation + Chaos de Zankou", "reaction", 3}, true
+		return groupDescriptor{"scorch", "Scorch", "Tick de la réaction Incantation + Chaos de Zankou", "reaction", "reaction", 3}, true
 	case strings.Contains(id, "SkillForce"):
 		// This GE carries the forced break payload, not a meaningful damage hit.
 		return groupDescriptor{}, false
 	case strings.Contains(id, "DotUltra"):
-		return groupDescriptor{"vile-ash", "Vile Ash", "Tick du DoT appliqué par Bloodfeast Reverie", "dot", 10}, true
+		return groupDescriptor{"vile-ash", "Vile Ash", "Tick du DoT appliqué par Bloodfeast Reverie", "dot", "dot", 10}, true
 	case strings.Contains(id, "DotDamage"):
-		return groupDescriptor{"heartwrench", "Heartwrench", "Tick du DoT appliqué et propagé par Zankou", "dot", 10}, true
+		return groupDescriptor{"heartwrench", "Heartwrench", "Tick du DoT appliqué et propagé par Zankou", "dot", "dot", 10}, true
 	case strings.Contains(id, "ForceUltraSkill"):
-		return groupDescriptor{"inferno-enhanced", "Inferno Flamenco renforcé", "Tous les coups de l'ultime renforcé", "direct", 0}, true
+		return groupDescriptor{"inferno-enhanced", "Inferno Flamenco renforcé", "Tous les coups de l'ultime renforcé", "direct", "ultimate", 0}, true
 	case strings.Contains(id, "MagicUltraSkill"):
-		return groupDescriptor{"bloodfeast", "Bloodfeast Reverie", "Tous les coups de l'ultime en forme Illusion", "direct", 0}, true
+		return groupDescriptor{"bloodfeast", "Bloodfeast Reverie", "Tous les coups de l'ultime en forme Illusion", "direct", "ultimate", 0}, true
 	case strings.Contains(id, "UltraSkill"):
-		return groupDescriptor{"inferno", "Inferno Flamenco", "Tous les coups de l'ultime", "direct", 0}, true
+		return groupDescriptor{"inferno", "Inferno Flamenco", "Tous les coups de l'ultime", "direct", "ultimate", 0}, true
 	case strings.Contains(id, "Skill1"):
-		return groupDescriptor{"sanguine-normal", "Sanguine Dash", "Tous les coups de la version normale", "direct", 0}, true
+		return groupDescriptor{"sanguine-normal", "Sanguine Dash", "Tous les coups de la version normale", "direct", "skill", 0}, true
 	case strings.Contains(id, "Skill2"):
-		return groupDescriptor{"sanguine-enhanced", "Sanguine Dash renforcé", "Tous les coups de la version renforcée", "direct", 0}, true
+		return groupDescriptor{"sanguine-enhanced", "Sanguine Dash renforcé", "Tous les coups de la version renforcée", "direct", "skill", 0}, true
 	case strings.Contains(id, "Skill3"):
-		return groupDescriptor{"soulcross-normal", "Soulcross", "Tous les coups de la version normale", "direct", 0}, true
+		return groupDescriptor{"soulcross-normal", "Soulcross", "Tous les coups de la version normale", "direct", "skill", 0}, true
 	case strings.Contains(id, "Skill4"):
-		return groupDescriptor{"soulcross-enhanced", "Soulcross renforcé", "Tous les coups de la version renforcée", "direct", 0}, true
+		return groupDescriptor{"soulcross-enhanced", "Soulcross renforcé", "Tous les coups de la version renforcée", "direct", "skill", 0}, true
 	case strings.Contains(id, "MagicMelee"):
-		return groupDescriptor{"nightmare-waltz", "Nightmare Waltz", "Combo complet en forme Illusion", "direct", 0}, true
+		return groupDescriptor{"nightmare-waltz", "Nightmare Waltz", "Combo complet en forme Illusion", "direct", "basic_attack", 0}, true
 	case numberedMelee.MatchString(id):
-		return groupDescriptor{"wildfire", "Wildfire", "Combo complet en forme Réalité", "direct", 0}, true
+		return groupDescriptor{"wildfire", "Wildfire", "Combo complet en forme Réalité", "direct", "basic_attack", 0}, true
 	case strings.Contains(id, "MagicBranch"):
-		return groupDescriptor{"moonfall", "Moonfall", "Tous les coups de l'attaque maintenue", "direct", 0}, true
+		return groupDescriptor{"moonfall", "Moonfall", "Tous les coups de l'attaque maintenue", "direct", "charged_attack", 0}, true
 	case strings.Contains(id, "Branch"):
-		return groupDescriptor{"flickering-shadow", "Flickering Shadow", "Tous les coups de l'attaque maintenue", "direct", 0}, true
+		return groupDescriptor{"flickering-shadow", "Flickering Shadow", "Tous les coups de l'attaque maintenue", "direct", "charged_attack", 0}, true
 	case strings.Contains(id, "PerfectEvadeAttack"):
-		return groupDescriptor{"voidstep", "Voidstep", "Riposte complète après esquive critique", "direct", 0}, true
+		return groupDescriptor{"voidstep", "Voidstep", "Riposte complète après esquive critique", "direct", "dodge_counter", 0}, true
 	case strings.Contains(id, "AirAttack"):
-		return groupDescriptor{"broken-twigs", "Broken Twigs", "Attaque plongeante", "direct", 0}, true
+		return groupDescriptor{"broken-twigs", "Broken Twigs", "Attaque plongeante", "direct", "plunging_attack", 0}, true
 	case strings.Contains(id, "QTE"):
-		return groupDescriptor{"stoked-flame", "Stoked Flame", "Compétence de soutien complète", "direct", 0}, true
+		return groupDescriptor{"stoked-flame", "Stoked Flame", "Compétence de soutien complète", "direct", "qte", 0}, true
 	default:
 		return groupDescriptor{}, false
 	}
@@ -235,7 +236,7 @@ func groupDamageResults(build, current []damage.Result) []DamageGroup {
 			}
 			group := groups[descriptor.id]
 			if group == nil {
-				group = &DamageGroup{ID: descriptor.id, Name: descriptor.name, Description: descriptor.description, Category: descriptor.category, MaxStacks: descriptor.maxStacks}
+				group = &DamageGroup{ID: descriptor.id, Name: descriptor.name, Description: descriptor.description, Category: descriptor.category, ActionType: descriptor.actionType, MaxStacks: descriptor.maxStacks}
 				groups[descriptor.id] = group
 			}
 			if currentValues {

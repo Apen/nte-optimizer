@@ -11,6 +11,7 @@ import (
 type moduleCandidatePool struct {
 	eligible            []optimizer.Candidate
 	raw                 []optimizer.Candidate
+	current             []optimizer.Candidate
 	selectionObjectives []optimizer.ObjectiveGoal
 	excludedEquipped    int
 }
@@ -63,6 +64,9 @@ func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile 
 			}
 		}
 		pool.eligible = append(pool.eligible, candidate)
+		if profile.CharacterID != 0 && module.EquippedCharacterID == profile.CharacterID {
+			pool.current = append(pool.current, candidate)
+		}
 	}
 	return pool
 }
@@ -97,6 +101,7 @@ func (s OptimizerService) selectModuleCandidates(pool moduleCandidatePool, objec
 		}
 	}
 	selected = appendPinnedCandidates(selected, pool.eligible, s.PinnedModuleIDs)
+	selected = appendCurrentEquipmentCandidates(selected, pool.current, plan)
 	selectedIDs := candidateIDs(selected)
 	for moduleID := range s.PinnedModuleIDs {
 		if s.ExcludedModuleIDs[moduleID] {
@@ -107,6 +112,20 @@ func (s OptimizerService) selectModuleCandidates(pool moduleCandidatePool, objec
 		}
 	}
 	return candidateSelection{selected: selected, perGeometry: perGeometry}, nil
+}
+
+func appendCurrentEquipmentCandidates(selected, candidates []optimizer.Candidate, plan searchPlan) []optimizer.Candidate {
+	if !plan.approximate {
+		return selected
+	}
+	selectedIDs := candidateIDs(selected)
+	for _, candidate := range candidates {
+		if candidate.Module.EquippedCharacterID != 0 && !selectedIDs[candidate.Module.LocalID] {
+			selected = append(selected, candidate)
+			selectedIDs[candidate.Module.LocalID] = true
+		}
+	}
+	return selected
 }
 
 func appendPinnedCandidates(selected, candidates []optimizer.Candidate, pinned map[string]bool) []optimizer.Candidate {

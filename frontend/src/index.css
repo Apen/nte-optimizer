@@ -107,6 +107,7 @@ fieldset:disabled { opacity: .65; }
 .score-strip > div { min-width: 0; border-radius: 8px; padding: 12px 14px; }
 .score-strip strong { font-size: 24px; letter-spacing: -.03em; }
 .table-scroll { overflow: auto; border: 1px solid #2d3b50; border-radius: 8px; max-height: 490px; }
+.score-details-table { max-height: none; }
 .ranking-table { width: 100%; min-width: 860px; border-collapse: separate; border-spacing: 0; font-size: 13px; }
 .ranking-table th { position: sticky; top: 0; z-index: 1; background: #0a111e; padding: 8px 10px; font-size: 10px; font-weight: 650; color: #a9bad0; text-align: right; text-transform: uppercase; letter-spacing: .06em; }
 .ranking-table td { padding: 7px 10px; border-top: 1px solid #263248; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }

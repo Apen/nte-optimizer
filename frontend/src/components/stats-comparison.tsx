@@ -2,12 +2,10 @@ import { t } from '../i18n'
 import { formatStat } from '../lib/format'
 import { usePresentation } from '../presentation'
 import type { GoalProgress, Result } from '../types'
-import { Card, CardContent, CardHeader } from './ui/card'
 
 export function StatsComparison({ result }: { result: Result }) {
   if (!result.goals?.length) return null
-  const reached = result.goals.filter(goal => goal.reached).length
-  return <Card className="border-slate-700 shadow-[inset_0_2px_#ff4598]"><CardHeader><div className="flex flex-wrap items-end justify-between gap-3"><div><p className="eyebrow">{t('best_proposal')}</p><h2 className="text-2xl font-bold">{t('stats_after_optimization')}</h2><p className="mt-1 text-sm text-slate-400">{t('objectives_reached', { reached, total: result.goals.length })}</p></div>{result.stats.completeness === 'partial' && <span className="rounded-full bg-amber-950 px-3 py-1 text-xs font-bold text-amber-300">{t('estimate')}</span>}</div></CardHeader><CardContent><div className="overflow-x-auto rounded-xl border border-slate-800"><div className="min-w-[700px]"><div className="comparison-grid bg-slate-950/80 text-[10px] font-black uppercase tracking-wider text-slate-500"><span>{t('statistic')}</span><span>{t('in_game')}</span><span>{t('with_build')}</span><span>{t('objective')}</span><span>{t('result')}</span></div>{result.goals.map((goal, index) => <ComparisonRow key={goal.property_id} goal={goal} current={result.current_goals?.[index]} conditional={result.conditional_goals?.[index]} currentConditional={result.current_conditional_goals?.[index]} />)}</div></div></CardContent></Card>
+  return <section className="grid gap-4">{result.stats.completeness === 'partial' && <div className="flex justify-end"><span className="rounded-full bg-amber-950 px-3 py-1 text-xs font-bold text-amber-300">{t('estimate')}</span></div>}<div className="overflow-x-auto rounded-xl border border-slate-800"><div className="min-w-[700px]"><div className="comparison-grid bg-slate-950/80 text-[10px] font-black uppercase tracking-wider text-slate-500"><span>{t('statistic')}</span><span>{t('in_game')}</span><span>{t('with_build')}</span><span>{t('objective_label')}</span><span>{t('result')}</span></div>{result.goals.map((goal, index) => <ComparisonRow key={goal.property_id} goal={goal} current={result.current_goals?.[index]} conditional={result.conditional_goals?.[index]} currentConditional={result.current_conditional_goals?.[index]} />)}</div></div></section>
 }
 
 function signedStat(property: string, value: number) {

@@ -47,16 +47,10 @@ func (e CartridgeSetEvaluator) prepareStatBound(groups []blueprintGroup, pools m
 	}
 	options := []option{}
 	geometry := []string{}
-	area := 0
 	for _, group := range groups {
 		for range group.count {
 			geometry = append(geometry, group.geometry)
 		}
-		largest := 0
-		for _, candidate := range pools[group.geometry] {
-			largest = max(largest, candidate.Module.Area)
-		}
-		area += largest * group.count
 	}
 	summaries := []map[string]float64{}
 	for _, set := range e.sets {
@@ -78,9 +72,6 @@ func (e CartridgeSetEvaluator) prepareStatBound(groups []blueprintGroup, pools m
 		summaries = append(summaries, values)
 		bonus := scoreForMatched(set.definition.Bonuses, len(matched)) * set.priority
 		score := bonus + set.cartridgeScore
-		if len(e.objectives) > 0 {
-			score += 500*bonus + 1000*float64(area)
-		}
 		options = append(options, option{score: score})
 	}
 	for i, values := range summaries {

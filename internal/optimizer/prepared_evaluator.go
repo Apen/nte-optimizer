@@ -143,10 +143,9 @@ func (e CartridgeSetEvaluator) prepareBlueprintEvaluations(geometries []string) 
 	main, sub, totals := map[string]float64{}, map[string]float64{}, map[string]float64{}
 	return func(placements []Placement, accept func(BonusResult)) {
 		clear(moduleValues)
-		occupied, traitCount := 0, 0
+		traitCount := 0
 		for _, placement := range placements {
 			module := projection.modules[placement.ModuleID]
-			occupied += module.area
 			traitCount += module.trait
 			for _, atom := range module.stats {
 				stat := projection.values[atom]
@@ -215,7 +214,7 @@ func (e CartridgeSetEvaluator) prepareBlueprintEvaluations(geometries []string) 
 					}
 					utility, _ = sourceObjectiveValues(totals, main, sub, e.character, e.objectives)
 				}
-				result.Score += utility + result.SetBonusScore*500 + float64(occupied)*1000
+				result.Score += utility
 			}
 			accept(result)
 		}

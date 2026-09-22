@@ -56,6 +56,9 @@ func TestGroupDamageResultsAddsMultiHitActionsAndDOTStacks(t *testing.T) {
 	if got := byID["inferno"]; got.BuildDamage != 350 || got.CurrentDamage != 280 || got.Instances != 2 {
 		t.Fatalf("unexpected ultimate group: %+v", got)
 	}
+	if byID["inferno"].ActionType != "ultimate" || byID["heartwrench"].ActionType != "dot" {
+		t.Fatalf("unexpected action types: ultimate=%q dot=%q", byID["inferno"].ActionType, byID["heartwrench"].ActionType)
+	}
 	if got := byID["heartwrench"]; got.BuildDamage != 500 || got.BuildMaxTick != 5000 || got.MaxStacks != 10 {
 		t.Fatalf("unexpected DOT group: %+v", got)
 	}

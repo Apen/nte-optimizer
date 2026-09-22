@@ -33,6 +33,26 @@ func TestGeneralWeightAppliesToMainAndSubStats(t *testing.T) {
 	}
 }
 
+func TestDeterministicModuleSubstatsKeepEqualPerCellRelevance(t *testing.T) {
+	character := Character{SubWeights: map[string]float64{"CritBase": 1}}
+	references := References{"CritBase": 0.02}
+	tests := []struct {
+		area  int
+		value float64
+	}{
+		{area: 2, value: 0.02},
+		{area: 3, value: 0.03},
+		{area: 4, value: 0.04},
+	}
+	for _, test := range tests {
+		module := nte.Module{Area: test.area, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: test.value, Percent: true}}}
+		density := Score(module, character, references) / float64(test.area)
+		if math.Abs(density-0.5) > 1e-12 {
+			t.Fatalf("area %d relevance density = %v, want 0.5", test.area, density)
+		}
+	}
+}
+
 func TestScoreDetailedAppliesSoftAndHardCaps(t *testing.T) {
 	m := nte.Module{SubStats: []nte.Stat{{PropertyID: "CritBase", Value: 0.2, Percent: true}}}
 	c := Character{

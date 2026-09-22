@@ -48,7 +48,7 @@ func TestLoadSetCatalogNormalizesDataminedInventoryIDs(t *testing.T) {
 	}
 }
 
-func TestObjectiveScoreUsesToleranceAndImportance(t *testing.T) {
+func TestObjectiveScoreUsesTargetAndImportance(t *testing.T) {
 	goal := []ObjectiveGoal{{PropertyID: "CritBase", Minimum: .60, Tolerance: .05, Importance: 1}}
 	atTarget := ObjectiveScore(map[string]float64{"CritBase": .60}, goal)
 	nearTarget := ObjectiveScore(map[string]float64{"CritBase": .59}, goal)
@@ -86,6 +86,25 @@ func TestStrictMinimumDoesNotDependOnScoringImportance(t *testing.T) {
 	}
 	if belowToleranceFloor(20000, goal) {
 		t.Fatal("the exact strict minimum should remain admissible")
+	}
+}
+
+func TestConstraintsDoNotChangeObjectiveScore(t *testing.T) {
+	strict := ObjectiveGoal{PropertyID: "CritDamageBase", Minimum: 2.30, Tolerance: 10.0 / 230.0, Importance: 1, StrictMinimum: true}
+	soft := strict
+	soft.StrictMinimum = false
+	soft.Tolerance = 0
+
+	strictFloor := ObjectiveScore(map[string]float64{"CritDamageBase": 2.20}, []ObjectiveGoal{strict})
+	strictTarget := ObjectiveScore(map[string]float64{"CritDamageBase": 2.30}, []ObjectiveGoal{strict})
+	softFloor := ObjectiveScore(map[string]float64{"CritDamageBase": 2.20}, []ObjectiveGoal{soft})
+	softTarget := ObjectiveScore(map[string]float64{"CritDamageBase": 2.30}, []ObjectiveGoal{soft})
+
+	if strictTarget-strictFloor < 1.5 {
+		t.Fatalf("a value at the strict floor should remain materially below target: floor=%v target=%v", strictFloor, strictTarget)
+	}
+	if strictFloor != softFloor || strictTarget != softTarget {
+		t.Fatalf("constraints must not alter ranking: strict=%v/%v soft=%v/%v", strictFloor, strictTarget, softFloor, softTarget)
 	}
 }
 
@@ -130,6 +149,22 @@ func TestCartridgeSetEvaluatorConsidersOwnedNonPreferredSets(t *testing.T) {
 	got := evaluator.Evaluate([]Placement{{ModuleID: "v"}})
 	if got.SetID != "alternative" || got.CartridgeID != "alternative-cartridge" {
 		t.Fatalf("owned alternative set was excluded by recommendation: %#v", got)
+	}
+}
+
+func TestObjectiveEvaluatorDoesNotRewardOccupiedArea(t *testing.T) {
+	catalog := SetCatalog{Definitions: map[string]SetDefinition{
+		"set": {ID: "set", InventorySetID: "set", RequiredGeometries: []string{"H_2"}, Bonuses: []SetBonus{{Count: 1, Score: 3}}},
+	}}
+	modules := []Candidate{
+		{Module: nte.Module{LocalID: "required", Geometry: "H_2", Area: 2}},
+		{Module: nte.Module{LocalID: "filler", Geometry: "V_3", Area: 3}},
+	}
+	evaluator := NewExactObjectiveEvaluator(catalog, []nte.Cartridge{{LocalID: "c", SetID: "set"}}, nil, modules, scoring.Character{}, nil, []ObjectiveGoal{{PropertyID: "CritBase", Minimum: .7}}, nil)
+	compact := evaluator.Evaluate([]Placement{{ModuleID: "required"}})
+	filled := evaluator.Evaluate([]Placement{{ModuleID: "required"}, {ModuleID: "filler"}})
+	if compact.Score != filled.Score {
+		t.Fatalf("occupied area changed objective score: compact=%v filled=%v", compact.Score, filled.Score)
 	}
 }
 

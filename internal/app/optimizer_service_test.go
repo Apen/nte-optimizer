@@ -206,7 +206,7 @@ func TestRankingExplainsObjectiveTradeoffWithoutChangingPublicScore(t *testing.T
 			}
 			explainRanking(&solution, map[string]float64{"AtkFinal": 100, "CritBase": .7}, goals, mode)
 			r := solution.Ranking
-			if solution.Score != 10 || r.Score != 1040.5 || r.Equipment != 10 || r.Objectives != 30.5 || math.Abs(r.Structure-1000) > 1e-9 {
+			if solution.Score != 10 || r.Score != 40.5 || r.Equipment != 10 || r.Objectives != 30.5 || math.Abs(r.Structure-1000) > 1e-9 {
 				t.Fatalf("incorrect decomposition: public=%g ranking=%+v", solution.Score, r)
 			}
 			if len(r.Contributions) != 2 || r.Contributions[0].Points != 20 || r.Contributions[1].Points != 10.5 || r.Contributions[1].Importance != 1 {

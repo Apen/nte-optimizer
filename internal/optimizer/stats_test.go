@@ -28,6 +28,22 @@ func TestBuildStatSummarySeparatesConditionalSetEffect(t *testing.T) {
 	}
 }
 
+func TestBasicDamageIndexUsesExpectedCriticalDamage(t *testing.T) {
+	stats := map[string]float64{
+		"AtkFinal":            1000,
+		"CritBase":            .5,
+		"CritDamageBase":      2,
+		"DamageUpGeneralBase": .2,
+	}
+	if got := BasicDamageIndex(stats); !near(got, 1800) {
+		t.Fatalf("basic damage index = %v, want 1800", got)
+	}
+	stats["CritBase"] = 1.5
+	if got := BasicDamageIndex(stats); !near(got, 2400) {
+		t.Fatalf("crit rate should be capped at 100%%: got %v", got)
+	}
+}
+
 func near(a, b float64) bool { return math.Abs(a-b) < 0.000001 }
 
 func TestDeriveUsesHPMaxUpProperty(t *testing.T) {

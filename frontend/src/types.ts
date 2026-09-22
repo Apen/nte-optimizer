@@ -7,14 +7,15 @@ export type TargetPreset = { name: string; goals: TargetGoal[] }
 export type Cell = { x: number; y: number }
 export type Placement = { module_id: string; cells: Cell[] }
 export type Stat = { property_id: string; value: number; percent: boolean }
+export type EquipmentScoreContribution = { source?:string; property_id:string; value:number; effective_value?:number; reference_value?:number; normalized_value?:number; weight:number; score:number; capped?:boolean }
 export type OptimizedModule = {
   module: { local_id: string; game_item_id?: string; geometry: string; main_stats: Stat[]; sub_stats: Stat[]; equipped_character_id?: number }
-  breakdown: { total: number; contributions?: { property_id:string; weight:number; score:number }[] }
+  breakdown: { total: number; contributions?: EquipmentScoreContribution[] }
   equipped_character_name?: string
 }
 export type StatSummary = { completeness: string; missing_sources: string[]; sources: Record<string, Record<string, number>>; derived: Record<string, number>; derived_conditional: Record<string, number> }
 export type DamageResult = { instance_id:string; name:string; category:string; non_crit:number; crit:number; expected:number; total:number; factors:{coefficient:number;crit_rate:number;crit_damage:number;damage_zone:number;defense_zone:number;resistance_zone:number}; warnings?:string[] }
-export type DamageGroup = { id:string;name:string;description:string;category:string;build_damage:number;current_damage?:number;build_non_crit:number;current_non_crit?:number;build_crit:number;current_crit?:number;instances:number;max_stacks?:number;build_max_tick?:number;current_max_tick?:number;build_max_crit_tick?:number;current_max_crit_tick?:number }
+export type DamageGroup = { id:string;name:string;description:string;category:string;action_type?:string;build_damage:number;current_damage?:number;build_non_crit:number;current_non_crit?:number;build_crit:number;current_crit?:number;instances:number;max_stacks?:number;build_max_tick?:number;current_max_tick?:number;build_max_crit_tick?:number;current_max_crit_tick?:number }
 export type DamageAnalysis = { status:string; enemy:{level:number;resistance:number;approximation?:string}; build:DamageResult[]; current?:DamageResult[]; groups?:DamageGroup[]; missing_inputs?:string[]; catalog_source:string }
 export type GoalProgress = TargetGoal & { current: number; missing: number; progress: number; reached: boolean }
 export type Result = {
@@ -23,7 +24,7 @@ export type Result = {
   grid: { width: number; height: number; playable: Cell[] }
   modules: OptimizedModule[]
   cartridge?: { local_id: string; game_item_id: string; set_name: string; main_stats: Stat[]; sub_stats: Stat[]; equipped_character_id?:number }
-  cartridge_breakdown?: { total: number; contributions?: { property_id:string; weight:number; score:number }[] }
+  cartridge_breakdown?: { total: number; contributions?: EquipmentScoreContribution[] }
   stats: StatSummary
   current_stats?: StatSummary
   set: { id: string; name: string; required_geometries: string[] }
