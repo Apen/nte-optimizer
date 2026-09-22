@@ -31,8 +31,62 @@ func (s OptimizerService) localizedDamageAnalysis(character *decoded.Character, 
 				analysis.Groups[index].Description = localized.Description
 			}
 		}
+		if localized := localizedAbilityLabel(catalog.Abilities, analysis.Groups[index].ID); localized != "" {
+			analysis.Groups[index].Name = localized
+		} else if strings.HasPrefix(analysis.Groups[index].Name, "GE_") {
+			analysis.Groups[index].Name = fallbackActionName(catalog.UI, analysis.Groups[index].ActionType)
+		}
 	}
 	return analysis
+}
+
+func localizedAbilityLabel(labels map[string]string, abilityID string) string {
+	for _, candidate := range abilityLabelCandidates(abilityID) {
+		for id, label := range labels {
+			if strings.EqualFold(id, candidate) && strings.TrimSpace(label) != "" {
+				return strings.TrimSpace(label)
+			}
+		}
+	}
+	return ""
+}
+
+func abilityLabelCandidates(abilityID string) []string {
+	parts := strings.Split(abilityID, "_")
+	if len(parts) < 3 || parts[0] != "GA" {
+		return []string{abilityID}
+	}
+	character := regexp.MustCompile(`[0-9]{3}$`).ReplaceAllString(parts[1], "")
+	action := strings.Join(parts[2:], "_")
+	normalizedAction := action
+	switch {
+	case strings.Contains(action, "UltraSkill"):
+		normalizedAction = "UltraSkill"
+	case strings.Contains(action, "QTE"):
+		normalizedAction = "QTE"
+	case strings.Contains(action, "Skill"):
+		normalizedAction = "Skill"
+	case strings.Contains(action, "Melee") || strings.Contains(action, "Appear") || strings.Contains(action, "Branch"):
+		normalizedAction = "Melee"
+	}
+	base := "GA_" + character + "_" + normalizedAction
+	return []string{abilityID, base, strings.Replace(base, "UltraSkill", "UtraSkill", 1), base + "1"}
+}
+
+func fallbackActionName(labels map[string]string, actionType string) string {
+	keys := map[string]string{
+		"ultimate":        "skill_ultimate",
+		"skill":           "skill_ability",
+		"basic_attack":    "skill_basic_attack",
+		"qte":             "skill_qte",
+		"charged_attack":  "damage_type_charged_attack",
+		"dodge_counter":   "damage_type_dodge_counter",
+		"plunging_attack": "damage_type_plunging_attack",
+	}
+	if label := strings.TrimSpace(labels[keys[actionType]]); label != "" {
+		return label
+	}
+	return "Damage action"
 }
 
 type DamageAnalysis struct {
@@ -129,7 +183,7 @@ func (s OptimizerService) damageAnalysis(character *decoded.Character, build opt
 		return analysis
 	}
 	analysis.Status = "atomic_preview"
-	analysis.Groups = groupDamageResults(analysis.Build, analysis.Current)
+	analysis.Groups = groupDamageResults(character.CharacterID, analysis.Build, analysis.Current)
 	analysis.MissingInputs = append(analysis.MissingInputs,
 		"missing_rotation",
 		"missing_enemy_profile",
@@ -182,7 +236,14 @@ type groupDescriptor struct {
 	maxStacks                                   int
 }
 
-func damageGroupDescriptor(id string) (groupDescriptor, bool) {
+func damageGroupDescriptor(characterID int, result damage.Result) (groupDescriptor, bool) {
+	id := result.InstanceID
+	if characterID != 1036 {
+		if result.SkillID == "" {
+			return groupDescriptor{}, false
+		}
+		return genericDamageGroupDescriptor(result), true
+	}
 	switch {
 	case strings.Contains(id, "reaction_scorch"):
 		return groupDescriptor{"scorch", "Scorch", "Tick triggered by Zankou's Incantation + Chaos reaction", "reaction", "reaction", 3}, true
@@ -226,11 +287,40 @@ func damageGroupDescriptor(id string) (groupDescriptor, bool) {
 	}
 }
 
-func groupDamageResults(build, current []damage.Result) []DamageGroup {
+func genericDamageGroupDescriptor(result damage.Result) groupDescriptor {
+	actionType := "skill"
+	lowerID := strings.ToLower(result.SkillID)
+	switch {
+	case strings.Contains(lowerID, "ultraskill"):
+		actionType = "ultimate"
+	case strings.Contains(lowerID, "melee"):
+		actionType = "basic_attack"
+	case strings.Contains(lowerID, "branch"):
+		actionType = "charged_attack"
+	case strings.Contains(lowerID, "evade"):
+		actionType = "dodge_counter"
+	case strings.Contains(lowerID, "airattack"):
+		actionType = "plunging_attack"
+	case strings.Contains(lowerID, "qte"):
+		actionType = "qte"
+	}
+	category := string(result.Category)
+	if category == "" {
+		category = "direct"
+	}
+	return groupDescriptor{
+		id:         result.SkillID,
+		name:       result.Name,
+		category:   category,
+		actionType: actionType,
+	}
+}
+
+func groupDamageResults(characterID int, build, current []damage.Result) []DamageGroup {
 	groups := map[string]*DamageGroup{}
 	add := func(results []damage.Result, currentValues bool) {
 		for _, result := range results {
-			descriptor, ok := damageGroupDescriptor(result.InstanceID)
+			descriptor, ok := damageGroupDescriptor(characterID, result)
 			if !ok {
 				continue
 			}

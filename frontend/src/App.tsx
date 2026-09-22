@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Ban, CheckCircle2, LockKeyhole, Play, Save, Square, X } from 'lucide-react'
-import { AccountImportStatus, BuildWorkspace, EquipmentCatalog, EquipBuildResult, LastOptimizationLog, Localization, OptimizeFlexibleSelection, Profiles, ResetProfileStrategy, SaveProfileSettings, SavedBuildResult, SetCharacterPriority, StopOptimization, Target } from '../wailsjs/go/main/DesktopApp'
+import { AccountImportStatus, BuildWorkspace, CheckForUpdate, EquipmentCatalog, EquipBuildResult, LastOptimizationLog, Localization, OptimizeFlexibleSelection, Profiles, ResetProfileStrategy, SaveProfileSettings, SavedBuildResult, SetCharacterPriority, StopOptimization, Target } from '../wailsjs/go/main/DesktopApp'
 import { AppSidebar, MobileNavigation, type Page } from './components/app-navigation'
 import { CartridgePieceCard, ModulePieceCard } from './components/equipment-cards'
 import { SearchStatus, StatsEditor, weightForGoal } from './components/optimizer-configuration'
@@ -9,6 +9,7 @@ import { DamagePreview } from './components/damage-preview'
 import { BuildRankingTable } from './components/build-ranking'
 import { StatsComparison } from './components/stats-comparison'
 import { AdvancedResultDetails } from './components/advanced-result-details'
+import { UpdateDialog, type UpdateInfo } from './components/update-dialog'
 import { AccountBuild } from './components/result-summary'
 import { Button } from './components/ui/button'
 import { Card, CardContent } from './components/ui/card'
@@ -51,6 +52,7 @@ export function App() {
   const [importSummary,setImportSummary]=useState<AccountImportSummary>({has_import:false,characters:0,modules:0,cartridges:0,weapons:0})
   const [saveToast,setSaveToast]=useState('')
   const [optimizationLog,setOptimizationLog]=useState<OptimizationLog>()
+  const [update,setUpdate]=useState<UpdateInfo>()
   const toastTimer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined)
   const selectionTouched=useRef(false)
   const selectedProfile=useMemo(()=>profiles.find(item=>item.id===profile),[profiles,profile])
@@ -72,6 +74,7 @@ export function App() {
   useEffect(() => { if(selectionTouched.current&&selectedCharacter)return;const next=workspace.characters.find(character=>profiles.some(item=>item.character_id===character.character_id))?.character_id||workspace.characters[0]?.character_id||0;if(next)setSelectedCharacter(next) },[workspace.characters,profiles,selectedCharacter])
   useEffect(() => { let active=true;EquipmentCatalog(locale).then((value:Catalog)=>{if(active)setCatalog(value)}).catch(error=>{if(active)setStatus(String(error))});return()=>{active=false} },[locale])
   useEffect(() => { AccountImportStatus().then((value:AccountImportSummary)=>setImportSummary(value)).catch(error=>setStatus(String(error))) },[])
+  useEffect(() => { CheckForUpdate().then((value:UpdateInfo)=>{if(value.available)setUpdate(value)}).catch(()=>{}) },[])
   useEffect(() => { let active=true;setActiveLocale(locale);localStorage.setItem('nte-optimizer-locale',locale);Localization(locale).then((value:LocalizationCatalog)=>{if(!active)return;applyLocalization(locale,value);setPresentation(value)}).catch(error=>{if(active)setStatus(String(error))});return()=>{active=false} },[locale])
   useEffect(() => { const matches=profiles.filter(item=>item.character_id===selectedCharacter); setProfile(current=>matches.some(item=>item.id===current)?current:(matches[0]?.id||'')); if(selectedCharacter&&matches.length===0)setStatus(t('status_no_profile')) },[selectedCharacter,profiles])
   useEffect(() => { if(!profile){setPreset(undefined);setGoals({});setMaximums({});setDisabledGoals([]);setStrictGoals([]);return};let active=true;Target(profile).then((value:TargetPreset)=>{if(!active)return;const saved=profiles.find(item=>item.id===profile);setPreset(value);setGoals(Object.fromEntries(value.goals.map(goal=>[goal.property_id,saved?.saved_goals?.[goal.property_id]?.target!=null?saved.saved_goals[goal.property_id].target*(goal.percent?100:1):displayGoal(goal)])));setMaximums(Object.fromEntries(value.goals.map(goal=>[goal.property_id,saved?.saved_goals?.[goal.property_id]?.maximum!=null?(saved.saved_goals[goal.property_id].maximum||0)*(goal.percent?100:1):goal.maximum!=null?(goal.percent?goal.maximum*100:goal.maximum):0])));setTolerances(Object.fromEntries(value.goals.map(goal=>[goal.property_id,saved?.saved_goals?.[goal.property_id]?.tolerance!=null?saved.saved_goals[goal.property_id].tolerance*100:5])));setDisabledGoals(value.goals.filter(goal=>saved?.saved_goals?.[goal.property_id]?.disabled).map(goal=>goal.property_id));setStrictGoals(value.goals.filter(goal=>saved?.saved_goals?.[goal.property_id]?.strict_minimum).map(goal=>goal.property_id)) }).catch(error=>{if(active)setStatus(String(error))});return()=>{active=false} },[profile,profiles])
@@ -97,7 +100,7 @@ export function App() {
   const togglePinned=(id:string)=>{setExcludedModules(items=>items.filter(item=>item!==id));setPinnedModules(items=>items.includes(id)?items.filter(item=>item!==id):[...items,id])}
   const toggleExcluded=(id:string)=>{setPinnedModules(items=>items.filter(item=>item!==id));setExcludedModules(items=>items.includes(id)?items.filter(item=>item!==id):[...items,id])}
   const selectCharacter=(id:number)=>{selectionTouched.current=true;setSelectedCharacter(id);setResult(undefined);setPinnedModules([]);setExcludedModules([])}
-  return <PresentationProvider catalog={presentation}><div className="app-shell"><AppSidebar page={page} onPage={setPage} characters={workspace.characters} catalog={catalog} importSummary={importSummary} locale={locale} onLocaleChange={setLocale}/><main className="app-main">
+  return <PresentationProvider catalog={presentation}><div className="app-shell">{update&&<UpdateDialog update={update} onClose={()=>setUpdate(undefined)}/>}<AppSidebar page={page} onPage={setPage} characters={workspace.characters} catalog={catalog} importSummary={importSummary} locale={locale} onLocaleChange={setLocale}/><main className="app-main">
     <MobileNavigation page={page} onPage={setPage} locale={locale} onLocaleChange={setLocale}/>
     <p className="mb-3 text-right text-xs text-slate-500" role="status" aria-live="polite">{status}</p>
     {page==='characters'?<CharactersPage characters={workspace.characters} selected={selectedCharacter} onSelect={selectCharacter} onMove={moveCharacter} onBuild={openCharacterBuild} onState={id=>{selectCharacter(id);setPage('character-state')}}/>:page==='character-state'?<CharacterStatePage characterID={selectedCharacter} locale={locale} onBack={()=>setPage('characters')}/>:page==='cartridges'?<CartridgesPage items={catalog.cartridges} characters={workspace.characters}/>:page==='modules'?<ModulesPage items={catalog.modules} characters={workspace.characters}/>:page==='arcs'?<ArcsPage items={catalog.arcs}/>:page==='resources'?<ResourcesPage items={catalog.resources}/>:page==='import'?<ImportPage summary={importSummary} locale={locale} onImported={refreshImportedData}/>:<>

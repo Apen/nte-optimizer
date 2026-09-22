@@ -12,6 +12,8 @@ export function SavedBuildResult(characterID: number): Promise<any>;
 export function SetCharacterPriority(priority: number[], language: string): Promise<any>;
 export function Target(profileID: string): Promise<any>;
 export function AccountImportStatus(): Promise<any>;
+export function CheckForUpdate(): Promise<{available:boolean;current_version:string;latest_version?:string;download_url?:string}>;
+export function OpenDownloadURL(url: string): Promise<void>;
 export function ScanAndImportAccount(language: string, seconds: number): Promise<any>;
 export function OptimizeFlexibleSelection(profileID: string, ignorePriority: boolean, language: string, mode: string, goals: Record<string, {target:number; maximum:number; tolerance:number; importance:number}>, pinnedModuleIDs: string[], excludedModuleIDs: string[], weights: {main_stats:string[];weights:Record<string,number>}): Promise<any>;
 export function StopOptimization(): Promise<boolean>;

@@ -48,7 +48,7 @@ func TestGroupDamageResultsAddsMultiHitActionsAndDOTStacks(t *testing.T) {
 		{InstanceID: "GE_Player_Zankou_UltraSkill2_Damage", Total: 200},
 		{InstanceID: "GE_Player_Zankou_DotDamage", Total: 400},
 	}
-	groups := groupDamageResults(build, current)
+	groups := groupDamageResults(1036, build, current)
 	byID := map[string]DamageGroup{}
 	for _, group := range groups {
 		byID[group.ID] = group
@@ -64,6 +64,49 @@ func TestGroupDamageResultsAddsMultiHitActionsAndDOTStacks(t *testing.T) {
 	}
 	if got := byID["inferno"]; got.BuildNonCrit != 150 || got.BuildCrit != 450 {
 		t.Fatalf("unexpected crit totals: %+v", got)
+	}
+}
+
+func TestGroupDamageResultsDoesNotApplyZankouLabelsToOtherCharacters(t *testing.T) {
+	groups := groupDamageResults(1076, []damage.Result{
+		{
+			InstanceID: "GE_Player_Shinku_Skill1_1_Damage",
+			SkillID:    "GA_Shinku_Skill1",
+			Name:       "Shinku skill hit",
+			Category:   damage.CategoryDirect,
+			Total:      100,
+		},
+	}, nil)
+	if len(groups) != 1 {
+		t.Fatalf("expected one Shinku group, got %+v", groups)
+	}
+	if groups[0].ID != "GA_Shinku_Skill1" || groups[0].Name != "Shinku skill hit" {
+		t.Fatalf("unexpected Shinku group: %+v", groups[0])
+	}
+	if groups[0].Name == "Sanguine Dash" {
+		t.Fatal("Shinku skill was mislabeled with a Zankou skill name")
+	}
+}
+
+func TestLocalizedAbilityLabelHandlesRuntimeAliases(t *testing.T) {
+	labels := map[string]string{
+		"GA_Chaos_UltraSkill": "Retribution",
+		"GA_Shinku_Skill1":    "High-Speed Breach",
+	}
+	for abilityID, want := range map[string]string{
+		"GA_Chaos071_UltraSkill": "Retribution",
+		"GA_Shinku_Skill_Rage":   "High-Speed Breach",
+	} {
+		if got := localizedAbilityLabel(labels, abilityID); got != want {
+			t.Fatalf("localizedAbilityLabel(%q) = %q, want %q", abilityID, got, want)
+		}
+	}
+}
+
+func TestFallbackActionNameNeverExposesTechnicalInstanceID(t *testing.T) {
+	labels := map[string]string{"skill_ultimate": "Ultimate"}
+	if got := fallbackActionName(labels, "ultimate"); got != "Ultimate" {
+		t.Fatalf("unexpected fallback label %q", got)
 	}
 }
 

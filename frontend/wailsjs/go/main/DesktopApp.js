@@ -56,6 +56,14 @@ export function AccountImportStatus() {
   return window['go']['main']['DesktopApp']['AccountImportStatus']()
 }
 
+export function CheckForUpdate() {
+  return window['go']['main']['DesktopApp']['CheckForUpdate']()
+}
+
+export function OpenDownloadURL(url) {
+  return window['go']['main']['DesktopApp']['OpenDownloadURL'](url)
+}
+
 export function ScanAndImportAccount(language, seconds) {
   return window['go']['main']['DesktopApp']['ScanAndImportAccount'](language, seconds)
 }

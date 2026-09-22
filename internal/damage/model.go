@@ -104,6 +104,7 @@ type Multipliers struct {
 
 type Result struct {
 	InstanceID string      `json:"instance_id"`
+	SkillID    string      `json:"skill_id,omitempty"`
 	Name       string      `json:"name"`
 	Category   Category    `json:"category"`
 	NonCrit    float64     `json:"non_crit"`

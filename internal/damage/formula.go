@@ -100,6 +100,7 @@ func Calculate(characterLevel int, stats Stats, enemy Enemy, instance Instance) 
 	expected := nonCrit*(1-critRate) + crit*critRate
 	result := Result{
 		InstanceID: instance.ID,
+		SkillID:    instance.SkillID,
 		Name:       instance.Name,
 		Category:   instance.Category,
 		NonCrit:    nonCrit,

@@ -4,13 +4,16 @@ import (
 	"context"
 	"fmt"
 	"path/filepath"
+	"strings"
 	"sync"
 
 	appservice "nte-optimizer/internal/app"
+	"nte-optimizer/internal/buildinfo"
 	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/optimizer"
 	"nte-optimizer/internal/scannerlauncher"
 	"nte-optimizer/internal/target"
+	"nte-optimizer/internal/updatecheck"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -159,6 +162,16 @@ func (a *DesktopApp) Target(profileID string) (target.BuildTarget, error) {
 
 func (a *DesktopApp) AccountImportStatus() (appservice.AccountImportSummary, error) {
 	return appservice.LoadAccountImportSummary(a.stateDir)
+}
+
+func (a *DesktopApp) CheckForUpdate() (updatecheck.Result, error) {
+	return updatecheck.Check(a.ctx, updatecheck.HTTPClient(), buildinfo.Version)
+}
+
+func (a *DesktopApp) OpenDownloadURL(url string) {
+	if strings.HasPrefix(url, "https://github.com/Apen/nte-optimizer/") {
+		runtime.BrowserOpenURL(a.ctx, url)
+	}
 }
 
 // ScanAndImportAccount runs only the packet-capture helper as administrator.
