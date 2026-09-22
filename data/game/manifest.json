@@ -123,7 +123,7 @@
     {
       "path": "locales/en.json",
       "schema_version": 1,
-      "sha256": "fd058d5399872a49cf8c9de71d761b5748552f22226fddd0f5999ceb5b6fa62f",
+      "sha256": "979a27f76e7a0750f5eb7e032e7c407eb218e2f98b87bef0a9ccb7a9ba309a38",
       "sources": [
         "datamine/data/localization/en.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -138,7 +138,7 @@
     {
       "path": "locales/fr.json",
       "schema_version": 1,
-      "sha256": "573651108e913b8eb93c01a9b380d6a9c5bc3992243386a38bf8bc74ad4bf469",
+      "sha256": "2c2324e5168ad5614d0800a8738876bb28c645dda4fcd4c9183f68c9cb935d19",
       "sources": [
         "datamine/data/localization/fr.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",

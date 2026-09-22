@@ -51,13 +51,15 @@
       "GA_F_QTE_name": "Rift Blossom",
       "GA_Female_Melee_name": "Appraisal",
       "GA_Female_Skill_name": "Appraise and Engrave",
-      "GA_Female_UtraSkill_name": "Divide by Zero"
+      "GA_Female_UtraSkill_name": "Divide by Zero",
+      "GA_Female051_QTE_name": "Rift Blossom"
     },
     "Female_SkillDes": {
       "GA_F_QTE_name": "Rift Blossom",
       "GA_Female_Melee_name": "Appraisal",
       "GA_Female_Skill_name": "Appraise and Engrave",
-      "GA_Female_UtraSkill_name": "Divide by Zero"
+      "GA_Female_UtraSkill_name": "Divide by Zero",
+      "GA_Female046_QTE_name": "Rift Blossom"
     },
     "Haniel_SkillDes": {
       "GA_Haniel_Melee_name": "Genesse Technique",
@@ -73,6 +75,7 @@
     },
     "Jin_SkillDes": {
       "GA_Jin_Melee_name": "Misty Moon Style",
+      "GA_Jin_QTE_name": "Shopkeeper\u0027s Authority",
       "GA_Jin_Skill_name": "Present Replay",
       "GA_Jin_UtraSkill_name": "World\u0027s Tide"
     },
@@ -88,11 +91,17 @@
       "GA_Lacrimosa_Skill_name": "Morning Tomato",
       "GA_Lacrimosa_UtraSkill_name": "Working Day Judgement"
     },
-    "Linko_Skilldes": {},
+    "Linko_Skilldes": {
+      "GA_Radio072_Melee_name": "Poltergeist CQC",
+      "GA_Radio072_QTE_name": "Spectral Cross",
+      "GA_Radio072_Skill_name": "Full-Frequency Pulse",
+      "GA_Radio072_UltraSkill_name": "Oversync"
+    },
     "Mint_SkillDes": {
       "GA_Mint_Melee_name": "Perfect Containment",
-      "GA_Mint_QTE_name": "Ultimate: Invincible Tornado Slash",
-      "GA_Mint_Skill_name": "Ultimate: Super Claws"
+      "GA_Mint_QTE_name": "Invincible Tornado Slash",
+      "GA_Mint_Skill_name": "Super Claws",
+      "GA_Mint019_UltraSkill_name": "Thunderous Whirlwind Slash"
     },
     "Mitsuki_SkillDes": {
       "GA_Mitsuki_Melee_name": "Cappella",
@@ -109,6 +118,7 @@
     },
     "Oneiror_SkillDes": {
       "GA_Oneiroi_Melee_name": "Collaboration",
+      "GA_Oneiroi_QTE_name": "Bang!",
       "GA_Oneiroi_Skill_name": "Future Self Continuity",
       "GA_Oneiroi_UltraSkill_name": "3.8-Billion-Year Mirage"
     },
@@ -120,8 +130,10 @@
       "GA_Sagiri_UtraSkill_name": "Feast of Gluttony"
     },
     "Shinku_SkillDes": {
+      "GA_Shinku_Melee_name": "Special Combat Arts",
       "GA_Shinku_QTE_name": "Breaching Tactics",
-      "GA_Shinku_Skill1_name": "High-Speed Breach"
+      "GA_Shinku_Skill1_name": "High-Speed Breach",
+      "GA_Shinku_UltraSkill_name": "Crimson Fury"
     },
     "Skia_SkillDes": {
       "GA_Skia_Melee_name": "Arresting Art",

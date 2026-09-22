@@ -56,7 +56,9 @@ func abilityLabelCandidates(abilityID string) []string {
 	if len(parts) < 3 || parts[0] != "GA" {
 		return []string{abilityID}
 	}
-	character := regexp.MustCompile(`[0-9]{3}$`).ReplaceAllString(parts[1], "")
+	runtimeCharacter := parts[1]
+	character := regexp.MustCompile(`[0-9]{3}$`).ReplaceAllString(runtimeCharacter, "")
+	character = strings.TrimSuffix(character, "ActorWind")
 	action := strings.Join(parts[2:], "_")
 	normalizedAction := action
 	switch {
@@ -69,8 +71,17 @@ func abilityLabelCandidates(abilityID string) []string {
 	case strings.Contains(action, "Melee") || strings.Contains(action, "Appear") || strings.Contains(action, "Branch"):
 		normalizedAction = "Melee"
 	}
+	runtimeBase := "GA_" + runtimeCharacter + "_" + normalizedAction
 	base := "GA_" + character + "_" + normalizedAction
-	return []string{abilityID, base, strings.Replace(base, "UltraSkill", "UtraSkill", 1), base + "1"}
+	return []string{
+		abilityID,
+		runtimeBase,
+		strings.Replace(runtimeBase, "UltraSkill", "UtraSkill", 1),
+		runtimeBase + "1",
+		base,
+		strings.Replace(base, "UltraSkill", "UtraSkill", 1),
+		base + "1",
+	}
 }
 
 func fallbackActionName(labels map[string]string, actionType string) string {

@@ -24,13 +24,29 @@ func TestCatalogUsesStableFallbackForUnknownGameObject(t *testing.T) {
 
 func TestProductionCatalogLoadsSkillLabelsFromGameLocale(t *testing.T) {
 	dataDir := filepath.Join("..", "..", "data")
+	required := []string{
+		"GA_Zankou_Skill",
+		"GA_Mint019_UltraSkill",
+		"GA_Female046_QTE",
+		"GA_Female051_QTE",
+		"GA_Jin_QTE",
+		"GA_Radio072_Melee",
+		"GA_Radio072_Skill",
+		"GA_Radio072_UltraSkill",
+		"GA_Radio072_QTE",
+		"GA_Oneiroi_QTE",
+		"GA_Shinku_Melee",
+		"GA_Shinku_UltraSkill",
+	}
 	for _, language := range []string{"fr", "en"} {
 		catalog, err := Load(dataDir, language)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if got := catalog.Abilities["GA_Zankou_Skill"]; strings.TrimSpace(got) == "" {
-			t.Fatalf("%s ability label is empty", language)
+		for _, abilityID := range required {
+			if got := catalog.Abilities[abilityID]; strings.TrimSpace(got) == "" {
+				t.Errorf("%s ability label %s is empty", language, abilityID)
+			}
 		}
 	}
 }

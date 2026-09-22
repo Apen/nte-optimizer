@@ -2,6 +2,7 @@
   "schema_version": 2,
   "id": "fadia",
   "name": "Fadia",
+  "page_updated": "Sep 7, 2026",
   "main_stats": [
     "HPMaxUp",
     "DamageUpPsychicallyBase",

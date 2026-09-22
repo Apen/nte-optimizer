@@ -81,6 +81,26 @@ Start the application after a successful build:
 
 Options can be combined.
 
+### Test the update notification
+
+Use `-Version` to simulate an installed version older than the latest GitHub
+Release, and combine it with `-Launch` to start that build immediately. For
+example, while `v0.1.3` is the latest published release:
+
+```powershell
+.\scripts\build-app.ps1 -Version v0.1.2 -Launch
+```
+
+At startup, the application should display the localized update dialog and its
+download button should open the Windows archive attached to `v0.1.3`. This test
+requires Internet access and a public GitHub Release newer than the value given
+to `-Version`.
+
+Close any running copy of NTE Optimizer before executing the command because
+Windows may otherwise lock the existing executable in `build/release`. The
+simulated version changes build metadata only; persistent data under
+`%LOCALAPPDATA%\NTE Optimizer` is not reset or removed.
+
 ## Smoke test
 
 `-SmokeTest` extracts the generated ZIP into a temporary directory, validates

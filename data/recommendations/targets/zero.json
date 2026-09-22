@@ -2,6 +2,7 @@
   "schema_version": 2,
   "id": "zero",
   "name": "Zero",
+  "page_updated": "May 31, 2026",
   "main_stats": [
     "CritBase",
     "CritDamageBase",
@@ -87,7 +88,7 @@
       "variants": [
         {
           "id": "zero",
-          "name": "Zero — DPS — Speedy Hedgehog",
+          "name": "Zero — Speedy Hedgehog",
           "preferred_sets": [
             {
               "set_id": "Suit11",
@@ -97,7 +98,7 @@
         },
         {
           "id": "zero_devil_s_blood_curse",
-          "name": "Zero — DPS — Devil's Blood: Curse",
+          "name": "Zero — Devil's Blood: Curse",
           "preferred_sets": [
             {
               "set_id": "Suit3",
@@ -107,7 +108,7 @@
         },
         {
           "id": "zero_fireflies_and_the_forest",
-          "name": "Zero — DPS — Fireflies and the Forest",
+          "name": "Zero — Fireflies and the Forest",
           "preferred_sets": [
             {
               "set_id": "Suit2",
@@ -117,7 +118,7 @@
         },
         {
           "id": "zero_lost_radiance",
-          "name": "Zero — DPS — Lost Radiance",
+          "name": "Zero — Lost Radiance",
           "preferred_sets": [
             {
               "set_id": "Suit6",
@@ -127,7 +128,7 @@
         },
         {
           "id": "zero_shadow_creed",
-          "name": "Zero — DPS — Shadow Creed",
+          "name": "Zero — Shadow Creed",
           "preferred_sets": [
             {
               "set_id": "Suit8",
@@ -165,7 +166,7 @@
       "variants": [
         {
           "id": "zero_dps",
-          "name": "Zero — DPS — Speedy Hedgehog",
+          "name": "Zero — Speedy Hedgehog",
           "preferred_sets": [
             {
               "set_id": "Suit11",
@@ -175,7 +176,7 @@
         },
         {
           "id": "zero_dps_devil_s_blood_curse",
-          "name": "Zero — DPS — Devil's Blood: Curse",
+          "name": "Zero — Devil's Blood: Curse",
           "preferred_sets": [
             {
               "set_id": "Suit3",
@@ -185,7 +186,7 @@
         },
         {
           "id": "zero_dps_fireflies_and_the_forest",
-          "name": "Zero — DPS — Fireflies and the Forest",
+          "name": "Zero — Fireflies and the Forest",
           "preferred_sets": [
             {
               "set_id": "Suit2",
@@ -195,7 +196,7 @@
         },
         {
           "id": "zero_dps_lost_radiance",
-          "name": "Zero — DPS — Lost Radiance",
+          "name": "Zero — Lost Radiance",
           "preferred_sets": [
             {
               "set_id": "Suit6",
@@ -205,7 +206,7 @@
         },
         {
           "id": "zero_dps_shadow_creed",
-          "name": "Zero — DPS — Shadow Creed",
+          "name": "Zero — Shadow Creed",
           "preferred_sets": [
             {
               "set_id": "Suit8",

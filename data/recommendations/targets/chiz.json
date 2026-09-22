@@ -2,6 +2,7 @@
   "schema_version": 2,
   "id": "chiz",
   "name": "Chiz",
+  "page_updated": "Jun 23, 2026",
   "main_stats": [
     "DamageUpCosmosBase",
     "CritDamageBase",

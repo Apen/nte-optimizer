@@ -2,6 +2,7 @@
   "schema_version": 2,
   "id": "shinku",
   "name": "Shinku",
+  "page_updated": "Sep 7, 2026",
   "main_stats": [
     "CritBase",
     "CritDamageBase",

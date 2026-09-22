@@ -51,13 +51,15 @@
       "GA_F_QTE_name": "Entaille spatiale",
       "GA_Female_Melee_name": "\u00C9valuation",
       "GA_Female_Skill_name": "\u00C9valuation et gravure",
-      "GA_Female_UtraSkill_name": "Diviser par Z\u00E9ro"
+      "GA_Female_UtraSkill_name": "Diviser par Z\u00E9ro",
+      "GA_Female051_QTE_name": "Entaille spatiale"
     },
     "Female_SkillDes": {
       "GA_F_QTE_name": "Entaille spatiale",
       "GA_Female_Melee_name": "\u00C9valuation",
       "GA_Female_Skill_name": "\u00C9valuation et gravure",
-      "GA_Female_UtraSkill_name": "Diviser par Z\u00E9ro"
+      "GA_Female_UtraSkill_name": "Diviser par Z\u00E9ro",
+      "GA_Female046_QTE_name": "Entaille spatiale"
     },
     "Haniel_SkillDes": {
       "GA_Haniel_Melee_name": "Technique de Genesse",
@@ -73,6 +75,7 @@
     },
     "Jin_SkillDes": {
       "GA_Jin_Melee_name": "Style Lune brumeuse",
+      "GA_Jin_QTE_name": "Autorit\u00E9 de propri\u00E9taire",
       "GA_Jin_Skill_name": "Rediffusion actuelle",
       "GA_Jin_UtraSkill_name": "Mar\u00E9e du monde"
     },
@@ -88,11 +91,17 @@
       "GA_Lacrimosa_Skill_name": "Tomate matinale",
       "GA_Lacrimosa_UtraSkill_name": "Jugement du jour ouvrable"
     },
-    "Linko_Skilldes": {},
+    "Linko_Skilldes": {
+      "GA_Radio072_Melee_name": "Poltergeist C\u00E0C",
+      "GA_Radio072_QTE_name": "Direct spectral",
+      "GA_Radio072_Skill_name": "Impulsion \u00E0 pleine fr\u00E9quence",
+      "GA_Radio072_UltraSkill_name": "Sursynchro"
+    },
     "Mint_SkillDes": {
       "GA_Mint_Melee_name": "Confinement parfait",
-      "GA_Mint_QTE_name": "Ultime : Lame d\u2019ouragan invincible",
-      "GA_Mint_Skill_name": "Ultime : Super griffes"
+      "GA_Mint_QTE_name": "Lame d\u2019ouragan invincible",
+      "GA_Mint_Skill_name": "Super griffes",
+      "GA_Mint019_UltraSkill_name": "tourbillon de lames tonnantes"
     },
     "Mitsuki_SkillDes": {
       "GA_Mitsuki_Melee_name": "A cappella",
@@ -109,6 +118,7 @@
     },
     "Oneiror_SkillDes": {
       "GA_Oneiroi_Melee_name": "Collaboration",
+      "GA_Oneiroi_QTE_name": "Bang\u00A0!",
       "GA_Oneiroi_Skill_name": "Continuit\u00E9 du soi futur",
       "GA_Oneiroi_UltraSkill_name": "Mirage de 3,8 milliards d\u2019ann\u00E9es"
     },
@@ -120,8 +130,10 @@
       "GA_Sagiri_UtraSkill_name": "Festin gourmand"
     },
     "Shinku_SkillDes": {
+      "GA_Shinku_Melee_name": "Arts martiaux sp\u00E9ciaux",
       "GA_Shinku_QTE_name": "Tactiques de perc\u00E9e",
-      "GA_Shinku_Skill1_name": "Perc\u00E9e \u00E0 grande vitesse"
+      "GA_Shinku_Skill1_name": "Perc\u00E9e \u00E0 grande vitesse",
+      "GA_Shinku_UltraSkill_name": "Fureur \u00E9carlate"
     },
     "Skia_SkillDes": {
       "GA_Skia_Melee_name": "Technique d\u2019arrestation",

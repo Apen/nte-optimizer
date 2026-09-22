@@ -2,6 +2,7 @@
   "schema_version": 2,
   "id": "zankou",
   "name": "Zankou",
+  "page_updated": "Sep 13, 2026",
   "main_stats": [
     "CritDamageBase",
     "MagBase",
@@ -162,7 +163,7 @@
       "variants": [
         {
           "id": "zankou",
-          "name": "Zankou — DPS — Crimson: Twin Butterflies",
+          "name": "Zankou — Crimson: Twin Butterflies",
           "preferred_sets": [
             {
               "set_id": "Suit4",
@@ -172,7 +173,7 @@
         },
         {
           "id": "zankou_lost_radiance",
-          "name": "Zankou — DPS — Lost Radiance",
+          "name": "Zankou — Lost Radiance",
           "preferred_sets": [
             {
               "set_id": "Suit6",
@@ -182,7 +183,7 @@
         },
         {
           "id": "zankou_shadow_creed",
-          "name": "Zankou — DPS — Shadow Creed",
+          "name": "Zankou — Shadow Creed",
           "preferred_sets": [
             {
               "set_id": "Suit8",

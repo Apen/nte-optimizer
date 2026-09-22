@@ -2,6 +2,7 @@
   "schema_version": 2,
   "id": "chaos",
   "name": "Chaos",
+  "page_updated": "Sep 7, 2026",
   "main_stats": [
     "DamageUpLakshanaBase",
     "CritDamageBase",

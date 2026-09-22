@@ -3,10 +3,13 @@ package app
 import (
 	"os"
 	"path/filepath"
+	"strconv"
+	"strings"
 	"testing"
 
 	"nte-optimizer/internal/damage"
 	"nte-optimizer/internal/decoded"
+	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/optimizer"
 )
 
@@ -91,11 +94,15 @@ func TestGroupDamageResultsDoesNotApplyZankouLabelsToOtherCharacters(t *testing.
 func TestLocalizedAbilityLabelHandlesRuntimeAliases(t *testing.T) {
 	labels := map[string]string{
 		"GA_Chaos_UltraSkill": "Retribution",
+		"GA_Mint_Skill":       "Ultimate: Super Claws",
+		"GA_Radio072_QTE":     "Spectral Cross",
 		"GA_Shinku_Skill1":    "High-Speed Breach",
 	}
 	for abilityID, want := range map[string]string{
-		"GA_Chaos071_UltraSkill": "Retribution",
-		"GA_Shinku_Skill_Rage":   "High-Speed Breach",
+		"GA_Chaos071_UltraSkill":    "Retribution",
+		"GA_MintActorWind_Skill":    "Ultimate: Super Claws",
+		"GA_Radio072_QTE_BackToLTE": "Spectral Cross",
+		"GA_Shinku_Skill_Rage":      "High-Speed Breach",
 	} {
 		if got := localizedAbilityLabel(labels, abilityID); got != want {
 			t.Fatalf("localizedAbilityLabel(%q) = %q, want %q", abilityID, got, want)
@@ -108,6 +115,43 @@ func TestFallbackActionNameNeverExposesTechnicalInstanceID(t *testing.T) {
 	if got := fallbackActionName(labels, "ultimate"); got != "Ultimate" {
 		t.Fatalf("unexpected fallback label %q", got)
 	}
+}
+
+func TestProductionDamageAbilitiesHaveLocalizedActionLabels(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	catalog, err := damage.ReadCatalog(filepath.Join(dataDir, "game", "combat", "damage.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, language := range []string{"en", "fr"} {
+		labels, err := ntelocale.LoadPresentation(dataDir, language)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for characterID, character := range catalog.Characters {
+			seen := map[string]bool{}
+			for _, instance := range character.Instances {
+				abilityID := instance.AbilityID
+				if abilityID == "" || seen[abilityID] || !isNamedCombatAction(abilityID) {
+					continue
+				}
+				seen[abilityID] = true
+				if localizedAbilityLabel(labels.Abilities, abilityID) == "" {
+					id, _ := strconv.Atoi(characterID)
+					t.Errorf("%s character %d ability %s has no localized action label", language, id, abilityID)
+				}
+			}
+		}
+	}
+}
+
+func isNamedCombatAction(abilityID string) bool {
+	for _, marker := range []string{"Melee", "Appear", "Skill", "QTE"} {
+		if strings.Contains(abilityID, marker) {
+			return true
+		}
+	}
+	return false
 }
 
 func TestDamageAnalysisAppliesAwakeningCoefficientOnceToBothBuilds(t *testing.T) {
