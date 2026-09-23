@@ -1,6 +1,8 @@
 package app
 
 import (
+	"fmt"
+
 	"nte-optimizer/internal/scoring"
 	"nte-optimizer/internal/target"
 )
@@ -9,6 +11,15 @@ import (
 // the scoring profiles exposed by the optimizer.
 func BuildRecommendationProfiles(recommendation target.BuildTarget) map[string]scoring.Character {
 	profiles := make(map[string]scoring.Character)
+	addProfile := func(id string, profile scoring.Character) {
+		profiles[id] = profile
+		for _, alternateID := range recommendation.Character.AlternateIDs {
+			alternate := profile
+			alternate.CharacterID = alternateID
+			alternate.GridID = fmt.Sprintf("character_%d", alternateID)
+			profiles[fmt.Sprintf("%s_%d", id, alternateID)] = alternate
+		}
+	}
 	for _, build := range recommendation.Builds {
 		base := recommendationTemplate(recommendation)
 		base.Name = recommendation.Name
@@ -23,14 +34,14 @@ func BuildRecommendationProfiles(recommendation target.BuildTarget) map[string]s
 		base.PreferredSets = nil
 
 		if len(build.Variants) == 0 {
-			profiles[build.ID] = base
+			addProfile(build.ID, base)
 			continue
 		}
 		for _, variant := range build.Variants {
 			profile := base
 			profile.Name = variant.Name
 			profile.PreferredSets = append([]scoring.SetPreference(nil), variant.PreferredSets...)
-			profiles[variant.ID] = profile
+			addProfile(variant.ID, profile)
 		}
 	}
 	return profiles

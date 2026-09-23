@@ -77,7 +77,7 @@ function StatConfigRow({ goal, value, maximumValue, minimumValue, weight, onGoal
   const { stats: labels } = usePresentation()
   const name = labels[goal.property_id] || goal.label
   return <div className="goal-row"><div className="goal-name flex items-start justify-between gap-2"><span><strong className="block">{name}</strong><small>{t('reference', { value: `${goal.percent ? goal.minimum * 100 : goal.minimum}${goal.percent ? ' %' : ''}` })}</small></span><button className="rounded-md p-1 text-slate-500 hover:bg-red-950 hover:text-red-300" onClick={onRemove} title={t('remove_goal', { name })} aria-label={t('remove_goal', { name })}><X className="size-4" /></button></div>
-    <label className="goal-field"><span className="mobile-label">{t('weight')}</span><div className="number-field"><input aria-label={t('weight_for', { name })} type="number" min={0} max={10} step={0.05} value={weight} onChange={event => onWeight(Math.min(10, Math.max(0, Number(event.target.value))))} /></div></label>
+    <label className="goal-field"><span className="mobile-label">{t('weight')}</span><div className="number-field"><input aria-label={t('weight_for', { name })} type="number" min={0} max={10} step={0.05} value={weight} onChange={event => onWeight(Math.min(10, Math.max(0, Number(event.target.value))))} /></div>{weight === 0 && <small className="text-amber-300">{t('zero_weight_goal_hint')}</small>}</label>
     <StatNumber label={t('objective_label')} name={name} goal={goal} value={value} onChange={onGoal} />
     <StatNumber label={t('min_strict')} name={name} goal={goal} value={minimumValue} placeholder="—" onChange={onMinimum} />
     <StatNumber label={t('max_strict')} name={name} goal={goal} value={maximumValue} placeholder="—" onChange={onMaximum} />

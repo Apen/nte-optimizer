@@ -26,6 +26,13 @@ func Read(path string) (BuildTarget, error) {
 	if target.SchemaVersion != 2 || target.ID == "" || target.Character.CharacterID <= 0 || len(target.Goals) == 0 || len(target.Builds) == 0 {
 		return BuildTarget{}, fmt.Errorf("invalid build target")
 	}
+	seenCharacters := map[int]bool{target.Character.CharacterID: true}
+	for _, id := range target.Character.AlternateIDs {
+		if id <= 0 || seenCharacters[id] {
+			return BuildTarget{}, fmt.Errorf("invalid alternate character ID %d", id)
+		}
+		seenCharacters[id] = true
+	}
 	for _, build := range target.Builds {
 		if build.ID == "" || len(build.Variants) == 0 {
 			return BuildTarget{}, fmt.Errorf("invalid build target strategy %q", build.ID)

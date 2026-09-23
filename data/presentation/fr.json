@@ -393,6 +393,7 @@
     "capped_value": "valeur effective plafonnée",
     "no_weighted_contribution": "Aucune contribution de statistique pondérée",
     "search_best_build": "Recherche du meilleur build…",
+    "zero_weight_goal_hint": "Cette cible n'influence pas le classement ; ajoute un poids ou un minimum strict.",
     "search_character_placeholder": "Rechercher Zankou…",
     "search_collection": "Rechercher dans les {title}…",
     "search_in": "Rechercher dans les {title}…",

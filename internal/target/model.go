@@ -35,6 +35,7 @@ type BuildTarget struct {
 
 type CharacterConfig struct {
 	CharacterID  int                        `json:"character_id"`
+	AlternateIDs []int                      `json:"alternate_character_ids,omitempty"`
 	GridID       string                     `json:"grid_id"`
 	CurrentStats map[string]float64         `json:"current_stats,omitempty"`
 	BaseStats    map[string]float64         `json:"base_stats,omitempty"`

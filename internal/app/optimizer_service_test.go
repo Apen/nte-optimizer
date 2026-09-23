@@ -46,6 +46,12 @@ func TestOptimizerServiceProfilesAreStable(t *testing.T) {
 	if byID["zankou"].CharacterID != 1036 || byID["zankou"].Weights["CritDamageBase"] != 1 || byID["zankou_sub_dps"].Weights["UnbalIntensityBase"] != .55 {
 		t.Fatalf("Zankou profile weights not exposed: %#v", byID)
 	}
+	if byID["zero"].CharacterID != 1046 {
+		t.Fatalf("Zero profile not exposed: %#v", byID["zero"])
+	}
+	if byID["zero_1051"].CharacterID != 1051 || byID["zero_1051"].GridID != "character_1051" {
+		t.Fatalf("female Zero profile not exposed: %#v", byID["zero_1051"])
+	}
 }
 
 func TestPinnedModuleCannotOverrideReservation(t *testing.T) {

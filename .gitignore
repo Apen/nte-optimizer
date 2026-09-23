@@ -6,3 +6,4 @@
 /frontend/.npm-cache/
 /frontend/dist/*
 !/frontend/dist/.gitkeep
+/IDEAS.md

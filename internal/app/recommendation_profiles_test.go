@@ -45,3 +45,19 @@ func TestBuildRecommendationProfilesUsesStaticVariants(t *testing.T) {
 		t.Fatalf("unexpected recommendation weights: %#v", profile)
 	}
 }
+
+func TestBuildRecommendationProfilesSupportsAlternateCharacterIDs(t *testing.T) {
+	recommendation := target.BuildTarget{
+		ID: "zero", Name: "Zero",
+		Character: target.CharacterConfig{CharacterID: 1046, AlternateIDs: []int{1051}, GridID: "character_1046"},
+		Builds:    []target.BuildProfile{{ID: "zero", Weights: map[string]float64{"CritBase": .8}, Variants: []target.ProfileVariant{{ID: "zero", Name: "Zero — Speedy Hedgehog"}}}},
+	}
+	profiles := BuildRecommendationProfiles(recommendation)
+	if profiles["zero"].CharacterID != 1046 || profiles["zero"].GridID != "character_1046" {
+		t.Fatalf("primary Zero profile changed: %+v", profiles["zero"])
+	}
+	alternate := profiles["zero_1051"]
+	if alternate.CharacterID != 1051 || alternate.GridID != "character_1051" || alternate.TargetID != "zero" || alternate.Weights["CritBase"] != .8 {
+		t.Fatalf("alternate Zero profile is incomplete: %+v", alternate)
+	}
+}
