@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"strings"
 	"testing"
 
@@ -37,12 +38,12 @@ func TestSelectModuleCandidatesRejectsInvalidLocks(t *testing.T) {
 	config.Optimize.TopPerSet = 1
 
 	service := OptimizerService{PinnedModuleIDs: map[string]bool{"missing": true}}
-	if _, err := service.selectModuleCandidates(pool, nil, 4, config, searchPlan{solverMode: "score", approximate: true}); err == nil || !strings.Contains(err.Error(), "not available") {
+	if _, err := service.selectModuleCandidates(pool, config, searchPlan{solverMode: "score", approximate: true}); err == nil || !strings.Contains(err.Error(), "not available") {
 		t.Fatalf("missing lock error = %v", err)
 	}
 
 	service = OptimizerService{PinnedModuleIDs: map[string]bool{"available": true}, ExcludedModuleIDs: map[string]bool{"available": true}}
-	if _, err := service.selectModuleCandidates(pool, nil, 4, config, searchPlan{solverMode: "score", approximate: true}); err == nil || !strings.Contains(err.Error(), "both locked and excluded") {
+	if _, err := service.selectModuleCandidates(pool, config, searchPlan{solverMode: "score", approximate: true}); err == nil || !strings.Contains(err.Error(), "both locked and excluded") {
 		t.Fatalf("conflicting lock error = %v", err)
 	}
 }
@@ -63,13 +64,30 @@ func TestFastSelectionRetainsCurrentEquipment(t *testing.T) {
 	config := optimizerDataConfig{}
 	config.Optimize.TopPerGeometry = 1
 	config.Optimize.TopPerSet = 1
-	selection, err := (OptimizerService{}).selectModuleCandidates(pool, nil, 4, config, searchPlan{solverMode: "score", approximate: true})
+	selection, err := (OptimizerService{}).selectModuleCandidates(pool, config, searchPlan{solverMode: "score", approximate: true})
 	if err != nil {
 		t.Fatal(err)
 	}
 	ids := candidateIDs(selection.selected)
 	if !ids["best"] || !ids["current"] {
 		t.Fatalf("fast selection dropped current equipment: %#v", selection.selected)
+	}
+}
+
+func TestFastSelectionKeepsCandidatesBelowStrictMaximum(t *testing.T) {
+	tooHigh := optimizer.Candidate{Module: nte.Module{LocalID: "too-high", Geometry: "H_2"}, Score: 11, Priority: 2, ObjectiveValues: map[string]float64{"CritBase": .25}}
+	admissible := optimizer.Candidate{Module: nte.Module{LocalID: "admissible", Geometry: "H_2"}, Score: 10, Priority: 1, ObjectiveValues: map[string]float64{"CritBase": .15}}
+	goal := optimizer.ObjectiveGoal{PropertyID: "CritBase", Minimum: .6, Maximum: .6, Importance: 1}
+	pool := moduleCandidatePool{eligible: []optimizer.Candidate{tooHigh, admissible}, raw: []optimizer.Candidate{tooHigh, admissible}, selectionObjectives: []optimizer.ObjectiveGoal{goal}}
+	config := optimizerDataConfig{}
+	config.Optimize.TopPerGeometry = 2
+	config.Optimize.TopPerSet = 2
+	selection, err := (OptimizerService{}).selectModuleCandidates(pool, config, searchPlan{solverMode: "objective", approximate: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !candidateIDs(selection.selected)["admissible"] {
+		t.Fatal("Fast discarded the admissible candidate before enforcing the maximum")
 	}
 }
 
@@ -120,5 +138,86 @@ func TestPrepareModuleCandidatesAddsObjectiveAndGeometryPriority(t *testing.T) {
 	}
 	if pool.eligible[1].ObjectiveValues["CritBase"] <= 0 || pool.eligible[1].Priority <= pool.eligible[0].Priority+24 {
 		t.Fatalf("objective/geometry priority was not applied: %#v", pool.eligible)
+	}
+}
+
+func TestBetaKeepsSpecialistsForStrictFloorAboveSoftTarget(t *testing.T) {
+	goal := optimizer.ObjectiveGoal{PropertyID: "UnbalIntensityBase", Minimum: 150, StrictMinimum: true, StrictFloor: 230, Importance: 0, ExplicitWeight: true}
+	baseline := map[string]float64{"UnbalIntensityBase": 160}
+	if got := objectivesStillMissing(baseline, []optimizer.ObjectiveGoal{goal}); len(got) != 0 {
+		t.Fatalf("soft target should already be met: %#v", got)
+	}
+	strict := strictObjectivesStillMissing(baseline, []optimizer.ObjectiveGoal{goal})
+	if len(strict) != 1 {
+		t.Fatalf("strict floor was not selected: %#v", strict)
+	}
+	prepared := (OptimizerService{}).prepareModuleCandidates(
+		[]nte.Module{{LocalID: "specialist", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "UnbalIntensityBase", Value: 30}}}},
+		scoring.Character{BaseStats: baseline}, scoring.References{}, nil, []optimizer.ObjectiveGoal{goal}, nil, true,
+	)
+	if len(prepared.strictObjectives) != 1 || len(prepared.selectionObjectives) != 0 {
+		t.Fatalf("unexpected prepared objectives: %#v", prepared)
+	}
+	pool := moduleCandidatePool{strictObjectives: strict, baselineStats: baseline}
+	for i := 0; i < 6; i++ {
+		pool.eligible = append(pool.eligible, optimizer.Candidate{Module: nte.Module{LocalID: string(rune('a' + i)), Geometry: "H_2"}, Priority: float64(10 - i), ObjectiveValues: map[string]float64{"UnbalIntensityBase": 0}})
+	}
+	for i := 0; i < 3; i++ {
+		gain := float64(30 - i)
+		pool.eligible = append(pool.eligible, optimizer.Candidate{Module: nte.Module{LocalID: string(rune('x' + i)), Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "UnbalIntensityBase", Value: gain}}}, Priority: float64(i), ObjectiveValues: map[string]float64{"UnbalIntensityBase": gain}})
+	}
+	pool.raw = pool.eligible
+	if count := strictSpecialistCount(pool.eligible, baseline[goal.PropertyID], goal, 3); count != 3 {
+		t.Fatalf("strict specialist budget = %d, want 3", count)
+	}
+	config := optimizerDataConfig{}
+	config.Optimize.TopPerGeometry = 1
+	config.Optimize.TopPerSet = 1
+	plan := searchPlan{requestedMode: "beta", solverMode: "objective", approximate: true}
+	selected, err := (OptimizerService{}).selectModuleCandidates(pool, config, plan, map[string]int{"H_2": 3})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ids := candidateIDs(selected.selected)
+	for _, id := range []string{"x", "y", "z"} {
+		if !ids[id] {
+			t.Fatalf("strict specialist %s was removed: %#v", id, selected.selected)
+		}
+	}
+	grid, err := optimizer.NewGrid(6, 1, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	shapes := optimizer.ShapeCatalog{Shapes: map[string]optimizer.Shape{"H_2": {ID: "H_2", Cells: []optimizer.Point{{0, 0}, {1, 0}}}}}
+	sets := optimizer.SetCatalog{Definitions: map[string]optimizer.SetDefinition{"test": {ID: "test", InventorySetID: "test", RequiredGeometries: []string{"H_2"}}}}
+	cartridges := []nte.Cartridge{{LocalID: "cartridge", SetID: "test"}}
+	character := scoring.Character{BaseStats: baseline}
+	full := optimizer.NewExactObjectiveEvaluator(sets, cartridges, nil, pool.eligible, character, nil, []optimizer.ObjectiveGoal{goal}, nil)
+	oracle, err := (optimizer.SearchSolver{Catalog: shapes, Exact: true, KeepBest: 1}).SolveWithBonus(context.Background(), grid, pool.eligible, full)
+	if err != nil {
+		t.Fatal(err)
+	}
+	retained := optimizer.NewExactObjectiveEvaluator(sets, cartridges, nil, selected.selected, character, nil, []optimizer.ObjectiveGoal{goal}, nil)
+	got, err := (optimizer.SearchSolver{Catalog: shapes, Exact: true, KeepBest: 1}).SolveWithBonus(context.Background(), grid, selected.selected, retained)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(oracle.Placements) != 3 || len(got.Placements) != 3 || got.Score != oracle.Score {
+		t.Fatalf("strict search differs from full-pool oracle: got %#v, want %#v", got, oracle)
+	}
+	for _, placement := range got.Placements {
+		if !strings.Contains("xyz", placement.ModuleID) {
+			t.Fatalf("strict build contains a non-specialist: %#v", got.Placements)
+		}
+	}
+}
+
+func TestGeometryModuleSlotsUsesPlayableCellsAndShapeSize(t *testing.T) {
+	grid := optimizer.GridDefinition{Playable: []optimizer.Point{{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}}}
+	shapes := optimizer.ShapeCatalog{Shapes: map[string]optimizer.Shape{"H_2": {Cells: []optimizer.Point{{0, 0}, {1, 0}}}, "H_3": {Cells: []optimizer.Point{{0, 0}, {1, 0}, {2, 0}}}}}
+	candidates := []optimizer.Candidate{{Module: nte.Module{Geometry: "H_2"}}, {Module: nte.Module{Geometry: "H_3"}}}
+	limits := geometryModuleSlots(grid, shapes, candidates)
+	if limits["H_2"] != 3 || limits["H_3"] != 2 {
+		t.Fatalf("unexpected geometry capacity: %#v", limits)
 	}
 }

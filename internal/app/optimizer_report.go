@@ -79,6 +79,12 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 }
 
 func publicOptimizationMode(plan searchPlan) string {
+	if plan.requestedMode == "beta" {
+		return "beta"
+	}
+	if plan.requestedMode == "exact-objective" {
+		return "exact-objective"
+	}
 	if plan.solverMode == "objective" {
 		return "fast"
 	}

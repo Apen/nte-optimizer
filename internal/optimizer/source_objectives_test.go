@@ -26,7 +26,7 @@ func TestSourceWeightedPreparedAndCachedEvaluatorMatchReference(t *testing.T) {
 	_, _, candidates, e := fixedFixture(14)
 	e.character.MainWeights = map[string]float64{"CritBase": 1}
 	e.character.SubWeights = map[string]float64{"CritBase": .85}
-	e.objectives = []ObjectiveGoal{{PropertyID: "CritBase", Minimum: .5, Importance: 1, SourceWeights: true}}
+	e.objectives = []ObjectiveGoal{{PropertyID: "CritBase", Minimum: .5, Importance: 1, SourceWeights: true, ScoreScale: .64}}
 	// Equal totals and raw equipment scores, different source attribution.
 	a, b := candidates[0].Module, candidates[1].Module
 	a.MainStats = []nte.Stat{{PropertyID: "CritBase", Value: .5}}

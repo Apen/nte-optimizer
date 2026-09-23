@@ -46,7 +46,7 @@ func sourceObjectiveValues(total, main, sub map[string]float64, character scorin
 		if !goal.SourceWeights {
 			points := objectiveUtility(value, goal)
 			score += points
-			contributions = append(contributions, RankingContribution{PropertyID: goal.PropertyID, Value: value, Target: goal.Minimum, Importance: goal.Importance, Points: points})
+			contributions = append(contributions, RankingContribution{PropertyID: goal.PropertyID, Value: value, Target: goal.Minimum, Importance: goal.Importance, Points: points, ScoreScale: goal.ScoreScale})
 			continue
 		}
 		neutral := goal
@@ -84,7 +84,7 @@ func sourceObjectiveValues(total, main, sub map[string]float64, character scorin
 					continue
 				}
 				score += points
-				contributions = append(contributions, RankingContribution{PropertyID: goal.PropertyID, Source: name, InputPropertyID: key, Value: source[key], Target: goal.Minimum, Importance: weight, Points: points})
+				contributions = append(contributions, RankingContribution{PropertyID: goal.PropertyID, Source: name, InputPropertyID: key, Value: source[key], Target: goal.Minimum, Importance: weight, Points: points, ScoreScale: goal.ScoreScale})
 			}
 		}
 	}

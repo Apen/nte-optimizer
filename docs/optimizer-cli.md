@@ -6,7 +6,7 @@ From the repository root:
 
 ```powershell
 go run ./cmd/nte-optimize --character 1036 --method fast
-go run ./cmd/nte-optimize --character 1036 --method fast-optimized
+go run ./cmd/nte-optimize --character 1036 --method beta
 ```
 
 `--character` accepts a numeric character ID or a profile ID such as `zankou`. If a character has several profiles, the command picks the first profile in the same sorted list used by the UI's initial selection. Use `--profile PROFILE_ID` to select a specific variant; `--profile` can also be used without `--character`.
@@ -20,7 +20,7 @@ Options:
 ```text
 --character ID     Numeric character ID or profile ID
 --profile ID       Exact profile variant
---method METHOD    fast (default) or fast-optimized
+--method METHOD    fast (default) or beta
 --lang LANGUAGE    en (default) or fr for game labels
 --state-dir PATH   User-data directory containing workspace/; defaults to
                    %LOCALAPPDATA%\NTE Optimizer on Windows

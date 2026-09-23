@@ -2,18 +2,13 @@ package optimizer
 
 import "math"
 
-// All goal utilities are at most 10.5*importance, irrespective of minima,
-// tolerances or caps. A cap penalty is nonpositive. Geometry fixes matched
-// set bonuses.
+// Use the maximum of each configured utility curve. A cap penalty is
+// nonpositive. Geometry fixes matched set bonuses.
 func (e CartridgeSetEvaluator) blueprintUpperBound(geometries []string) float64 {
 	utility := 0.0
 	for _, goal := range e.objectives {
 		if goal.Minimum > 0 {
-			importance := goal.Importance
-			if importance <= 0 {
-				importance = 1
-			}
-			utility = math.Nextafter(utility+10.5*importance, math.Inf(1))
+			utility = math.Nextafter(utility+objectiveMaximum(goal), math.Inf(1))
 		}
 	}
 	bound := 0.0
@@ -29,6 +24,7 @@ func (e CartridgeSetEvaluator) blueprintUpperBound(geometries []string) float64 
 		bonus := scoreForMatched(set.definition.Bonuses, len(matched)) * set.priority
 		score := bonus + set.cartridgeScore
 		if len(e.objectives) > 0 {
+			score *= EquipmentTieBreakScale
 			score += utility
 		}
 		bound = math.Max(bound, score)

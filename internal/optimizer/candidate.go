@@ -13,51 +13,6 @@ type Candidate struct {
 	ObjectiveValues map[string]float64 `json:"-"`
 }
 
-// PruneDominatedCandidates removes an item only when enough strictly better
-// items of the same geometry exist to fill every possible slot of that shape.
-func PruneDominatedCandidates(input []Candidate, goals []ObjectiveGoal, capacity int) []Candidate {
-	result := make([]Candidate, 0, len(input))
-	for i, candidate := range input {
-		area := candidate.Module.Area
-		if area <= 0 {
-			area = 1
-		}
-		maxUsed := capacity / area
-		dominators := 0
-		for j, other := range input {
-			if i == j || other.Module.Geometry != candidate.Module.Geometry || !dominates(other, candidate, goals) {
-				continue
-			}
-			dominators++
-			if dominators >= maxUsed {
-				break
-			}
-		}
-		if dominators < maxUsed {
-			result = append(result, candidate)
-		}
-	}
-	return result
-}
-
-func dominates(left, right Candidate, goals []ObjectiveGoal) bool {
-	strict := left.Score > right.Score
-	if left.Score < right.Score {
-		return false
-	}
-	for _, goal := range goals {
-		if goal.Minimum <= 0 {
-			continue
-		}
-		leftValue, rightValue := left.ObjectiveValues[goal.PropertyID], right.ObjectiveValues[goal.PropertyID]
-		if leftValue < rightValue {
-			return false
-		}
-		strict = strict || leftValue > rightValue
-	}
-	return strict
-}
-
 // SelectCandidates keeps the best candidates in both geometry and set buckets.
 // Taking the union preserves set-building options that a geometry-only ranking
 // could discard.

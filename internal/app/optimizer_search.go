@@ -34,7 +34,7 @@ func (s OptimizerService) prepareSearch(profile scoring.Character, refs scoring.
 	if exact {
 		evaluator = optimizer.NewExactObjectiveEvaluator(sets, cartridges, profile.PreferredSets, selected, profile, refs, objectives, additional)
 		switch {
-		case plan.requestedMode == "exact-score":
+		case plan.requestedMode == "exact-score" || plan.requestedMode == "exact-objective":
 			timeoutSeconds = 0
 		}
 	}

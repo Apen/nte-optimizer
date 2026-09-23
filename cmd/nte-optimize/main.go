@@ -30,7 +30,7 @@ func run(args []string, output io.Writer) error {
 	flags := flag.NewFlagSet("nte-optimize", flag.ContinueOnError)
 	character := flags.String("character", "", "numeric character ID or profile ID")
 	profile := flags.String("profile", "", "specific profile ID when a character has multiple profiles")
-	method := flags.String("method", "fast", "search method: fast or fast-optimized")
+	method := flags.String("method", "fast", "search method: fast or beta")
 	language := flags.String("lang", "en", "game-label language: en or fr")
 	stateDir := flags.String("state-dir", defaultStateDir(), "user data directory containing workspace/")
 	dataDir := flags.String("data", "data", "project data directory")
@@ -41,8 +41,8 @@ func run(args []string, output io.Writer) error {
 	if flags.NArg() != 0 {
 		return fmt.Errorf("unexpected arguments: %s", strings.Join(flags.Args(), " "))
 	}
-	if *method != "fast" && *method != "fast-optimized" {
-		return fmt.Errorf("invalid method %q: choose fast or fast-optimized", *method)
+	if *method != "fast" && *method != "beta" {
+		return fmt.Errorf("invalid method %q: choose fast or beta", *method)
 	}
 	if *language != "en" && *language != "fr" {
 		return fmt.Errorf("invalid language %q: choose en or fr", *language)

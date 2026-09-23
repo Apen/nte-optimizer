@@ -64,3 +64,25 @@ func TestProfileSettingsStayIsolatedAndWeightSavePreservesGoals(t *testing.T) {
 		t.Fatalf("Zero settings were modified by Zankou save: %#v", state.Profiles["zero"])
 	}
 }
+
+func TestProfileSettingsPersistStrictMinimumAboveSoftTarget(t *testing.T) {
+	dir := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(dir, "workspace"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	minimum := 300.0
+	settings := WeightOverrides{MainStats: []string{"UnbalIntensityBase"}, Goals: map[string]SavedGoalSettings{
+		"UnbalIntensityBase": {Target: 150, Minimum: &minimum, StrictMinimum: true},
+	}}
+	if _, err := SaveProfileSettings(dir, "daffodill", settings); err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := LoadStrategyOverrides(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	goal := loaded.Profiles["daffodill"].Goals["UnbalIntensityBase"]
+	if goal.Minimum == nil || *goal.Minimum != 300 || goal.Target != 150 {
+		t.Fatalf("absolute minimum was not persisted independently: %+v", goal)
+	}
+}

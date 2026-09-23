@@ -248,16 +248,15 @@ func TestSelectObjectiveCandidatesKeepsBreakpointSpecialists(t *testing.T) {
 	}
 }
 
-func TestPruneDominatedCandidatesKeepsEnoughCopiesForEverySlot(t *testing.T) {
-	goals := []ObjectiveGoal{{PropertyID: "CritBase", Minimum: .6}}
+func TestSelectObjectiveCandidatesKeepsMultipleSpecialists(t *testing.T) {
 	input := []Candidate{
-		{Module: nte.Module{LocalID: "best", Geometry: "SINGLE", Area: 1}, Score: 3, ObjectiveValues: map[string]float64{"CritBase": .3}},
-		{Module: nte.Module{LocalID: "second", Geometry: "SINGLE", Area: 1}, Score: 2, ObjectiveValues: map[string]float64{"CritBase": .2}},
-		{Module: nte.Module{LocalID: "weak", Geometry: "SINGLE", Area: 1}, Score: 1, ObjectiveValues: map[string]float64{"CritBase": .1}},
+		{Module: nte.Module{LocalID: "general", Geometry: "H_2"}, Priority: 10, ObjectiveValues: map[string]float64{"UnbalIntensityBase": 0}},
+		{Module: nte.Module{LocalID: "break-a", Geometry: "H_2"}, Priority: 2, ObjectiveValues: map[string]float64{"UnbalIntensityBase": 24}},
+		{Module: nte.Module{LocalID: "break-b", Geometry: "H_2"}, Priority: 1, ObjectiveValues: map[string]float64{"UnbalIntensityBase": 18}},
 	}
-	got := PruneDominatedCandidates(input, goals, 2)
-	if len(got) != 2 || got[0].Module.LocalID != "best" || got[1].Module.LocalID != "second" {
-		t.Fatalf("unexpected Pareto depth: %#v", got)
+	got := SelectObjectiveCandidates(input, []ObjectiveGoal{{PropertyID: "UnbalIntensityBase", Minimum: 360}}, 1, 2)
+	if len(got) != 3 {
+		t.Fatalf("multiple Break specialists were dropped: %#v", got)
 	}
 }
 

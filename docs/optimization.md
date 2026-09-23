@@ -83,7 +83,7 @@ For target `C` and actual value `V`:
 ratio = V / C
 ```
 
-The target utility is:
+Fast uses the original target utility:
 
 ```text
 below target: utility = ratio⁴
@@ -96,15 +96,37 @@ Its search contribution is:
 utility × importance × 10
 ```
 
-The fourth-power curve keeps a meaningful incentive to approach each requested
-target instead of treating a nearby floor as almost complete. The interface
-importance levels map to `0.5`, `1`, `2`, and `8`. Surplus value stops improving
+Beta is an experimental alternative. It uses the same goals, weights,
+inventory, and approximate candidate search, but a bounded, diminishing-return
+utility. The target is only a saturation threshold; it does not set the slope.
+For a positive scale `S` resolved before the search:
+
+```text
+M = min(max(V, 0), C)
+contribution = 10 × importance × M / (S + M)
+S = 10 × reference
+```
+
+References come from `data/optimizer/references.json` for every profile, not
+from character recommendations. Final ATK, HP, and DEF use the larger of the
+flat reference and base stat multiplied by the percent reference. A missing
+reference is an error, not a fallback to the target. The global factor `10`
+is experimental calibration; it may be adjusted after comparing Fast and Beta
+on different characters. At the same value below both targets,
+raising the target leaves the score and marginal gain unchanged. Each goal
+contributes less than `10 × importance`, and values above target add no points.
+
+The interface lets users set a nonnegative weight. A zero-weight goal makes
+no ranking contribution, even when a strict constraint is attached. Surplus
+value under the Fast curve stops improving
 utility after 125% of the target, at a maximum utility of `1.05`. This prevents
 one heavily overcapped stat from overwhelming every other goal.
 
 Strict minimums and maximums are hard constraints. A result that violates one
-is rejected rather than merely receiving a lower score. Strictness and
-tolerance never change the ranking score of an otherwise identical build. This
+is rejected rather than merely receiving a lower score. A new strict minimum
+is stored as an absolute value, independently of the soft target; existing
+saved settings using a target-relative tolerance are still read. Strictness
+never changes the ranking score of an otherwise identical build. This
 keeps scores comparable when constraints are added or removed and ensures that
 an unconstrained search cannot rank the same build differently.
 
@@ -138,15 +160,23 @@ The optimizer:
 1. excludes equipment reserved by higher-priority characters unless reuse is
    allowed;
 2. ranks modules by weighted score and efficiency per occupied cell;
-3. keeps strong candidates across geometry and set groups;
+3. keeps strong candidates across geometry and set groups, including multiple
+   specialists per objective and the currently equipped modules;
 4. generates valid rotations and positions;
 5. explores combinations without overlap;
 6. evaluates modules, cartridge, set, final stats, and goals together;
 7. refines same-geometry substitutions in goal-oriented mode.
 
-The exact solver uses an upper bound to discard branches that cannot beat the
-current best result. Goal-oriented search avoids that bound during its main
-non-linear scoring pass.
+Search bounds account for the maximum of each configured preference curve.
+Fast remains approximate because it preselects modules and has a time limit.
+Beta additionally retains specialists for an unmet strict minimum,
+even when the base value already meets its softer target or its ranking weight
+is zero. The number retained per geometry is based on the remaining deficit
+and the number of that geometry that could fit by playable area. This is a
+feasibility safeguard, not a proof that the full inventory was searched.
+An internal `exact-objective` diagnostic can run the same objective function
+without Fast preselection or a timeout on small test inventories; it is not a
+practical search mode for a full account.
 
 ![Fast search configuration, ranked candidates, and projected statistics](images/build-search-results.png)
 
@@ -161,7 +191,9 @@ The interface deliberately separates three concepts:
 3. **Combat impact** is shown by the damage analysis when structured combat data
    is available for the character.
 
-The displayed ranking is the weighted objective utility. Final panel values
+The displayed ranking is the weighted objective utility plus equipment
+relevance multiplied by `0.000001` as a tie-breaker. The detailed score dialog
+shows that small term separately. Final panel values
 already include modules, the cartridge, the Arc, set effects, and character
 bonuses, so equipment relevance is not added to the ranking a second time. It
 remains visible as a diagnostic and is used only as a stable tie-breaker between

@@ -132,7 +132,13 @@ func exceedsMaximum(values map[string]float64, goals []ObjectiveGoal) bool {
 }
 
 func belowToleranceFloor(value float64, goal ObjectiveGoal) bool {
-	if !goal.StrictMinimum || goal.Minimum <= 0 {
+	if !goal.StrictMinimum {
+		return false
+	}
+	if goal.StrictFloor > 0 {
+		return value < goal.StrictFloor-1e-12*math.Max(1, math.Abs(goal.StrictFloor))
+	}
+	if goal.Minimum <= 0 {
 		return false
 	}
 	tolerance := goal.Tolerance
@@ -152,13 +158,16 @@ func exceedsLimit(value, maximum float64) bool {
 }
 
 type ObjectiveGoal struct {
-	SourceWeights bool
-	PropertyID    string
-	Minimum       float64
-	Maximum       float64
-	Tolerance     float64
-	Importance    float64
-	StrictMinimum bool
+	SourceWeights  bool
+	PropertyID     string
+	Minimum        float64
+	Maximum        float64
+	Tolerance      float64
+	Importance     float64
+	StrictMinimum  bool
+	StrictFloor    float64
+	ExplicitWeight bool
+	ScoreScale     float64
 }
 
 type weightedSet struct {
@@ -216,11 +225,7 @@ func NewObjectiveEvaluator(catalog SetCatalog, cartridges []nte.Cartridge, prefe
 		objectiveBound := 0.0
 		for _, goal := range goals {
 			if goal.Minimum > 0 {
-				importance := goal.Importance
-				if importance <= 0 {
-					importance = 1
-				}
-				objectiveBound += 10.5 * importance
+				objectiveBound += objectiveMaximum(goal)
 			}
 		}
 		evaluator.upperBound = 0
@@ -301,20 +306,28 @@ func objectiveUtility(value float64, goal ObjectiveGoal) float64 {
 	if goal.Minimum <= 0 {
 		return 0
 	}
+	importance := objectiveImportance(goal)
+	if importance == 0 {
+		return 0
+	}
+	if goal.ScoreScale > 0 {
+		if exceedsLimit(value, goal.Maximum) {
+			excess := (value - goal.Maximum) / goal.Maximum
+			return -(10000 + excess*10000) * importance
+		}
+		capped := math.Min(math.Max(value, 0), goal.Minimum)
+		return 10 * importance * capped / (goal.ScoreScale + capped)
+	}
 	ratio := value / goal.Minimum
 	if math.Abs(ratio-1) <= 1e-12 {
 		ratio = 1
 	}
 	if exceedsLimit(value, goal.Maximum) {
 		excess := (value - goal.Maximum) / goal.Maximum
-		return -(10000 + excess*10000) * maxFloat(goal.Importance, 1)
+		return -(10000 + excess*10000) * importance
 	}
 	if ratio < 0 {
 		ratio = 0
-	}
-	importance := goal.Importance
-	if importance <= 0 {
-		importance = 1
 	}
 	utility := 0.0
 	switch {
@@ -329,6 +342,21 @@ func objectiveUtility(value float64, goal ObjectiveGoal) float64 {
 		utility = 1 + minFloat(ratio-1, .25)*.2
 	}
 	return utility * importance * 10
+}
+
+func objectiveImportance(goal ObjectiveGoal) float64 {
+	if goal.Importance <= 0 && !goal.ExplicitWeight {
+		return 1
+	}
+	return math.Max(goal.Importance, 0)
+}
+
+func objectiveMaximum(goal ObjectiveGoal) float64 {
+	importance := objectiveImportance(goal)
+	if goal.ScoreScale > 0 {
+		return 10 * importance * goal.Minimum / (goal.ScoreScale + goal.Minimum)
+	}
+	return 10.5 * importance
 }
 
 func maxFloat(a, b float64) float64 {

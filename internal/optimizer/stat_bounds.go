@@ -72,6 +72,9 @@ func (e CartridgeSetEvaluator) prepareStatBound(groups []blueprintGroup, pools m
 		summaries = append(summaries, values)
 		bonus := scoreForMatched(set.definition.Bonuses, len(matched)) * set.priority
 		score := bonus + set.cartridgeScore
+		if len(e.objectives) > 0 {
+			score *= EquipmentTieBreakScale
+		}
 		options = append(options, option{score: score})
 	}
 	for i, values := range summaries {

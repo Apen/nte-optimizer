@@ -20,10 +20,12 @@ type RankingContribution struct {
 	Target          float64 `json:"target"`
 	Importance      float64 `json:"importance"`
 	Points          float64 `json:"points"`
+	ScoreScale      float64 `json:"score_scale,omitempty"`
 }
 type RankingBreakdown struct {
 	Score         float64               `json:"score"`
 	Equipment     float64               `json:"equipment"`
+	TieBreak      float64               `json:"tie_break,omitempty"`
 	Objectives    float64               `json:"objectives"`
 	Structure     float64               `json:"structure"`
 	Contributions []RankingContribution `json:"contributions"`

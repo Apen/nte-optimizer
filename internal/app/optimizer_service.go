@@ -24,11 +24,12 @@ type WeightOverrides struct {
 }
 
 type SavedGoalSettings struct {
-	Target        float64 `json:"target"`
-	Maximum       float64 `json:"maximum,omitempty"`
-	Tolerance     float64 `json:"tolerance"`
-	StrictMinimum bool    `json:"strict_minimum,omitempty"`
-	Disabled      bool    `json:"disabled,omitempty"`
+	Target        float64  `json:"target"`
+	Minimum       *float64 `json:"minimum,omitempty"`
+	Maximum       float64  `json:"maximum,omitempty"`
+	Tolerance     float64  `json:"tolerance"`
+	StrictMinimum bool     `json:"strict_minimum,omitempty"`
+	Disabled      bool     `json:"disabled,omitempty"`
 }
 
 type OptimizerService struct {
@@ -130,6 +131,7 @@ type OptimizationSet struct {
 
 type GoalTuning struct {
 	Target        float64 `json:"target"`
+	Minimum       float64 `json:"minimum,omitempty"`
 	Maximum       float64 `json:"maximum,omitempty"`
 	Tolerance     float64 `json:"tolerance"`
 	Importance    float64 `json:"importance"`
@@ -253,10 +255,15 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 		buildTarget = &loaded
 	}
 	objectives, requiredGeometry := prepareObjectives(plan.solverMode, buildTarget, goalTunings, s.WeightOverrides, profile, setCatalog)
+	if mode == "beta" {
+		if err := applyObjectiveScales(objectives, refs, profile.BaseStats); err != nil {
+			return OptimizationResult{}, err
+		}
+	}
 	selectionStarted := time.Now()
 	pool := s.prepareModuleCandidates(inv.Modules, profile, refs, additional, objectives, requiredGeometry, includeEquipped)
 	candidates, excludedEquipped := pool.eligible, pool.excludedEquipped
-	selection, err := s.selectModuleCandidates(pool, objectives, grid.FreeCells(), cfg, plan)
+	selection, err := s.selectModuleCandidates(pool, cfg, plan, geometryModuleSlots(catalogs.grids.Definitions[profile.GridID], shapeCatalog, candidates))
 	if err != nil {
 		return OptimizationResult{}, err
 	}
@@ -456,25 +463,26 @@ func explainRanking(solution *optimizer.Solution, values map[string]float64, goa
 	if solution.Ranking == nil {
 		return
 	}
-	if mode == "fast" {
+	if mode == "fast" || mode == "beta" || mode == "exact-objective" {
 		for _, goal := range goals {
 			if goal.Minimum <= 0 {
 				continue
 			}
 			importance := goal.Importance
-			if importance <= 0 {
+			if importance <= 0 && !goal.ExplicitWeight {
 				importance = 1
 			}
 			points := optimizer.ObjectiveScore(values, []optimizer.ObjectiveGoal{goal})
-			solution.Ranking.Contributions = append(solution.Ranking.Contributions, optimizer.RankingContribution{PropertyID: goal.PropertyID, Value: values[goal.PropertyID], Target: goal.Minimum, Importance: importance, Points: points})
+			solution.Ranking.Contributions = append(solution.Ranking.Contributions, optimizer.RankingContribution{PropertyID: goal.PropertyID, Value: values[goal.PropertyID], Target: goal.Minimum, Importance: importance, Points: points, ScoreScale: goal.ScoreScale})
 			solution.Ranking.Objectives += points
 		}
+		solution.Ranking.TieBreak = solution.Ranking.Equipment * optimizer.EquipmentTieBreakScale
 	}
-	solution.Ranking.Structure -= solution.Ranking.Objectives
+	solution.Ranking.Structure -= solution.Ranking.Objectives + solution.Ranking.TieBreak
 	// Final panel objectives already include every selected piece and set
 	// effect. Equipment relevance remains diagnostic and is only used as an
 	// internal tie-breaker, otherwise the same stats would be rewarded twice.
-	solution.Ranking.Score = solution.Ranking.Objectives
+	solution.Ranking.Score = solution.Ranking.Objectives + solution.Ranking.TieBreak
 }
 
 // Final panel goals use the strongest configured weight in their stat family.

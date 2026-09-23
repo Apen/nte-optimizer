@@ -2,6 +2,8 @@ package app
 
 import (
 	"fmt"
+	"math"
+	"sort"
 
 	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/optimizer"
@@ -13,6 +15,8 @@ type moduleCandidatePool struct {
 	raw                 []optimizer.Candidate
 	current             []optimizer.Candidate
 	selectionObjectives []optimizer.ObjectiveGoal
+	strictObjectives    []optimizer.ObjectiveGoal
+	baselineStats       map[string]float64
 	excludedEquipped    int
 }
 
@@ -32,7 +36,9 @@ func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile 
 		raw:      make([]optimizer.Candidate, 0, len(modules)),
 	}
 	baselineStats := optimizer.BuildStatSummary(profile, nil, nil, optimizer.SetDefinition{}, 0, additional).Derived
+	pool.baselineStats = baselineStats
 	pool.selectionObjectives = objectivesStillMissing(baselineStats, objectives)
+	pool.strictObjectives = strictObjectivesStillMissing(baselineStats, objectives)
 	baselineObjective := 0.0
 	if len(objectives) > 0 {
 		baselineObjective = optimizer.ObjectiveScore(baselineStats, objectives)
@@ -62,7 +68,7 @@ func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile 
 			for _, goal := range objectives {
 				candidate.ObjectiveValues[goal.PropertyID] = summary.Derived[goal.PropertyID] - baselineStats[goal.PropertyID]
 			}
-			candidate.Priority = optimizer.ObjectiveScore(summary.Derived, objectives) - baselineObjective + score*.01
+			candidate.Priority = optimizer.ObjectiveScore(summary.Derived, objectives) - baselineObjective + score*optimizer.EquipmentTieBreakScale
 			if requiredGeometry[module.Geometry] {
 				candidate.Priority += 25
 			}
@@ -75,7 +81,7 @@ func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile 
 	return pool
 }
 
-func (s OptimizerService) selectModuleCandidates(pool moduleCandidatePool, objectives []optimizer.ObjectiveGoal, freeCells int, config optimizerDataConfig, plan searchPlan) (candidateSelection, error) {
+func (s OptimizerService) selectModuleCandidates(pool moduleCandidatePool, config optimizerDataConfig, plan searchPlan, strictCapacity ...map[string]int) (candidateSelection, error) {
 	perGeometry, perSet := config.Optimize.TopPerGeometry, config.Optimize.TopPerSet
 	if plan.solverMode == "objective" {
 		perGeometry = max(perGeometry, 3)
@@ -86,10 +92,38 @@ func (s OptimizerService) selectModuleCandidates(pool moduleCandidatePool, objec
 		selected = optimizer.SelectCandidates(pool.eligible, perGeometry, perSet)
 	}
 	if plan.approximate && plan.solverMode == "objective" {
-		selected = optimizer.SelectObjectiveCandidates(pool.eligible, pool.selectionObjectives, max(perGeometry, 4), 1)
+		selected = optimizer.SelectObjectiveCandidates(pool.eligible, pool.selectionObjectives, max(perGeometry, 4), 2)
+		if plan.requestedMode == "beta" && len(pool.strictObjectives) > 0 {
+			capacities := map[string]int{}
+			if len(strictCapacity) > 0 {
+				capacities = strictCapacity[0]
+			}
+			byGeometry := map[string][]optimizer.Candidate{}
+			for _, candidate := range pool.eligible {
+				byGeometry[candidate.Module.Geometry] = append(byGeometry[candidate.Module.Geometry], candidate)
+			}
+			geometries := make([]string, 0, len(byGeometry))
+			for geometry := range byGeometry {
+				geometries = append(geometries, geometry)
+			}
+			sort.Strings(geometries)
+			for _, goal := range pool.strictObjectives {
+				for _, geometry := range geometries {
+					group := byGeometry[geometry]
+					capacity, known := capacities[geometry]
+					if !known {
+						capacity = 2
+					}
+					if capacity <= 0 {
+						continue
+					}
+					limit := strictSpecialistCount(group, pool.baselineStats[goal.PropertyID], goal, capacity)
+					selected = appendUniqueCandidates(selected, optimizer.SelectObjectiveCandidates(group, []optimizer.ObjectiveGoal{goal}, max(perGeometry, 4), limit))
+				}
+			}
+		}
 		seedCandidates := optimizer.SelectCandidates(pool.raw, config.Optimize.TopPerGeometry, config.Optimize.TopPerSet)
 		selected = appendUniqueCandidates(selected, seedCandidates)
-		selected = optimizer.PruneDominatedCandidates(selected, objectives, freeCells)
 	}
 	selected = appendPinnedCandidates(selected, pool.eligible, s.PinnedModuleIDs)
 	selected = appendCurrentEquipmentCandidates(selected, pool.current, plan)
@@ -103,6 +137,65 @@ func (s OptimizerService) selectModuleCandidates(pool moduleCandidatePool, objec
 		}
 	}
 	return candidateSelection{selected: selected, perGeometry: perGeometry}, nil
+}
+
+// A strict floor can exceed its soft target. Such a goal still needs
+// specialists even when the target itself is already met by base stats.
+func strictObjectivesStillMissing(baseline map[string]float64, objectives []optimizer.ObjectiveGoal) []optimizer.ObjectiveGoal {
+	result := make([]optimizer.ObjectiveGoal, 0)
+	for _, goal := range objectives {
+		if !goal.StrictMinimum {
+			continue
+		}
+		floor := strictGoalFloor(goal)
+		if baseline[goal.PropertyID] < floor {
+			result = append(result, goal)
+		}
+	}
+	return result
+}
+
+func strictGoalFloor(goal optimizer.ObjectiveGoal) float64 {
+	if goal.StrictFloor > 0 {
+		return goal.StrictFloor
+	}
+	return goal.Minimum * (1 - goal.Tolerance)
+}
+
+// Retain enough specialists to cover the strict deficit even when one module
+// is insufficient, while bounding the budget by the grid's physical capacity.
+func strictSpecialistCount(candidates []optimizer.Candidate, baseline float64, goal optimizer.ObjectiveGoal, capacity int) int {
+	bestGain := 0.0
+	for _, candidate := range candidates {
+		bestGain = max(bestGain, candidate.ObjectiveValues[goal.PropertyID])
+	}
+	if bestGain <= 0 {
+		return min(capacity, 2)
+	}
+	deficit := strictGoalFloor(goal) - baseline
+	needed := math.Ceil(deficit / bestGain)
+	if needed >= float64(capacity) {
+		return capacity
+	}
+	return min(capacity, max(2, int(needed)))
+}
+
+// Playable area gives a safe upper bound on the number of modules of each
+// geometry that a build could use. Actual tiling may allow fewer.
+func geometryModuleSlots(grid optimizer.GridDefinition, shapes optimizer.ShapeCatalog, candidates []optimizer.Candidate) map[string]int {
+	limits := map[string]int{}
+	for _, candidate := range candidates {
+		geometry := candidate.Module.Geometry
+		if _, exists := limits[geometry]; exists {
+			continue
+		}
+		shape, ok := shapes.Shapes[geometry]
+		if !ok || len(shape.Cells) == 0 {
+			continue
+		}
+		limits[geometry] = len(grid.Playable) / len(shape.Cells)
+	}
+	return limits
 }
 
 func appendCurrentEquipmentCandidates(selected, candidates []optimizer.Candidate, plan searchPlan) []optimizer.Candidate {

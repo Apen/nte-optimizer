@@ -145,6 +145,9 @@
     "UnbalIntensityBase": "Intensité de rupture"
   },
   "ui": {
+    "search_beta": "Beta (expérimental)",
+    "search_fast": "Rapide",
+    "search_method": "Méthode de recherche",
     "account_build": "Personnage",
     "account_inventory": "INVENTAIRE DU COMPTE",
     "action": "Action",
@@ -230,6 +233,8 @@
     "equipment_relevance_detail": "Diagnostic et départage uniquement ; ces stats sont déjà incluses dans les valeurs finales ci-dessus",
     "equipment_relevance_section": "2. Pertinence de l’équipement",
     "equipment_relevance_subtotal_detail": "Modules + cartouche + activation du set de la stratégie",
+    "equipment_tie_break": "Départage par l’équipement",
+    "equipment_tie_break_detail": "Pertinence de l’équipement × 0,000001 ; départage uniquement les scores d’objectifs très proches",
     "equipped_arc": "Arc équipé",
     "equipped_gear": "Équipement réellement équipé",
     "equipped_modules": "Modules équipés",
@@ -455,7 +460,7 @@
     "tested_progress_short": "{visited} testés · {elapsed} s",
     "tick": "Tick",
     "total_ranking": "Total du classement",
-    "total_ranking_detail": "Atteinte pondérée des objectifs ; la pertinence sert uniquement au départage",
+    "total_ranking_detail": "Atteinte pondérée des objectifs + départage réduit de l’équipement",
     "understand_result": "Comprendre le résultat",
     "unknown_arc": "Arc inconnu",
     "unknown_date": "Date inconnue",

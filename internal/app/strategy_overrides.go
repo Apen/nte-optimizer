@@ -64,7 +64,7 @@ func saveProfileSettings(projectDir, profileID string, settings WeightOverrides,
 		}
 	}
 	for property, goal := range settings.Goals {
-		if property == "" || !finiteNonNegative(goal.Target) || !finiteNonNegative(goal.Maximum) || math.IsNaN(goal.Tolerance) || math.IsInf(goal.Tolerance, 0) || goal.Tolerance < 0 || goal.Tolerance > .25 {
+		if property == "" || !finiteNonNegative(goal.Target) || !finiteNonNegative(goal.Maximum) || (goal.Minimum != nil && !finiteNonNegative(*goal.Minimum)) || math.IsNaN(goal.Tolerance) || math.IsInf(goal.Tolerance, 0) || goal.Tolerance < 0 || goal.Tolerance > .25 {
 			return WeightOverrides{}, fmt.Errorf("invalid goal settings for %s", property)
 		}
 	}

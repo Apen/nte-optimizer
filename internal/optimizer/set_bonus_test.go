@@ -1,6 +1,7 @@
 package optimizer
 
 import (
+	"math"
 	"os"
 	"path/filepath"
 	"testing"
@@ -62,6 +63,86 @@ func TestObjectiveScoreUsesTargetAndImportance(t *testing.T) {
 	high := ObjectiveScore(map[string]float64{"CritBase": .59}, []ObjectiveGoal{{PropertyID: "CritBase", Minimum: .60, Tolerance: .05, Importance: 2}})
 	if high != nearTarget*2 {
 		t.Fatalf("importance should scale utility: normal=%v high=%v", nearTarget, high)
+	}
+}
+
+func TestBoundedPreferenceKeepsValueAndMarginalGainWhenTargetRises(t *testing.T) {
+	goal := ObjectiveGoal{PropertyID: "UnbalIntensityBase", Minimum: 150, Importance: 1, ExplicitWeight: true, ScoreScale: 120}
+	value := map[string]float64{"UnbalIntensityBase": 140}
+	before := ObjectiveScore(value, []ObjectiveGoal{goal})
+	goal.Minimum = 360
+	after := ObjectiveScore(value, []ObjectiveGoal{goal})
+	if math.Abs(before-10*140.0/260) > 1e-9 || after != before {
+		t.Fatalf("bounded score changed below both targets: before=%v after=%v", before, after)
+	}
+	value["UnbalIntensityBase"] = 180
+	if gain := ObjectiveScore(value, []ObjectiveGoal{goal}) - after; math.Abs(gain-(6-10*140.0/260)) > 1e-9 {
+		t.Fatalf("bounded marginal gain = %v", gain)
+	}
+	if bound := objectiveMaximum(goal); bound < ObjectiveScore(map[string]float64{"UnbalIntensityBase": 360}, []ObjectiveGoal{goal}) {
+		t.Fatalf("objective bound %v excludes target score", bound)
+	}
+	goal.Importance = 2
+	if got := ObjectiveScore(value, []ObjectiveGoal{goal}); math.Abs(got-12) > 1e-9 {
+		t.Fatalf("doubling weight did not double score: %v", got)
+	}
+}
+
+func TestBoundedPreferenceSaturatesAndHasDiminishingReturns(t *testing.T) {
+	goal := ObjectiveGoal{PropertyID: "UnbalIntensityBase", Minimum: 360, Importance: 1, ExplicitWeight: true, ScoreScale: 120}
+	score := func(value float64) float64 {
+		return ObjectiveScore(map[string]float64{"UnbalIntensityBase": value}, []ObjectiveGoal{goal})
+	}
+	if score(-10) != 0 || score(360) != score(420) || score(360) >= 10 {
+		t.Fatalf("bounded preference did not saturate: negative=%g target=%g excess=%g", score(-10), score(360), score(420))
+	}
+	if first, second := score(180)-score(140), score(220)-score(180); first <= second || second <= 0 {
+		t.Fatalf("marginal return did not diminish: first=%g second=%g", first, second)
+	}
+	goal.Importance = 0
+	if goalScore := ObjectiveScore(map[string]float64{"UnbalIntensityBase": 360}, []ObjectiveGoal{goal}); goalScore != 0 {
+		t.Fatalf("explicit zero weight contributed %g", goalScore)
+	}
+}
+
+func TestUnconfiguredPreferenceKeepsQuarticCurve(t *testing.T) {
+	goal := ObjectiveGoal{PropertyID: "UnbalIntensityBase", Minimum: 150, Importance: 1}
+	values := map[string]float64{"UnbalIntensityBase": 140}
+	if got := ObjectiveScore(values, []ObjectiveGoal{goal}); math.Abs(got-10*math.Pow(140.0/150, 4)) > 1e-9 {
+		t.Fatalf("legacy curve changed at 140/150: %v", got)
+	}
+	goal.Minimum = 360
+	if got := ObjectiveScore(values, []ObjectiveGoal{goal}); math.Abs(got-10*math.Pow(140.0/360, 4)) > 1e-9 {
+		t.Fatalf("legacy curve changed at 140/360: %v", got)
+	}
+}
+
+func TestBoundedPreferenceCanChangeBuildOrderingWithoutChangingOtherGoal(t *testing.T) {
+	breakGoal := ObjectiveGoal{PropertyID: "UnbalIntensityBase", Minimum: 360, Importance: 1}
+	critGoal := ObjectiveGoal{PropertyID: "CritBase", Minimum: .5, Importance: 1}
+	lowBreak := map[string]float64{"UnbalIntensityBase": 140, "CritBase": .5}
+	highBreak := map[string]float64{"UnbalIntensityBase": 180, "CritBase": .48}
+	if ObjectiveScore(lowBreak, []ObjectiveGoal{breakGoal, critGoal}) <= ObjectiveScore(highBreak, []ObjectiveGoal{breakGoal, critGoal}) {
+		t.Fatal("legacy curve no longer prefers the stronger Crit build")
+	}
+	breakGoal.ScoreScale = 120
+	critGoal.ScoreScale = .64
+	if ObjectiveScore(highBreak, []ObjectiveGoal{breakGoal, critGoal}) <= ObjectiveScore(lowBreak, []ObjectiveGoal{breakGoal, critGoal}) {
+		t.Fatal("bounded Break preference did not change the build ordering")
+	}
+}
+
+func TestExplicitZeroWeightRemainsConstraintOnly(t *testing.T) {
+	goal := ObjectiveGoal{PropertyID: "UnbalIntensityBase", Minimum: 360, Importance: 0, ExplicitWeight: true, StrictMinimum: true, StrictFloor: 300}
+	if got := ObjectiveScore(map[string]float64{"UnbalIntensityBase": 360}, []ObjectiveGoal{goal}); got != 0 {
+		t.Fatalf("zero-weight constrained goal scored %v", got)
+	}
+	if !belowToleranceFloor(299, goal) || belowToleranceFloor(300, goal) {
+		t.Fatal("absolute strict minimum was not enforced")
+	}
+	goal.Minimum = 200
+	if !belowToleranceFloor(299, goal) || belowToleranceFloor(300, goal) {
+		t.Fatal("changing the soft target changed the absolute strict minimum")
 	}
 }
 

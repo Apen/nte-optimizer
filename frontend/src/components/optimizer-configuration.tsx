@@ -34,9 +34,9 @@ type StatsEditorProps = {
   preset?: TargetPreset
   disabledGoals: string[]
   strictGoals: string[]
+  strictMinimums: Record<string, number>
   goals: Record<string, number>
   maximums: Record<string, number>
-  tolerances: Record<string, number>
   weights: WeightSettings
   availableMain: string[]
   onGoal: (id: string, value: number) => void
@@ -49,12 +49,12 @@ type StatsEditorProps = {
   onSave: () => Promise<void>
 }
 
-export function StatsEditor({ preset, disabledGoals, strictGoals, goals, maximums, tolerances, weights, availableMain, onGoal, onMaximum, onMinimum, onWeight, onMainStats, onRemove, onReset, onSave }: StatsEditorProps) {
+export function StatsEditor({ preset, disabledGoals, strictGoals, strictMinimums, goals, maximums, weights, availableMain, onGoal, onMaximum, onMinimum, onWeight, onMainStats, onRemove, onReset, onSave }: StatsEditorProps) {
   const visibleGoals = (preset?.goals || []).filter(goal => !disabledGoals.includes(goal.property_id))
   return <section className="configuration-panel goals-panel" onBlur={() => void onSave()}>
     <div className="section-heading"><p className="eyebrow">{t('stats_section')}</p><button className="text-action" onClick={() => void onReset()}><RotateCcw className="size-3.5" />{t('reset')}</button></div>
     <MainStatSelector selected={weights.main_stats} available={availableMain} onChange={onMainStats} />
-    <div className="goal-matrix stats-matrix"><div className="goal-table-heading"><span>{t('statistic')}</span><span>{t('weight')}</span><span>{t('objective_label')}</span><span>{t('min_strict')}</span><span>{t('max_strict')}</span></div>{visibleGoals.map(goal => <StatConfigRow key={goal.property_id} goal={goal} value={goals[goal.property_id] || 0} maximumValue={maximums[goal.property_id] || 0} minimumValue={strictGoals.includes(goal.property_id) ? (goals[goal.property_id] || 0) * (1 - (tolerances[goal.property_id] || 0) / 100) : 0} weight={weightForGoal(goal.property_id, weights)} onGoal={value => onGoal(goal.property_id, value)} onMaximum={value => onMaximum(goal.property_id, value)} onMinimum={value => onMinimum(goal.property_id, value)} onWeight={value => onWeight(weightKeyForGoal(goal.property_id, weights), value)} onRemove={() => onRemove(goal.property_id)} />)}{visibleGoals.length === 0 && <p className="py-8 text-center text-sm text-slate-500">{t('no_stats')}</p>}</div>
+    <div className="goal-matrix stats-matrix"><div className="goal-table-heading"><span>{t('statistic')}</span><span>{t('weight')}</span><span>{t('objective_label')}</span><span>{t('min_strict')}</span><span>{t('max_strict')}</span></div>{visibleGoals.map(goal => <StatConfigRow key={goal.property_id} goal={goal} value={goals[goal.property_id] || 0} maximumValue={maximums[goal.property_id] || 0} minimumValue={strictGoals.includes(goal.property_id) ? strictMinimums[goal.property_id] || 0 : 0} weight={weightForGoal(goal.property_id, weights)} onGoal={value => onGoal(goal.property_id, value)} onMaximum={value => onMaximum(goal.property_id, value)} onMinimum={value => onMinimum(goal.property_id, value)} onWeight={value => onWeight(weightKeyForGoal(goal.property_id, weights), value)} onRemove={() => onRemove(goal.property_id)} />)}{visibleGoals.length === 0 && <p className="py-8 text-center text-sm text-slate-500">{t('no_stats')}</p>}</div>
   </section>
 }
 

@@ -16,9 +16,9 @@ type searchPlan struct {
 }
 
 func parseSearchPlan(mode string) (searchPlan, error) {
-	plan := searchPlan{requestedMode: mode, approximate: mode != "exact-score"}
+	plan := searchPlan{requestedMode: mode, approximate: mode != "exact-score" && mode != "exact-objective"}
 	switch mode {
-	case "fast":
+	case "fast", "beta", "exact-objective":
 		plan.solverMode = "objective"
 	case "score", "exact-score":
 		plan.solverMode = "score"
@@ -58,12 +58,12 @@ func prepareObjectives(mode string, buildTarget *target.BuildTarget, tunings map
 			tuning.Importance = goalWeight(profile, goal.PropertyID)
 			if tuning.Importance == 0 {
 				if tuning.StrictMinimum || tuning.Maximum > 0 {
-					objectives = append(objectives, optimizer.ObjectiveGoal{PropertyID: goal.PropertyID, Minimum: goal.Minimum, Maximum: tuning.Maximum, Tolerance: tuning.Tolerance, StrictMinimum: tuning.StrictMinimum})
+					objectives = append(objectives, optimizer.ObjectiveGoal{PropertyID: goal.PropertyID, Minimum: goal.Minimum, Maximum: tuning.Maximum, Tolerance: tuning.Tolerance, StrictMinimum: tuning.StrictMinimum, StrictFloor: tuning.Minimum, ExplicitWeight: true})
 				}
 				continue
 			}
 		}
-		objectives = append(objectives, optimizer.ObjectiveGoal{PropertyID: goal.PropertyID, Minimum: goal.Minimum, Maximum: tuning.Maximum, Tolerance: tuning.Tolerance, Importance: tuning.Importance, StrictMinimum: tuning.StrictMinimum})
+		objectives = append(objectives, optimizer.ObjectiveGoal{PropertyID: goal.PropertyID, Minimum: goal.Minimum, Maximum: tuning.Maximum, Tolerance: tuning.Tolerance, Importance: tuning.Importance, StrictMinimum: tuning.StrictMinimum, StrictFloor: tuning.Minimum, ExplicitWeight: overrides != nil})
 	}
 	for _, preference := range profile.PreferredSets {
 		for _, geometry := range sets.Definitions[preference.SetID].RequiredGeometries {

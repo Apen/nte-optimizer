@@ -145,6 +145,9 @@
     "UnbalIntensityBase": "Break Intensity"
   },
   "ui": {
+    "search_beta": "Beta (experimental)",
+    "search_fast": "Fast",
+    "search_method": "Search method",
     "account_build": "Character",
     "account_inventory": "ACCOUNT INVENTORY",
     "action": "Action",
@@ -230,6 +233,8 @@
     "equipment_relevance_detail": "Diagnostic and tie-breaker only; these stats are already included in the final values above",
     "equipment_relevance_section": "2. Equipment relevance",
     "equipment_relevance_subtotal_detail": "Modules + cartridge + strategy set activation",
+    "equipment_tie_break": "Equipment tie-break",
+    "equipment_tie_break_detail": "Equipment relevance × 0.000001; affects only nearly equal objective scores",
     "equipped_arc": "Equipped Arc",
     "equipped_gear": "Currently equipped gear",
     "equipped_modules": "Equipped modules",
@@ -455,7 +460,7 @@
     "tested_progress_short": "{visited} tested · {elapsed} s",
     "tick": "Tick",
     "total_ranking": "Total ranking",
-    "total_ranking_detail": "Weighted objective fit; equipment relevance is only a tie-breaker",
+    "total_ranking_detail": "Weighted objective fit + scaled equipment tie-break",
     "understand_result": "Understand the result",
     "unknown_arc": "Unknown Arc",
     "unknown_date": "Unknown date",
