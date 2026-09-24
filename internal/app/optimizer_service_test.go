@@ -154,6 +154,56 @@ func TestOptimizerServiceReturnsStructuredResult(t *testing.T) {
 	}
 }
 
+func TestOptimizerServiceCalculatesBuildWithEachSupportedSubstatAlone(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	service := NewOptimizerService(dataDir)
+	catalog, err := service.loadOptimizerCatalog()
+	if err != nil {
+		t.Fatal(err)
+	}
+	propertyIDs := make([]string, 0, len(catalog.references))
+	for propertyID := range catalog.references {
+		propertyIDs = append(propertyIDs, propertyID)
+	}
+	slices.Sort(propertyIDs)
+	if len(propertyIDs) == 0 {
+		t.Fatal("optimizer reference catalog has no substats")
+	}
+
+	for _, propertyID := range propertyIDs {
+		t.Run(propertyID, func(t *testing.T) {
+			reference := catalog.references[propertyID]
+			if reference <= 0 {
+				t.Fatalf("substat %s has invalid reference value %v", propertyID, reference)
+			}
+			value := reference / 10
+			service.WeightOverrides = &WeightOverrides{
+				MainStats: []string{"CritDamageBase"},
+				Weights:   map[string]float64{propertyID: 1},
+			}
+			inventory := nte.Inventory{Modules: []nte.Module{{
+				LocalID: "substat-probe", Geometry: "H_2", Area: 2,
+				SubStats: []nte.Stat{{PropertyID: propertyID, Value: value, Percent: reference < 1}},
+			}}}
+
+			result, err := service.Optimize(context.Background(), inventory, "zankou")
+			if err != nil {
+				t.Fatalf("calculating a build with substat %s failed: %v", propertyID, err)
+			}
+			if len(result.Modules) != 1 || len(result.Modules[0].Breakdown.Contributions) != 1 {
+				t.Fatalf("substat %s was not carried through the build calculation: %#v", propertyID, result.Modules)
+			}
+			contribution := result.Modules[0].Breakdown.Contributions[0]
+			if contribution.PropertyID != propertyID || contribution.Value != value || contribution.Score <= 0 {
+				t.Fatalf("unexpected %s calculation contribution: %#v", propertyID, contribution)
+			}
+			if got := result.Stats.Sources["modules"][propertyID]; got != value {
+				t.Fatalf("calculated module total for %s = %v, want %v", propertyID, got, value)
+			}
+		})
+	}
+}
+
 func TestOptimizerServiceRequiresExplicitOptionForOtherCharactersEquipment(t *testing.T) {
 	service := OptimizerService{DataDir: filepath.Join("..", "..", "data")}
 	inv := nte.Inventory{Modules: []nte.Module{{LocalID: "free", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .01}}}, {LocalID: "borrowed", Geometry: "H_2", EquippedCharacterID: 1004, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .5}}}}}

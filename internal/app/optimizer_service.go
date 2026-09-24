@@ -25,6 +25,9 @@ type WeightOverrides struct {
 
 type SavedGoalSettings struct {
 	Target        float64  `json:"target"`
+	Label         string   `json:"label,omitempty"`
+	Percent       bool     `json:"percent,omitempty"`
+	Custom        bool     `json:"custom,omitempty"`
 	Minimum       *float64 `json:"minimum,omitempty"`
 	Maximum       float64  `json:"maximum,omitempty"`
 	Tolerance     float64  `json:"tolerance"`
@@ -131,6 +134,9 @@ type OptimizationSet struct {
 
 type GoalTuning struct {
 	Target        float64 `json:"target"`
+	Label         string  `json:"label,omitempty"`
+	Percent       bool    `json:"percent,omitempty"`
+	Custom        bool    `json:"custom,omitempty"`
 	Minimum       float64 `json:"minimum,omitempty"`
 	Maximum       float64 `json:"maximum,omitempty"`
 	Tolerance     float64 `json:"tolerance"`
@@ -216,6 +222,7 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 		return OptimizationResult{}, err
 	}
 	refs := catalogs.references
+	migrateLegacyDerivedStatWeights(&profile, refs)
 	if err := scoring.ValidateCharacter(profileID, profile, refs); err != nil {
 		return OptimizationResult{}, err
 	}
@@ -247,6 +254,7 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 	}
 	var buildTarget *target.BuildTarget
 	if loaded, readErr := s.Target(profileID); readErr == nil {
+		appendCustomTargetGoals(&loaded, goalTunings)
 		for i := range loaded.Goals {
 			if value, ok := goalOverrides[loaded.Goals[i].PropertyID]; ok && value >= 0 {
 				loaded.Goals[i].Minimum = value
@@ -298,6 +306,32 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 	})
 	result.PhaseMS["reporting"] = time.Since(searchFinished).Milliseconds()
 	return result, nil
+}
+
+func appendCustomTargetGoals(buildTarget *target.BuildTarget, tunings map[string]GoalTuning) {
+	if buildTarget == nil || len(tunings) == 0 {
+		return
+	}
+	known := make(map[string]bool, len(buildTarget.Goals))
+	for _, goal := range buildTarget.Goals {
+		known[goal.PropertyID] = true
+	}
+	customIDs := make([]string, 0, len(tunings))
+	for propertyID, tuning := range tunings {
+		if propertyID != "" && tuning.Custom && !known[propertyID] {
+			customIDs = append(customIDs, propertyID)
+		}
+	}
+	sort.Strings(customIDs)
+	for _, propertyID := range customIDs {
+		tuning := tunings[propertyID]
+		buildTarget.Goals = append(buildTarget.Goals, target.Goal{
+			PropertyID: propertyID,
+			Label:      tuning.Label,
+			Minimum:    tuning.Target,
+			Percent:    tuning.Percent,
+		})
+	}
 }
 
 type alternativeBuildContext struct {
@@ -490,11 +524,11 @@ func goalWeight(profile scoring.Character, property string) float64 {
 	keys := []string{property}
 	switch property {
 	case "AtkFinal":
-		keys = []string{"AtkBase", "AtkUp", "AtkAdd"}
+		keys = []string{"AtkUp", "AtkAdd"}
 	case "HPFinal":
-		keys = []string{"HPMaxBase", "HPMaxUp", "HPMaxAdd", "HPUp"}
+		keys = []string{"HPMaxUp", "HPMaxAdd"}
 	case "DefFinal":
-		keys = []string{"DefBase", "DefUp", "DefAdd"}
+		keys = []string{"DefUp", "DefAdd"}
 	}
 	weight := 0.0
 	for _, key := range keys {

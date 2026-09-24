@@ -23,7 +23,7 @@ type AppSidebarProps = NavigationProps & {
 
 export function AppSidebar({ page, onPage, characters, catalog, importSummary, locale, onLocaleChange }: AppSidebarProps) {
   const saved = characters.filter(character => character.build).length
-  return <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 overflow-x-hidden border-r border-slate-800 bg-slate-950/95 p-5 backdrop-blur-xl lg:flex lg:flex-col">
+  return <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 overflow-x-hidden border-r border-slate-800 bg-[#12161e] p-5 lg:flex lg:flex-col">
     <div className="mb-8 min-w-0"><p className="eyebrow">{t('app_name')}</p><h1 className="mt-1 text-xl font-black">{t('build_planner')}</h1></div>
     <nav className="grid gap-2">
       <NavButton active={page === 'characters'} onClick={() => onPage('characters')} icon={Users} title={t('nav_characters')} detail={t('nav_available', { count: characters.length })} />
@@ -50,7 +50,7 @@ export function MobileNavigation({ page, onPage, locale, onLocaleChange }: Navig
     ['import', 'nav_import', FolderInput],
   ]
   return <div className="mb-5 flex flex-wrap items-end gap-2 lg:hidden">
-    <nav className="grid flex-1 grid-cols-2 gap-2 sm:grid-cols-3">{items.map(([id, key, Icon]) => <Button key={id} variant={page === id ? 'default' : 'secondary'} onClick={() => onPage(id)}><Icon className="mr-2 size-4" />{t(key)}</Button>)}</nav>
+    <nav className="grid flex-1 grid-cols-2 gap-2 sm:grid-cols-3">{items.map(([id, key, Icon]) => <Button key={id} variant="secondary" className={page === id ? 'border-l-2 border-l-pink-600 bg-slate-800 text-slate-100' : ''} onClick={() => onPage(id)}><Icon className="mr-2 size-4" />{t(key)}</Button>)}</nav>
     <LocaleSelector locale={locale} onChange={onLocaleChange} className="w-24" />
   </div>
 }
@@ -65,8 +65,8 @@ function LocaleSelector({ locale, onChange, className = '' }: { locale: Locale; 
 }
 
 function NavButton({ active, onClick, icon: Icon, title, detail }: { active: boolean; onClick: () => void; icon: LucideIcon; title: string; detail: string }) {
-  return <button onClick={onClick} className={`flex items-center gap-3 rounded-xl border p-3 text-left transition ${active ? 'border-pink-500 bg-pink-950/40 text-white' : 'border-transparent text-slate-400 hover:bg-slate-900 hover:text-white'}`}>
-    <span className={`grid size-10 place-items-center rounded-lg ${active ? 'bg-pink-500 text-white' : 'bg-slate-900'}`}><Icon className="size-5" /></span>
+  return <button onClick={onClick} className={`flex items-center gap-3 rounded-r-xl border-y border-r p-3 text-left transition ${active ? 'border-y-slate-700 border-r-slate-700 border-l-2 border-l-pink-600 bg-slate-800/70 text-white' : 'border-transparent text-slate-400 hover:bg-slate-900 hover:text-white'}`}>
+    <span className={`grid size-10 place-items-center rounded-lg ${active ? 'bg-slate-700 text-white' : 'bg-slate-900'}`}><Icon className="size-5" /></span>
     <span><strong className="block text-sm">{title}</strong><small className="text-slate-500">{detail}</small></span>
   </button>
 }

@@ -82,6 +82,18 @@ func PrepareSavedOptimization(service OptimizerService, stateDir, character, pro
 		}
 		goals[goal.PropertyID] = tuning
 	}
+	for propertyID, saved := range weights.Goals {
+		if !saved.Custom || saved.Disabled {
+			continue
+		}
+		tuning := GoalTuning{Target: saved.Target, Label: saved.Label, Percent: saved.Percent, Custom: true, Maximum: saved.Maximum, Tolerance: saved.Tolerance, Importance: savedGoalWeight(propertyID, weights.Weights), StrictMinimum: saved.StrictMinimum}
+		if saved.Minimum != nil {
+			tuning.Minimum = *saved.Minimum
+		} else if saved.StrictMinimum {
+			tuning.Minimum = saved.Target * (1 - saved.Tolerance)
+		}
+		goals[propertyID] = tuning
+	}
 	return SavedOptimizationRequest{Profile: *selected, Weights: weights, Goals: goals}, nil
 }
 
@@ -89,11 +101,11 @@ func savedGoalWeight(property string, weights map[string]float64) float64 {
 	keys := []string{property}
 	switch property {
 	case "AtkFinal":
-		keys = []string{"AtkBase", "AtkUp", "AtkAdd"}
+		keys = []string{"AtkUp", "AtkAdd"}
 	case "HPFinal":
-		keys = []string{"HPMaxBase", "HPMaxUp", "HPMaxAdd", "HPUp"}
+		keys = []string{"HPMaxUp", "HPMaxAdd"}
 	case "DefFinal":
-		keys = []string{"DefBase", "DefUp", "DefAdd"}
+		keys = []string{"DefUp", "DefAdd"}
 	}
 	weight := 0.0
 	for _, key := range keys {

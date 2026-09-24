@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { createElement } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -6,7 +6,7 @@ import { applyLocalization } from '../i18n'
 import type { LocalizationCatalog, TargetPreset } from '../types'
 import { StatsEditor, weightForGoal } from './optimizer-configuration'
 
-const zeroWeightHint = 'Target does not affect ranking; use a weight or strict minimum.'
+const zeroWeightHint = 'Not included in the score'
 const catalog: LocalizationCatalog = {
   locale: 'en',
   ui: {
@@ -17,11 +17,17 @@ const catalog: LocalizationCatalog = {
     stats_section: 'Stats',
     reset: 'Reset',
     stats_main: 'Main stats',
+    stats_objectives: 'Objectives',
+    add_objective_stat: 'Add an objective stat…',
     statistic: 'Statistic',
     weight: 'Weight',
     objective_label: 'Objective',
     min_strict: 'Min',
     max_strict: 'Max',
+    weight_help: 'Weight help',
+    advanced_constraints: 'Advanced constraints',
+    active_constraints_count: '{count} active',
+    strict_limits_description: 'Strict minimums and maximums',
   },
   stats: {},
   qualities: {},
@@ -33,13 +39,14 @@ const catalog: LocalizationCatalog = {
 
 const preset: TargetPreset = {
   name: 'Test profile',
-  goals: [{ property_id: 'CritBase', label: 'Critical rate', minimum: 20, percent: true }],
+  goals: [{ property_id: 'CritBase', label: 'Critical rate', minimum: 0.2, percent: true }],
 }
 
-function renderStatsEditor(weight: number) {
+function renderStatsEditor(weight: number, disabledGoals: string[] = [], onAddGoal = vi.fn(), availableGoals = preset.goals) {
   return render(createElement(StatsEditor, {
-    preset,
-    disabledGoals: [],
+    goalDefinitions: preset.goals,
+    availableGoals,
+    disabledGoals,
     strictGoals: [],
     strictMinimums: {},
     goals: { CritBase: 20 },
@@ -52,6 +59,7 @@ function renderStatsEditor(weight: number) {
     onWeight: vi.fn(),
     onMainStats: vi.fn(),
     onRemove: vi.fn(),
+    onAddGoal,
     onReset: vi.fn().mockResolvedValue(undefined),
     onSave: vi.fn().mockResolvedValue(undefined),
   }))
@@ -69,23 +77,59 @@ describe('weightForGoal', () => {
   })
 })
 
-describe('zero-weight goal warning', () => {
-  it('shows the localized explanation in an accessible warning tooltip when weight is zero', () => {
+describe('zero-weight goal hint', () => {
+  it('shows the localized explanation inline when weight is zero', () => {
     renderStatsEditor(0)
 
-    const warning = screen.getByRole('button', { name: 'Weight for Critical rate' })
-    const tooltip = screen.getByRole('tooltip')
     expect(screen.getByRole('spinbutton', { name: 'Weight for Critical rate' })).toBeInTheDocument()
-    expect(warning).toHaveAttribute('aria-describedby', tooltip.id)
-    expect(tooltip).toHaveTextContent(zeroWeightHint)
-    expect(tooltip.className).toContain('group-hover:opacity-100')
-    expect(tooltip.className).toContain('group-focus-within:opacity-100')
+    expect(screen.getByText(zeroWeightHint)).toBeInTheDocument()
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
   })
 
-  it('does not show a warning tooltip when the stat has a non-zero weight', () => {
+  it('does not show the hint when the stat has a non-zero weight', () => {
     renderStatsEditor(0.5)
 
-    expect(screen.queryByRole('button', { name: 'Weight for Critical rate' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+    expect(screen.queryByText(zeroWeightHint)).not.toBeInTheDocument()
+  })
+
+  it('exposes strict limits through an accessible disclosure control', () => {
+    renderStatsEditor(0)
+
+    const disclosure = screen.getByRole('button', { name: /Advanced constraints/ })
+    expect(disclosure).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.getByText('Strict minimums and maximums')).toBeInTheDocument()
+
+    fireEvent.click(disclosure)
+
+    expect(disclosure).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('spinbutton', { name: 'Min Critical rate' })).toBeInTheDocument()
+    expect(screen.getByRole('spinbutton', { name: 'Max Critical rate' })).toBeInTheDocument()
+  })
+})
+
+describe('adding objective stats', () => {
+  it('offers removed profile goals and lets the parent restore them individually', () => {
+    const onAddGoal = vi.fn()
+    renderStatsEditor(0, ['CritBase'], onAddGoal)
+
+    expect(screen.queryByRole('spinbutton', { name: 'Weight for Critical rate' })).not.toBeInTheDocument()
+    fireEvent.change(screen.getByRole('combobox', { name: 'Add an objective stat…' }), { target: { value: 'CritBase' } })
+
+    expect(onAddGoal).toHaveBeenCalledWith(preset.goals[0])
+  })
+
+  it('offers any localized stat that is not currently displayed', () => {
+    const onAddGoal = vi.fn()
+    const defense = { property_id: 'DefFinal', label: 'DEF', minimum: 0, percent: false }
+    const { container } = renderStatsEditor(0, [], onAddGoal, [...preset.goals, defense])
+
+    const addSelect = screen.getByRole('combobox', { name: 'Add an objective stat…' })
+    expect(screen.getByRole('option', { name: 'DEF' })).toBeInTheDocument()
+    const table = container.querySelector('.goal-matrix')!
+    const toolbar = addSelect.closest('.goal-add-toolbar')!
+    expect(table.compareDocumentPosition(toolbar) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    fireEvent.change(addSelect, { target: { value: 'DefFinal' } })
+
+    expect(onAddGoal).toHaveBeenCalledWith(defense)
   })
 })

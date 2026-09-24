@@ -45,7 +45,7 @@ export function ConsoleGrid({ result }: { result: Result }) {
       const className = `grid size-12 place-items-center rounded-lg font-black transition ${playable.has(key) ? moduleColors[placement?.number || 0] : 'border border-dashed border-slate-700 bg-slate-950'} ${placement && activeModuleID && placement.moduleID === activeModuleID ? 'ring-2 ring-white/80 ring-offset-1 ring-offset-slate-950' : ''}`
 
       cells.push(module && placement
-        ? <button key={key} type="button" className={`${className} cursor-help focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300`} aria-label={t('module_label', { number: placement.number })} aria-controls="console-grid-module-preview" onPointerEnter={() => setHoveredModuleID(placement.moduleID)} onFocus={() => setHoveredModuleID(placement.moduleID)} onClick={() => setPinnedModuleID(placement.moduleID)}>{content}</button>
+        ? <button key={key} type="button" className={`${className} cursor-help focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300`} aria-label={t('module_label', { number: placement.number })} aria-controls="console-grid-module-preview" onPointerEnter={() => setHoveredModuleID(placement.moduleID)} onFocus={() => setHoveredModuleID(placement.moduleID)} onClick={() => setPinnedModuleID(placement.moduleID)}>{content}</button>
         : <div key={key} className={className}>{content}</div>)
     }
   }
@@ -56,7 +56,7 @@ export function ConsoleGrid({ result }: { result: Result }) {
     <div className="relative mt-3 min-h-4">
       <p className="text-xs text-slate-500">{t('hover_grid_piece_hint')}</p>
       <div ref={previewRef} id="console-grid-module-preview" className="absolute left-0 top-full z-30 mt-2 w-[min(24rem,calc(100vw-2rem))] shadow-2xl" aria-live="polite">
-        {activeModule && <ModulePieceCard item={activeModule.module} title={t('module_label', { number: activeNumber })} meta={geometries[activeModule.module.geometry] || activeModule.module.geometry} className="border-cyan-700 bg-slate-950" />}
+        {activeModule && <ModulePieceCard item={activeModule.module} title={t('module_label', { number: activeNumber })} meta={geometries[activeModule.module.geometry] || activeModule.module.geometry} className="border-slate-700 bg-slate-950" />}
       </div>
     </div>
   </section>

@@ -43,6 +43,32 @@ func applyWeightOverrides(profile scoring.Character, overrides *WeightOverrides)
 	return profile, nil
 }
 
+// migrateLegacyDerivedStatWeights moves weights saved against panel base stats
+// to the corresponding equipment stat when that source has no scoring reference.
+func migrateLegacyDerivedStatWeights(profile *scoring.Character, refs scoring.References) {
+	if profile == nil {
+		return
+	}
+	aliases := []struct{ legacy, supported string }{
+		{"AtkBase", "AtkUp"},
+		{"HPMaxBase", "HPMaxUp"},
+		{"HPUp", "HPMaxUp"},
+		{"DefBase", "DefUp"},
+	}
+	for _, weights := range []map[string]float64{profile.Weights, profile.MainWeights, profile.SubWeights} {
+		for _, alias := range aliases {
+			weight, exists := weights[alias.legacy]
+			if !exists || refs[alias.legacy] > 0 {
+				continue
+			}
+			if refs[alias.supported] > 0 && weight > weights[alias.supported] {
+				weights[alias.supported] = weight
+			}
+			delete(weights, alias.legacy)
+		}
+	}
+}
+
 func prepareObjectives(mode string, buildTarget *target.BuildTarget, tunings map[string]GoalTuning, overrides *WeightOverrides, profile scoring.Character, sets optimizer.SetCatalog) ([]optimizer.ObjectiveGoal, map[string]bool) {
 	objectives := []optimizer.ObjectiveGoal{}
 	requiredGeometry := map[string]bool{}

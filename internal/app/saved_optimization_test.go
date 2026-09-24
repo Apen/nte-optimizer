@@ -29,6 +29,7 @@ func TestPrepareSavedOptimizationUsesDefaultsAndOverrides(t *testing.T) {
 	settings.Goals = map[string]SavedGoalSettings{
 		"CritDamageBase": {Target: 2.3, Minimum: &strict, Tolerance: .1, StrictMinimum: true},
 		"AtkFinal":       {Disabled: true},
+		"DefFinal":       {Target: 2400, Label: "DEF", Custom: true},
 	}
 	settings.Weights["CritDamageBase"] = .42
 	if err := os.MkdirAll(filepath.Join(stateDir, "workspace"), 0o755); err != nil {
@@ -47,6 +48,10 @@ func TestPrepareSavedOptimizationUsesDefaultsAndOverrides(t *testing.T) {
 	goal = request.Goals["CritDamageBase"]
 	if !goal.StrictMinimum || goal.Minimum != strict || goal.Target != 2.3 || goal.Importance != .42 || math.Abs(goal.Tolerance-.1) > 1e-9 {
 		t.Fatalf("saved goal not applied: %#v", goal)
+	}
+	goal, ok = request.Goals["DefFinal"]
+	if !ok || !goal.Custom || goal.Label != "DEF" || goal.Target != 2400 || goal.Percent {
+		t.Fatalf("saved custom goal not applied: %#v", goal)
 	}
 }
 

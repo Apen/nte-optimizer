@@ -100,6 +100,23 @@ func TestPrepareObjectivesUsesTuningsAndSetGeometry(t *testing.T) {
 	}
 }
 
+func TestAppendCustomTargetGoalsMakesUserDefinedStatsOptimizable(t *testing.T) {
+	buildTarget := &target.BuildTarget{Goals: []target.Goal{{PropertyID: "Crit", Label: "CRIT Rate", Minimum: .75, Percent: true}}}
+	tunings := map[string]GoalTuning{
+		"DefFinal": {Target: 2400, Label: "DEF", Custom: true},
+		"Crit":     {Target: .8},
+		"Ignored":  {Target: 10},
+	}
+	appendCustomTargetGoals(buildTarget, tunings)
+	if len(buildTarget.Goals) != 2 || buildTarget.Goals[1].PropertyID != "DefFinal" || buildTarget.Goals[1].Minimum != 2400 || buildTarget.Goals[1].Percent || buildTarget.Goals[1].Label != "DEF" {
+		t.Fatalf("custom goal was not added correctly: %#v", buildTarget.Goals)
+	}
+	objectives, _ := prepareObjectives("objective", buildTarget, tunings, nil, scoring.Character{}, optimizer.SetCatalog{})
+	if len(objectives) != 2 || objectives[1].PropertyID != "DefFinal" || objectives[1].Minimum != 2400 {
+		t.Fatalf("custom goal was not included in objective scoring: %#v", objectives)
+	}
+}
+
 func TestPrepareObjectivesPreservesUnweightedHardBounds(t *testing.T) {
 	buildTarget := &target.BuildTarget{Goals: []target.Goal{{PropertyID: "Crit", Minimum: .75}, {PropertyID: "Atk", Minimum: 2000}}}
 	profile := scoring.Character{Weights: map[string]float64{"Crit": 1}}
