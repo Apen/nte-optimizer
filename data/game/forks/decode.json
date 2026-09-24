@@ -3,247 +3,296 @@
     "fork_Arachne": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_BitGame": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_BitterCake": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_BlackBook": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "fork_BlastCandy": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_BoxingCandy": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "fork_Butterfly": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_Castle": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "fork_Crowbar": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_DemonBlade": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_Door": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "fork_GoldRecord": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "fork_GoldWool": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_Kite": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_KnightCandy": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_LunarPhase": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_MotorCandy": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "fork_Nakupeda": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_NestBird": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_PaperPlane": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "fork_PoliceRat": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_Prokaryon": {
       "quality": "BLUE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "fork_Rose": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "fork_ThiefCandy": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_TigerTally": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "fork_Time": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_Whale": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "fork_appliance": {
       "quality": "BLUE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "fork_bopu": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_dustbin": {
       "quality": "BLUE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_jiaojuan": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "fork_jingmotingyuan": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_koinobori": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_lingganzhongjiezhe": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "fork_mamen": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_mofeikesi": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_moon": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "fork_nonos": {
       "quality": "BLUE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_oulaquantao": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "fork_rishi": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_snowman": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_spider": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_tuansanlang": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "fork_vine": {
       "quality": "BLUE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_worldrain": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_wuhuakuang": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "fork_wushoutieyu": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "fork_yaodao": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "fork_yuren": {
       "quality": "PURPLE",
       "max_breakthrough": 6,
-      "max_star": 5
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     }
   }
 }

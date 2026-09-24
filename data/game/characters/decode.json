@@ -1,79 +1,104 @@
 {
   "characters": {
     "1003": {
-      "codename": "Sagiri"
+      "codename": "Sagiri",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "1004": {
-      "codename": "Lacrimosa"
+      "codename": "Lacrimosa",
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "1008": {
-      "codename": "Skia"
+      "codename": "Skia",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "1010": {
-      "codename": "Nanally"
+      "codename": "Nanally",
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "1019": {
-      "codename": "Mint"
+      "codename": "Mint",
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "1020": {
-      "codename": "Haniel"
+      "codename": "Haniel",
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "1021": {
-      "codename": "Edgar"
+      "codename": "Edgar",
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "1023": {
-      "codename": "Cang"
+      "codename": "Cang",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "1025": {
-      "codename": "Hathor"
+      "codename": "Hathor",
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "1033": {
-      "codename": "Adler"
+      "codename": "Adler",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "1036": {
-      "codename": "zankou"
+      "codename": "zankou",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "1039": {
-      "codename": "Fadia"
+      "codename": "Fadia",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "1046": {
-      "codename": "Male"
+      "codename": "Male",
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "1051": {
-      "codename": "Female"
+      "codename": "Female",
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "1052": {
-      "codename": "Jin"
+      "codename": "Jin",
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "1054": {
-      "codename": "Daffodill"
+      "codename": "Daffodill",
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "1055": {
-      "codename": "Kuhara"
+      "codename": "Kuhara",
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
     },
     "1056": {
-      "codename": "bat"
+      "codename": "bat",
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "1070": {
-      "codename": "mitsuki"
+      "codename": "mitsuki",
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "1071": {
-      "codename": "Chaos"
+      "codename": "Chaos",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "1072": {
-      "codename": "radio"
+      "codename": "radio",
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
     "1073": {
-      "codename": "chiichan"
+      "codename": "chiichan",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "1075": {
-      "codename": "Oneiroi"
+      "codename": "Oneiroi",
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "1076": {
-      "codename": "shinku"
+      "codename": "shinku",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
     "1091": {
-      "codename": "lingke"
+      "codename": "lingke",
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
     }
   }
 }

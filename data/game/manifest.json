@@ -4,7 +4,7 @@
     {
       "path": "characters/base_stats.json",
       "schema_version": 1,
-      "sha256": "6897afefe445421ccaf294d181c4254b9a4df0d5d95794bc942e579531b5c299",
+      "sha256": "7386cf6d5011454899cc449aa19213e192c0b1e33887ce3061b8bb4410a54748",
       "sources": [
         "generated/base_stats.json"
       ],
@@ -14,10 +14,11 @@
     {
       "path": "characters/decode.json",
       "schema_version": 1,
-      "sha256": "dc4f855db734c40ac800d5897e4ef2929abd6cea2131721a607a277cc503c61c",
+      "sha256": "42c36f5987ca04b9acab33b093c86e8d55b520fa70116daf5c1f7bc4f97f917f",
       "sources": [
         "datamine/data/characters/manifest.json",
         "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
+        "datamine/data/datatables/DataTable/Character/DT_Character.json",
         "overrides/game-data.json"
       ],
       "status": "generated",
@@ -26,7 +27,7 @@
     {
       "path": "combat/damage.json",
       "schema_version": 1,
-      "sha256": "a8f3584aa7462045dd4d2386ba7c805b3e4c2a0a8044e9954cb0f8666e943fc3",
+      "sha256": "cf0b8778257e3029bf9060e2d541438ff46c17f42a4d7de04089a7e17de91a9b",
       "sources": [
         "generated/combat_catalog_draft.json",
         "datamine/data/characters/manifest.json",
@@ -40,7 +41,7 @@
     {
       "path": "equipment/arcs.json",
       "schema_version": 1,
-      "sha256": "f0aa5119d14e12fc4ba3bf52c825ba5898b054b2622685364c8be0135eb2dfa8",
+      "sha256": "4f73edbe54a856fe3398e94475708b2742060a5419ab0d9d87821a740e243d59",
       "sources": [
         "generated/fork_stats.json",
         "overrides/equipment-projections.json"
@@ -53,7 +54,7 @@
     {
       "path": "equipment/console_traits.json",
       "schema_version": 1,
-      "sha256": "00018e046000dd14218be5c4218d95b7adaf10090939c3955c928e802488b0d7",
+      "sha256": "b24e0657ec2f2667fa32c6be669c0321732dd516c569f5e7bb3668c10bde858f",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_CharacterEquipmentSlotsData.json",
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_EquipmentModifySlotsEffect.json"
@@ -64,7 +65,7 @@
     {
       "path": "equipment/decode.json",
       "schema_version": 1,
-      "sha256": "633ddef677eaee23eb75382e14b7bf0577c5457457b643e7a1dda752ac4957a7",
+      "sha256": "23c2efc98e693a1b6db6eb65dd814c9d5ac985bd5b9b392646dcc618a0d47910",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_Equipment.json",
         "datamine/data/catalogs/DataTable/Equipment/CT_EquipmentBaseAttribute.json",
@@ -80,7 +81,7 @@
     {
       "path": "equipment/grids.json",
       "schema_version": 1,
-      "sha256": "1dfbc63168b83af8095c040bc0ad937e5afcccff966869cd1ab68ff8b738c425",
+      "sha256": "94d2ff591e085e973976e8f017e11e916dc287213bfcef5ff58da5a9447ec397",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentPlanData.json"
       ],
@@ -90,7 +91,7 @@
     {
       "path": "equipment/sets.json",
       "schema_version": 1,
-      "sha256": "1fbc5c25e2e3a19e6963e3e082fd034d2c55b17237d1c479fc13ecafc0958064",
+      "sha256": "89ee039b6dc51fd27995bd5e4288af82d0e20d6b94b331dba945a7b944fecf49",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentSuitData.json",
         "overrides/equipment-projections.json"
@@ -103,7 +104,7 @@
     {
       "path": "equipment/shapes.json",
       "schema_version": 1,
-      "sha256": "f53dc32926fec6b1f6daf37b2569210a106dc529c12ea4aaf99ed4629c39d0e2",
+      "sha256": "ee1d4ed537f8d967b2e274c28eb28663588ceffd76720f8b9f02547858d80831",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentShapeFeatureData.json"
       ],
@@ -113,7 +114,7 @@
     {
       "path": "forks/decode.json",
       "schema_version": 1,
-      "sha256": "e447f194fcff3686317f8f72800d396502d7ec768fba611d1273c8354dd563ef",
+      "sha256": "0937a5056d95a8cd6dbe19187e10bd9d91bd6b02ad292adc1990b59a0a29762f",
       "sources": [
         "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json"
       ],
@@ -153,7 +154,7 @@
     {
       "path": "resources/decode.json",
       "schema_version": 1,
-      "sha256": "f3536d0f5686a2d274374ae1ed3fc8726acaed55e831508bb93d783000b8b970",
+      "sha256": "b64825fdf6e3136dadc6ea1ffa922362daf330c905ea5a7a049dfc41b2c80f72",
       "sources": [
         "datamine/data/inventory/DataTable/Inventory/DT_ItemConfig.json",
         "datamine/data/inventory/DataTable/Inventory/DT_CapitalItemConfig.json"
