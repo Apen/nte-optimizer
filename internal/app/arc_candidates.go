@@ -62,7 +62,7 @@ func (s OptimizerService) prepareArcSelection(state *decoded.State, profile scor
 	}
 	if !compatible {
 		if explicitSelection {
-			return arcCandidateSet{}, fmt.Errorf("Arc %q is not compatible with character %d", selectedForkID, profile.CharacterID)
+			return arcCandidateSet{}, fmt.Errorf("arc %q is not compatible with character %d", selectedForkID, profile.CharacterID)
 		}
 		return result, nil
 	}
@@ -79,7 +79,7 @@ func (s OptimizerService) prepareArcSelection(state *decoded.State, profile scor
 	}
 	if weapon == nil {
 		if explicitSelection {
-			return arcCandidateSet{}, fmt.Errorf("Arc %q is not owned in the imported account data", selectedForkID)
+			return arcCandidateSet{}, fmt.Errorf("arc %q is not owned in the imported account data", selectedForkID)
 		}
 		return result, nil
 	}

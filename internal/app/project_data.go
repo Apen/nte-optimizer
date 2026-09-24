@@ -25,10 +25,6 @@ func (s OptimizerService) OptimizeFlexibleProjectWithArc(ctx context.Context, pr
 	return s.optimizeProjectWithArc(ctx, projectDir, profileID, includeEquipped, language, mode, goals, tunings, arcForkID)
 }
 
-func (s OptimizerService) optimizeProject(ctx context.Context, projectDir, profileID string, includeEquipped bool, language, mode string, goals map[string]float64, tunings map[string]GoalTuning) (OptimizationResult, error) {
-	return s.optimizeProjectWithArc(ctx, projectDir, profileID, includeEquipped, language, mode, goals, tunings, "")
-}
-
 func (s OptimizerService) optimizeProjectWithArc(ctx context.Context, projectDir, profileID string, includeEquipped bool, language, mode string, goals map[string]float64, tunings map[string]GoalTuning, arcForkID string) (OptimizationResult, error) {
 	inventory, state, loaded, err := loadAccountData(projectDir)
 	if err != nil {

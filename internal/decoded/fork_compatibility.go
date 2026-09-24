@@ -31,7 +31,7 @@ func LoadArcCompatibilityCatalog(characterPath, arcsPath string) (ArcCompatibili
 		return ArcCompatibilityCatalog{}, fmt.Errorf("load Arc compatibility: %w", err)
 	}
 	if len(characters.Characters) == 0 || len(forks.Forks) == 0 {
-		return ArcCompatibilityCatalog{}, fmt.Errorf("Arc compatibility catalogs are empty")
+		return ArcCompatibilityCatalog{}, fmt.Errorf("arc compatibility catalogs are empty")
 	}
 
 	catalog := ArcCompatibilityCatalog{
@@ -50,7 +50,7 @@ func LoadArcCompatibilityCatalog(characterPath, arcsPath string) (ArcCompatibili
 	}
 	for id, fork := range forks.Forks {
 		if fork.GroupType == "" {
-			return ArcCompatibilityCatalog{}, fmt.Errorf("Arc %s has no compatibility group", id)
+			return ArcCompatibilityCatalog{}, fmt.Errorf("arc %s has no compatibility group", id)
 		}
 		catalog.forkGroupTypes[id] = fork.GroupType
 	}
