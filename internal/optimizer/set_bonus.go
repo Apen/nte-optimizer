@@ -359,13 +359,6 @@ func objectiveMaximum(goal ObjectiveGoal) float64 {
 	return 10.5 * importance
 }
 
-func maxFloat(a, b float64) float64 {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 func minFloat(a, b float64) float64 {
 	if a < b {
 		return a

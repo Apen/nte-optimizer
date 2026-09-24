@@ -86,10 +86,6 @@ func captureMode(ctx context.Context, name string) error {
 	return nil
 }
 
-func captureLoginAuto(ctx context.Context, name string, maxDuration time.Duration) (string, error) {
-	return captureLoginAutoWithRunner(ctx, name, maxDuration, runPktmon)
-}
-
 func captureLoginAutoWithProgress(ctx context.Context, name string, maxDuration time.Duration, progress func(string, string)) (string, error) {
 	return captureLoginAutoWithDependenciesAndProgress(ctx, name, maxDuration, runPktmon, waitForLoginCapture, progress)
 }

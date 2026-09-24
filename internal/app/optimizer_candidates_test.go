@@ -188,7 +188,7 @@ func TestBetaKeepsSpecialistsForStrictFloorAboveSoftTarget(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	shapes := optimizer.ShapeCatalog{Shapes: map[string]optimizer.Shape{"H_2": {ID: "H_2", Cells: []optimizer.Point{{0, 0}, {1, 0}}}}}
+	shapes := optimizer.ShapeCatalog{Shapes: map[string]optimizer.Shape{"H_2": {ID: "H_2", Cells: []optimizer.Point{{X: 0, Y: 0}, {X: 1, Y: 0}}}}}
 	sets := optimizer.SetCatalog{Definitions: map[string]optimizer.SetDefinition{"test": {ID: "test", InventorySetID: "test", RequiredGeometries: []string{"H_2"}}}}
 	cartridges := []nte.Cartridge{{LocalID: "cartridge", SetID: "test"}}
 	character := scoring.Character{BaseStats: baseline}
@@ -213,8 +213,8 @@ func TestBetaKeepsSpecialistsForStrictFloorAboveSoftTarget(t *testing.T) {
 }
 
 func TestGeometryModuleSlotsUsesPlayableCellsAndShapeSize(t *testing.T) {
-	grid := optimizer.GridDefinition{Playable: []optimizer.Point{{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}}}
-	shapes := optimizer.ShapeCatalog{Shapes: map[string]optimizer.Shape{"H_2": {Cells: []optimizer.Point{{0, 0}, {1, 0}}}, "H_3": {Cells: []optimizer.Point{{0, 0}, {1, 0}, {2, 0}}}}}
+	grid := optimizer.GridDefinition{Playable: []optimizer.Point{{X: 0, Y: 0}, {X: 1, Y: 0}, {X: 2, Y: 0}, {X: 3, Y: 0}, {X: 4, Y: 0}, {X: 5, Y: 0}}}
+	shapes := optimizer.ShapeCatalog{Shapes: map[string]optimizer.Shape{"H_2": {Cells: []optimizer.Point{{X: 0, Y: 0}, {X: 1, Y: 0}}}, "H_3": {Cells: []optimizer.Point{{X: 0, Y: 0}, {X: 1, Y: 0}, {X: 2, Y: 0}}}}}
 	candidates := []optimizer.Candidate{{Module: nte.Module{Geometry: "H_2"}}, {Module: nte.Module{Geometry: "H_3"}}}
 	limits := geometryModuleSlots(grid, shapes, candidates)
 	if limits["H_2"] != 3 || limits["H_3"] != 2 {
