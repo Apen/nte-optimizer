@@ -54,7 +54,7 @@ func TestExactObjectiveDiagnosticUsesFullPoolAndNoTimeout(t *testing.T) {
 	if err != nil || len(selection.selected) != 2 {
 		t.Fatalf("exact objective diagnostic lost candidates: %#v, %v", selection, err)
 	}
-	setup := (OptimizerService{}).prepareSearch(scoring.Character{}, scoring.References{}, optimizer.ShapeCatalog{}, optimizer.SetCatalog{}, config, selection.selected, nil, []optimizer.ObjectiveGoal{{PropertyID: "CritBase", Minimum: .6}}, nil, plan)
+	setup := (OptimizerService{}).prepareSearch(scoring.Character{}, scoring.References{}, optimizer.ShapeCatalog{}, optimizer.SetCatalog{}, config, selection.selected, nil, []optimizer.ObjectiveGoal{{PropertyID: "CritBase", Minimum: .6}}, nil, plan, nil)
 	if setup.timeoutSeconds != 0 || !setup.solver.Exact || publicOptimizationMode(plan) != "exact-objective" {
 		t.Fatalf("exact objective diagnostic was not configured: %+v", setup)
 	}

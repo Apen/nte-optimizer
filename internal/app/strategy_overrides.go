@@ -38,6 +38,7 @@ func SaveProfileStrategy(projectDir, profileID string, settings WeightOverrides)
 	}
 	if previous, ok := state.Profiles[profileID]; ok {
 		settings.Goals = previous.Goals
+		settings.ArcForkID = previous.ArcForkID
 	}
 	return saveProfileSettings(projectDir, profileID, settings, state)
 }
@@ -95,7 +96,7 @@ func normalizeWeightOverrides(settings WeightOverrides) WeightOverrides {
 	for property, goal := range settings.Goals {
 		goals[property] = goal
 	}
-	return WeightOverrides{MainStats: mainStats, Weights: cloneWeights(settings.Weights), Goals: goals}
+	return WeightOverrides{MainStats: mainStats, Weights: cloneWeights(settings.Weights), Goals: goals, ArcForkID: settings.ArcForkID}
 }
 
 func finiteNonNegative(value float64) bool {

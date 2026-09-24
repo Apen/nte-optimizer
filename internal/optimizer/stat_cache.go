@@ -28,7 +28,7 @@ func (e CartridgeSetEvaluator) cachedBlueprintEvaluations(geometries []string, k
 		if a.Score != b.Score {
 			return a.Score > b.Score
 		}
-		return a.CartridgeID+"|"+a.SetID < b.CartridgeID+"|"+b.SetID
+		return a.WeaponID+"|"+a.CartridgeID+"|"+a.SetID < b.WeaponID+"|"+b.CartridgeID+"|"+b.SetID
 	}
 	record := func(result BonusResult) {
 		if math.IsInf(result.Score, -1) {

@@ -23,7 +23,7 @@ func TestPrepareSearchConfiguresExactnessAndTimeout(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			config := optimizerDataConfig{}
 			config.Optimize.TimeoutSeconds = test.configured
-			setup := (OptimizerService{}).prepareSearch(scoring.Character{}, scoring.References{}, optimizer.ShapeCatalog{}, optimizer.SetCatalog{}, config, nil, nil, nil, nil, test.plan)
+			setup := (OptimizerService{}).prepareSearch(scoring.Character{}, scoring.References{}, optimizer.ShapeCatalog{}, optimizer.SetCatalog{}, config, nil, nil, nil, nil, test.plan, nil)
 			if setup.timeoutSeconds != test.wantTimeout || setup.solver.Exact != test.wantExact || setup.solver.KeepBest != 50 || setup.evaluator == nil {
 				t.Fatalf("unexpected search setup: timeout=%d exact=%v keep=%d evaluator=%T", setup.timeoutSeconds, setup.solver.Exact, setup.solver.KeepBest, setup.evaluator)
 			}

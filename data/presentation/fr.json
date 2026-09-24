@@ -145,9 +145,11 @@
     "UnbalIntensityBase": "Intensité de rupture"
   },
   "ui": {
+    "arc": "Arc",
     "search_beta": "Expérimental",
     "search_fast": "Rapide",
     "search_method": "Méthode de recherche",
+    "select_arc": "Choisir un Arc compatible",
     "account_build": "Personnage",
     "account_inventory": "INVENTAIRE DU COMPTE",
     "action": "Action",
@@ -332,6 +334,7 @@
     "no_imported_item": "Aucun élément importé.",
     "no_imported_items": "Aucun élément importé.",
     "no_module_equipped": "Aucun module équipé",
+    "no_arc": "Aucun Arc",
     "no_profile": "Aucun profil",
     "no_results_for": "Aucun résultat pour « {query} ».",
     "no_search_result": "Aucun résultat pour « {query} ».",

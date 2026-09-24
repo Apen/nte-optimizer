@@ -69,6 +69,7 @@ func (a *DesktopApp) Profiles() ([]appservice.ProfileSummary, error) {
 			profiles[index].MainStats = settings.MainStats
 			profiles[index].Weights = settings.Weights
 			profiles[index].SavedGoals = settings.Goals
+			profiles[index].ArcForkID = settings.ArcForkID
 		}
 	}
 	return profiles, nil
@@ -233,7 +234,7 @@ func (a *DesktopApp) StopScan() bool {
 	return true
 }
 
-func (a *DesktopApp) OptimizeFlexibleSelection(profileID string, ignorePriority bool, language, mode string, goals map[string]appservice.GoalTuning, pinnedModuleIDs, excludedModuleIDs []string, weights *appservice.WeightOverrides) (appservice.OptimizationResult, error) {
+func (a *DesktopApp) OptimizeFlexibleSelection(profileID string, ignorePriority bool, language, mode string, goals map[string]appservice.GoalTuning, pinnedModuleIDs, excludedModuleIDs []string, weights *appservice.WeightOverrides, arcForkID string) (appservice.OptimizationResult, error) {
 	a.beginOptimizationLog(profileID, mode, goals, pinnedModuleIDs, excludedModuleIDs, weights)
 	service, err := a.optimizerService(profileID, ignorePriority)
 	if err != nil {
@@ -243,7 +244,7 @@ func (a *DesktopApp) OptimizeFlexibleSelection(profileID string, ignorePriority 
 	service.WeightOverrides = weights
 	service.PinnedModuleIDs = stringSet(pinnedModuleIDs)
 	service.ExcludedModuleIDs = stringSet(excludedModuleIDs)
-	result, err := a.runFlexibleOptimization(service, profileID, true, language, mode, goals)
+	result, err := a.runFlexibleOptimization(service, profileID, true, language, mode, goals, arcForkID)
 	a.finishOptimizationLog(result, err)
 	return result, err
 }
@@ -268,14 +269,14 @@ func (a *DesktopApp) optimizerService(profileID string, ignorePriority bool) (ap
 		return appservice.OptimizerService{}, fmt.Errorf("unknown character profile %q", profileID)
 	}
 	a.buildMu.Lock()
-	service.ReservedModuleIDs, service.ReservedCartridgeIDs, err = appservice.HigherPriorityReservations(a.stateDir, characterID)
+	service.ReservedModuleIDs, service.ReservedCartridgeIDs, service.ReservedArcIDs, err = appservice.HigherPriorityReservationsWithArcs(a.stateDir, characterID)
 	a.buildMu.Unlock()
 	return service, err
 }
 
-func (a *DesktopApp) runFlexibleOptimization(service appservice.OptimizerService, profileID string, includeEquipped bool, language, mode string, goals map[string]appservice.GoalTuning) (appservice.OptimizationResult, error) {
+func (a *DesktopApp) runFlexibleOptimization(service appservice.OptimizerService, profileID string, includeEquipped bool, language, mode string, goals map[string]appservice.GoalTuning, arcForkID string) (appservice.OptimizationResult, error) {
 	return a.runSearch(service, func(ctx context.Context, service appservice.OptimizerService) (appservice.OptimizationResult, error) {
-		return service.OptimizeFlexibleProject(ctx, a.stateDir, profileID, includeEquipped, language, mode, goals)
+		return service.OptimizeFlexibleProjectWithArc(ctx, a.stateDir, profileID, includeEquipped, language, mode, goals, arcForkID)
 	})
 }
 

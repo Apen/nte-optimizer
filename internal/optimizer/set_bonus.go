@@ -67,9 +67,20 @@ type BonusResult struct {
 	Score          float64
 	SetBonusScore  float64
 	CartridgeScore float64
+	WeaponScore    float64
 	SetID          string
 	CartridgeID    string
+	WeaponID       string
 	MatchedCount   int
+}
+
+// ArcOption is the one Arc fixed before the module search starts. Additional
+// contains its panel and passive stat sources; conditional sources remain
+// available for display but are excluded from unconditional objectives.
+type ArcOption struct {
+	ID         string
+	Additional map[string][]nte.Stat
+	Score      float64
 }
 
 type GlobalBonusEvaluator interface {
@@ -83,13 +94,22 @@ func (NoBonusEvaluator) Evaluate([]Placement) BonusResult { return BonusResult{}
 func (NoBonusEvaluator) UpperBound() float64              { return 0 }
 
 type CartridgeSetEvaluator struct {
-	exact      bool
-	sets       []weightedSet
-	modules    map[string]nte.Module
-	upperBound float64
-	objectives []ObjectiveGoal
-	character  scoring.Character
-	additional map[string][]nte.Stat
+	exact       bool
+	sets        []weightedSet
+	modules     map[string]nte.Module
+	upperBound  float64
+	objectives  []ObjectiveGoal
+	character   scoring.Character
+	additional  map[string][]nte.Stat
+	weaponID    string
+	weaponScore float64
+}
+
+func (e CartridgeSetEvaluator) WithArcOption(option ArcOption) CartridgeSetEvaluator {
+	e.additional = option.Additional
+	e.weaponID = option.ID
+	e.weaponScore = option.Score
+	return e
 }
 
 // Exact mode retains every cartridge: raw cartridge score is not an
@@ -239,6 +259,14 @@ func NewObjectiveEvaluator(catalog SetCatalog, cartridges []nte.Cartridge, prefe
 }
 
 func (e CartridgeSetEvaluator) Evaluate(placements []Placement) BonusResult {
+	result := e.evaluateSingle(placements)
+	result.Score += e.weaponScore
+	result.WeaponScore = e.weaponScore
+	result.WeaponID = e.weaponID
+	return result
+}
+
+func (e CartridgeSetEvaluator) evaluateSingle(placements []Placement) BonusResult {
 	best := BonusResult{}
 	if e.exact {
 		best.Score = math.Inf(-1)
@@ -366,7 +394,9 @@ func minFloat(a, b float64) float64 {
 	return b
 }
 
-func (e CartridgeSetEvaluator) UpperBound() float64 { return e.upperBound }
+func (e CartridgeSetEvaluator) UpperBound() float64 {
+	return math.Nextafter(e.upperBound+e.weaponScore, math.Inf(1))
+}
 
 func scoreForMatched(bonuses []SetBonus, matched int) float64 {
 	result := 0.0

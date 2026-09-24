@@ -145,9 +145,11 @@
     "UnbalIntensityBase": "Break Intensity"
   },
   "ui": {
+    "arc": "Arc",
     "search_beta": "Experimental",
     "search_fast": "Fast",
     "search_method": "Search method",
+    "select_arc": "Select a compatible Arc",
     "account_build": "Character",
     "account_inventory": "ACCOUNT INVENTORY",
     "action": "Action",
@@ -332,6 +334,7 @@
     "no_imported_item": "No item imported.",
     "no_imported_items": "No imported item.",
     "no_module_equipped": "No module equipped",
+    "no_arc": "No Arc",
     "no_profile": "No profile",
     "no_results_for": "No results for “{query}”.",
     "no_search_result": "No result for “{query}”.",

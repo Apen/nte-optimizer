@@ -117,10 +117,10 @@ func savedGoalWeight(property string, weights map[string]float64) float64 {
 // OptimizeSavedProject uses the prepared planner settings and priority reservations.
 func OptimizeSavedProject(ctx context.Context, service OptimizerService, stateDir, language, mode string, request SavedOptimizationRequest) (OptimizationResult, error) {
 	var err error
-	service.ReservedModuleIDs, service.ReservedCartridgeIDs, err = HigherPriorityReservations(stateDir, request.Profile.CharacterID)
+	service.ReservedModuleIDs, service.ReservedCartridgeIDs, service.ReservedArcIDs, err = HigherPriorityReservationsWithArcs(stateDir, request.Profile.CharacterID)
 	if err != nil {
 		return OptimizationResult{}, err
 	}
 	service.WeightOverrides = &request.Weights
-	return service.OptimizeFlexibleProject(ctx, stateDir, request.Profile.ID, true, language, mode, request.Goals)
+	return service.OptimizeFlexibleProjectWithArc(ctx, stateDir, request.Profile.ID, true, language, mode, request.Goals, request.Weights.ArcForkID)
 }

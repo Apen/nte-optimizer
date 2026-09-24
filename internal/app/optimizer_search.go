@@ -27,8 +27,8 @@ type searchExecution struct {
 	searchMS int64
 }
 
-func (s OptimizerService) prepareSearch(profile scoring.Character, refs scoring.References, shapes optimizer.ShapeCatalog, sets optimizer.SetCatalog, config optimizerDataConfig, selected []optimizer.Candidate, cartridges []nte.Cartridge, objectives []optimizer.ObjectiveGoal, additional map[string][]nte.Stat, plan searchPlan) searchSetup {
-	evaluator := optimizer.GlobalBonusEvaluator(optimizer.NewCartridgeSetEvaluator(sets, cartridges, profile.PreferredSets, selected, profile, refs))
+func (s OptimizerService) prepareSearch(profile scoring.Character, refs scoring.References, shapes optimizer.ShapeCatalog, sets optimizer.SetCatalog, config optimizerDataConfig, selected []optimizer.Candidate, cartridges []nte.Cartridge, objectives []optimizer.ObjectiveGoal, additional map[string][]nte.Stat, plan searchPlan, arcOption *optimizer.ArcOption) searchSetup {
+	evaluator := optimizer.NewCartridgeSetEvaluator(sets, cartridges, profile.PreferredSets, selected, profile, refs)
 	timeoutSeconds := config.Optimize.TimeoutSeconds
 	exact := !plan.approximate || plan.solverMode == "objective"
 	if exact {
@@ -37,6 +37,9 @@ func (s OptimizerService) prepareSearch(profile scoring.Character, refs scoring.
 		case plan.requestedMode == "exact-score" || plan.requestedMode == "exact-objective":
 			timeoutSeconds = 0
 		}
+	}
+	if arcOption != nil {
+		evaluator = evaluator.WithArcOption(*arcOption)
 	}
 	return searchSetup{
 		evaluator:      evaluator,

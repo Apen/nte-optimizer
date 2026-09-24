@@ -1,6 +1,6 @@
-export function Profiles(): Promise<Array<{id: string; character_id: number; name: string; grid_id: string; preferred_sets: Array<{set_id: string; priority: number}>; main_weights: Record<string, number>; sub_weights: Record<string, number>; main_stats: string[]; weights: Record<string, number>; caps: Record<string, {soft_cap: number; hard_cap: number; after_soft_scale: number}>; console_trait?: {area: number; property_id: string; value_per_module: number}}>>;
+export function Profiles(): Promise<Array<{id: string; character_id: number; name: string; grid_id: string; preferred_sets: Array<{set_id: string; priority: number}>; main_weights: Record<string, number>; sub_weights: Record<string, number>; main_stats: string[]; weights: Record<string, number>; arc_fork_id?: string; caps: Record<string, {soft_cap: number; hard_cap: number; after_soft_scale: number}>; console_trait?: {area: number; property_id: string; value_per_module: number}}>>;
 export function SaveProfileStrategy(profileID: string, settings: {main_stats:string[];weights:Record<string,number>}): Promise<{main_stats:string[];weights:Record<string,number>}>;
-export function SaveProfileSettings(profileID: string, settings: {main_stats:string[];weights:Record<string,number>;goals:Record<string,{target:number;maximum:number;tolerance:number;strict_minimum?:boolean;disabled?:boolean}>}): Promise<any>;
+export function SaveProfileSettings(profileID: string, settings: {main_stats:string[];weights:Record<string,number>;arc_fork_id?:string;goals:Record<string,{target:number;maximum:number;tolerance:number;strict_minimum?:boolean;disabled?:boolean}>}): Promise<any>;
 export function ResetProfileStrategy(profileID: string): Promise<void>;
 export function BuildWorkspace(language: string): Promise<any>;
 export function EquipmentCatalog(language: string): Promise<any>;
@@ -16,6 +16,6 @@ export function CheckForUpdate(): Promise<{available:boolean;current_version:str
 export function OpenDownloadURL(url: string): Promise<void>;
 export function ScanAndImportAccount(language: string, seconds: number): Promise<any>;
 export function LastScanLog(): Promise<Array<{time:string;stage:string;status:string;counts?:Record<string,number>}>>;
-export function OptimizeFlexibleSelection(profileID: string, ignorePriority: boolean, language: string, mode: string, goals: Record<string, {target:number; maximum:number; tolerance:number; importance:number}>, pinnedModuleIDs: string[], excludedModuleIDs: string[], weights: {main_stats:string[];weights:Record<string,number>}): Promise<any>;
+export function OptimizeFlexibleSelection(profileID: string, ignorePriority: boolean, language: string, mode: string, goals: Record<string, {target:number; maximum:number; tolerance:number; importance:number}>, pinnedModuleIDs: string[], excludedModuleIDs: string[], weights: {main_stats:string[];weights:Record<string,number>}, arcForkID: string): Promise<any>;
 export function StopOptimization(): Promise<boolean>;
 export function LastOptimizationLog(): Promise<{started_at:string;finished_at?:string;status:string;entries:Array<{level:string;stage:string;message:string}>}>;

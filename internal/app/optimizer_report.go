@@ -19,9 +19,13 @@ type optimizationReportInput struct {
 	setCatalog        optimizer.SetCatalog
 	displayCatalog    ntelocale.Catalog
 	currentCharacter  *decoded.Character
-	currentWeapon     *decoded.Weapon
+	selectedWeapon    *decoded.Weapon
 	weaponNote        string
 	additional        map[string][]nte.Stat
+	currentAdditional map[string][]nte.Stat
+	arcWeapons        map[string]decoded.Weapon
+	arcNotes          map[string]string
+	arcAdditional     map[string]map[string][]nte.Stat
 	characterNames    map[int]string
 	buildTarget       *target.BuildTarget
 	objectives        []optimizer.ObjectiveGoal
@@ -51,13 +55,18 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 	}
 	normalizePublicScore(&input.solution, optimizedModules, cartridgeBreakdown)
 	explainRanking(&input.solution, stats.Derived, input.objectives, mode)
-	currentStats := buildCurrentEquipmentStats(input.inventory, input.profile, input.setCatalog, input.additional)
+	currentAdditional := input.currentAdditional
+	if currentAdditional == nil {
+		currentAdditional = input.additional
+	}
+	currentStats := buildCurrentEquipmentStats(input.inventory, input.profile, input.setCatalog, currentAdditional)
 	goals, currentGoals, conditionalGoals, currentConditionalGoals := compareBuildGoals(input.buildTarget, stats, currentStats)
 	alternatives := s.buildAlternatives(input.solution.Alternatives, alternativeBuildContext{
 		moduleByID: moduleByID, cartridges: input.inventory.Cartridges, profile: input.profile, refs: input.refs,
 		characterNames: input.characterNames, setCatalog: input.setCatalog, additional: input.additional,
 		objectives: input.objectives, mode: mode, approximate: input.plan.approximate, buildTarget: input.buildTarget,
 		currentCharacter: input.currentCharacter, currentStats: currentStats, language: input.language, displayCatalog: input.displayCatalog,
+		arcWeapons: input.arcWeapons, arcNotes: input.arcNotes, arcAdditional: input.arcAdditional,
 	})
 	input.solution.Alternatives = nil
 	damageAnalysis := s.localizedDamageAnalysis(input.currentCharacter, stats, currentStats, input.language)
@@ -67,7 +76,7 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 		TimeoutSeconds: input.timeoutSeconds, Grid: input.grid, Solution: input.solution, Modules: optimizedModules,
 		Cartridge: selectedCartridge, CartridgeBreakdown: cartridgeBreakdown, Stats: stats, Set: displaySetDefinition,
 		Target: input.buildTarget, Goals: goals,
-		Character: input.currentCharacter, Weapon: input.currentWeapon, WeaponConditionalNote: input.weaponNote, ExcludedEquipped: input.excludedEquipped,
+		Character: input.currentCharacter, Weapon: input.selectedWeapon, WeaponConditionalNote: input.weaponNote, ExcludedEquipped: input.excludedEquipped,
 		CurrentStats: currentStats, CurrentGoals: currentGoals,
 		ConditionalGoals: conditionalGoals, CurrentConditionalGoals: currentConditionalGoals,
 		Alternatives: alternatives, Damage: damageAnalysis, IncludeEquipped: input.includeEquipped,

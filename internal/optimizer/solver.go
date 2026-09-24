@@ -37,7 +37,9 @@ type Solution struct {
 	ModuleScore         float64           `json:"module_score"`
 	SetBonusScore       float64           `json:"set_bonus_score"`
 	CartridgeScore      float64           `json:"cartridge_score"`
+	WeaponScore         float64           `json:"weapon_score,omitempty"`
 	SelectedCartridgeID string            `json:"selected_cartridge_id,omitempty"`
+	SelectedWeaponID    string            `json:"selected_weapon_id,omitempty"`
 	SelectedSetID       string            `json:"selected_set_id,omitempty"`
 	SetMatchedCount     int               `json:"set_matched_count,omitempty"`
 	Placements          []Placement       `json:"placements"`
@@ -163,7 +165,7 @@ func (s SearchSolver) solveLegacy(ctx context.Context, base Grid, candidates []C
 			moduleScore += scores[placement.ModuleID]
 		}
 		bonus := bonusEvaluator.Evaluate(seed)
-		best = Solution{Score: moduleScore + bonus.Score, ModuleScore: moduleScore, SetBonusScore: bonus.SetBonusScore, CartridgeScore: bonus.CartridgeScore, SelectedCartridgeID: bonus.CartridgeID, SelectedSetID: bonus.SetID, SetMatchedCount: bonus.MatchedCount, Placements: append([]Placement(nil), seed...), Complete: true}
+		best = Solution{Score: moduleScore + bonus.Score, ModuleScore: moduleScore, SetBonusScore: bonus.SetBonusScore, CartridgeScore: bonus.CartridgeScore, WeaponScore: bonus.WeaponScore, SelectedCartridgeID: bonus.CartridgeID, SelectedWeaponID: bonus.WeaponID, SelectedSetID: bonus.SetID, SetMatchedCount: bonus.MatchedCount, Placements: append([]Placement(nil), seed...), Complete: true}
 	}
 	grid := base.Clone()
 	if !placementsContainRequired(best.Placements, s.RequiredIDs) {
@@ -183,7 +185,9 @@ func (s SearchSolver) solveLegacy(ctx context.Context, base Grid, candidates []C
 			best.ModuleScore = score
 			best.SetBonusScore = bonus.SetBonusScore
 			best.CartridgeScore = bonus.CartridgeScore
+			best.WeaponScore = bonus.WeaponScore
 			best.SelectedCartridgeID = bonus.CartridgeID
+			best.SelectedWeaponID = bonus.WeaponID
 			best.SelectedSetID = bonus.SetID
 			best.SetMatchedCount = bonus.MatchedCount
 			best.Placements = append([]Placement(nil), current...)

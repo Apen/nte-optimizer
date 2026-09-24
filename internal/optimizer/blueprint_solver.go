@@ -530,6 +530,7 @@ func placementsContainRequired(placements []Placement, required map[string]bool)
 func blueprintSolution(total, moduleScore float64, bonus BonusResult, placements []Placement) Solution {
 	return Solution{
 		Score: total, ModuleScore: moduleScore, SetBonusScore: bonus.SetBonusScore, CartridgeScore: bonus.CartridgeScore,
+		WeaponScore: bonus.WeaponScore, SelectedWeaponID: bonus.WeaponID,
 		SelectedCartridgeID: bonus.CartridgeID, SelectedSetID: bonus.SetID, SetMatchedCount: bonus.MatchedCount,
 		Placements: clonePlacements(placements), Complete: true,
 	}
@@ -567,7 +568,7 @@ func solutionSignature(solution Solution) string {
 		moduleIDs[index] = placement.ModuleID
 	}
 	sort.Strings(moduleIDs)
-	return solution.SelectedCartridgeID + "|" + solution.SelectedSetID + "|" + strings.Join(moduleIDs, ",")
+	return solution.SelectedWeaponID + "|" + solution.SelectedCartridgeID + "|" + solution.SelectedSetID + "|" + strings.Join(moduleIDs, ",")
 }
 
 func blueprintAssignmentTotal(blueprints []geometryBlueprint, byGeometry map[string][]Candidate) uint64 {
@@ -693,7 +694,9 @@ func seededSolution(seed []Placement, candidates []Candidate, evaluator GlobalBo
 	best.Score = best.ModuleScore + bonus.Score
 	best.SetBonusScore = bonus.SetBonusScore
 	best.CartridgeScore = bonus.CartridgeScore
+	best.WeaponScore = bonus.WeaponScore
 	best.SelectedCartridgeID = bonus.CartridgeID
+	best.SelectedWeaponID = bonus.WeaponID
 	best.SelectedSetID = bonus.SetID
 	best.SetMatchedCount = bonus.MatchedCount
 	best.Placements = append([]Placement(nil), seed...)

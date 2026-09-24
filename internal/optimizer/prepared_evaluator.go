@@ -220,6 +220,9 @@ func (e CartridgeSetEvaluator) prepareBlueprintEvaluations(geometries []string) 
 				}
 				result.Score += utility
 			}
+			result.Score += e.weaponScore
+			result.WeaponScore = e.weaponScore
+			result.WeaponID = e.weaponID
 			accept(result)
 		}
 	}

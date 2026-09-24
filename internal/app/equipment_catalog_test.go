@@ -20,12 +20,17 @@ func TestLoadEquipmentCatalogLocalizesEquipment(t *testing.T) {
 	if err := os.MkdirAll(filepath.Join(dataDir, "game", "equipment"), 0o755); err != nil {
 		t.Fatal(err)
 	}
+	if err := os.MkdirAll(filepath.Join(dataDir, "game", "characters"), 0o755); err != nil {
+		t.Fatal(err)
+	}
 	if err := os.MkdirAll(filepath.Join(dataDir, "game", "locales"), 0o755); err != nil {
 		t.Fatal(err)
 	}
 	writeTestFile(t, filepath.Join(dataDir, "presentation", "fr.json"), `{"schema":"nte-optimizer-locale","schema_version":1,"locale":"fr"}`)
 	writeTestFile(t, filepath.Join(dataDir, "game", "locales", "fr.json"), `{"schema_version":1,"language":"fr","tables":{"characters":{"42":"Personnage·Shinku"},"forks":{"fork_test":"Arc·Test"},"resources":{"Gold":"Pièce coléoptère"},"sets":{"Suit1":"Set localisé"}}}`)
 	writeTestFile(t, filepath.Join(dataDir, "game", "equipment", "sets.json"), `{"schema_version":1,"sets":[{"id":"Suit1","inventory_set_id":"set_test","name_fr":"Set français","required_geometries":["H_2"],"bonuses":[]}]}`)
+	writeTestFile(t, filepath.Join(dataDir, "game", "characters", "decode.json"), `{"characters":{"42":{"character_group_type":"CHARACTER_GROUP_TYPE_TEST"}}}`)
+	writeTestFile(t, filepath.Join(dataDir, "game", "equipment", "arcs.json"), `{"forks":{"fork_test":{"apply_group_type":"CHARACTER_GROUP_TYPE_TEST"}}}`)
 	if err := writeJSON(workspaceFile(projectDir, "inventory.json"), nte.Inventory{
 		Modules:    []nte.Module{{LocalID: "m1", SetID: "set_test", SetName: "English set"}},
 		Cartridges: []nte.Cartridge{{LocalID: "c1", SetID: "set_test", SetName: "English set"}},
@@ -56,6 +61,9 @@ func TestLoadEquipmentCatalogLocalizesEquipment(t *testing.T) {
 	}
 	if got := catalog.Arcs[0].EquippedCharacterName; got != "Shinku" {
 		t.Fatalf("arc owner = %q", got)
+	}
+	if got := catalog.Arcs[0].CompatibleCharacters; len(got) != 1 || got[0].CharacterID != 42 || got[0].Name != "Shinku" {
+		t.Fatalf("arc compatible characters = %#v", got)
 	}
 	if got := catalog.Resources[0]; got.Name != "Pièce coléoptère" || got.Quantity != 123 {
 		t.Fatalf("unexpected resource: %#v", got)

@@ -249,6 +249,31 @@ func TestObjectiveEvaluatorDoesNotRewardOccupiedArea(t *testing.T) {
 	}
 }
 
+func TestFixedArcStatsChangeObjectiveModulePreference(t *testing.T) {
+	catalog := SetCatalog{Definitions: map[string]SetDefinition{
+		"set": {ID: "set", InventorySetID: "set", RequiredGeometries: []string{"H_2"}},
+	}}
+	modules := []Candidate{
+		{Module: nte.Module{LocalID: "crit", Geometry: "H_2", MainStats: []nte.Stat{{PropertyID: "CritDamageBase", Value: 1}}}},
+		{Module: nte.Module{LocalID: "mag", Geometry: "H_2", MainStats: []nte.Stat{{PropertyID: "MagBase", Value: 100}}}},
+	}
+	goals := []ObjectiveGoal{{PropertyID: "CritDamageBase", Minimum: 1, Importance: 1}, {PropertyID: "MagBase", Minimum: 100, Importance: 1}}
+	evaluator := NewExactObjectiveEvaluator(catalog, []nte.Cartridge{{LocalID: "c", SetID: "set"}}, nil, modules, scoring.Character{}, nil, goals, nil)
+	fixedArc := evaluator.WithArcOption(ArcOption{
+		ID:         "fixed-arc",
+		Additional: map[string][]nte.Stat{"weapon": {{PropertyID: "CritDamageBase", Value: 1}}},
+	})
+	evaluate := fixedArc.prepareBlueprintEvaluator([]string{"H_2"})
+	crit := evaluate([]Placement{{ModuleID: "crit"}})
+	mag := evaluate([]Placement{{ModuleID: "mag"}})
+	if mag.Score <= crit.Score {
+		t.Fatalf("fixed Arc stats did not free the module slot for the other objective: mag=%v crit=%v", mag.Score, crit.Score)
+	}
+	if mag.WeaponID != "fixed-arc" {
+		t.Fatalf("fixed Arc identity = %q, want fixed-arc", mag.WeaponID)
+	}
+}
+
 func TestObjectiveScoreStronglyDiminishesExcess(t *testing.T) {
 	goals := []ObjectiveGoal{{PropertyID: "MagBase", Minimum: 200}, {PropertyID: "CritBase", Minimum: .6}}
 	balanced := ObjectiveScore(map[string]float64{"MagBase": 200, "CritBase": .6}, goals)

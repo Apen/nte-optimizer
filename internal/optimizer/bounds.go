@@ -29,7 +29,7 @@ func (e CartridgeSetEvaluator) blueprintUpperBound(geometries []string) float64 
 		}
 		bound = math.Max(bound, score)
 	}
-	return math.Nextafter(bound, math.Inf(1))
+	return math.Nextafter(bound+e.weaponScore, math.Inf(1))
 }
 
 // combinationBounds chooses the best k scores in each suffix, independently

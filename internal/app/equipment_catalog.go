@@ -20,7 +20,13 @@ type EquipmentCatalog struct {
 
 type EquipmentCatalogArc struct {
 	decoded.Weapon
-	EquippedCharacterName string `json:"equipped_character_name,omitempty"`
+	EquippedCharacterName string                   `json:"equipped_character_name,omitempty"`
+	CompatibleCharacters  []ArcCompatibleCharacter `json:"compatible_characters,omitempty"`
+}
+
+type ArcCompatibleCharacter struct {
+	CharacterID int    `json:"character_id"`
+	Name        string `json:"name"`
 }
 
 func LoadEquipmentCatalog(projectDir, dataDir, language string) (EquipmentCatalog, error) {
@@ -35,7 +41,12 @@ func LoadEquipmentCatalog(projectDir, dataDir, language string) (EquipmentCatalo
 	if err != nil {
 		return EquipmentCatalog{}, fmt.Errorf("load locale catalog: %w", err)
 	}
-	sets, err := optimizer.LoadSetCatalog(datafiles.New(dataDir).Sets())
+	layout := datafiles.New(dataDir)
+	compatibility, err := decoded.LoadArcCompatibilityCatalog(layout.DecodeCatalog("characters.json"), layout.Arcs())
+	if err != nil {
+		return EquipmentCatalog{}, err
+	}
+	sets, err := optimizer.LoadSetCatalog(layout.Sets())
 	if err != nil {
 		return EquipmentCatalog{}, err
 	}
@@ -60,7 +71,14 @@ func LoadEquipmentCatalog(projectDir, dataDir, language string) (EquipmentCatalo
 	arcs := make([]EquipmentCatalogArc, 0, len(state.Weapons))
 	for _, weapon := range state.Weapons {
 		weapon.Name = cleanArcName(catalog.ItemName(weapon.ForkID, weapon.Name))
-		arcs = append(arcs, EquipmentCatalogArc{Weapon: weapon, EquippedCharacterName: characterNames[weapon.EquippedCharacterID]})
+		compatibleCharacters := make([]ArcCompatibleCharacter, 0)
+		for _, characterID := range compatibility.CompatibleCharacterIDs(weapon.ForkID) {
+			compatibleCharacters = append(compatibleCharacters, ArcCompatibleCharacter{
+				CharacterID: characterID,
+				Name:        cleanCharacterName(catalog.CharacterName(characterID, "")),
+			})
+		}
+		arcs = append(arcs, EquipmentCatalogArc{Weapon: weapon, EquippedCharacterName: characterNames[weapon.EquippedCharacterID], CompatibleCharacters: compatibleCharacters})
 	}
 	resources := append([]decoded.Resource(nil), state.Resources...)
 	for index := range resources {

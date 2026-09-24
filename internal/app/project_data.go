@@ -14,20 +14,28 @@ import (
 )
 
 func (s OptimizerService) OptimizeFlexibleProject(ctx context.Context, projectDir, profileID string, includeEquipped bool, language, mode string, tunings map[string]GoalTuning) (OptimizationResult, error) {
+	return s.OptimizeFlexibleProjectWithArc(ctx, projectDir, profileID, includeEquipped, language, mode, tunings, "")
+}
+
+func (s OptimizerService) OptimizeFlexibleProjectWithArc(ctx context.Context, projectDir, profileID string, includeEquipped bool, language, mode string, tunings map[string]GoalTuning, arcForkID string) (OptimizationResult, error) {
 	goals := make(map[string]float64, len(tunings))
 	for propertyID, tuning := range tunings {
 		goals[propertyID] = tuning.Target
 	}
-	return s.optimizeProject(ctx, projectDir, profileID, includeEquipped, language, mode, goals, tunings)
+	return s.optimizeProjectWithArc(ctx, projectDir, profileID, includeEquipped, language, mode, goals, tunings, arcForkID)
 }
 
 func (s OptimizerService) optimizeProject(ctx context.Context, projectDir, profileID string, includeEquipped bool, language, mode string, goals map[string]float64, tunings map[string]GoalTuning) (OptimizationResult, error) {
+	return s.optimizeProjectWithArc(ctx, projectDir, profileID, includeEquipped, language, mode, goals, tunings, "")
+}
+
+func (s OptimizerService) optimizeProjectWithArc(ctx context.Context, projectDir, profileID string, includeEquipped bool, language, mode string, goals map[string]float64, tunings map[string]GoalTuning, arcForkID string) (OptimizationResult, error) {
 	inventory, state, loaded, err := loadAccountData(projectDir)
 	if err != nil {
 		return OptimizationResult{}, err
 	}
 	if !loaded {
-		return s.optimizeTuned(ctx, inventory, profileID, nil, includeEquipped, language, mode, goals, tunings)
+		return s.optimizeTunedWithArc(ctx, inventory, profileID, nil, includeEquipped, language, mode, goals, tunings, arcForkID)
 	}
 	var overrides struct {
 		Characters map[int]map[string]float64 `json:"characters"`
@@ -39,7 +47,7 @@ func (s OptimizerService) optimizeProject(ctx context.Context, projectDir, profi
 	if loaded {
 		state.PanelOverrides = overrides.Characters
 	}
-	return s.optimizeTuned(ctx, inventory, profileID, &state, includeEquipped, language, mode, goals, tunings)
+	return s.optimizeTunedWithArc(ctx, inventory, profileID, &state, includeEquipped, language, mode, goals, tunings, arcForkID)
 }
 
 func (s OptimizerService) loadCharacters() (map[string]scoring.Character, error) {

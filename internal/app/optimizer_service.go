@@ -21,6 +21,7 @@ type WeightOverrides struct {
 	MainStats []string                     `json:"main_stats"`
 	Weights   map[string]float64           `json:"weights"`
 	Goals     map[string]SavedGoalSettings `json:"goals,omitempty"`
+	ArcForkID string                       `json:"arc_fork_id,omitempty"`
 }
 
 type SavedGoalSettings struct {
@@ -42,6 +43,7 @@ type OptimizerService struct {
 	Progress             func(optimizer.SearchProgress)
 	ReservedModuleIDs    map[string]bool
 	ReservedCartridgeIDs map[string]bool
+	ReservedArcIDs       map[string]bool
 	PinnedModuleIDs      map[string]bool
 	ExcludedModuleIDs    map[string]bool
 	catalogs             *optimizerCatalogCache
@@ -70,6 +72,7 @@ type ProfileSummary struct {
 	Caps          map[string]scoring.StatCap   `json:"caps"`
 	ConsoleTrait  *scoring.ConsoleTrait        `json:"console_trait,omitempty"`
 	SavedGoals    map[string]SavedGoalSettings `json:"saved_goals,omitempty"`
+	ArcForkID     string                       `json:"arc_fork_id,omitempty"`
 }
 
 type OptimizationResult struct {
@@ -107,15 +110,17 @@ type OptimizationResult struct {
 }
 
 type OptimizationAlternative struct {
-	Solution           optimizer.Solution    `json:"solution"`
-	Modules            []OptimizationModule  `json:"modules"`
-	Cartridge          *nte.Cartridge        `json:"cartridge,omitempty"`
-	CartridgeBreakdown *scoring.Breakdown    `json:"cartridge_breakdown,omitempty"`
-	Stats              optimizer.StatSummary `json:"stats"`
-	Set                OptimizationSet       `json:"set"`
-	Goals              []target.GoalProgress `json:"goals,omitempty"`
-	ConditionalGoals   []target.GoalProgress `json:"conditional_goals,omitempty"`
-	Damage             *DamageAnalysis       `json:"damage,omitempty"`
+	Solution              optimizer.Solution    `json:"solution"`
+	Modules               []OptimizationModule  `json:"modules"`
+	Weapon                *decoded.Weapon       `json:"weapon,omitempty"`
+	WeaponConditionalNote string                `json:"weapon_conditional_note,omitempty"`
+	Cartridge             *nte.Cartridge        `json:"cartridge,omitempty"`
+	CartridgeBreakdown    *scoring.Breakdown    `json:"cartridge_breakdown,omitempty"`
+	Stats                 optimizer.StatSummary `json:"stats"`
+	Set                   OptimizationSet       `json:"set"`
+	Goals                 []target.GoalProgress `json:"goals,omitempty"`
+	ConditionalGoals      []target.GoalProgress `json:"conditional_goals,omitempty"`
+	Damage                *DamageAnalysis       `json:"damage,omitempty"`
 }
 
 type OptimizationModule struct {
@@ -195,6 +200,10 @@ func (s OptimizerService) optimize(ctx context.Context, inv nte.Inventory, profi
 }
 
 func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, profileID string, state *decoded.State, includeEquipped bool, language, mode string, goalOverrides map[string]float64, goalTunings map[string]GoalTuning) (OptimizationResult, error) {
+	return s.optimizeTunedWithArc(ctx, inv, profileID, state, includeEquipped, language, mode, goalOverrides, goalTunings, "")
+}
+
+func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inventory, profileID string, state *decoded.State, includeEquipped bool, language, mode string, goalOverrides map[string]float64, goalTunings map[string]GoalTuning, arcForkID string) (OptimizationResult, error) {
 	started := time.Now()
 	language = ntelocale.Normalize(language)
 	plan, err := parseSearchPlan(mode)
@@ -239,9 +248,23 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 		return OptimizationResult{}, err
 	}
 	shapeCatalog, setCatalog, cfg := catalogs.shapes, catalogs.sets, catalogs.config
-	currentCharacter, currentWeapon, weaponNote, additional, characterNames, err := s.resolveAccountContext(state, profile, language)
+	currentCharacter, currentWeapon, _, currentAdditional, characterNames, err := s.resolveAccountContext(state, profile, language)
 	if err != nil {
 		return OptimizationResult{}, err
+	}
+	arcScoreScale := optimizer.EquipmentTieBreakScale
+	if plan.solverMode == "score" {
+		arcScoreScale = 1
+	}
+	arcs, err := s.prepareArcSelection(state, profile, currentWeapon, currentAdditional, arcForkID, language, arcScoreScale, refs)
+	if err != nil {
+		return OptimizationResult{}, err
+	}
+	additional := arcs.additional[""]
+	var arcOption *optimizer.ArcOption
+	if arcs.option != nil {
+		arcOption = arcs.option
+		additional = arcOption.Additional
 	}
 	if currentCharacter != nil {
 		baseStats, ok, err := s.characterBaseStats(currentCharacter.CharacterID, currentCharacter.Level, currentCharacter.BreakthroughLevel)
@@ -283,7 +306,7 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 	}
 	availableCartridges := cartridges.available
 	excludedEquipped += cartridges.excludedEquipped
-	setup := s.prepareSearch(profile, refs, shapeCatalog, setCatalog, cfg, selected, availableCartridges, objectives, additional, plan)
+	setup := s.prepareSearch(profile, refs, shapeCatalog, setCatalog, cfg, selected, availableCartridges, objectives, additional, plan, arcOption)
 	searchStarted := time.Now()
 	execution, err := s.executeSearch(ctx, searchRequest{
 		grid: grid, setup: setup, selected: selected,
@@ -292,10 +315,21 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 	if err != nil {
 		return OptimizationResult{}, err
 	}
+	selectedWeapon := arcs.weapons[execution.solution.SelectedWeaponID]
+	var selectedWeaponPtr *decoded.Weapon
+	if execution.solution.SelectedWeaponID != "" {
+		copy := selectedWeapon
+		selectedWeaponPtr = &copy
+	}
+	selectedAdditional := arcs.additional[execution.solution.SelectedWeaponID]
+	if selectedAdditional == nil {
+		selectedAdditional = additional
+	}
 	result := s.buildOptimizationResult(optimizationReportInput{
 		inventory: inv, profileID: profileID, language: language, plan: plan, profile: profile, refs: refs,
-		setCatalog: setCatalog, displayCatalog: displayCatalog, currentCharacter: currentCharacter, currentWeapon: currentWeapon,
-		weaponNote: weaponNote, additional: additional, characterNames: characterNames, buildTarget: buildTarget,
+		setCatalog: setCatalog, displayCatalog: displayCatalog, currentCharacter: currentCharacter, selectedWeapon: selectedWeaponPtr,
+		weaponNote: arcs.notes[execution.solution.SelectedWeaponID], additional: selectedAdditional, currentAdditional: currentAdditional,
+		arcWeapons: arcs.weapons, arcNotes: arcs.notes, arcAdditional: arcs.additional, characterNames: characterNames, buildTarget: buildTarget,
 		objectives: objectives, candidates: candidates, selected: selected, solution: execution.solution,
 		grid: catalogs.grids.Definitions[profile.GridID], timeoutSeconds: setup.timeoutSeconds, excludedEquipped: excludedEquipped,
 		includeEquipped: includeEquipped,
@@ -350,6 +384,9 @@ type alternativeBuildContext struct {
 	currentStats     *optimizer.StatSummary
 	language         string
 	displayCatalog   ntelocale.Catalog
+	arcWeapons       map[string]decoded.Weapon
+	arcNotes         map[string]string
+	arcAdditional    map[string]map[string][]nte.Stat
 }
 
 func (s OptimizerService) buildAlternatives(solutions []optimizer.Solution, ctx alternativeBuildContext) []OptimizationAlternative {
@@ -362,11 +399,20 @@ func (s OptimizerService) buildAlternatives(solutions []optimizer.Solution, ctx 
 		detailedModules, modules := buildOptimizationModules(solution.Placements, ctx.moduleByID, ctx.profile, ctx.refs, ctx.characterNames)
 		cartridge, cartridgeBreakdown := findScoredCartridge(ctx.cartridges, solution.SelectedCartridgeID, ctx.profile, ctx.refs)
 		setDefinition := ctx.setCatalog.Definitions[solution.SelectedSetID]
+		additional := ctx.arcAdditional[solution.SelectedWeaponID]
+		if additional == nil {
+			additional = ctx.additional
+		}
 		normalizePublicScore(&solution, detailedModules, cartridgeBreakdown)
-		stats := optimizer.BuildStatSummary(ctx.profile, modules, cartridge, setDefinition, solution.SetMatchedCount, ctx.additional)
+		stats := optimizer.BuildStatSummary(ctx.profile, modules, cartridge, setDefinition, solution.SetMatchedCount, additional)
 		explainRanking(&solution, stats.Derived, ctx.objectives, ctx.mode)
+		var weapon *decoded.Weapon
+		if selected, exists := ctx.arcWeapons[solution.SelectedWeaponID]; exists {
+			copy := selected
+			weapon = &copy
+		}
 		alternative := OptimizationAlternative{
-			Solution: solution, Modules: detailedModules, Cartridge: cartridge,
+			Solution: solution, Modules: detailedModules, Weapon: weapon, WeaponConditionalNote: ctx.arcNotes[solution.SelectedWeaponID], Cartridge: cartridge,
 			CartridgeBreakdown: cartridgeBreakdown, Stats: stats, Set: localizedSetDefinition(setDefinition, ctx.displayCatalog),
 			Damage: s.localizedDamageAnalysis(ctx.currentCharacter, stats, ctx.currentStats, ctx.language),
 		}
@@ -485,7 +531,7 @@ func normalizePublicScore(solution *optimizer.Solution, modules []OptimizationMo
 	if cartridge != nil {
 		solution.CartridgeScore = cartridge.Total
 	}
-	solution.Score = solution.ModuleScore + solution.CartridgeScore + solution.SetBonusScore
+	solution.Score = solution.ModuleScore + solution.CartridgeScore + solution.SetBonusScore + solution.WeaponScore
 	solution.Ranking.Equipment = solution.Score
 	solution.Ranking.Structure = solution.Ranking.Score - solution.Score
 }

@@ -18,6 +18,7 @@ type LocalBuild struct {
 	ProfileID   string              `json:"profile_id"`
 	ModuleIDs   []string            `json:"module_ids"`
 	CartridgeID string              `json:"cartridge_id,omitempty"`
+	ArcID       string              `json:"arc_id,omitempty"`
 	Stats       map[string]float64  `json:"stats,omitempty"`
 	UpdatedAt   time.Time           `json:"updated_at"`
 	Result      *OptimizationResult `json:"result,omitempty"`
@@ -35,7 +36,11 @@ func SaveOptimizationResult(projectDir string, result OptimizationResult) (Local
 	if result.Cartridge != nil {
 		cartridgeID = result.Cartridge.LocalID
 	}
-	builds, err := SaveLocalBuild(projectDir, result.ProfileID, result.Character.CharacterID, moduleIDs, cartridgeID, result.Stats.Derived)
+	arcID := ""
+	if result.Weapon != nil {
+		arcID = result.Weapon.ID.Key()
+	}
+	builds, err := SaveLocalBuild(projectDir, result.ProfileID, result.Character.CharacterID, moduleIDs, cartridgeID, result.Stats.Derived, arcID)
 	if err != nil {
 		return LocalBuildState{}, err
 	}
@@ -130,7 +135,7 @@ func cleanCategorizedGameName(name string) string {
 	return name
 }
 
-func SaveLocalBuild(projectDir, profileID string, characterID int, moduleIDs []string, cartridgeID string, stats map[string]float64) (LocalBuildState, error) {
+func SaveLocalBuild(projectDir, profileID string, characterID int, moduleIDs []string, cartridgeID string, stats map[string]float64, arcIDs ...string) (LocalBuildState, error) {
 	state, builds, err := loadBuildData(projectDir)
 	if err != nil {
 		return LocalBuildState{}, err
@@ -139,7 +144,7 @@ func SaveLocalBuild(projectDir, profileID string, characterID int, moduleIDs []s
 	if !containsCharacter(state.Characters, characterID) {
 		return LocalBuildState{}, fmt.Errorf("unknown account character %d", characterID)
 	}
-	inventory, _, loaded, err := loadAccountData(projectDir)
+	inventory, account, loaded, err := loadAccountData(projectDir)
 	if err != nil {
 		return LocalBuildState{}, err
 	}
@@ -166,7 +171,20 @@ func SaveLocalBuild(projectDir, profileID string, characterID int, moduleIDs []s
 			return LocalBuildState{}, fmt.Errorf("unknown cartridge %q", cartridgeID)
 		}
 	}
-	builds.Builds[strconv.Itoa(characterID)] = LocalBuild{CharacterID: characterID, ProfileID: profileID, ModuleIDs: append([]string(nil), moduleIDs...), CartridgeID: cartridgeID, Stats: stats, UpdatedAt: time.Now().UTC()}
+	arcID := ""
+	if len(arcIDs) > 0 {
+		arcID = arcIDs[0]
+	}
+	if arcID != "" {
+		found := false
+		for _, weapon := range account.Weapons {
+			found = found || weapon.ID.Key() == arcID
+		}
+		if !found {
+			return LocalBuildState{}, fmt.Errorf("unknown Arc %q", arcID)
+		}
+	}
+	builds.Builds[strconv.Itoa(characterID)] = LocalBuild{CharacterID: characterID, ProfileID: profileID, ModuleIDs: append([]string(nil), moduleIDs...), CartridgeID: cartridgeID, ArcID: arcID, Stats: stats, UpdatedAt: time.Now().UTC()}
 	return builds, writeJSON(workspaceFile(projectDir, "local_builds.json"), builds)
 }
 
@@ -195,22 +213,27 @@ func SaveCharacterPriority(projectDir string, priority []int) (LocalBuildState, 
 }
 
 func HigherPriorityReservations(projectDir string, characterID int) (map[string]bool, map[string]bool, error) {
+	modules, cartridges, _, err := HigherPriorityReservationsWithArcs(projectDir, characterID)
+	return modules, cartridges, err
+}
+
+func HigherPriorityReservationsWithArcs(projectDir string, characterID int) (map[string]bool, map[string]bool, map[string]bool, error) {
 	state, builds, err := loadBuildData(projectDir)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 	builds.normalize(state.Characters)
-	inventory, _, loaded, err := loadAccountData(projectDir)
+	inventory, account, loaded, err := loadAccountData(projectDir)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 	if !loaded {
-		return nil, nil, fmt.Errorf("no account has been imported")
+		return nil, nil, nil, fmt.Errorf("no account has been imported")
 	}
-	modules, cartridges := map[string]bool{}, map[string]bool{}
+	modules, cartridges, arcs := map[string]bool{}, map[string]bool{}, map[string]bool{}
 	for _, id := range builds.Priority {
 		if id == characterID {
-			return modules, cartridges, nil
+			return modules, cartridges, arcs, nil
 		}
 		// The imported account state is authoritative for equipment currently
 		// worn by a higher-priority character, even when that character has no
@@ -225,6 +248,16 @@ func HigherPriorityReservations(projectDir string, characterID int) (map[string]
 				cartridges[cartridge.LocalID] = true
 			}
 		}
+		for _, weapon := range account.Weapons {
+			if weapon.EquippedCharacterID == id && (weapon.ID.Slot != 0 || weapon.ID.Serial != 0) {
+				arcs[weapon.ID.Key()] = true
+			}
+		}
+		for _, character := range account.Characters {
+			if character.CharacterID == id && character.ForkNetID != nil && (character.ForkNetID.Slot != 0 || character.ForkNetID.Serial != 0) {
+				arcs[character.ForkNetID.Key()] = true
+			}
+		}
 		if build, ok := builds.Builds[strconv.Itoa(id)]; ok {
 			for _, moduleID := range build.ModuleIDs {
 				if moduleID != "" {
@@ -234,9 +267,12 @@ func HigherPriorityReservations(projectDir string, characterID int) (map[string]
 			if build.CartridgeID != "" {
 				cartridges[build.CartridgeID] = true
 			}
+			if build.ArcID != "" {
+				arcs[build.ArcID] = true
+			}
 		}
 	}
-	return modules, cartridges, nil
+	return modules, cartridges, arcs, nil
 }
 
 func loadBuildData(projectDir string) (decoded.State, LocalBuildState, error) {
