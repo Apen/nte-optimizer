@@ -1,4 +1,5 @@
-import { RotateCcw, X } from 'lucide-react'
+import { useId } from 'react'
+import { RotateCcw, TriangleAlert, X } from 'lucide-react'
 
 import { Card, CardContent } from './ui/card'
 import { Progress } from './ui/progress'
@@ -75,9 +76,14 @@ function weightKeyForGoal(property: string, settings: Pick<WeightSettings, 'weig
 
 function StatConfigRow({ goal, value, maximumValue, minimumValue, weight, onGoal, onMaximum, onMinimum, onWeight, onRemove }: { goal: TargetGoal; value: number; maximumValue: number; minimumValue: number; weight: number; onGoal: (value: number) => void; onMaximum: (value: number) => void; onMinimum: (value: number) => void; onWeight: (value: number) => void; onRemove: () => void }) {
   const { stats: labels } = usePresentation()
+  const warningId = useId()
   const name = labels[goal.property_id] || goal.label
+  const zeroWeightHint = t('zero_weight_goal_hint')
   return <div className="goal-row"><div className="goal-name flex items-start justify-between gap-2"><span><strong className="block">{name}</strong><small>{t('reference', { value: `${goal.percent ? goal.minimum * 100 : goal.minimum}${goal.percent ? ' %' : ''}` })}</small></span><button className="rounded-md p-1 text-slate-500 hover:bg-red-950 hover:text-red-300" onClick={onRemove} title={t('remove_goal', { name })} aria-label={t('remove_goal', { name })}><X className="size-4" /></button></div>
-    <label className="goal-field"><span className="mobile-label">{t('weight')}</span><div className="number-field"><input aria-label={t('weight_for', { name })} type="number" min={0} max={10} step={0.05} value={weight} onChange={event => onWeight(Math.min(10, Math.max(0, Number(event.target.value))))} /></div>{weight === 0 && <small className="text-amber-300">{t('zero_weight_goal_hint')}</small>}</label>
+    <div className="goal-field"><span className="mobile-label">{t('weight')}</span><div className="flex items-center gap-1"><div className="number-field flex-1"><input aria-label={t('weight_for', { name })} type="number" min={0} max={10} step={0.05} value={weight} onChange={event => onWeight(Math.min(10, Math.max(0, Number(event.target.value))))} /></div>{weight === 0 && <span className="group relative inline-flex shrink-0">
+      <button type="button" aria-label={t('weight_for', { name })} aria-describedby={warningId} className="rounded p-0.5 text-amber-300 hover:text-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-300"><TriangleAlert aria-hidden="true" className="size-4" /></button>
+      <span id={warningId} role="tooltip" className="pointer-events-none absolute right-0 top-full z-30 mt-1 w-56 rounded-md border border-amber-700/70 bg-slate-950 px-3 py-2 text-left text-xs font-normal leading-relaxed text-amber-100 opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">{zeroWeightHint}</span>
+    </span>}</div></div>
     <StatNumber label={t('objective_label')} name={name} goal={goal} value={value} onChange={onGoal} />
     <StatNumber label={t('min_strict')} name={name} goal={goal} value={minimumValue} placeholder="—" onChange={onMinimum} />
     <StatNumber label={t('max_strict')} name={name} goal={goal} value={maximumValue} placeholder="—" onChange={onMaximum} />
