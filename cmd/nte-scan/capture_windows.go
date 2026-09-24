@@ -90,11 +90,24 @@ func captureLoginAuto(ctx context.Context, name string, maxDuration time.Duratio
 	return captureLoginAutoWithRunner(ctx, name, maxDuration, runPktmon)
 }
 
+func captureLoginAutoWithProgress(ctx context.Context, name string, maxDuration time.Duration, progress func(string, string)) (string, error) {
+	return captureLoginAutoWithDependenciesAndProgress(ctx, name, maxDuration, runPktmon, waitForLoginCapture, progress)
+}
+
 func captureLoginAutoWithRunner(ctx context.Context, name string, maxDuration time.Duration, run pktmonRunner) (string, error) {
 	return captureLoginAutoWithDependencies(ctx, name, maxDuration, run, waitForLoginCapture)
 }
 
 func captureLoginAutoWithDependencies(ctx context.Context, name string, maxDuration time.Duration, run pktmonRunner, wait captureWaiter) (string, error) {
+	return captureLoginAutoWithDependenciesAndProgress(ctx, name, maxDuration, run, wait, nil)
+}
+
+func captureLoginAutoWithDependenciesAndProgress(ctx context.Context, name string, maxDuration time.Duration, run pktmonRunner, wait captureWaiter, progress func(string, string)) (string, error) {
+	report := func(stage, status string) {
+		if progress != nil {
+			progress(stage, status)
+		}
+	}
 	name = strings.TrimSpace(name)
 	if name == "" {
 		name = "nte-login-" + time.Now().Format("20060102-150405")
@@ -123,24 +136,32 @@ func captureLoginAutoWithDependencies(ctx context.Context, name string, maxDurat
 	// normal state on a clean launch.
 	_ = run("stop")
 	if err := run("start", "--capture", "--pkt-size", "0", "--file-name", etl); err != nil {
+		report("pktmon_start", "failed")
 		return "", fmt.Errorf("pktmon failed to start (approve the administrator prompt): %w", err)
 	}
 	stopCapture := pktmonStopper(run)
 	defer stopCapture()
+	report("capture", "ready")
 	fmt.Println(loginReadyMessage)
 	if maxDuration < 10*time.Second {
 		maxDuration = 10 * time.Second
 	}
 	if err := wait(ctx, maxDuration); err != nil {
+		report("capture", "interrupted")
 		return "", fmt.Errorf("capture interrupted: %w", err)
 	}
+	report("capture", "window_complete")
 	fmt.Println(captureAnalysisMessage)
 	if err := stopCapture(); err != nil {
+		report("pktmon_stop", "failed")
 		return "", fmt.Errorf("failed to stop pktmon: %w", err)
 	}
+	report("conversion", "started")
 	if err := run("etl2pcap", etl, "--out", pcap); err != nil {
+		report("conversion", "failed")
 		return "", fmt.Errorf("conversion failed: %w", err)
 	}
+	report("conversion", "complete")
 	return pcap, nil
 }
 

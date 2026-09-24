@@ -67,6 +67,31 @@ func TestCaptureLoginNominalLifecycle(t *testing.T) {
 	assertCommandNames(t, commands, "stop", "start", "stop", "etl2pcap")
 }
 
+func TestCaptureLoginReportsConversionFailureWithoutRawError(t *testing.T) {
+	useWorkingDirectory(t)
+	var events []string
+	_, err := captureLoginAutoWithDependenciesAndProgress(context.Background(), "test", time.Second, func(args ...string) error {
+		if args[0] == "etl2pcap" {
+			return errors.New("private command output")
+		}
+		return nil
+	}, func(context.Context, time.Duration) error { return nil }, func(stage, status string) {
+		events = append(events, stage+":"+status)
+	})
+	if err == nil {
+		t.Fatal("expected conversion failure")
+	}
+	want := []string{"capture:ready", "capture:window_complete", "conversion:started", "conversion:failed"}
+	if len(events) != len(want) {
+		t.Fatalf("events=%v, want=%v", events, want)
+	}
+	for i := range want {
+		if events[i] != want[i] {
+			t.Fatalf("events=%v, want=%v", events, want)
+		}
+	}
+}
+
 func TestGuidedCaptureInstructionsAreEnglish(t *testing.T) {
 	if loginReadyMessage != "Capture ready. Click Login in NTE now." {
 		t.Fatalf("unexpected login instruction: %q", loginReadyMessage)

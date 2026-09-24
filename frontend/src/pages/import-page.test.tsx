@@ -7,9 +7,11 @@ import type { AccountImportSummary, LocalizationCatalog } from '../types'
 import { ImportPage } from './import-page'
 
 const scanAndImport = vi.fn()
+const lastScanLog = vi.fn()
 
 vi.mock('../../wailsjs/go/main/DesktopApp', () => ({
   ScanAndImportAccount: (...args: unknown[]) => scanAndImport(...args),
+  LastScanLog: () => lastScanLog(),
 }))
 
 const catalog: LocalizationCatalog = {
@@ -20,6 +22,11 @@ const catalog: LocalizationCatalog = {
     scan_waiting: 'En attente',
     scan_finished: '{characters} personnages, {pieces} équipements, {arcs} arcs',
     no_account_data: 'Aucune donnée',
+    scan_log_title: 'Diagnostic du scan',
+    scan_log_privacy: 'Local uniquement',
+    scan_log_stage_validation: 'Validation',
+    scan_log_status_incomplete: 'données requises manquantes',
+    scan_log_count_equipment: 'équipement',
   },
   stats: {},
   qualities: {},
@@ -41,6 +48,8 @@ describe('ImportPage', () => {
   beforeEach(() => {
     applyLocalization('fr', catalog)
     scanAndImport.mockReset()
+    lastScanLog.mockReset()
+    lastScanLog.mockResolvedValue([])
   })
 
   it('runs the guided scan with the default duration and refreshes imported data', async () => {
@@ -64,5 +73,14 @@ describe('ImportPage', () => {
 
     expect(await screen.findByRole('alert')).toHaveTextContent('UAC refusé')
     expect(screen.getByRole('button', { name: 'Lancer le scan' })).toBeEnabled()
+  })
+
+  it('shows privacy-safe scan steps after a failed attempt', async () => {
+    scanAndImport.mockRejectedValue(new Error('incomplete capture'))
+    lastScanLog.mockResolvedValue([{ time: '2026-09-23T10:00:00Z', stage: 'validation', status: 'incomplete', counts: { equipment: 0 } }])
+    render(<ImportPage summary={emptySummary} locale="fr" onImported={vi.fn()} />)
+    await userEvent.click(screen.getByRole('button', { name: 'Lancer le scan' }))
+    expect(await screen.findByText('données requises manquantes')).toBeInTheDocument()
+    expect(screen.getByText('équipement: 0')).toBeInTheDocument()
   })
 })

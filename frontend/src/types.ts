@@ -47,6 +47,7 @@ export type OptimizationSolution = { ranking?: { score:number; equipment:number;
 export type OptimizationAlternative = { solution:OptimizationSolution; modules:OptimizedModule[]; cartridge?:Result['cartridge']; cartridge_breakdown?:Result['cartridge_breakdown']; stats:StatSummary; set:Result['set']; goals?:GoalProgress[]; conditional_goals?:GoalProgress[]; damage?:DamageAnalysis }
 export type SearchProgress = { visited: number; total?: number; elapsed_ms: number; candidates: number; workers?:number; pruned_branches?:number; finished?:boolean }
 export type OptimizationLog = { started_at:string; finished_at?:string; status:string; entries:{level:string;stage:string;message:string}[] }
+export type ScanLogEvent = { time:string; stage:string; status:string; counts?:Record<string,number> }
 export type InventoryModule = { local_id:string; game_item_id?:string; quality:string; set_id:string; set_name:string; geometry:string; area:number; level:number; main_stats:Stat[]; sub_stats:Stat[]; locked?:boolean; equipped_character_id?:number; equipped_placement?:{row:number;column:number} }
 export type InventoryCartridge = { local_id:string; game_item_id?:string; set_id:string; set_name:string; quality:string; level:number; main_stats:Stat[]; sub_stats:Stat[]; locked?:boolean; equipped_character_id?:number }
 export type InventoryArc = { id:{solt:number;serial:number}; forkId:string; name:string; quality:string; level:number; breakthrough:number; star:number; equippedCharacterId?:number; equipped_character_name?:string }

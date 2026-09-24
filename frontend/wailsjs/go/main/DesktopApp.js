@@ -68,6 +68,10 @@ export function ScanAndImportAccount(language, seconds) {
   return window['go']['main']['DesktopApp']['ScanAndImportAccount'](language, seconds)
 }
 
+export function LastScanLog() {
+  return window['go']['main']['DesktopApp']['LastScanLog']()
+}
+
 export function OptimizeFlexibleSelection(profileID, ignorePriority, language, mode, goals, pinnedModuleIDs, excludedModuleIDs, weights) {
   return window['go']['main']['DesktopApp']['OptimizeFlexibleSelection'](profileID, ignorePriority, language, mode, goals, pinnedModuleIDs, excludedModuleIDs, weights)
 }

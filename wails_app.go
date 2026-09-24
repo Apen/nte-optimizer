@@ -11,6 +11,7 @@ import (
 	"nte-optimizer/internal/buildinfo"
 	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/optimizer"
+	"nte-optimizer/internal/scanlog"
 	"nte-optimizer/internal/scannerlauncher"
 	"nte-optimizer/internal/target"
 	"nte-optimizer/internal/updatecheck"
@@ -181,6 +182,10 @@ func (a *DesktopApp) ScanAndImportAccount(language string, seconds int) (appserv
 	if _, err := ntelocale.Load(a.service.DataDir, language); err != nil {
 		return appservice.AccountImportSummary{}, err
 	}
+	logPath := scanlog.Path(a.stateDir)
+	if err := scanlog.Start(logPath, seconds); err != nil {
+		return appservice.AccountImportSummary{}, fmt.Errorf("start local scan diagnostic: %w", err)
+	}
 	scanContext, stop := context.WithCancel(a.ctx)
 	a.scanMu.Lock()
 	if a.scanStop != nil {
@@ -199,11 +204,23 @@ func (a *DesktopApp) ScanAndImportAccount(language string, seconds int) (appserv
 		stop()
 	}()
 	if err := scannerlauncher.RunContext(scanContext, a.projectDir, a.stateDir, seconds); err != nil {
+		_ = scanlog.Append(logPath, "scanner", "failed", nil)
 		return appservice.AccountImportSummary{}, err
 	}
+	_ = scanlog.Append(logPath, "import", "started", nil)
 	a.buildMu.Lock()
 	defer a.buildMu.Unlock()
-	return appservice.ImportDecodedWithSummary(scannerlauncher.OutputDir(a.stateDir), a.stateDir)
+	summary, err := appservice.ImportDecodedWithSummary(scannerlauncher.OutputDir(a.stateDir), a.stateDir)
+	if err != nil {
+		_ = scanlog.Append(logPath, "import", "failed", nil)
+		return summary, err
+	}
+	_ = scanlog.Append(logPath, "import", "complete", map[string]int{"characters": summary.Characters, "modules": summary.Modules, "cartridges": summary.Cartridges, "arcs": summary.Weapons})
+	return summary, nil
+}
+
+func (a *DesktopApp) LastScanLog() ([]scanlog.Event, error) {
+	return scanlog.Read(scanlog.Path(a.stateDir))
 }
 
 func (a *DesktopApp) StopScan() bool {

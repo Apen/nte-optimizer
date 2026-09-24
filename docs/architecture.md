@@ -61,6 +61,9 @@ scripts/                   quality, build, packaging, and smoke tests
 8. the desktop importer creates one atomic account snapshot.
 
 An incomplete scan never replaces the last valid account import.
+The elevated helper and desktop process append privacy-safe stage events and
+aggregate counts to the latest local scan diagnostic. The Import page polls
+that file during the scan; raw packets and decoded records are never logged.
 
 ## Desktop service boundary
 

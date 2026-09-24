@@ -138,6 +138,14 @@ Normal users should prefer the guided scan in the desktop application.
 
 ## Troubleshooting
 
+The Import page shows a live **Scan diagnostic** during a guided scan and keeps
+the last attempt visible after it finishes. If a scan fails, copy this diagnostic
+into a GitHub issue along with the on-screen error. It records stage names,
+timestamps, and aggregate counts only; do not attach ETL/PCAPNG captures or
+decoded account exports. The latest diagnostic is also stored locally at
+`%LOCALAPPDATA%\NTE Optimizer\scan-diagnostic.jsonl` and is replaced when a new
+guided scan starts.
+
 ### The administrator prompt was refused
 
 No new import is published. Start the scan again and approve the prompt when

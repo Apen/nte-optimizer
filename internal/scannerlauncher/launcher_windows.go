@@ -5,9 +5,12 @@ package scannerlauncher
 import (
 	"fmt"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"syscall"
+
+	"nte-optimizer/internal/scanlog"
 )
 
 func runElevated(helper, projectDir, outputDir, cancelFile string, seconds int) error {
@@ -22,6 +25,7 @@ func runElevatedWithRunner(helper, projectDir, outputDir, cancelFile string, sec
 		"-login-seconds", strconv.Itoa(seconds),
 		"-output-dir", commandLineQuote(outputDir),
 		"-cancel-file", commandLineQuote(cancelFile),
+		"-scan-log", commandLineQuote(scanlog.Path(filepath.Dir(filepath.Dir(outputDir)))),
 	}, " ")
 	script := fmt.Sprintf(
 		"$p = Start-Process -FilePath %s -WorkingDirectory %s -ArgumentList %s -Verb RunAs -Wait -PassThru; exit $p.ExitCode",

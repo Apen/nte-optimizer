@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"nte-optimizer/internal/scanlog"
 )
 
 func TestStopOptimizationCancelsActiveSearch(t *testing.T) {
@@ -38,6 +40,17 @@ func TestStopScanCancelsActiveCapture(t *testing.T) {
 	case <-ctx.Done():
 	default:
 		t.Fatal("scan context was not cancelled")
+	}
+}
+
+func TestLastScanLogReadsLocalDiagnostic(t *testing.T) {
+	app := NewDesktopAppWithStateDir(t.TempDir(), t.TempDir())
+	if err := scanlog.Start(scanlog.Path(app.stateDir), 35); err != nil {
+		t.Fatal(err)
+	}
+	events, err := app.LastScanLog()
+	if err != nil || len(events) != 1 || events[0].Stage != "scan" {
+		t.Fatalf("scan log=%#v err=%v", events, err)
 	}
 }
 

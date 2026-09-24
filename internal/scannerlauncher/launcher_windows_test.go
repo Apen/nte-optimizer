@@ -17,7 +17,7 @@ func TestRunElevatedBuildsEscapedPowerShellCommand(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, want := range []string{"Start-Process", "-Verb RunAs", "-Wait", "-login-seconds 35", `-output-dir "C:\Users\Test User\AppData\Local\NTE Optimizer\workspace\scan-output"`, `-cancel-file "C:\Users\Test User\AppData\Local\NTE Optimizer\cancel"`, "NTE''s"} {
+	for _, want := range []string{"Start-Process", "-Verb RunAs", "-Wait", "-login-seconds 35", `-output-dir "C:\Users\Test User\AppData\Local\NTE Optimizer\workspace\scan-output"`, `-cancel-file "C:\Users\Test User\AppData\Local\NTE Optimizer\cancel"`, `-scan-log "C:\Users\Test User\AppData\Local\NTE Optimizer\scan-diagnostic.jsonl"`, "NTE''s"} {
 		if !strings.Contains(script, want) {
 			t.Fatalf("PowerShell script does not contain %q: %s", want, script)
 		}

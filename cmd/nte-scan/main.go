@@ -16,6 +16,7 @@ import (
 
 	"nte-optimizer/internal/buildinfo"
 	"nte-optimizer/internal/datafiles"
+	"nte-optimizer/internal/scanlog"
 	scannerpcap "nte-optimizer/internal/scanner/pcap"
 	scannerunreal "nte-optimizer/internal/scanner/unreal"
 )
@@ -112,6 +113,7 @@ func main() {
 	loginCapture := flag.Bool("login-capture", false, "capture login traffic and export all JSON files")
 	loginSeconds := flag.Int("login-seconds", 30, "maximum guided capture duration")
 	cancelFile := flag.String("cancel-file", "", "file used to signal capture cancellation")
+	scanLog := flag.String("scan-log", "", "local privacy-safe scan diagnostic file")
 	showVersion := flag.Bool("version", false, "print the version and exit")
 	flag.Parse()
 	ctx, cancelFileWatcher := contextWithCancelFile(ctx, *cancelFile)
@@ -129,23 +131,41 @@ func main() {
 		return
 	}
 	if *loginCapture {
-		pcap, err := captureLoginAuto(ctx, "", time.Duration(*loginSeconds)*time.Second)
+		_ = scanlog.Append(*scanLog, "capture", "started", nil)
+		pcap, err := captureLoginAutoWithProgress(ctx, "", time.Duration(*loginSeconds)*time.Second, func(stage, status string) {
+			_ = scanlog.Append(*scanLog, stage, status, nil)
+		})
+		if err != nil {
+			_ = scanlog.Append(*scanLog, "capture", "failed", nil)
+		}
 		must(err)
+		_ = scanlog.Append(*scanLog, "capture", "complete", nil)
 		*input = pcap
 		if *outputDir == "" {
 			*outputDir = filepath.Join(filepath.Dir(filepath.Dir(pcap)), "workspace", "scan-output")
 		}
 	}
 
+	_ = scanlog.Append(*scanLog, "packet_read", "started", nil)
 	packets, err := readPCAPNG(*input)
+	if err != nil {
+		_ = scanlog.Append(*scanLog, "packet_read", "failed", nil)
+	}
 	must(err)
 	mustScanContext(ctx)
 	unique := dedupe(packets)
+	_ = scanlog.Append(*scanLog, "packet_read", "complete", map[string]int{"raw_packets": len(packets), "unique_packets": len(unique)})
 	r := report{Input: *input, RawPackets: len(packets), UniquePackets: len(unique), DuplicateAppearances: len(packets) - len(unique)}
+	_ = scanlog.Append(*scanLog, "decode", "started", nil)
 	r.UDP = analyzeUDP(unique, 0, *dumpUDP, *catalog, *characterCatalogPath, *forkCatalogPath, *resourceCatalogPath, *characterProbeOut != "")
+	_ = scanlog.Append(*scanLog, "decode", "complete", map[string]int{"udp_packets": r.UDP.Packets, "equipment": r.UDP.DecodedItems, "characters": len(r.UDP.Characters), "arcs": len(r.UDP.Weapons), "resources": len(r.UDP.Resources)})
 	mustScanContext(ctx)
 	if *loginCapture && (r.UDP.DecodedItems == 0 || len(r.UDP.Characters) == 0 || len(r.UDP.Weapons) == 0) {
+		_ = scanlog.Append(*scanLog, "validation", "incomplete", nil)
 		must(fmt.Errorf("incomplete capture: equipment=%d, characters=%d, Arcs=%d; start another guided scan and log in while the capture is active", r.UDP.DecodedItems, len(r.UDP.Characters), len(r.UDP.Weapons)))
+	}
+	if *loginCapture {
+		_ = scanlog.Append(*scanLog, "validation", "complete", nil)
 	}
 	if *inventoryOut != "" {
 		b, err := json.MarshalIndent(r.UDP.Items, "", "  ")
@@ -194,10 +214,21 @@ func main() {
 	}
 	if *outputDir != "" {
 		mustScanContext(ctx)
-		must(writeOutputDir(*outputDir, r))
+		_ = scanlog.Append(*scanLog, "export", "started", nil)
+		err := writeOutputDir(*outputDir, r)
+		if err != nil {
+			_ = scanlog.Append(*scanLog, "export", "failed", nil)
+		}
+		must(err)
+		_ = scanlog.Append(*scanLog, "export", "complete", nil)
 	}
 	if *loginCapture {
-		must(removeCaptureFiles(*input))
+		err := removeCaptureFiles(*input)
+		if err != nil {
+			_ = scanlog.Append(*scanLog, "cleanup", "failed", nil)
+		}
+		must(err)
+		_ = scanlog.Append(*scanLog, "cleanup", "complete", nil)
 		fmt.Printf("Validated login export written to %s\n", *outputDir)
 	}
 	if *jsonOut {
