@@ -85,6 +85,62 @@ func TestParseCharacterPanelStats(t *testing.T) {
 	}
 }
 
+func TestParseCharacterPanelStatsWithChangedCycleIntensity(t *testing.T) {
+	data := make([]byte, 512)
+	putFloat := func(off int, value float32) {
+		raw := math.Float32bits(value)
+		for bit := 0; bit < 32; bit++ {
+			if raw&(1<<uint(bit)) != 0 {
+				data[(off+bit)/8] |= 1 << uint((off+bit)%8)
+			}
+		}
+	}
+	baseOff := 400
+	values := []float32{15514, 15514, 72, 172, 1230, 1230, .57, .73, 2.304, 2.304, 1, 1, 120, 120, .2, .2, .1, .1, 909, 909, .07, .07, 33, 33}
+	for i, value := range values {
+		putFloat(baseOff+i*40, value)
+	}
+	totalOff := 2500
+	for i, value := range []float32{23471.475, 23471.475, 23471.475, 1748.125, 200} {
+		putFloat(totalOff+i*40, value)
+	}
+	stats, ok := parseCharacterPanelStats(data, len(data)*8, 23471.475)
+	if !ok {
+		t.Fatal("panel stats with changed cycle intensity were not decoded")
+	}
+	if stats.BaseHP != 15514 || stats.BaseAttack != 1230 || stats.BaseDefense != 909 || stats.Attack != 1748.125 || stats.Defense != 1005 || stats.CycleIntensity != 172 || stats.CritRate != .73 || stats.UniversalDMGBonus != .2 || stats.ElementalDMGBonus != .1 {
+		t.Fatalf("unexpected panel stats: %#v", stats)
+	}
+}
+
+func TestParseCharacterPanelStatsWithSingleCycleIntensity(t *testing.T) {
+	data := make([]byte, 512)
+	putFloat := func(off int, value float32) {
+		raw := math.Float32bits(value)
+		for bit := 0; bit < 32; bit++ {
+			if raw&(1<<uint(bit)) != 0 {
+				data[(off+bit)/8] |= 1 << uint((off+bit)%8)
+			}
+		}
+	}
+	baseOff := 400
+	values := []float32{15514, 15514, 172, 1230, 1230, .57, .73, 2.304, 2.304, 1, 1, 120, 120, .2, .2, .1, .1, 909, 909, .07, .07, 33, 33}
+	for i, value := range values {
+		putFloat(baseOff+i*40, value)
+	}
+	totalOff := 2500
+	for i, value := range []float32{23471.475, 23471.475, 23471.475, 1748.125, 200} {
+		putFloat(totalOff+i*40, value)
+	}
+	stats, ok := parseCharacterPanelStats(data, len(data)*8, 23471.475)
+	if !ok {
+		t.Fatal("panel stats with a single cycle intensity value were not decoded")
+	}
+	if stats.BaseAttack != 1230 || stats.CycleIntensity != 172 || stats.Defense != 1005 {
+		t.Fatalf("unexpected panel stats: %#v", stats)
+	}
+}
+
 func TestEnrichObservedEquipmentBuff(t *testing.T) {
 	catalog := &equipmentCatalog{
 		Items: map[string]equipmentDefinition{

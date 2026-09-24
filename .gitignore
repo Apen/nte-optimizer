@@ -7,3 +7,4 @@
 /frontend/dist/*
 !/frontend/dist/.gitkeep
 /IDEAS.md
+/PACKET_MAP.md

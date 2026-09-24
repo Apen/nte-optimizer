@@ -52,6 +52,7 @@ type characterPanelStats struct {
 	CycleIntensity    float32 `json:"cycleIntensity"`
 	BreakIntensity    float32 `json:"breakIntensity"`
 	UniversalDMGBonus float32 `json:"universalDamageBonus"`
+	ElementalDMGBonus float32 `json:"elementalDamageBonus"`
 }
 
 func bitFloat32(data []byte, bitLen, off int) (float32, bool) {
@@ -107,17 +108,26 @@ func parseCharacterPanelStats(data []byte, bitLen int, maxHP float32) (character
 			continue
 		}
 		magIndex, attackIndex := 2, 3
-		if sameFloat(values[2], values[3]) {
-			attackIndex = 4
+		if sameFloat(values[4], values[5]) && values[4] >= 50 && values[4] <= 10000 {
+			// The two cycle values can differ, so their equality cannot
+			// determine whether the cycle field is paired.
+			magIndex, attackIndex = 3, 4
+		} else if !sameFloat(values[3], values[4]) {
+			continue
 		}
 		critIndex := attackIndex + 2
 		critDamageIndex := critIndex + 2
 		chargeIndex := critDamageIndex + 2
 		universalIndex := chargeIndex + 4
 		defenseIndex := universalIndex + 2
+		elementalBonus := float32(0)
 		if defenseIndex+1 >= len(values) || values[defenseIndex] < 50 || values[defenseIndex] > 10000 || !sameFloat(values[defenseIndex], values[defenseIndex+1]) {
 			// A non-zero elemental DMG pair is serialized between universal
 			// damage and defense. It is omitted entirely when it is zero.
+			if defenseIndex+1 >= len(values) || !sameFloat(values[defenseIndex], values[defenseIndex+1]) || values[defenseIndex+1] < 0 || values[defenseIndex+1] > 10 {
+				continue
+			}
+			elementalBonus = values[defenseIndex+1]
 			defenseIndex += 2
 		}
 		if defenseIndex+3 >= len(values) || !sameFloat(values[attackIndex], values[attackIndex+1]) || !sameFloat(values[defenseIndex], values[defenseIndex+1]) {
@@ -141,7 +151,7 @@ func parseCharacterPanelStats(data []byte, bitLen int, maxHP float32) (character
 			BaseHP: values[0], BaseAttack: baseAttack, BaseDefense: baseDefense,
 			MaxHP: maxHP, Attack: finalAttack, Defense: baseDefense + float32(math.Floor(float64(baseDefense*defUp+defAdd)+1e-6)), Endurance: endurance,
 			CritRate: critRate, CritDamage: critDamage, ChargeEfficiency: charge,
-			CycleIntensity: values[magIndex], UniversalDMGBonus: universal,
+			CycleIntensity: values[magIndex], UniversalDMGBonus: universal, ElementalDMGBonus: elementalBonus,
 		}, true
 	}
 	return characterPanelStats{}, false

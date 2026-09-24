@@ -22,7 +22,7 @@ func TestWriteOutputDirMergesCharacterExports(t *testing.T) {
 	characterID := uint32(1036)
 	weaponID := itemNetID{Solt: 30, Serial: 40}
 	report := report{Input: "capture.pcapng", UDP: udpReport{
-		Characters: []characterItem{{CharacterID: characterID, Name: "zankou", NetID: characterNetID, ForkNetID: &weaponID}},
+		Characters: []characterItem{{CharacterID: characterID, Name: "zankou", NetID: characterNetID, ForkNetID: &weaponID, PanelStats: &characterPanelStats{ElementalDMGBonus: .1}}},
 		Weapons:    []weaponItem{{ID: weaponID, ForkID: "fork_test", EquippedCharacterID: &characterID}},
 		Items: []inventoryItem{
 			{ID: itemNetID{Solt: 50, Serial: 60}, Kind: "core", CharacterNetID: &characterNetID},
@@ -48,6 +48,9 @@ func TestWriteOutputDirMergesCharacterExports(t *testing.T) {
 	}
 	if output.Count != 1 || len(output.Characters) != 1 || output.Characters[0].Identity.CharacterID != 1036 {
 		t.Fatalf("unexpected merged character output: %#v", output)
+	}
+	if bonus := output.Characters[0].Stats.ElementalDMGBonus; bonus == nil || *bonus != .1 {
+		t.Fatalf("elemental damage bonus was not exported: %#v", bonus)
 	}
 	equipment := output.Characters[0].Equipment
 	if equipment.Weapon == nil || equipment.Weapon.ID != weaponID || len(equipment.Cores) != 1 || len(equipment.Modules) != 1 {

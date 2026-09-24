@@ -57,6 +57,7 @@ type characterStats struct {
 	CycleIntensity    *float32            `json:"cycleIntensity,omitempty"`
 	BreakIntensity    *float32            `json:"breakIntensity,omitempty"`
 	UniversalDMGBonus *float32            `json:"universalDamageBonus,omitempty"`
+	ElementalDMGBonus *float32            `json:"elementalDamageBonus,omitempty"`
 	PanelBase         *characterBaseStats `json:"panelBase,omitempty"`
 	Source            string              `json:"source,omitempty"`
 }
@@ -106,6 +107,7 @@ func exportCharacters(characters []characterItem, equipmentByCharacter map[uint3
 			stats.CycleIntensity = &panel.CycleIntensity
 			stats.BreakIntensity = &panel.BreakIntensity
 			stats.UniversalDMGBonus = &panel.UniversalDMGBonus
+			stats.ElementalDMGBonus = &panel.ElementalDMGBonus
 			stats.PanelBase = &characterBaseStats{MaxHP: panel.BaseHP, Attack: panel.BaseAttack, Defense: panel.BaseDefense}
 			stats.Source = "unreal_attribute_set_and_equipment"
 		}
