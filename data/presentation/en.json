@@ -145,7 +145,7 @@
     "UnbalIntensityBase": "Break Intensity"
   },
   "ui": {
-    "search_beta": "Beta (experimental)",
+    "search_beta": "Experimental",
     "search_fast": "Fast",
     "search_method": "Search method",
     "account_build": "Character",
