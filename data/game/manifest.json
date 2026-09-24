@@ -41,10 +41,11 @@
     {
       "path": "equipment/arcs.json",
       "schema_version": 1,
-      "sha256": "4f73edbe54a856fe3398e94475708b2742060a5419ab0d9d87821a740e243d59",
+      "sha256": "d0537bb3f15d05545511ab2ace7c96ffb42fe8ee0ad2674e2d6edde19d1dc07e",
       "sources": [
         "generated/fork_stats.json",
-        "overrides/equipment-projections.json"
+        "overrides/equipment-projections.json",
+        "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json"
       ],
       "status": "partial",
       "warnings": [
