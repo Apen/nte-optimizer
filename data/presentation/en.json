@@ -192,7 +192,7 @@
     "calculation_log": "Calculation log",
     "cell": "cell",
     "cells": "cells",
-    "character_order_description": "Check the state imported from the game or open an optimizer build.",
+    "character_order_description": "Drag characters to change their order, check their imported game state, or open an optimizer build.",
     "character_order_title": "Character order",
     "character_section": "CHARACTERS",
     "clear_all": "Clear all",

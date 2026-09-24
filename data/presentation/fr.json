@@ -192,7 +192,7 @@
     "calculation_log": "Journal du calcul",
     "cell": "case",
     "cells": "cases",
-    "character_order_description": "Consulte l’état importé du jeu ou ouvre une build de l’optimizer.",
+    "character_order_description": "Glisse les personnages pour changer leur ordre, consulte leur état importé ou ouvre une build de l’optimizer.",
     "character_order_title": "Ordre des personnages",
     "character_section": "PERSONNAGES",
     "clear_all": "Tout effacer",
