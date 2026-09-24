@@ -307,9 +307,13 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 	availableCartridges := cartridges.available
 	excludedEquipped += cartridges.excludedEquipped
 	setup := s.prepareSearch(profile, refs, shapeCatalog, setCatalog, cfg, selected, availableCartridges, objectives, additional, plan, arcOption)
+	var seed []optimizer.Placement
+	if plan.approximate {
+		seed = currentBuildSeed(grid, shapeCatalog, inv.Modules, profile.CharacterID, selected)
+	}
 	searchStarted := time.Now()
 	execution, err := s.executeSearch(ctx, searchRequest{
-		grid: grid, setup: setup, selected: selected,
+		grid: grid, setup: setup, selected: selected, seed: seed,
 	})
 	searchFinished := time.Now()
 	if err != nil {

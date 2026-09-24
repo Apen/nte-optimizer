@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 )
 
 type Catalog struct {
@@ -104,7 +105,13 @@ func (entry TieredInstance) Resolve(characterID string, level int) Instance {
 
 func StatsFromOptimizer(values map[string]float64, element string, conditional bool) Stats {
 	damage := values["DamageUpGeneralBase"]
-	elementDamage := values["DamageUp"+element+"Base"]
+	elementSuffix := optimizerElementSuffix(element)
+	elementDamage := 0.0
+	resistancePen := 0.0
+	if elementSuffix != "" {
+		elementDamage = values["DamageUp"+elementSuffix+"Base"]
+		resistancePen = values["ResistanceIgnore"+elementSuffix+"Base"]
+	}
 	return Stats{
 		Attack:        values["AtkFinal"],
 		HP:            values["HPFinal"],
@@ -114,6 +121,15 @@ func StatsFromOptimizer(values map[string]float64, element string, conditional b
 		GeneralDamage: damage,
 		ElementDamage: elementDamage,
 		DefenseIgnore: values["DefenseIgnoreBase"],
-		ResistancePen: values["ResistanceIgnore"+element+"Base"],
+		ResistancePen: resistancePen,
 	}
+}
+
+func optimizerElementSuffix(element string) string {
+	element = strings.TrimSpace(strings.TrimPrefix(element, "DAMAGE_TYPE_"))
+	if element == "" {
+		return ""
+	}
+	element = strings.ToLower(element)
+	return strings.ToUpper(element[:1]) + element[1:]
 }

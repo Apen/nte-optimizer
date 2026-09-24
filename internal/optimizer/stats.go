@@ -122,14 +122,14 @@ func derive(stats map[string]float64) map[string]float64 {
 }
 
 // BasicDamageIndex compares builds with a coefficient-1 attack before enemy
-// mitigation or skill-specific effects. CritDamageBase is the total critical
-// multiplier displayed by the game (for example 2.30 for 230%).
+// mitigation or skill-specific effects. CritDamageBase is the additive critical
+// damage bonus (for example 0.50 for a 50% bonus).
 func BasicDamageIndex(stats map[string]float64) float64 {
 	attack := math.Max(0, stats["AtkFinal"])
 	critRate := math.Max(0, math.Min(1, stats["CritBase"]))
-	critDamage := math.Max(1, stats["CritDamageBase"])
+	critDamage := math.Max(0, stats["CritDamageBase"])
 	damageMultiplier := math.Max(0, 1+stats["DamageUpGeneralBase"])
-	expectedCritMultiplier := 1 + critRate*(critDamage-1)
+	expectedCritMultiplier := 1 + critRate*critDamage
 	return attack * damageMultiplier * expectedCritMultiplier
 }
 

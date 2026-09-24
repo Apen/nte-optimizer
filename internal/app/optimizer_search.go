@@ -20,6 +20,7 @@ type searchRequest struct {
 	grid     optimizer.Grid
 	setup    searchSetup
 	selected []optimizer.Candidate
+	seed     []optimizer.Placement
 }
 
 type searchExecution struct {
@@ -66,7 +67,7 @@ func (s OptimizerService) executeSearch(ctx context.Context, request searchReque
 	}
 	defer cancel()
 
-	solution, err := request.setup.solver.SolveWithBonus(searchContext, request.grid, request.selected, request.setup.evaluator)
+	solution, err := request.setup.solver.SolveWithBonusSeed(searchContext, request.grid, request.selected, request.setup.evaluator, request.seed)
 	if err != nil {
 		return searchExecution{}, err
 	}

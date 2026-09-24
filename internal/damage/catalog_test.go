@@ -21,3 +21,17 @@ func TestStatsFromOptimizer(t *testing.T) {
 		t.Fatalf("unexpected stats: %+v", got)
 	}
 }
+
+func TestStatsFromOptimizerNormalizesDamageTypeElement(t *testing.T) {
+	cosmos := StatsFromOptimizer(map[string]float64{"DamageUpCosmosBase": .15}, "DAMAGE_TYPE_COSMOS", false)
+	if cosmos.ElementDamage != .15 {
+		t.Fatalf("Cosmos damage type did not map to optimizer stats: %+v", cosmos)
+	}
+	chaos := StatsFromOptimizer(map[string]float64{
+		"DamageUpChaosBase":         .2,
+		"ResistanceIgnoreChaosBase": .08,
+	}, "DAMAGE_TYPE_CHAOS", false)
+	if chaos.ElementDamage != .2 || chaos.ResistancePen != .08 {
+		t.Fatalf("Chaos damage type did not map to optimizer stats: %+v", chaos)
+	}
+}

@@ -28,19 +28,23 @@ func TestBuildStatSummarySeparatesConditionalSetEffect(t *testing.T) {
 	}
 }
 
-func TestBasicDamageIndexUsesExpectedCriticalDamage(t *testing.T) {
+func TestBasicDamageIndexUsesAdditiveCriticalDamageBonus(t *testing.T) {
 	stats := map[string]float64{
 		"AtkFinal":            1000,
 		"CritBase":            .5,
 		"CritDamageBase":      2,
 		"DamageUpGeneralBase": .2,
 	}
-	if got := BasicDamageIndex(stats); !near(got, 1800) {
-		t.Fatalf("basic damage index = %v, want 1800", got)
+	if got := BasicDamageIndex(stats); !near(got, 2400) {
+		t.Fatalf("basic damage index = %v, want 2400", got)
 	}
 	stats["CritBase"] = 1.5
-	if got := BasicDamageIndex(stats); !near(got, 2400) {
+	if got := BasicDamageIndex(stats); !near(got, 3600) {
 		t.Fatalf("crit rate should be capped at 100%%: got %v", got)
+	}
+	stats["CritBase"] = 0
+	if got := BasicDamageIndex(stats); !near(got, 1200) {
+		t.Fatalf("zero crit rate should use non-critical damage: got %v", got)
 	}
 }
 
