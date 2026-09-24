@@ -204,6 +204,7 @@
     "component_one": "component",
     "configuration": "01 / CONFIGURATION",
     "console_grid": "Console grid",
+    "hover_grid_piece_hint": "Hover over or focus a numbered piece to inspect its module stats.",
     "constraints_next_calculation": "They will be applied to the next calculation.",
     "contribution": "Contribution",
     "copied": "Copied",

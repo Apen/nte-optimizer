@@ -3,6 +3,7 @@ import { Ban, CheckCircle2, LockKeyhole, Play, Save, Square, X } from 'lucide-re
 import { AccountImportStatus, BuildWorkspace, CheckForUpdate, EquipmentCatalog, EquipBuildResult, LastOptimizationLog, Localization, OptimizeFlexibleSelection, Profiles, ResetProfileStrategy, SaveProfileSettings, SavedBuildResult, SetCharacterPriority, StopOptimization, Target } from '../wailsjs/go/main/DesktopApp'
 import { AppSidebar, MobileNavigation, type Page } from './components/app-navigation'
 import { CartridgePieceCard, ModulePieceCard } from './components/equipment-cards'
+import { ConsoleGrid } from './components/console-grid'
 import { SearchStatus, StatsEditor, weightForGoal } from './components/optimizer-configuration'
 import { OptimizationLogDialog } from './components/optimization-log-dialog'
 import { DamagePreview } from './components/damage-preview'
@@ -21,8 +22,6 @@ import { formatRanking } from './lib/format'
 import { PresentationProvider } from './presentation'
 import type { AccountImportSummary, BuildWorkspace as Workspace, EquipmentCatalog as Catalog, LocalizationCatalog, OptimizationLog, OptimizedModule, Profile, Result, SearchProgress, TargetGoal, TargetPreset } from './types'
 import { applyLocalization, initialLocale, setActiveLocale, t, type Locale } from './i18n'
-
-const moduleColors = ['bg-slate-700','bg-red-500','bg-cyan-500','bg-emerald-500','bg-violet-500','bg-amber-500','bg-blue-500','bg-fuchsia-500']
 
 function displayGoal(goal:TargetGoal) { return goal.percent ? goal.minimum*100 : goal.minimum }
 
@@ -151,12 +150,6 @@ function buildResultSignature(build:Result) {
 }
 
 function WeightedScore({value,label}:{value:number;label:string}) { return <span className="rounded-lg border border-pink-800 bg-pink-950/40 px-3 py-2 text-right" title={t('stat_relevance_description')}><small className="block text-[9px] font-black uppercase tracking-wider text-pink-300">{label}</small><strong className="text-lg tabular-nums text-pink-100">{formatRanking(value)}</strong></span> }
-function ConsoleGrid({result}:{result:Result}) {
-  const byCell=useMemo(()=>{const map=new Map<string,number>();result.solution.placements.forEach((placement,index)=>placement.cells.forEach(cell=>map.set(`${cell.x},${cell.y}`,index+1)));return map},[result]); const playable=new Set(result.grid.playable.map(cell=>`${cell.x},${cell.y}`)); const cells=[]
-  for(let y=0;y<result.grid.height;y++)for(let x=0;x<result.grid.width;x++){const key=`${x},${y}`,number=byCell.get(key);cells.push(<div key={key} className={`grid size-12 place-items-center rounded-lg font-black ${playable.has(key)?moduleColors[number||0]:'border border-dashed border-slate-700 bg-slate-950'}`}>{number||''}</div>)}
-  return <div><h2 className="mb-3 font-bold">{t('console_grid')}</h2><div className="grid gap-1.5" style={{gridTemplateColumns:`repeat(${result.grid.width},3rem)`}}>{cells}</div></div>
-}
-
 function Cartridge({result}:{result:Result}) { if(!result.cartridge)return null; const owner=result.cartridge.equipped_character_id?{id:result.cartridge.equipped_character_id,name:result.cartridge_equipped_character_name||result.character?.name||t('owner_unknown')}:undefined; return <section><h2 className="mb-3 font-bold">{t('selected_cartridge')}</h2><CartridgePieceCard item={result.cartridge} title={result.set.name||result.cartridge.set_name} owner={owner?'':t('available_state')} ownerCharacter={owner} className="border-violet-800" trailing={<><WeightedScore value={result.cartridge_breakdown?.total||0} label={t('stat_relevance')}/><b className="badge-ok">{t('set_active')}</b></>}/></section> }
 
 function ModuleCard({entry,index,result,pinned=false,excluded=false,onPin,onExclude}:{entry:OptimizedModule;index:number;result:Result;pinned?:boolean;excluded?:boolean;onPin?:()=>void;onExclude?:()=>void}) { const required=new Set(result.set.required_geometries); const owner=entry.module.equipped_character_id?{id:entry.module.equipped_character_id,name:entry.equipped_character_name||result.character?.name||t('owner_unknown')}:undefined; const label=t('module_label',{number:index+1}); return <ModulePieceCard item={entry.module} title={label} owner={owner?'':t('available_state')} ownerCharacter={owner} className={pinned?'border-emerald-600':excluded?'border-red-700 opacity-70':''} leading={<span className="grid size-8 place-items-center rounded-full bg-orange-500 font-black">{index+1}</span>} trailing={<><WeightedScore value={entry.breakdown.total} label={t('stat_relevance')}/>{required.has(entry.module.geometry)&&<span className="badge-ok">{t('piece_set')}</span>}</>} actions={onPin&&onExclude?<><Button variant="secondary" className={pinned?'border-emerald-600 text-emerald-300':''} onClick={onPin}><LockKeyhole className="mr-2 size-3"/>{pinned?t('locked_state'):t('lock')}</Button><Button variant="secondary" className={excluded?'border-red-700 text-red-300':''} onClick={onExclude}><Ban className="mr-2 size-3"/>{excluded?t('excluded_state'):t('exclude')}</Button></>:undefined}/> }

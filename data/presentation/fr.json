@@ -204,6 +204,7 @@
     "component_one": "composante",
     "configuration": "01 / CONFIGURATION",
     "console_grid": "Grille console",
+    "hover_grid_piece_hint": "Survole ou sélectionne une pièce numérotée pour voir les stats du module.",
     "constraints_next_calculation": "Elles seront appliquées au prochain calcul.",
     "contribution": "Contribution",
     "copied": "Copié",
