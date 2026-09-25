@@ -1,9 +1,10 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Search, X } from 'lucide-react'
 
-import { AssetImage, CartridgePieceCard, ModulePieceCard, OwnerBadge, type Owner } from '../components/equipment-cards'
+import { ArcEffectDescription, AssetImage, CartridgePieceCard, ModulePieceCard, OwnerBadge, type Owner } from '../components/equipment-cards'
 import { Card, CardContent } from '../components/ui/card'
 import { currentIntlLocale, t } from '../i18n'
+import { resourceAssetID } from '../lib/resource-assets'
 import { usePresentation } from '../presentation'
 import type { InventoryArc, InventoryCartridge, InventoryModule, InventoryResource, WorkspaceCharacter } from '../types'
 
@@ -21,10 +22,6 @@ function qualityRank(value: string) {
 
 function geometryName(value: string, geometries: Record<string, string>) {
   return geometries[value] || value
-}
-
-function embeddedResourceAssetID(value: string) {
-  return value.replaceAll('×', 'x')
 }
 
 function CollectionHeader({ title, count, query, onQuery }: { title: string; count: number; query: string; onQuery: (value: string) => void }) {
@@ -89,14 +86,25 @@ export function ArcsPage({ items }: { items: InventoryArc[] }) {
   const [query, setQuery] = useState('')
   const needle = query.trim().toLocaleLowerCase()
   const visible = useMemo(() => items.filter(item => `${item.name} ${item.forkId} ${item.quality} ${item.compatible_characters?.map(character => character.name).join(' ') || ''}`.toLocaleLowerCase().includes(needle)).sort((a, b) => b.level - a.level || qualityRank(b.quality) - qualityRank(a.quality) || (a.name || a.forkId).localeCompare(b.name || b.forkId, currentIntlLocale())), [items, needle])
-  return <><CollectionHeader title={t('count_arcs')} count={items.length} query={query} onQuery={setQuery} /><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{visible.map(item => <Card key={`${item.id.solt}:${item.id.serial}`} className="overflow-hidden"><CardContent className="flex items-center gap-4 pt-5"><AssetImage source={`/game_ui/forks/${encodeURIComponent(item.forkId)}.png`} label={item.name} className="size-20 object-contain" /><div className="min-w-0"><strong className="block text-lg">{item.name || item.forkId}</strong><small className="block text-slate-400">{itemMeta(item.quality, item.level, qualities)}</small><small className="block text-slate-400">{t('arc_details', { breakthrough: item.breakthrough, star: item.star })}</small>{item.equippedCharacterId ? <OwnerBadge owner={{ id: item.equippedCharacterId, name: item.equipped_character_name || t('owner_unknown') }} /> : <small className="block h-6 leading-6 text-emerald-400">{t('available_state')}</small>}</div></CardContent></Card>)}{!visible.length && <EmptyCollection query={query} />}</div></>
+  return <><CollectionHeader title={t('count_arcs')} count={items.length} query={query} onQuery={setQuery} /><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{visible.map(item => <Card key={`${item.id.solt}:${item.id.serial}`} className="overflow-hidden"><CardContent className="flex items-start gap-4 pt-5"><AssetImage source={`/game_ui/forks/${encodeURIComponent(item.forkId)}.png`} label={item.name} className="size-20 object-contain" /><div className="min-w-0"><strong className="block text-lg">{item.name || item.forkId}</strong><small className="block text-slate-400">{itemMeta(item.quality, item.level, qualities)}</small><small className="block text-slate-400">{t('arc_details', { breakthrough: item.breakthrough, star: item.star })}</small>{item.equippedCharacterId ? <OwnerBadge owner={{ id: item.equippedCharacterId, name: item.equipped_character_name || t('owner_unknown') }} /> : <small className="block h-6 leading-6 text-emerald-400">{t('available_state')}</small>}<ArcEffectDescription forkID={item.forkId} star={item.star} /></div></CardContent></Card>)}{!visible.length && <EmptyCollection query={query} />}</div></>
 }
 
 export function ResourcesPage({ items }: { items: InventoryResource[] }) {
   const [query, setQuery] = useState('')
+  const [assetAliases, setAssetAliases] = useState<Record<string, string>>({})
+  useEffect(() => {
+    let cancelled = false
+    fetch('/game_ui/resources/aliases.json')
+      .then(async response => response.ok
+        ? ((await response.json()) as { aliases?: Record<string, string> }).aliases ?? {}
+        : {})
+      .then(aliases => { if (!cancelled) setAssetAliases(aliases) })
+      .catch(() => { if (!cancelled) setAssetAliases({}) })
+    return () => { cancelled = true }
+  }, [])
   const needle = query.trim().toLocaleLowerCase()
   const visible = useMemo(() => items.filter(item => `${item.name} ${item.itemId}`.toLocaleLowerCase().includes(needle)).sort((a, b) => b.quantity - a.quantity || (a.name || a.itemId).localeCompare(b.name || b.itemId, currentIntlLocale())), [items, needle])
-  return <><CollectionHeader title={t('count_resources')} count={items.length} query={query} onQuery={setQuery} /><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{visible.map(item => <Card key={`${item.id.solt}:${item.id.serial}`} className="overflow-hidden"><CardContent className="flex items-center gap-4 pt-5"><AssetImage source={`/game_ui/resources/${encodeURIComponent(embeddedResourceAssetID(item.itemId))}.png`} label={item.name || item.itemId} className="size-20 object-contain" /><div className="min-w-0"><strong className="block break-words text-lg">{item.name || item.itemId}</strong><span className="mt-2 block text-2xl font-black tabular-nums text-slate-100">{item.quantity.toLocaleString(currentIntlLocale())}</span></div></CardContent></Card>)}{!visible.length && <EmptyCollection query={query} />}</div></>
+  return <><CollectionHeader title={t('count_resources')} count={items.length} query={query} onQuery={setQuery} /><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{visible.map(item => <Card key={`${item.id.solt}:${item.id.serial}`} className="overflow-hidden"><CardContent className="flex items-center gap-4 pt-5"><AssetImage source={`/game_ui/resources/${encodeURIComponent(resourceAssetID(item.itemId, assetAliases))}.png`} label={item.name || item.itemId} className="size-20 object-contain" /><div className="min-w-0"><strong className="block break-words text-lg">{item.name || item.itemId}</strong><span className="mt-2 block text-2xl font-black tabular-nums text-slate-100">{item.quantity.toLocaleString(currentIntlLocale())}</span></div></CardContent></Card>)}{!visible.length && <EmptyCollection query={query} />}</div></>
 }
 
 function EmptyCollection({ query }: { query: string }) {

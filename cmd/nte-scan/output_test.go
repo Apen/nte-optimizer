@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 )
 
@@ -100,6 +101,32 @@ func TestWriteOutputDirPublishesManifestAfterCompleteGeneration(t *testing.T) {
 		if _, err := os.Stat(filepath.Join(dir, name)); err != nil {
 			t.Fatalf("published file %s: %v", name, err)
 		}
+	}
+}
+
+func TestWriteOutputDirExportsResourcesFromDifferentCatalogGroups(t *testing.T) {
+	dir := filepath.Join(t.TempDir(), "scan-output")
+	resources := []resourceItem{
+		{ID: itemNetID{Solt: 21, Serial: 31}, ItemID: "Annulith", Quantity: 4},
+		{ID: itemNetID{Solt: 22, Serial: 32}, ItemID: "SyntheticEventToken", Quantity: 9},
+	}
+	if err := writeOutputDir(dir, report{UDP: udpReport{Resources: resources}}); err != nil {
+		t.Fatal(err)
+	}
+
+	data, err := os.ReadFile(filepath.Join(dir, "resources.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var output struct {
+		Count int            `json:"count"`
+		Data  []resourceItem `json:"data"`
+	}
+	if err := json.Unmarshal(data, &output); err != nil {
+		t.Fatal(err)
+	}
+	if output.Count != len(resources) || !reflect.DeepEqual(output.Data, resources) {
+		t.Fatalf("resource output = %#v, want count=%d data=%#v", output, len(resources), resources)
 	}
 }
 
