@@ -706,39 +706,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Arachne_CD": 10,
-            "buff_Arachne_Hp": 0.2,
-            "buff_Arachne_Up": 0.1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Arachne_Hp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_Up",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Arachne_CD": 10,
-            "buff_Arachne_Hp": 0.23,
-            "buff_Arachne_Up": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Arachne_Hp",
+              "value": 0.23,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_Up",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Arachne_CD": 10,
-            "buff_Arachne_Hp": 0.26,
-            "buff_Arachne_Up": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Arachne_Hp",
+              "value": 0.26,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_Up",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Arachne_CD": 10,
-            "buff_Arachne_Hp": 0.29,
-            "buff_Arachne_Up": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Arachne_Hp",
+              "value": 0.29,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_Up",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Arachne_CD": 10,
-            "buff_Arachne_Hp": 0.32,
-            "buff_Arachne_Up": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Arachne_Hp",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_Up",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Arachne_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -1411,49 +1471,149 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_BitGame2_AtkUp1": 0.1,
-            "buff_BitGame2_AtkUp2": 0.02,
-            "buff_BitGame2_CD": 2,
-            "buff_BitGame2_DamageUpPsycheBase1": 0.12,
-            "buff_BitGame2_DamageUpPsycheBase2": 0.02
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitGame2_AtkUp1",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_AtkUp2",
+              "value": 0.02,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_CD",
+              "value": 2,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase1",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase2",
+              "value": 0.02,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_BitGame2_AtkUp1": 0.11,
-            "buff_BitGame2_AtkUp2": 0.023,
-            "buff_BitGame2_CD": 2,
-            "buff_BitGame2_DamageUpPsycheBase1": 0.14,
-            "buff_BitGame2_DamageUpPsycheBase2": 0.023
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitGame2_AtkUp1",
+              "value": 0.11,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_AtkUp2",
+              "value": 0.023,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_CD",
+              "value": 2,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase1",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase2",
+              "value": 0.023,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_BitGame2_AtkUp1": 0.12,
-            "buff_BitGame2_AtkUp2": 0.026,
-            "buff_BitGame2_CD": 2,
-            "buff_BitGame2_DamageUpPsycheBase1": 0.16,
-            "buff_BitGame2_DamageUpPsycheBase2": 0.026
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitGame2_AtkUp1",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_AtkUp2",
+              "value": 0.026,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_CD",
+              "value": 2,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase1",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase2",
+              "value": 0.026,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_BitGame2_AtkUp1": 0.13,
-            "buff_BitGame2_AtkUp2": 0.029,
-            "buff_BitGame2_CD": 2,
-            "buff_BitGame2_DamageUpPsycheBase1": 0.18,
-            "buff_BitGame2_DamageUpPsycheBase2": 0.029
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitGame2_AtkUp1",
+              "value": 0.13,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_AtkUp2",
+              "value": 0.029,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_CD",
+              "value": 2,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase1",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase2",
+              "value": 0.029,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_BitGame2_AtkUp1": 0.14,
-            "buff_BitGame2_AtkUp2": 0.032,
-            "buff_BitGame2_CD": 2,
-            "buff_BitGame2_DamageUpPsycheBase1": 0.2,
-            "buff_BitGame2_DamageUpPsycheBase2": 0.032
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitGame2_AtkUp1",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_AtkUp2",
+              "value": 0.032,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_CD",
+              "value": 2,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase1",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitGame2_DamageUpPsycheBase2",
+              "value": 0.032,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -2126,39 +2286,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_BitterCake_CD": 10,
-            "buff_BitterCake_CD2": 20,
-            "buff_BitterCake_DefUp": 0.26
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitterCake_DefUp",
+              "value": 0.26,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitterCake_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitterCake_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_BitterCake_CD": 10,
-            "buff_BitterCake_CD2": 20,
-            "buff_BitterCake_DefUp": 0.31
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitterCake_DefUp",
+              "value": 0.31,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitterCake_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitterCake_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_BitterCake_CD": 10,
-            "buff_BitterCake_CD2": 20,
-            "buff_BitterCake_DefUp": 0.36
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitterCake_DefUp",
+              "value": 0.36,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitterCake_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitterCake_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_BitterCake_CD": 10,
-            "buff_BitterCake_CD2": 20,
-            "buff_BitterCake_DefUp": 0.41
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitterCake_DefUp",
+              "value": 0.41,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitterCake_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitterCake_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_BitterCake_CD": 10,
-            "buff_BitterCake_CD2": 20,
-            "buff_BitterCake_DefUp": 0.46
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BitterCake_DefUp",
+              "value": 0.46,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BitterCake_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BitterCake_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -2867,49 +3087,149 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_BlackBook2_CD": 20,
-            "buff_BlackBook2_CD2": 5,
-            "buff_BlackBook2_DamageUpChaosBase": 0.2,
-            "buff_BlackBook2_SkillDamage": 2,
-            "buff_BlackBook2_Unbal": 60
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlackBook2_Unbal",
+              "value": 60,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD2",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_DamageUpChaosBase",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlackBook2_SkillDamage",
+              "value": 2,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_BlackBook2_CD": 20,
-            "buff_BlackBook2_CD2": 5,
-            "buff_BlackBook2_DamageUpChaosBase": 0.24,
-            "buff_BlackBook2_SkillDamage": 2.3,
-            "buff_BlackBook2_Unbal": 67
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlackBook2_Unbal",
+              "value": 67,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD2",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_DamageUpChaosBase",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlackBook2_SkillDamage",
+              "value": 2.3,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_BlackBook2_CD": 20,
-            "buff_BlackBook2_CD2": 5,
-            "buff_BlackBook2_DamageUpChaosBase": 0.28,
-            "buff_BlackBook2_SkillDamage": 2.6,
-            "buff_BlackBook2_Unbal": 74
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlackBook2_Unbal",
+              "value": 74,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD2",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_DamageUpChaosBase",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlackBook2_SkillDamage",
+              "value": 2.6,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_BlackBook2_CD": 20,
-            "buff_BlackBook2_CD2": 5,
-            "buff_BlackBook2_DamageUpChaosBase": 0.32,
-            "buff_BlackBook2_SkillDamage": 2.9,
-            "buff_BlackBook2_Unbal": 81
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlackBook2_Unbal",
+              "value": 81,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD2",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_DamageUpChaosBase",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlackBook2_SkillDamage",
+              "value": 2.9,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_BlackBook2_CD": 20,
-            "buff_BlackBook2_CD2": 5,
-            "buff_BlackBook2_DamageUpChaosBase": 0.36,
-            "buff_BlackBook2_SkillDamage": 3.2,
-            "buff_BlackBook2_Unbal": 88
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlackBook2_Unbal",
+              "value": 88,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_CD2",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_BlackBook2_DamageUpChaosBase",
+              "value": 0.36,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlackBook2_SkillDamage",
+              "value": 3.2,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -3582,34 +3902,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_BlastCandy_AtkUp": 0.25,
-            "buff_BlastCandy_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlastCandy_AtkUp",
+              "value": 0.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlastCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_BlastCandy_AtkUp": 0.3,
-            "buff_BlastCandy_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlastCandy_AtkUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlastCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_BlastCandy_AtkUp": 0.35,
-            "buff_BlastCandy_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlastCandy_AtkUp",
+              "value": 0.35,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlastCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_BlastCandy_AtkUp": 0.4,
-            "buff_BlastCandy_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlastCandy_AtkUp",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlastCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_BlastCandy_AtkUp": 0.45,
-            "buff_BlastCandy_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BlastCandy_AtkUp",
+              "value": 0.45,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BlastCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -4282,34 +4642,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_BoxingCandy_Up": 0.22,
-            "buff_BoxingCandy_Up2": 0.28
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BoxingCandy_Up",
+              "value": 0.22,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BoxingCandy_Up2",
+              "value": 0.28,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_BoxingCandy_Up": 0.26,
-            "buff_BoxingCandy_Up2": 0.34
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BoxingCandy_Up",
+              "value": 0.26,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BoxingCandy_Up2",
+              "value": 0.34,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_BoxingCandy_Up": 0.3,
-            "buff_BoxingCandy_Up2": 0.4
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BoxingCandy_Up",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BoxingCandy_Up2",
+              "value": 0.4,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_BoxingCandy_Up": 0.34,
-            "buff_BoxingCandy_Up2": 0.46
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BoxingCandy_Up",
+              "value": 0.34,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BoxingCandy_Up2",
+              "value": 0.46,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_BoxingCandy_Up": 0.38,
-            "buff_BoxingCandy_Up2": 0.52
-          }
+          "parameters": [
+            {
+              "name_id": "buff_BoxingCandy_Up",
+              "value": 0.38,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_BoxingCandy_Up2",
+              "value": 0.52,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -5018,44 +5418,124 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Butterfly_CD": 6,
-            "buff_Butterfly_DamageUpNatureBase": 0.15,
-            "buff_Butterfly_attachedup": 0.1,
-            "buff_Butterfly_attachedup2": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Butterfly_DamageUpNatureBase",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup2",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_CD",
+              "value": 6,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Butterfly_CD": 6,
-            "buff_Butterfly_DamageUpNatureBase": 0.175,
-            "buff_Butterfly_attachedup": 0.1125,
-            "buff_Butterfly_attachedup2": 0.225
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Butterfly_DamageUpNatureBase",
+              "value": 0.175,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup",
+              "value": 0.1125,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup2",
+              "value": 0.225,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_CD",
+              "value": 6,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Butterfly_CD": 6,
-            "buff_Butterfly_DamageUpNatureBase": 0.2,
-            "buff_Butterfly_attachedup": 0.125,
-            "buff_Butterfly_attachedup2": 0.25
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Butterfly_DamageUpNatureBase",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup",
+              "value": 0.125,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup2",
+              "value": 0.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_CD",
+              "value": 6,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Butterfly_CD": 6,
-            "buff_Butterfly_DamageUpNatureBase": 0.225,
-            "buff_Butterfly_attachedup": 0.1375,
-            "buff_Butterfly_attachedup2": 0.275
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Butterfly_DamageUpNatureBase",
+              "value": 0.225,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup",
+              "value": 0.1375,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup2",
+              "value": 0.275,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_CD",
+              "value": 6,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Butterfly_CD": 6,
-            "buff_Butterfly_DamageUpNatureBase": 0.25,
-            "buff_Butterfly_attachedup": 0.15,
-            "buff_Butterfly_attachedup2": 0.3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Butterfly_DamageUpNatureBase",
+              "value": 0.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_attachedup2",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Butterfly_CD",
+              "value": 6,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -5728,34 +6208,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Castle_CD": 10,
-            "buff_Castle_HealUp": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Castle_HealUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Castle_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Castle_CD": 10,
-            "buff_Castle_HealUp": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Castle_HealUp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Castle_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Castle_CD": 10,
-            "buff_Castle_HealUp": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Castle_HealUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Castle_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Castle_CD": 10,
-            "buff_Castle_HealUp": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Castle_HealUp",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Castle_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Castle_CD": 10,
-            "buff_Castle_HealUp": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Castle_HealUp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Castle_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -6428,34 +6948,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Crowbar_CD": 50,
-            "buff_Crowbar_Unbal": 90
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Crowbar_Unbal",
+              "value": 90,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Crowbar_CD",
+              "value": 50,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Crowbar_CD": 50,
-            "buff_Crowbar_Unbal": 108
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Crowbar_Unbal",
+              "value": 108,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Crowbar_CD",
+              "value": 50,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Crowbar_CD": 50,
-            "buff_Crowbar_Unbal": 126
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Crowbar_Unbal",
+              "value": 126,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Crowbar_CD",
+              "value": 50,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Crowbar_CD": 50,
-            "buff_Crowbar_Unbal": 144
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Crowbar_Unbal",
+              "value": 144,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Crowbar_CD",
+              "value": 50,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Crowbar_CD": 50,
-            "buff_Crowbar_Unbal": 162
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Crowbar_Unbal",
+              "value": 162,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Crowbar_CD",
+              "value": 50,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -7200,39 +7760,99 @@
       "conditional_note": "DGT CRIT apr\u00E8s 7 cumuls d\u0027Incantation, 9% par cumul \u00E0 M1.",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_DemonBlade_CD": 15,
-            "buff_DemonBlade_Crit": 0.16,
-            "buff_DemonBlade_CritDamageUp": 0.09
-          }
+          "parameters": [
+            {
+              "name_id": "buff_DemonBlade_Crit",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CritDamageUp",
+              "value": 0.09,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_DemonBlade_CD": 15,
-            "buff_DemonBlade_Crit": 0.2,
-            "buff_DemonBlade_CritDamageUp": 0.1125
-          }
+          "parameters": [
+            {
+              "name_id": "buff_DemonBlade_Crit",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CritDamageUp",
+              "value": 0.1125,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_DemonBlade_CD": 15,
-            "buff_DemonBlade_Crit": 0.24,
-            "buff_DemonBlade_CritDamageUp": 0.135
-          }
+          "parameters": [
+            {
+              "name_id": "buff_DemonBlade_Crit",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CritDamageUp",
+              "value": 0.135,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_DemonBlade_CD": 15,
-            "buff_DemonBlade_Crit": 0.28,
-            "buff_DemonBlade_CritDamageUp": 0.1575
-          }
+          "parameters": [
+            {
+              "name_id": "buff_DemonBlade_Crit",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CritDamageUp",
+              "value": 0.1575,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_DemonBlade_CD": 15,
-            "buff_DemonBlade_Crit": 0.32,
-            "buff_DemonBlade_CritDamageUp": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_DemonBlade_Crit",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CritDamageUp",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_DemonBlade_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -7941,44 +8561,124 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Door_Atk": 0.16,
-            "buff_Door_CD": 20,
-            "buff_Door_OtherUp": 0.15,
-            "buff_Door_Up": 0.3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Door_Atk",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_OtherUp",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_Up",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Door_Atk": 0.2,
-            "buff_Door_CD": 20,
-            "buff_Door_OtherUp": 0.1875,
-            "buff_Door_Up": 0.375
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Door_Atk",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_OtherUp",
+              "value": 0.1875,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_Up",
+              "value": 0.375,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Door_Atk": 0.24,
-            "buff_Door_CD": 20,
-            "buff_Door_OtherUp": 0.225,
-            "buff_Door_Up": 0.45
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Door_Atk",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_OtherUp",
+              "value": 0.225,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_Up",
+              "value": 0.45,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Door_Atk": 0.28,
-            "buff_Door_CD": 20,
-            "buff_Door_OtherUp": 0.2625,
-            "buff_Door_Up": 0.525
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Door_Atk",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_OtherUp",
+              "value": 0.2625,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_Up",
+              "value": 0.525,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Door_Atk": 0.32,
-            "buff_Door_CD": 20,
-            "buff_Door_OtherUp": 0.3,
-            "buff_Door_Up": 0.6
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Door_Atk",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_OtherUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_Up",
+              "value": 0.6,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Door_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -8687,44 +9387,124 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_GoldRecord_AtkUp": 0.24,
-            "buff_GoldRecord_CD": 3,
-            "buff_GoldRecord_QCritDmaUp": 0.22,
-            "buff_GoldRecord_QteCritDmaUp": 0.66
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldRecord_AtkUp",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QteCritDmaUp",
+              "value": 0.66,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QCritDmaUp",
+              "value": 0.22,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_CD",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_GoldRecord_AtkUp": 0.3,
-            "buff_GoldRecord_CD": 3,
-            "buff_GoldRecord_QCritDmaUp": 0.275,
-            "buff_GoldRecord_QteCritDmaUp": 0.825
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldRecord_AtkUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QteCritDmaUp",
+              "value": 0.825,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QCritDmaUp",
+              "value": 0.275,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_CD",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_GoldRecord_AtkUp": 0.36,
-            "buff_GoldRecord_CD": 3,
-            "buff_GoldRecord_QCritDmaUp": 0.33,
-            "buff_GoldRecord_QteCritDmaUp": 0.99
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldRecord_AtkUp",
+              "value": 0.36,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QteCritDmaUp",
+              "value": 0.99,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QCritDmaUp",
+              "value": 0.33,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_CD",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_GoldRecord_AtkUp": 0.42,
-            "buff_GoldRecord_CD": 3,
-            "buff_GoldRecord_QCritDmaUp": 0.385,
-            "buff_GoldRecord_QteCritDmaUp": 1.155
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldRecord_AtkUp",
+              "value": 0.42,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QteCritDmaUp",
+              "value": 1.155,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QCritDmaUp",
+              "value": 0.385,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_CD",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_GoldRecord_AtkUp": 0.48,
-            "buff_GoldRecord_CD": 3,
-            "buff_GoldRecord_QCritDmaUp": 0.44,
-            "buff_GoldRecord_QteCritDmaUp": 1.32
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldRecord_AtkUp",
+              "value": 0.48,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QteCritDmaUp",
+              "value": 1.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_QCritDmaUp",
+              "value": 0.44,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldRecord_CD",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -9433,39 +10213,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_GoldWool_CD": 20,
-            "buff_GoldWool_CritDamageUp": 0.4,
-            "buff_GoldWool_Up": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldWool_Up",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CritDamageUp",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_GoldWool_CD": 20,
-            "buff_GoldWool_CritDamageUp": 0.5,
-            "buff_GoldWool_Up": 0.25
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldWool_Up",
+              "value": 0.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CritDamageUp",
+              "value": 0.5,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_GoldWool_CD": 20,
-            "buff_GoldWool_CritDamageUp": 0.6,
-            "buff_GoldWool_Up": 0.3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldWool_Up",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CritDamageUp",
+              "value": 0.6,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_GoldWool_CD": 20,
-            "buff_GoldWool_CritDamageUp": 0.7,
-            "buff_GoldWool_Up": 0.35
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldWool_Up",
+              "value": 0.35,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CritDamageUp",
+              "value": 0.7,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_GoldWool_CD": 20,
-            "buff_GoldWool_CritDamageUp": 0.8,
-            "buff_GoldWool_Up": 0.4
-          }
+          "parameters": [
+            {
+              "name_id": "buff_GoldWool_Up",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CritDamageUp",
+              "value": 0.8,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_GoldWool_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -10138,39 +10978,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Kite_AtkUp": 0.1,
-            "buff_Kite_CD": 15,
-            "buff_Kite_Up": 0.1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Kite_AtkUp",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_Up",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Kite_AtkUp": 0.12,
-            "buff_Kite_CD": 15,
-            "buff_Kite_Up": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Kite_AtkUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_Up",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Kite_AtkUp": 0.14,
-            "buff_Kite_CD": 15,
-            "buff_Kite_Up": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Kite_AtkUp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_Up",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Kite_AtkUp": 0.16,
-            "buff_Kite_CD": 15,
-            "buff_Kite_Up": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Kite_AtkUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_Up",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Kite_AtkUp": 0.18,
-            "buff_Kite_CD": 15,
-            "buff_Kite_Up": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Kite_AtkUp",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_Up",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Kite_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -10843,34 +11743,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_KnightCandy_CD": 10,
-            "buff_KnightCandy_CritDamageUp": 0.04
-          }
+          "parameters": [
+            {
+              "name_id": "buff_KnightCandy_CritDamageUp",
+              "value": 0.04,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_KnightCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_KnightCandy_CD": 10,
-            "buff_KnightCandy_CritDamageUp": 0.048
-          }
+          "parameters": [
+            {
+              "name_id": "buff_KnightCandy_CritDamageUp",
+              "value": 0.048,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_KnightCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_KnightCandy_CD": 10,
-            "buff_KnightCandy_CritDamageUp": 0.056
-          }
+          "parameters": [
+            {
+              "name_id": "buff_KnightCandy_CritDamageUp",
+              "value": 0.056,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_KnightCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_KnightCandy_CD": 10,
-            "buff_KnightCandy_CritDamageUp": 0.064
-          }
+          "parameters": [
+            {
+              "name_id": "buff_KnightCandy_CritDamageUp",
+              "value": 0.064,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_KnightCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_KnightCandy_CD": 10,
-            "buff_KnightCandy_CritDamageUp": 0.072
-          }
+          "parameters": [
+            {
+              "name_id": "buff_KnightCandy_CritDamageUp",
+              "value": 0.072,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_KnightCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -11579,44 +12519,124 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_LunarPhase_Atk": 0.2,
-            "buff_LunarPhase_CD": 20,
-            "buff_LunarPhase_DefIgnore": 0.12,
-            "buff_LunarPhase_Up": 0.32
-          }
+          "parameters": [
+            {
+              "name_id": "buff_LunarPhase_Atk",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_Up",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_DefIgnore",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_LunarPhase_Atk": 0.23,
-            "buff_LunarPhase_CD": 20,
-            "buff_LunarPhase_DefIgnore": 0.138,
-            "buff_LunarPhase_Up": 0.368
-          }
+          "parameters": [
+            {
+              "name_id": "buff_LunarPhase_Atk",
+              "value": 0.23,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_Up",
+              "value": 0.368,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_DefIgnore",
+              "value": 0.138,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_LunarPhase_Atk": 0.26,
-            "buff_LunarPhase_CD": 20,
-            "buff_LunarPhase_DefIgnore": 0.156,
-            "buff_LunarPhase_Up": 0.416
-          }
+          "parameters": [
+            {
+              "name_id": "buff_LunarPhase_Atk",
+              "value": 0.26,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_Up",
+              "value": 0.416,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_DefIgnore",
+              "value": 0.156,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_LunarPhase_Atk": 0.29,
-            "buff_LunarPhase_CD": 20,
-            "buff_LunarPhase_DefIgnore": 0.174,
-            "buff_LunarPhase_Up": 0.464
-          }
+          "parameters": [
+            {
+              "name_id": "buff_LunarPhase_Atk",
+              "value": 0.29,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_Up",
+              "value": 0.464,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_DefIgnore",
+              "value": 0.174,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_LunarPhase_Atk": 0.32,
-            "buff_LunarPhase_CD": 20,
-            "buff_LunarPhase_DefIgnore": 0.192,
-            "buff_LunarPhase_Up": 0.512
-          }
+          "parameters": [
+            {
+              "name_id": "buff_LunarPhase_Atk",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_Up",
+              "value": 0.512,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_DefIgnore",
+              "value": 0.192,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_LunarPhase_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -12289,34 +13309,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_MotorCandy_AtkUp": 0.05,
-            "buff_MotorCandy_CD": 1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_MotorCandy_CD",
+              "value": 1,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_MotorCandy_AtkUp",
+              "value": 0.05,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_MotorCandy_AtkUp": 0.06,
-            "buff_MotorCandy_CD": 1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_MotorCandy_CD",
+              "value": 1,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_MotorCandy_AtkUp",
+              "value": 0.06,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_MotorCandy_AtkUp": 0.07,
-            "buff_MotorCandy_CD": 1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_MotorCandy_CD",
+              "value": 1,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_MotorCandy_AtkUp",
+              "value": 0.07,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_MotorCandy_AtkUp": 0.08,
-            "buff_MotorCandy_CD": 1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_MotorCandy_CD",
+              "value": 1,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_MotorCandy_AtkUp",
+              "value": 0.08,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_MotorCandy_AtkUp": 0.09,
-            "buff_MotorCandy_CD": 1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_MotorCandy_CD",
+              "value": 1,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_MotorCandy_AtkUp",
+              "value": 0.09,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -13025,54 +14085,174 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Nakipeda_CD": 30,
-            "buff_Nakipeda_Hp": 0.24,
-            "buff_Nakipeda_effect1": 0.2,
-            "buff_Nakipeda_effect2": 0.2,
-            "buff_Nakipeda_effect2CD": 15,
-            "buff_Nakipeda_effect3": 0.1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Nakipeda_Hp",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect1",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Nakipeda_effect3",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Nakipeda_CD": 30,
-            "buff_Nakipeda_Hp": 0.28,
-            "buff_Nakipeda_effect1": 0.25,
-            "buff_Nakipeda_effect2": 0.25,
-            "buff_Nakipeda_effect2CD": 15,
-            "buff_Nakipeda_effect3": 0.125
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Nakipeda_Hp",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect1",
+              "value": 0.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2",
+              "value": 0.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Nakipeda_effect3",
+              "value": 0.125,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Nakipeda_CD": 30,
-            "buff_Nakipeda_Hp": 0.32,
-            "buff_Nakipeda_effect1": 0.3,
-            "buff_Nakipeda_effect2": 0.3,
-            "buff_Nakipeda_effect2CD": 15,
-            "buff_Nakipeda_effect3": 0.15
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Nakipeda_Hp",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect1",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Nakipeda_effect3",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Nakipeda_CD": 30,
-            "buff_Nakipeda_Hp": 0.36,
-            "buff_Nakipeda_effect1": 0.35,
-            "buff_Nakipeda_effect2": 0.35,
-            "buff_Nakipeda_effect2CD": 15,
-            "buff_Nakipeda_effect3": 0.175
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Nakipeda_Hp",
+              "value": 0.36,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect1",
+              "value": 0.35,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2",
+              "value": 0.35,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Nakipeda_effect3",
+              "value": 0.175,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Nakipeda_CD": 30,
-            "buff_Nakipeda_Hp": 0.4,
-            "buff_Nakipeda_effect1": 0.4,
-            "buff_Nakipeda_effect2": 0.4,
-            "buff_Nakipeda_effect2CD": 15,
-            "buff_Nakipeda_effect3": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Nakipeda_Hp",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect1",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_effect2CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Nakipeda_effect3",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Nakipeda_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -13744,11 +14924,21 @@
       "conditional_by_star": {},
       "conditional_note": "",
       "effects_by_star": {
-        "1": {},
-        "2": {},
-        "3": {},
-        "4": {},
-        "5": {}
+        "1": {
+          "parameters": []
+        },
+        "2": {
+          "parameters": []
+        },
+        "3": {
+          "parameters": []
+        },
+        "4": {
+          "parameters": []
+        },
+        "5": {
+          "parameters": []
+        }
       }
     },
     "fork_PaperPlane": {
@@ -14420,29 +15610,49 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_PaperPlane_Up": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PaperPlane_Up",
+              "value": 0.2,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_PaperPlane_Up": 0.2375
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PaperPlane_Up",
+              "value": 0.2375,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_PaperPlane_Up": 0.275
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PaperPlane_Up",
+              "value": 0.275,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_PaperPlane_Up": 0.3125
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PaperPlane_Up",
+              "value": 0.3125,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_PaperPlane_Up": 0.35
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PaperPlane_Up",
+              "value": 0.35,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -15151,44 +16361,124 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_PoliceRat_AtkUp": 0.15,
-            "buff_PoliceRat_SkillDamage": 1,
-            "buff_PoliceRat_Up": 0.15,
-            "buff_Rat_CD": 60
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PoliceRat_AtkUp",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_Up",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_SkillDamage",
+              "value": 1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rat_CD",
+              "value": 60,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_PoliceRat_AtkUp": 0.175,
-            "buff_PoliceRat_SkillDamage": 1.25,
-            "buff_PoliceRat_Up": 0.175,
-            "buff_Rat_CD": 60
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PoliceRat_AtkUp",
+              "value": 0.175,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_Up",
+              "value": 0.175,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_SkillDamage",
+              "value": 1.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rat_CD",
+              "value": 60,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_PoliceRat_AtkUp": 0.2,
-            "buff_PoliceRat_SkillDamage": 1.5,
-            "buff_PoliceRat_Up": 0.2,
-            "buff_Rat_CD": 60
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PoliceRat_AtkUp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_Up",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_SkillDamage",
+              "value": 1.5,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rat_CD",
+              "value": 60,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_PoliceRat_AtkUp": 0.225,
-            "buff_PoliceRat_SkillDamage": 1.75,
-            "buff_PoliceRat_Up": 0.225,
-            "buff_Rat_CD": 60
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PoliceRat_AtkUp",
+              "value": 0.225,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_Up",
+              "value": 0.225,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_SkillDamage",
+              "value": 1.75,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rat_CD",
+              "value": 60,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_PoliceRat_AtkUp": 0.25,
-            "buff_PoliceRat_SkillDamage": 2,
-            "buff_PoliceRat_Up": 0.25,
-            "buff_Rat_CD": 60
-          }
+          "parameters": [
+            {
+              "name_id": "buff_PoliceRat_AtkUp",
+              "value": 0.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_Up",
+              "value": 0.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_PoliceRat_SkillDamage",
+              "value": 2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rat_CD",
+              "value": 60,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -15861,29 +17151,49 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Prokaryon_Up": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Prokaryon_Up",
+              "value": 0.12,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Prokaryon_Up": 0.13
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Prokaryon_Up",
+              "value": 0.13,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Prokaryon_Up": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Prokaryon_Up",
+              "value": 0.14,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Prokaryon_Up": 0.15
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Prokaryon_Up",
+              "value": 0.15,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Prokaryon_Up": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Prokaryon_Up",
+              "value": 0.16,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -16592,44 +17902,124 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Rose_AtkUp": 0.14,
-            "buff_Rose_CD": 3,
-            "buff_Rose_CritDamageUp": 0.06,
-            "buff_Rose_UnbalTime": 3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Rose_AtkUp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CritDamageUp",
+              "value": 0.06,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CD",
+              "value": 3,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Rose_UnbalTime",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Rose_AtkUp": 0.175,
-            "buff_Rose_CD": 3,
-            "buff_Rose_CritDamageUp": 0.075,
-            "buff_Rose_UnbalTime": 3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Rose_AtkUp",
+              "value": 0.175,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CritDamageUp",
+              "value": 0.075,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CD",
+              "value": 3,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Rose_UnbalTime",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Rose_AtkUp": 0.21,
-            "buff_Rose_CD": 3,
-            "buff_Rose_CritDamageUp": 0.09,
-            "buff_Rose_UnbalTime": 3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Rose_AtkUp",
+              "value": 0.21,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CritDamageUp",
+              "value": 0.09,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CD",
+              "value": 3,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Rose_UnbalTime",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Rose_AtkUp": 0.245,
-            "buff_Rose_CD": 3,
-            "buff_Rose_CritDamageUp": 0.105,
-            "buff_Rose_UnbalTime": 3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Rose_AtkUp",
+              "value": 0.245,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CritDamageUp",
+              "value": 0.105,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CD",
+              "value": 3,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Rose_UnbalTime",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Rose_AtkUp": 0.28,
-            "buff_Rose_CD": 3,
-            "buff_Rose_CritDamageUp": 0.12,
-            "buff_Rose_UnbalTime": 3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Rose_AtkUp",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CritDamageUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Rose_CD",
+              "value": 3,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Rose_UnbalTime",
+              "value": 3,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -17302,34 +18692,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_ThiefCandy_CD": 10,
-            "buff_ThiefCandy_Up": 0.08
-          }
+          "parameters": [
+            {
+              "name_id": "buff_ThiefCandy_Up",
+              "value": 0.08,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_ThiefCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_ThiefCandy_CD": 10,
-            "buff_ThiefCandy_Up": 0.096
-          }
+          "parameters": [
+            {
+              "name_id": "buff_ThiefCandy_Up",
+              "value": 0.096,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_ThiefCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_ThiefCandy_CD": 10,
-            "buff_ThiefCandy_Up": 0.112
-          }
+          "parameters": [
+            {
+              "name_id": "buff_ThiefCandy_Up",
+              "value": 0.112,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_ThiefCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_ThiefCandy_CD": 10,
-            "buff_ThiefCandy_Up": 0.128
-          }
+          "parameters": [
+            {
+              "name_id": "buff_ThiefCandy_Up",
+              "value": 0.128,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_ThiefCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_ThiefCandy_CD": 10,
-            "buff_ThiefCandy_Up": 0.144
-          }
+          "parameters": [
+            {
+              "name_id": "buff_ThiefCandy_Up",
+              "value": 0.144,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_ThiefCandy_CD",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -18038,54 +19468,174 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_TigerTally_AtkUp": 0.15,
-            "buff_TigerTally_CD": 15,
-            "buff_TigerTally_CD3": 10,
-            "buff_TigerTally_CD4": 15,
-            "buff_TigerTally_NormalUp": 0.15,
-            "buff_TigerTally_Qup": 0.1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_TigerTally_AtkUp",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_NormalUp",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_CD4",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_Qup",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD3",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_TigerTally_AtkUp": 0.1875,
-            "buff_TigerTally_CD": 15,
-            "buff_TigerTally_CD3": 10,
-            "buff_TigerTally_CD4": 15,
-            "buff_TigerTally_NormalUp": 0.1875,
-            "buff_TigerTally_Qup": 0.125
-          }
+          "parameters": [
+            {
+              "name_id": "buff_TigerTally_AtkUp",
+              "value": 0.1875,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_NormalUp",
+              "value": 0.1875,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_CD4",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_Qup",
+              "value": 0.125,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD3",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_TigerTally_AtkUp": 0.225,
-            "buff_TigerTally_CD": 15,
-            "buff_TigerTally_CD3": 10,
-            "buff_TigerTally_CD4": 15,
-            "buff_TigerTally_NormalUp": 0.225,
-            "buff_TigerTally_Qup": 0.15
-          }
+          "parameters": [
+            {
+              "name_id": "buff_TigerTally_AtkUp",
+              "value": 0.225,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_NormalUp",
+              "value": 0.225,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_CD4",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_Qup",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD3",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_TigerTally_AtkUp": 0.2625,
-            "buff_TigerTally_CD": 15,
-            "buff_TigerTally_CD3": 10,
-            "buff_TigerTally_CD4": 15,
-            "buff_TigerTally_NormalUp": 0.2625,
-            "buff_TigerTally_Qup": 0.175
-          }
+          "parameters": [
+            {
+              "name_id": "buff_TigerTally_AtkUp",
+              "value": 0.2625,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_NormalUp",
+              "value": 0.2625,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_CD4",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_Qup",
+              "value": 0.175,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD3",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_TigerTally_AtkUp": 0.3,
-            "buff_TigerTally_CD": 15,
-            "buff_TigerTally_CD3": 10,
-            "buff_TigerTally_CD4": 15,
-            "buff_TigerTally_NormalUp": 0.3,
-            "buff_TigerTally_Qup": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_TigerTally_AtkUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_NormalUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_CD4",
+              "value": 15,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_TigerTally_Qup",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TigerTally_CD3",
+              "value": 10,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -18794,49 +20344,149 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Time_AtkUp": 0.16,
-            "buff_Time_CritDamageUp": 0.08,
-            "buff_Time_DefIgnore": 0.12,
-            "buff_Time_DefIgnore_Dur": 70,
-            "buff_Time_stateCritDamageUp": 0.24
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Time_AtkUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_stateCritDamageUp",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_CritDamageUp",
+              "value": 0.08,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore_Dur",
+              "value": 70,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Time_AtkUp": 0.2,
-            "buff_Time_CritDamageUp": 0.1,
-            "buff_Time_DefIgnore": 0.15,
-            "buff_Time_DefIgnore_Dur": 70,
-            "buff_Time_stateCritDamageUp": 0.3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Time_AtkUp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_stateCritDamageUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_CritDamageUp",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore_Dur",
+              "value": 70,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Time_AtkUp": 0.24,
-            "buff_Time_CritDamageUp": 0.12,
-            "buff_Time_DefIgnore": 0.18,
-            "buff_Time_DefIgnore_Dur": 70,
-            "buff_Time_stateCritDamageUp": 0.36
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Time_AtkUp",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_stateCritDamageUp",
+              "value": 0.36,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_CritDamageUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore_Dur",
+              "value": 70,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Time_AtkUp": 0.28,
-            "buff_Time_CritDamageUp": 0.14,
-            "buff_Time_DefIgnore": 0.21,
-            "buff_Time_DefIgnore_Dur": 70,
-            "buff_Time_stateCritDamageUp": 0.42
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Time_AtkUp",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_stateCritDamageUp",
+              "value": 0.42,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_CritDamageUp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore",
+              "value": 0.21,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore_Dur",
+              "value": 70,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Time_AtkUp": 0.32,
-            "buff_Time_CritDamageUp": 0.16,
-            "buff_Time_DefIgnore": 0.24,
-            "buff_Time_DefIgnore_Dur": 70,
-            "buff_Time_stateCritDamageUp": 0.48
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Time_AtkUp",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_stateCritDamageUp",
+              "value": 0.48,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_CritDamageUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Time_DefIgnore_Dur",
+              "value": 70,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -19545,44 +21195,124 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_Whale_AtkUp": 0.12,
-            "buff_Whale_CD": 30,
-            "buff_Whale_Hp": 0.3,
-            "buff_Whale_Up": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Whale_AtkUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Up",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Hp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_Whale_AtkUp": 0.14,
-            "buff_Whale_CD": 30,
-            "buff_Whale_Hp": 0.3,
-            "buff_Whale_Up": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Whale_AtkUp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Up",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Hp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_Whale_AtkUp": 0.16,
-            "buff_Whale_CD": 30,
-            "buff_Whale_Hp": 0.3,
-            "buff_Whale_Up": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Whale_AtkUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Up",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Hp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_Whale_AtkUp": 0.18,
-            "buff_Whale_CD": 30,
-            "buff_Whale_Hp": 0.3,
-            "buff_Whale_Up": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Whale_AtkUp",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Up",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Hp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_Whale_AtkUp": 0.2,
-            "buff_Whale_CD": 30,
-            "buff_Whale_Hp": 0.3,
-            "buff_Whale_Up": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_Whale_AtkUp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Up",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_Hp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Whale_CD",
+              "value": 30,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -20255,29 +21985,49 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_appliance_Up": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_appliance_Up",
+              "value": 0.12,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_appliance_Up": 0.13
-          }
+          "parameters": [
+            {
+              "name_id": "buff_appliance_Up",
+              "value": 0.13,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_appliance_Up": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_appliance_Up",
+              "value": 0.14,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_appliance_Up": 0.15
-          }
+          "parameters": [
+            {
+              "name_id": "buff_appliance_Up",
+              "value": 0.15,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_appliance_Up": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_appliance_Up",
+              "value": 0.16,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -20950,39 +22700,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_haokewu_CD": 10,
-            "buff_haokewu_CD2": 20,
-            "buff_haokewu_Up": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_haokewu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_haokewu_Up",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_haokewu_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_haokewu_CD": 10,
-            "buff_haokewu_CD2": 20,
-            "buff_haokewu_Up": 0.21
-          }
+          "parameters": [
+            {
+              "name_id": "buff_haokewu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_haokewu_Up",
+              "value": 0.21,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_haokewu_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_haokewu_CD": 10,
-            "buff_haokewu_CD2": 20,
-            "buff_haokewu_Up": 0.24
-          }
+          "parameters": [
+            {
+              "name_id": "buff_haokewu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_haokewu_Up",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_haokewu_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_haokewu_CD": 10,
-            "buff_haokewu_CD2": 20,
-            "buff_haokewu_Up": 0.27
-          }
+          "parameters": [
+            {
+              "name_id": "buff_haokewu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_haokewu_Up",
+              "value": 0.27,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_haokewu_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_haokewu_CD": 10,
-            "buff_haokewu_CD2": 20,
-            "buff_haokewu_Up": 0.3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_haokewu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_haokewu_Up",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_haokewu_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -21655,39 +23465,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_dustbin_CD": 10,
-            "buff_dustbin_CD2": 20,
-            "buff_dustbin_Unbal": 60
-          }
+          "parameters": [
+            {
+              "name_id": "buff_dustbin_Unbal",
+              "value": 60,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_dustbin_CD": 10,
-            "buff_dustbin_CD2": 20,
-            "buff_dustbin_Unbal": 66
-          }
+          "parameters": [
+            {
+              "name_id": "buff_dustbin_Unbal",
+              "value": 66,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_dustbin_CD": 10,
-            "buff_dustbin_CD2": 20,
-            "buff_dustbin_Unbal": 72
-          }
+          "parameters": [
+            {
+              "name_id": "buff_dustbin_Unbal",
+              "value": 72,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_dustbin_CD": 10,
-            "buff_dustbin_CD2": 20,
-            "buff_dustbin_Unbal": 78
-          }
+          "parameters": [
+            {
+              "name_id": "buff_dustbin_Unbal",
+              "value": 78,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_dustbin_CD": 10,
-            "buff_dustbin_CD2": 20,
-            "buff_dustbin_Unbal": 84
-          }
+          "parameters": [
+            {
+              "name_id": "buff_dustbin_Unbal",
+              "value": 84,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_dustbin_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -22396,34 +24266,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_oulaquantao_Unbal": 48,
-            "buff_oulaquantao_Up": 0.1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_oulaquantao_Unbal",
+              "value": 48,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_oulaquantao_Up",
+              "value": 0.1,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_oulaquantao_Unbal": 57,
-            "buff_oulaquantao_Up": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_oulaquantao_Unbal",
+              "value": 57,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_oulaquantao_Up",
+              "value": 0.12,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_oulaquantao_Unbal": 66,
-            "buff_oulaquantao_Up": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_oulaquantao_Unbal",
+              "value": 66,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_oulaquantao_Up",
+              "value": 0.14,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_oulaquantao_Unbal": 75,
-            "buff_oulaquantao_Up": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_oulaquantao_Unbal",
+              "value": 75,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_oulaquantao_Up",
+              "value": 0.16,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_oulaquantao_Unbal": 84,
-            "buff_oulaquantao_Up": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_oulaquantao_Unbal",
+              "value": 84,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_oulaquantao_Up",
+              "value": 0.18,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -23096,54 +25006,174 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "GE_Fork_serenity_Skill1_Damage1": 0.24,
-            "GE_Fork_serenity_Skill2_Damage": 0.18,
-            "buff_tingyuan_CD": 5,
-            "buff_tingyuan_CD2": 25,
-            "buff_tingyuan_CritDamageUp": 0.12,
-            "buff_tingyuan_HPreduce": 0.05
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tingyuan_CD",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_tingyuan_CritDamageUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_HPreduce",
+              "value": 0.05,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_CD2",
+              "value": 25,
+              "is_percent": false
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill1_Damage1",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill2_Damage",
+              "value": 0.18,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "GE_Fork_serenity_Skill1_Damage1": 0.28,
-            "GE_Fork_serenity_Skill2_Damage": 0.21,
-            "buff_tingyuan_CD": 5,
-            "buff_tingyuan_CD2": 25,
-            "buff_tingyuan_CritDamageUp": 0.14,
-            "buff_tingyuan_HPreduce": 0.05
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tingyuan_CD",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_tingyuan_CritDamageUp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_HPreduce",
+              "value": 0.05,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_CD2",
+              "value": 25,
+              "is_percent": false
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill1_Damage1",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill2_Damage",
+              "value": 0.21,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "GE_Fork_serenity_Skill1_Damage1": 0.32,
-            "GE_Fork_serenity_Skill2_Damage": 0.24,
-            "buff_tingyuan_CD": 5,
-            "buff_tingyuan_CD2": 25,
-            "buff_tingyuan_CritDamageUp": 0.16,
-            "buff_tingyuan_HPreduce": 0.05
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tingyuan_CD",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_tingyuan_CritDamageUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_HPreduce",
+              "value": 0.05,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_CD2",
+              "value": 25,
+              "is_percent": false
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill1_Damage1",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill2_Damage",
+              "value": 0.24,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "GE_Fork_serenity_Skill1_Damage1": 0.36,
-            "GE_Fork_serenity_Skill2_Damage": 0.27,
-            "buff_tingyuan_CD": 5,
-            "buff_tingyuan_CD2": 25,
-            "buff_tingyuan_CritDamageUp": 0.18,
-            "buff_tingyuan_HPreduce": 0.05
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tingyuan_CD",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_tingyuan_CritDamageUp",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_HPreduce",
+              "value": 0.05,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_CD2",
+              "value": 25,
+              "is_percent": false
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill1_Damage1",
+              "value": 0.36,
+              "is_percent": true
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill2_Damage",
+              "value": 0.27,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "GE_Fork_serenity_Skill1_Damage1": 0.4,
-            "GE_Fork_serenity_Skill2_Damage": 0.3,
-            "buff_tingyuan_CD": 5,
-            "buff_tingyuan_CD2": 25,
-            "buff_tingyuan_CritDamageUp": 0.2,
-            "buff_tingyuan_HPreduce": 0.05
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tingyuan_CD",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_tingyuan_CritDamageUp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_HPreduce",
+              "value": 0.05,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_tingyuan_CD2",
+              "value": 25,
+              "is_percent": false
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill1_Damage1",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "GE_Fork_serenity_Skill2_Damage",
+              "value": 0.3,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -23816,39 +25846,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_koinobori_AtkUp": 0.1,
-            "buff_koinobori_DefUp": 0.1,
-            "buff_koinobori_HpMaxUp": 0.1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_koinobori_AtkUp",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_DefUp",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_HpMaxUp",
+              "value": 0.1,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_koinobori_AtkUp": 0.12,
-            "buff_koinobori_DefUp": 0.12,
-            "buff_koinobori_HpMaxUp": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_koinobori_AtkUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_DefUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_HpMaxUp",
+              "value": 0.12,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_koinobori_AtkUp": 0.14,
-            "buff_koinobori_DefUp": 0.14,
-            "buff_koinobori_HpMaxUp": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_koinobori_AtkUp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_DefUp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_HpMaxUp",
+              "value": 0.14,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_koinobori_AtkUp": 0.16,
-            "buff_koinobori_DefUp": 0.16,
-            "buff_koinobori_HpMaxUp": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_koinobori_AtkUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_DefUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_HpMaxUp",
+              "value": 0.16,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_koinobori_AtkUp": 0.18,
-            "buff_koinobori_DefUp": 0.18,
-            "buff_koinobori_HpMaxUp": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_koinobori_AtkUp",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_DefUp",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_koinobori_HpMaxUp",
+              "value": 0.18,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -24521,34 +26611,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_xiangdao_CD": 20,
-            "buff_xiangdao_energy": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_xiangdao_energy",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_xiangdao_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_xiangdao_CD": 20,
-            "buff_xiangdao_energy": 12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_xiangdao_energy",
+              "value": 12,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_xiangdao_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_xiangdao_CD": 20,
-            "buff_xiangdao_energy": 14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_xiangdao_energy",
+              "value": 14,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_xiangdao_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_xiangdao_CD": 20,
-            "buff_xiangdao_energy": 16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_xiangdao_energy",
+              "value": 16,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_xiangdao_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_xiangdao_CD": 20,
-            "buff_xiangdao_energy": 18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_xiangdao_energy",
+              "value": 18,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_xiangdao_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -25221,34 +27351,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_mamen_CosmosUp": 0.025,
-            "buff_mamen_fons": 100000
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mamen_fons",
+              "value": 100000,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mamen_CosmosUp",
+              "value": 0.025,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_mamen_CosmosUp": 0.03,
-            "buff_mamen_fons": 100000
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mamen_fons",
+              "value": 100000,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mamen_CosmosUp",
+              "value": 0.03,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_mamen_CosmosUp": 0.035,
-            "buff_mamen_fons": 100000
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mamen_fons",
+              "value": 100000,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mamen_CosmosUp",
+              "value": 0.035,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_mamen_CosmosUp": 0.04,
-            "buff_mamen_fons": 100000
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mamen_fons",
+              "value": 100000,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mamen_CosmosUp",
+              "value": 0.04,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_mamen_CosmosUp": 0.045,
-            "buff_mamen_fons": 100000
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mamen_fons",
+              "value": 100000,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mamen_CosmosUp",
+              "value": 0.045,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -25957,44 +28127,124 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_mofeikesi_Atk": 0.1,
-            "buff_mofeikesi_CD": 20,
-            "buff_mofeikesi_ChargeGetEfficiency": 0.18,
-            "buff_mofeikesi_Up": 0.06
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mofeikesi_ChargeGetEfficiency",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mofeikesi_Atk",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_Up",
+              "value": 0.06,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_mofeikesi_Atk": 0.115,
-            "buff_mofeikesi_CD": 20,
-            "buff_mofeikesi_ChargeGetEfficiency": 0.21,
-            "buff_mofeikesi_Up": 0.07
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mofeikesi_ChargeGetEfficiency",
+              "value": 0.21,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mofeikesi_Atk",
+              "value": 0.115,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_Up",
+              "value": 0.07,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_mofeikesi_Atk": 0.13,
-            "buff_mofeikesi_CD": 20,
-            "buff_mofeikesi_ChargeGetEfficiency": 0.24,
-            "buff_mofeikesi_Up": 0.08
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mofeikesi_ChargeGetEfficiency",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mofeikesi_Atk",
+              "value": 0.13,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_Up",
+              "value": 0.08,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_mofeikesi_Atk": 0.145,
-            "buff_mofeikesi_CD": 20,
-            "buff_mofeikesi_ChargeGetEfficiency": 0.27,
-            "buff_mofeikesi_Up": 0.09
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mofeikesi_ChargeGetEfficiency",
+              "value": 0.27,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mofeikesi_Atk",
+              "value": 0.145,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_Up",
+              "value": 0.09,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_mofeikesi_Atk": 0.16,
-            "buff_mofeikesi_CD": 20,
-            "buff_mofeikesi_ChargeGetEfficiency": 0.3,
-            "buff_mofeikesi_Up": 0.1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_mofeikesi_ChargeGetEfficiency",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_CD",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_mofeikesi_Atk",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_mofeikesi_Up",
+              "value": 0.1,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -26703,39 +28953,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_moon_CD": 5,
-            "buff_moon_CritDamageUp": 0.02,
-            "buff_moon_PsycheUp": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_moon_PsycheUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CritDamageUp",
+              "value": 0.02,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CD",
+              "value": 5,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_moon_CD": 5,
-            "buff_moon_CritDamageUp": 0.024,
-            "buff_moon_PsycheUp": 0.145
-          }
+          "parameters": [
+            {
+              "name_id": "buff_moon_PsycheUp",
+              "value": 0.145,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CritDamageUp",
+              "value": 0.024,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CD",
+              "value": 5,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_moon_CD": 5,
-            "buff_moon_CritDamageUp": 0.028,
-            "buff_moon_PsycheUp": 0.17
-          }
+          "parameters": [
+            {
+              "name_id": "buff_moon_PsycheUp",
+              "value": 0.17,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CritDamageUp",
+              "value": 0.028,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CD",
+              "value": 5,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_moon_CD": 5,
-            "buff_moon_CritDamageUp": 0.032,
-            "buff_moon_PsycheUp": 0.195
-          }
+          "parameters": [
+            {
+              "name_id": "buff_moon_PsycheUp",
+              "value": 0.195,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CritDamageUp",
+              "value": 0.032,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CD",
+              "value": 5,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_moon_CD": 5,
-            "buff_moon_CritDamageUp": 0.036,
-            "buff_moon_PsycheUp": 0.21
-          }
+          "parameters": [
+            {
+              "name_id": "buff_moon_PsycheUp",
+              "value": 0.21,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CritDamageUp",
+              "value": 0.036,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_moon_CD",
+              "value": 5,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -27408,39 +29718,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_nonos_AtkUp": 0.12,
-            "buff_nonos_CD": 10,
-            "buff_nonos_CD2": 20
-          }
+          "parameters": [
+            {
+              "name_id": "buff_nonos_AtkUp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_nonos_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_nonos_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_nonos_AtkUp": 0.13,
-            "buff_nonos_CD": 10,
-            "buff_nonos_CD2": 20
-          }
+          "parameters": [
+            {
+              "name_id": "buff_nonos_AtkUp",
+              "value": 0.13,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_nonos_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_nonos_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_nonos_AtkUp": 0.14,
-            "buff_nonos_CD": 10,
-            "buff_nonos_CD2": 20
-          }
+          "parameters": [
+            {
+              "name_id": "buff_nonos_AtkUp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_nonos_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_nonos_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_nonos_AtkUp": 0.15,
-            "buff_nonos_CD": 10,
-            "buff_nonos_CD2": 20
-          }
+          "parameters": [
+            {
+              "name_id": "buff_nonos_AtkUp",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_nonos_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_nonos_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_nonos_AtkUp": 0.16,
-            "buff_nonos_CD": 10,
-            "buff_nonos_CD2": 20
-          }
+          "parameters": [
+            {
+              "name_id": "buff_nonos_AtkUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_nonos_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_nonos_CD2",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -28113,34 +30483,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_wujinjieti_CD": 10,
-            "buff_wujinjieti_Up": 0.02
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wujinjieti_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wujinjieti_Up",
+              "value": 0.02,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_wujinjieti_CD": 10,
-            "buff_wujinjieti_Up": 0.024
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wujinjieti_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wujinjieti_Up",
+              "value": 0.024,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_wujinjieti_CD": 10,
-            "buff_wujinjieti_Up": 0.028
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wujinjieti_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wujinjieti_Up",
+              "value": 0.028,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_wujinjieti_CD": 10,
-            "buff_wujinjieti_Up": 0.032
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wujinjieti_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wujinjieti_Up",
+              "value": 0.032,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_wujinjieti_CD": 10,
-            "buff_wujinjieti_Up": 0.036
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wujinjieti_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wujinjieti_Up",
+              "value": 0.036,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -28849,49 +31259,149 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_rishi_AtkUp": 0.3,
-            "buff_rishi_CD": 300,
-            "buff_rishi_CD2": 40,
-            "buff_rishi_energy": 6,
-            "buff_rishi_stack": 5
-          }
+          "parameters": [
+            {
+              "name_id": "buff_rishi_AtkUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_rishi_CD2",
+              "value": 40,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_energy",
+              "value": 6,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_stack",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_CD",
+              "value": 300,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_rishi_AtkUp": 0.35,
-            "buff_rishi_CD": 300,
-            "buff_rishi_CD2": 40,
-            "buff_rishi_energy": 7,
-            "buff_rishi_stack": 5
-          }
+          "parameters": [
+            {
+              "name_id": "buff_rishi_AtkUp",
+              "value": 0.35,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_rishi_CD2",
+              "value": 40,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_energy",
+              "value": 7,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_stack",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_CD",
+              "value": 300,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_rishi_AtkUp": 0.4,
-            "buff_rishi_CD": 300,
-            "buff_rishi_CD2": 40,
-            "buff_rishi_energy": 8,
-            "buff_rishi_stack": 5
-          }
+          "parameters": [
+            {
+              "name_id": "buff_rishi_AtkUp",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_rishi_CD2",
+              "value": 40,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_energy",
+              "value": 8,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_stack",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_CD",
+              "value": 300,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_rishi_AtkUp": 0.45,
-            "buff_rishi_CD": 300,
-            "buff_rishi_CD2": 40,
-            "buff_rishi_energy": 9,
-            "buff_rishi_stack": 5
-          }
+          "parameters": [
+            {
+              "name_id": "buff_rishi_AtkUp",
+              "value": 0.45,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_rishi_CD2",
+              "value": 40,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_energy",
+              "value": 9,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_stack",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_CD",
+              "value": 300,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_rishi_AtkUp": 0.5,
-            "buff_rishi_CD": 300,
-            "buff_rishi_CD2": 40,
-            "buff_rishi_energy": 10,
-            "buff_rishi_stack": 5
-          }
+          "parameters": [
+            {
+              "name_id": "buff_rishi_AtkUp",
+              "value": 0.5,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_rishi_CD2",
+              "value": 40,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_energy",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_stack",
+              "value": 5,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_rishi_CD",
+              "value": 300,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -29564,29 +32074,49 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_snowman_AtkUp": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_snowman_AtkUp",
+              "value": 0.18,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_snowman_AtkUp": 0.21
-          }
+          "parameters": [
+            {
+              "name_id": "buff_snowman_AtkUp",
+              "value": 0.21,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_snowman_AtkUp": 0.24
-          }
+          "parameters": [
+            {
+              "name_id": "buff_snowman_AtkUp",
+              "value": 0.24,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_snowman_AtkUp": 0.27
-          }
+          "parameters": [
+            {
+              "name_id": "buff_snowman_AtkUp",
+              "value": 0.27,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_snowman_AtkUp": 0.3
-          }
+          "parameters": [
+            {
+              "name_id": "buff_snowman_AtkUp",
+              "value": 0.3,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -30259,39 +32789,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_spider_AtkUp": 0.01,
-            "buff_spider_AtkUp2": 0.02,
-            "buff_spider_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_spider_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_spider_AtkUp",
+              "value": 0.01,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_spider_AtkUp2",
+              "value": 0.02,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_spider_AtkUp": 0.0115,
-            "buff_spider_AtkUp2": 0.023,
-            "buff_spider_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_spider_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_spider_AtkUp",
+              "value": 0.0115,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_spider_AtkUp2",
+              "value": 0.023,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_spider_AtkUp": 0.013,
-            "buff_spider_AtkUp2": 0.026,
-            "buff_spider_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_spider_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_spider_AtkUp",
+              "value": 0.013,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_spider_AtkUp2",
+              "value": 0.026,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_spider_AtkUp": 0.0145,
-            "buff_spider_AtkUp2": 0.029,
-            "buff_spider_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_spider_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_spider_AtkUp",
+              "value": 0.0145,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_spider_AtkUp2",
+              "value": 0.029,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_spider_AtkUp": 0.016,
-            "buff_spider_AtkUp2": 0.032,
-            "buff_spider_CD": 10
-          }
+          "parameters": [
+            {
+              "name_id": "buff_spider_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_spider_AtkUp",
+              "value": 0.016,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_spider_AtkUp2",
+              "value": 0.032,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -30964,29 +33554,49 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_tuansanlang_Unbal": 70
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tuansanlang_Unbal",
+              "value": 70,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_tuansanlang_Unbal": 84
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tuansanlang_Unbal",
+              "value": 84,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_tuansanlang_Unbal": 98
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tuansanlang_Unbal",
+              "value": 98,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_tuansanlang_Unbal": 112
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tuansanlang_Unbal",
+              "value": 112,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_tuansanlang_Unbal": 126
-          }
+          "parameters": [
+            {
+              "name_id": "buff_tuansanlang_Unbal",
+              "value": 126,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -31659,34 +34269,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_vine_CD": 20,
-            "buff_vine_Hp": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_vine_Hp",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_vine_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_vine_CD": 20,
-            "buff_vine_Hp": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_vine_Hp",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_vine_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_vine_CD": 20,
-            "buff_vine_Hp": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_vine_Hp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_vine_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_vine_CD": 20,
-            "buff_vine_Hp": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_vine_Hp",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_vine_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_vine_CD": 20,
-            "buff_vine_Hp": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_vine_Hp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_vine_CD",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -32359,39 +35009,99 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_worldrain_CD": 15,
-            "buff_worldrain_CosmosUp": 0.3,
-            "buff_worldrain_Mag": 36
-          }
+          "parameters": [
+            {
+              "name_id": "buff_worldrain_CosmosUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_worldrain_Mag",
+              "value": 36,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_worldrain_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_worldrain_CD": 15,
-            "buff_worldrain_CosmosUp": 0.33,
-            "buff_worldrain_Mag": 45
-          }
+          "parameters": [
+            {
+              "name_id": "buff_worldrain_CosmosUp",
+              "value": 0.33,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_worldrain_Mag",
+              "value": 45,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_worldrain_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_worldrain_CD": 15,
-            "buff_worldrain_CosmosUp": 0.36,
-            "buff_worldrain_Mag": 54
-          }
+          "parameters": [
+            {
+              "name_id": "buff_worldrain_CosmosUp",
+              "value": 0.36,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_worldrain_Mag",
+              "value": 54,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_worldrain_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_worldrain_CD": 15,
-            "buff_worldrain_CosmosUp": 0.39,
-            "buff_worldrain_Mag": 63
-          }
+          "parameters": [
+            {
+              "name_id": "buff_worldrain_CosmosUp",
+              "value": 0.39,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_worldrain_Mag",
+              "value": 63,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_worldrain_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_worldrain_CD": 15,
-            "buff_worldrain_CosmosUp": 0.42,
-            "buff_worldrain_Mag": 72
-          }
+          "parameters": [
+            {
+              "name_id": "buff_worldrain_CosmosUp",
+              "value": 0.42,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_worldrain_Mag",
+              "value": 72,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_worldrain_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
         }
       }
     },
@@ -33064,34 +35774,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_kudangao_Atk": 0.2,
-            "buff_kudangao_Def": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_kudangao_Atk",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_kudangao_Def",
+              "value": 0.2,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_kudangao_Atk": 0.24,
-            "buff_kudangao_Def": 0.24
-          }
+          "parameters": [
+            {
+              "name_id": "buff_kudangao_Atk",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_kudangao_Def",
+              "value": 0.24,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_kudangao_Atk": 0.28,
-            "buff_kudangao_Def": 0.28
-          }
+          "parameters": [
+            {
+              "name_id": "buff_kudangao_Atk",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_kudangao_Def",
+              "value": 0.28,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_kudangao_Atk": 0.32,
-            "buff_kudangao_Def": 0.32
-          }
+          "parameters": [
+            {
+              "name_id": "buff_kudangao_Atk",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_kudangao_Def",
+              "value": 0.32,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_kudangao_Atk": 0.36,
-            "buff_kudangao_Def": 0.36
-          }
+          "parameters": [
+            {
+              "name_id": "buff_kudangao_Atk",
+              "value": 0.36,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_kudangao_Def",
+              "value": 0.36,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -33800,44 +36550,124 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_wushoutieyu_CD": 10,
-            "buff_wushoutieyu_Up": 0.1,
-            "buff_wushoutieyu_Up2": 0.05,
-            "buff_wushoutieyu_UpLakshana": 0.15
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wushoutieyu_Up",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wushoutieyu_Up2",
+              "value": 0.05,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_UpLakshana",
+              "value": 0.15,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_wushoutieyu_CD": 10,
-            "buff_wushoutieyu_Up": 0.125,
-            "buff_wushoutieyu_Up2": 0.06,
-            "buff_wushoutieyu_UpLakshana": 0.175
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wushoutieyu_Up",
+              "value": 0.125,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wushoutieyu_Up2",
+              "value": 0.06,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_UpLakshana",
+              "value": 0.175,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_wushoutieyu_CD": 10,
-            "buff_wushoutieyu_Up": 0.15,
-            "buff_wushoutieyu_Up2": 0.07,
-            "buff_wushoutieyu_UpLakshana": 0.2
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wushoutieyu_Up",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wushoutieyu_Up2",
+              "value": 0.07,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_UpLakshana",
+              "value": 0.2,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_wushoutieyu_CD": 10,
-            "buff_wushoutieyu_Up": 0.175,
-            "buff_wushoutieyu_Up2": 0.08,
-            "buff_wushoutieyu_UpLakshana": 0.225
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wushoutieyu_Up",
+              "value": 0.175,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wushoutieyu_Up2",
+              "value": 0.08,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_UpLakshana",
+              "value": 0.225,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_wushoutieyu_CD": 10,
-            "buff_wushoutieyu_Up": 0.2,
-            "buff_wushoutieyu_Up2": 0.09,
-            "buff_wushoutieyu_UpLakshana": 0.25
-          }
+          "parameters": [
+            {
+              "name_id": "buff_wushoutieyu_Up",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_CD",
+              "value": 10,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_wushoutieyu_Up2",
+              "value": 0.09,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_wushoutieyu_UpLakshana",
+              "value": 0.25,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -34510,29 +37340,49 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "GE_Fork_yaodao_Skill_Damage": 2
-          }
+          "parameters": [
+            {
+              "name_id": "GE_Fork_yaodao_Skill_Damage",
+              "value": 2,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "GE_Fork_yaodao_Skill_Damage": 2.3
-          }
+          "parameters": [
+            {
+              "name_id": "GE_Fork_yaodao_Skill_Damage",
+              "value": 2.3,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "GE_Fork_yaodao_Skill_Damage": 2.6
-          }
+          "parameters": [
+            {
+              "name_id": "GE_Fork_yaodao_Skill_Damage",
+              "value": 2.6,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "GE_Fork_yaodao_Skill_Damage": 2.9
-          }
+          "parameters": [
+            {
+              "name_id": "GE_Fork_yaodao_Skill_Damage",
+              "value": 2.9,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "GE_Fork_yaodao_Skill_Damage": 3.2
-          }
+          "parameters": [
+            {
+              "name_id": "GE_Fork_yaodao_Skill_Damage",
+              "value": 3.2,
+              "is_percent": true
+            }
+          ]
         }
       }
     },
@@ -35241,34 +38091,74 @@
       "conditional_note": "",
       "effects_by_star": {
         "1": {
-          "parameters": {
-            "buff_bowenchanggui_HP": 0.1,
-            "buff_bowenchanggui_shield": 0.1
-          }
+          "parameters": [
+            {
+              "name_id": "buff_bowenchanggui_shield",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_bowenchanggui_HP",
+              "value": 0.1,
+              "is_percent": true
+            }
+          ]
         },
         "2": {
-          "parameters": {
-            "buff_bowenchanggui_HP": 0.12,
-            "buff_bowenchanggui_shield": 0.12
-          }
+          "parameters": [
+            {
+              "name_id": "buff_bowenchanggui_shield",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_bowenchanggui_HP",
+              "value": 0.12,
+              "is_percent": true
+            }
+          ]
         },
         "3": {
-          "parameters": {
-            "buff_bowenchanggui_HP": 0.14,
-            "buff_bowenchanggui_shield": 0.14
-          }
+          "parameters": [
+            {
+              "name_id": "buff_bowenchanggui_shield",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_bowenchanggui_HP",
+              "value": 0.14,
+              "is_percent": true
+            }
+          ]
         },
         "4": {
-          "parameters": {
-            "buff_bowenchanggui_HP": 0.16,
-            "buff_bowenchanggui_shield": 0.16
-          }
+          "parameters": [
+            {
+              "name_id": "buff_bowenchanggui_shield",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_bowenchanggui_HP",
+              "value": 0.16,
+              "is_percent": true
+            }
+          ]
         },
         "5": {
-          "parameters": {
-            "buff_bowenchanggui_HP": 0.18,
-            "buff_bowenchanggui_shield": 0.18
-          }
+          "parameters": [
+            {
+              "name_id": "buff_bowenchanggui_shield",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_bowenchanggui_HP",
+              "value": 0.18,
+              "is_percent": true
+            }
+          ]
         }
       }
     }

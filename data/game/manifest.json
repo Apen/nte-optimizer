@@ -41,11 +41,12 @@
     {
       "path": "equipment/arcs.json",
       "schema_version": 1,
-      "sha256": "d0537bb3f15d05545511ab2ace7c96ffb42fe8ee0ad2674e2d6edde19d1dc07e",
+      "sha256": "0ae3e292bea4d81f2c24ee1e37cf5fb46022079017f602ecae853b059063b607",
       "sources": [
         "generated/fork_stats.json",
         "overrides/equipment-projections.json",
-        "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json"
+        "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json",
+        "datamine/data/catalogs/DataTable/Fork/DT_ForkUpgradeStarDataTable.json"
       ],
       "status": "partial",
       "warnings": [
@@ -125,7 +126,7 @@
     {
       "path": "locales/en.json",
       "schema_version": 1,
-      "sha256": "979a27f76e7a0750f5eb7e032e7c407eb218e2f98b87bef0a9ccb7a9ba309a38",
+      "sha256": "ba01f798c1035283c7fe3b9f06cfe0f5472affeb305b2b11d3371e6515bf0173",
       "sources": [
         "datamine/data/localization/en.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -140,7 +141,7 @@
     {
       "path": "locales/fr.json",
       "schema_version": 1,
-      "sha256": "2c2324e5168ad5614d0800a8738876bb28c645dda4fcd4c9183f68c9cb935d19",
+      "sha256": "c1fcb37fbd24b59bd34598c0b7220a056f767b26b03108279f1f29ed60f14e15",
       "sources": [
         "datamine/data/localization/fr.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -155,10 +156,15 @@
     {
       "path": "resources/decode.json",
       "schema_version": 1,
-      "sha256": "b64825fdf6e3136dadc6ea1ffa922362daf330c905ea5a7a049dfc41b2c80f72",
+      "sha256": "f0c6686a3dd7ed0874f27ebf86feb87c50118f519d7f5b05c9fb45224678b687",
       "sources": [
+        "config/resource_items.csv",
+        "datamine/data/inventory/DataTable/Food/DT_FoodItemData.json",
+        "datamine/data/inventory/DataTable/Inventory/DT_CapitalItemConfig.json",
         "datamine/data/inventory/DataTable/Inventory/DT_ItemConfig.json",
-        "datamine/data/inventory/DataTable/Inventory/DT_CapitalItemConfig.json"
+        "datamine/data/inventory/DataTable/RobBank/DT_RobBankItemData.json",
+        "datamine/data/inventory/DataTable/Vehicle/DT_VehicleExpropriate.json",
+        "datamine/data/inventory/DataTable/Vehicle/DT_VehicleItemData.json"
       ],
       "status": "generated",
       "warnings": []
