@@ -49,16 +49,27 @@ func TestLoadSetCatalogNormalizesDataminedInventoryIDs(t *testing.T) {
 	}
 }
 
-func TestObjectiveScoreUsesTargetAndImportance(t *testing.T) {
+func TestObjectiveScoreUsesQuarticTargetAndImportance(t *testing.T) {
 	goal := []ObjectiveGoal{{PropertyID: "CritBase", Minimum: .60, Tolerance: .05, Importance: 1}}
 	atTarget := ObjectiveScore(map[string]float64{"CritBase": .60}, goal)
 	nearTarget := ObjectiveScore(map[string]float64{"CritBase": .59}, goal)
-	belowTolerance := ObjectiveScore(map[string]float64{"CritBase": .50}, goal)
-	if atTarget-nearTarget >= 1 {
-		t.Fatalf("59%% should remain close to the 60%% target: target=%v near=%v", atTarget, nearTarget)
+	belowTarget := ObjectiveScore(map[string]float64{"CritBase": .50}, goal)
+	for _, test := range []struct {
+		name string
+		got  float64
+		want float64
+	}{
+		{name: "at target", got: atTarget, want: 10},
+		{name: "near target", got: nearTarget, want: 10 * math.Pow(.59/.60, 4)},
+		{name: "below target", got: belowTarget, want: 10 * math.Pow(.50/.60, 4)},
+	} {
+		if math.Abs(test.got-test.want) > 1e-12 {
+			t.Fatalf("%s score = %.12f, want %.12f", test.name, test.got, test.want)
+		}
 	}
-	if nearTarget-belowTolerance <= 1.5 {
-		t.Fatalf("falling below tolerance should cost materially more: near=%v below=%v", nearTarget, belowTolerance)
+	goal[0].Tolerance = .50
+	if got := ObjectiveScore(map[string]float64{"CritBase": .59}, goal); got != nearTarget {
+		t.Fatalf("tolerance changed ranking utility: got %v, want %v", got, nearTarget)
 	}
 	high := ObjectiveScore(map[string]float64{"CritBase": .59}, []ObjectiveGoal{{PropertyID: "CritBase", Minimum: .60, Tolerance: .05, Importance: 2}})
 	if high != nearTarget*2 {

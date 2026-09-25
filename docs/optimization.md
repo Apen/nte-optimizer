@@ -174,6 +174,25 @@ even when the base value already meets its softer target or its ranking weight
 is zero. The number retained per geometry is based on the remaining deficit
 and the number of that geometry that could fit by playable area. This is a
 feasibility safeguard, not a proof that the full inventory was searched.
+
+Fast and Beta share a default search timeout of 60 seconds, configured in
+`data/optimizer/config.json`. The timeout bounds the combination search after
+candidate preparation; inventory loading and preselection happen before that
+timer starts. The desktop UI can stop an active search with **Stop and keep**.
+The CLI can be interrupted with Ctrl+C.
+
+The optimizer retains and displays up to 100 distinct equipment builds, sorted
+by the displayed ranking. The internal candidate-reduction budget remains 50;
+the larger result list can take longer to fill, so a timed-out Fast or Beta run
+may return fewer than 100 builds.
+
+The synthetic regression fixture also demonstrates a Fast limitation: if the
+soft target is already saturated, Fast can prune the only candidate that could
+meet a still-unmet strict floor. Its exact search over the retained pool can
+then report no feasible build even though exhaustive search over the full
+inventory finds one. A separate correction could preserve strict-floor
+specialists in Fast as well, or retry with a broader candidate pool when the
+retained search finds no feasible build.
 An internal `exact-objective` diagnostic can run the same objective function
 without Fast preselection or a timeout on small test inventories; it is not a
 practical search mode for a full account.
@@ -213,13 +232,15 @@ skill-specific bonuses:
 
 ```text
 Basic DMG = ATK × (1 + universal DMG)
-            × (1 + CRIT rate × (CRIT DMG - 1))
+            × (1 + CRIT rate × CRIT DMG bonus)
 ```
 
-CRIT rate is capped at 100% for this calculation. The index is intentionally
-independent of a particular ability, making it useful for quickly comparing
-the general offensive potential of builds. The Damage tab remains the source
-for skill-specific projections, conditional effects, and enemy mitigation.
+`CRIT DMG bonus` is the additive `CritDamageBase` value used by the damage
+model. CRIT rate is capped at 100% for this calculation. The index is
+intentionally independent of a particular ability, making it useful for
+quickly comparing the general offensive potential of builds. The Damage tab
+remains the source for skill-specific projections, conditional effects, and
+enemy mitigation.
 
 `complete: true` means the retained search space was fully explored. If the
 user stops a search, the application returns the best candidate found so far

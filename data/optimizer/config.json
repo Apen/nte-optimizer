@@ -2,6 +2,6 @@
   "optimize": {
     "top_per_geometry": 2,
     "top_per_set": 2,
-    "timeout_seconds": 5
+    "timeout_seconds": 60
   }
 }

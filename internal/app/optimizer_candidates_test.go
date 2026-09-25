@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"math"
 	"strings"
 	"testing"
 
@@ -74,10 +75,10 @@ func TestFastSelectionRetainsCurrentEquipment(t *testing.T) {
 	}
 }
 
-func TestFastSelectionKeepsCandidatesBelowStrictMaximum(t *testing.T) {
-	tooHigh := optimizer.Candidate{Module: nte.Module{LocalID: "too-high", Geometry: "H_2"}, Score: 11, Priority: 2, ObjectiveValues: map[string]float64{"CritBase": .25}}
-	admissible := optimizer.Candidate{Module: nte.Module{LocalID: "admissible", Geometry: "H_2"}, Score: 10, Priority: 1, ObjectiveValues: map[string]float64{"CritBase": .15}}
-	goal := optimizer.ObjectiveGoal{PropertyID: "CritBase", Minimum: .6, Maximum: .6, Importance: 1}
+func TestFastCandidateSelectionLeavesStrictMaximumToExactEvaluation(t *testing.T) {
+	tooHigh := optimizer.Candidate{Module: nte.Module{LocalID: "too-high", Geometry: "H_2", Area: 2, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .2}}}, Score: 11, Priority: 2, ObjectiveValues: map[string]float64{"CritBase": .2}}
+	admissible := optimizer.Candidate{Module: nte.Module{LocalID: "admissible", Geometry: "H_2", Area: 2, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .1}}}, Score: 10, Priority: 1, ObjectiveValues: map[string]float64{"CritBase": .1}}
+	goal := optimizer.ObjectiveGoal{PropertyID: "CritBase", Minimum: .6, Maximum: .6, StrictMinimum: true, StrictFloor: .6, Importance: 1}
 	pool := moduleCandidatePool{eligible: []optimizer.Candidate{tooHigh, admissible}, raw: []optimizer.Candidate{tooHigh, admissible}, selectionObjectives: []optimizer.ObjectiveGoal{goal}}
 	config := optimizerDataConfig{}
 	config.Optimize.TopPerGeometry = 2
@@ -86,8 +87,19 @@ func TestFastSelectionKeepsCandidatesBelowStrictMaximum(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !candidateIDs(selection.selected)["admissible"] {
-		t.Fatal("Fast discarded the admissible candidate before enforcing the maximum")
+	ids := candidateIDs(selection.selected)
+	if !ids["too-high"] || !ids["admissible"] {
+		t.Fatalf("preselection unexpectedly enforced the final maximum: %#v", selection.selected)
+	}
+	sets := optimizer.SetCatalog{Definitions: map[string]optimizer.SetDefinition{
+		"sample": {ID: "sample", InventorySetID: "sample", RequiredGeometries: []string{"H_2"}},
+	}}
+	evaluator := optimizer.NewExactObjectiveEvaluator(sets, []nte.Cartridge{{LocalID: "cartridge", SetID: "sample"}}, nil, selection.selected, scoring.Character{BaseStats: map[string]float64{"CritBase": .5}}, nil, []optimizer.ObjectiveGoal{goal}, nil)
+	if got := evaluator.Evaluate([]optimizer.Placement{{ModuleID: "too-high"}}); got.Score != math.Inf(-1) {
+		t.Fatalf("strict maximum accepted an over-cap build: %+v", got)
+	}
+	if got := evaluator.Evaluate([]optimizer.Placement{{ModuleID: "admissible"}}); math.IsInf(got.Score, -1) {
+		t.Fatalf("strict maximum rejected the boundary build: %+v", got)
 	}
 }
 

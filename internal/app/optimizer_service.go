@@ -38,6 +38,7 @@ type SavedGoalSettings struct {
 
 type OptimizerService struct {
 	WeightOverrides      *WeightOverrides
+	SearchLimitsOverride *SearchLimitsOverride
 	Measure              bool
 	DataDir              string
 	Progress             func(optimizer.SearchProgress)
@@ -49,6 +50,20 @@ type OptimizerService struct {
 	catalogs             *optimizerCatalogCache
 	baseStats            *characterBaseStatsCache
 	blueprints           *optimizer.BlueprintCache
+}
+
+// SearchLimits describes the effective candidate preselection and search timeout.
+type SearchLimits struct {
+	TopPerGeometry int `json:"top_per_geometry"`
+	TopPerSet      int `json:"top_per_set"`
+	TimeoutSeconds int `json:"timeout_seconds"`
+}
+
+// SearchLimitsOverride lets one run replace only the limits explicitly set by its caller.
+type SearchLimitsOverride struct {
+	TopPerGeometry *int `json:"top_per_geometry,omitempty"`
+	TopPerSet      *int `json:"top_per_set,omitempty"`
+	TimeoutSeconds *int `json:"timeout_seconds,omitempty"`
 }
 
 type optimizerDataConfig struct {
@@ -86,6 +101,7 @@ type OptimizationResult struct {
 	EligibleCandidates             int                       `json:"eligible_candidates"`
 	SelectedCandidates             int                       `json:"selected_candidates"`
 	TimeoutSeconds                 int                       `json:"timeout_seconds"`
+	SearchLimits                   SearchLimits              `json:"search_limits"`
 	Grid                           optimizer.GridDefinition  `json:"grid"`
 	Solution                       optimizer.Solution        `json:"solution"`
 	Modules                        []OptimizationModule      `json:"modules"`
@@ -248,6 +264,20 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 		return OptimizationResult{}, err
 	}
 	shapeCatalog, setCatalog, cfg := catalogs.shapes, catalogs.sets, catalogs.config
+	if s.SearchLimitsOverride != nil {
+		if value := s.SearchLimitsOverride.TopPerGeometry; value != nil {
+			cfg.Optimize.TopPerGeometry = *value
+		}
+		if value := s.SearchLimitsOverride.TopPerSet; value != nil {
+			cfg.Optimize.TopPerSet = *value
+		}
+		if value := s.SearchLimitsOverride.TimeoutSeconds; value != nil {
+			cfg.Optimize.TimeoutSeconds = *value
+		}
+		if err := ValidateSearchLimits(SearchLimits{TopPerGeometry: cfg.Optimize.TopPerGeometry, TopPerSet: cfg.Optimize.TopPerSet, TimeoutSeconds: cfg.Optimize.TimeoutSeconds}); err != nil {
+			return OptimizationResult{}, err
+		}
+	}
 	currentCharacter, currentWeapon, _, currentAdditional, characterNames, err := s.resolveAccountContext(state, profile, language)
 	if err != nil {
 		return OptimizationResult{}, err
@@ -343,6 +373,7 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 		},
 	})
 	result.PhaseMS["reporting"] = time.Since(searchFinished).Milliseconds()
+	result.SearchLimits = SearchLimits{TopPerGeometry: cfg.Optimize.TopPerGeometry, TopPerSet: cfg.Optimize.TopPerSet, TimeoutSeconds: cfg.Optimize.TimeoutSeconds}
 	return result, nil
 }
 

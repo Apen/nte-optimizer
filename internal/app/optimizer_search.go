@@ -10,6 +10,11 @@ import (
 	"nte-optimizer/internal/scoring"
 )
 
+const (
+	optimizerResultKeepBest        = 100
+	optimizerStatReductionKeepBest = 50
+)
+
 type searchSetup struct {
 	evaluator      optimizer.GlobalBonusEvaluator
 	solver         optimizer.SearchSolver
@@ -46,14 +51,15 @@ func (s OptimizerService) prepareSearch(profile scoring.Character, refs scoring.
 		evaluator:      evaluator,
 		timeoutSeconds: timeoutSeconds,
 		solver: optimizer.SearchSolver{
-			Measure:              s.Measure,
-			Exact:                exact,
-			Catalog:              shapes,
-			Progress:             s.Progress,
-			BlueprintCache:       s.blueprints,
-			KeepBest:             50,
-			RequiredIDs:          s.PinnedModuleIDs,
-			GeometryRequirements: ownedSetGeometryRequirements(cartridges, sets),
+			Measure:               s.Measure,
+			Exact:                 exact,
+			Catalog:               shapes,
+			Progress:              s.Progress,
+			BlueprintCache:        s.blueprints,
+			KeepBest:              optimizerResultKeepBest,
+			StatReductionKeepBest: optimizerStatReductionKeepBest,
+			RequiredIDs:           s.PinnedModuleIDs,
+			GeometryRequirements:  ownedSetGeometryRequirements(cartridges, sets),
 		},
 	}
 }

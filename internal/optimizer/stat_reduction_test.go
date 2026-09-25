@@ -117,7 +117,7 @@ func TestReduceBlueprintCandidatesKeepsGeometryPoolsConsistent(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	reduction := solver.reduceBlueprintCandidates(grid, usable, pools, []geometryBlueprint{{geometries: []string{"S", "S", "S"}}}, evaluator)
+	reduction := solver.reduceBlueprintCandidates(grid, usable, pools, []geometryBlueprint{{geometries: []string{"S", "S", "S"}}}, evaluator, solver.KeepBest)
 	if len(reduction.usable) != 7 || len(pools["S"]) != 7 {
 		t.Fatalf("reduced candidates = %d, geometry pool = %d; want 7 and 7", len(reduction.usable), len(pools["S"]))
 	}

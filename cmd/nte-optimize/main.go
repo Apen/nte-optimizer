@@ -34,7 +34,8 @@ func run(args []string, output io.Writer) error {
 	language := flags.String("lang", "en", "game-label language: en or fr")
 	stateDir := flags.String("state-dir", defaultStateDir(), "user data directory containing workspace/")
 	dataDir := flags.String("data", "data", "project data directory")
-	jsonOutput := flags.Bool("json", false, "print the full optimization result as JSON (may contain private inventory data)")
+	experimentsFile := flags.String("experiments", "", "run named one-shot variants from a JSON experiment file")
+	jsonOutput := flags.Bool("json", false, "print the result as JSON (full inventory details unless --experiments is set)")
 	if err := flags.Parse(args); err != nil {
 		return err
 	}
@@ -57,6 +58,25 @@ func run(args []string, output io.Writer) error {
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
+	if *experimentsFile != "" {
+		plan, err := app.ReadExperimentPlan(*experimentsFile)
+		if err != nil {
+			return err
+		}
+		report, err := app.RunSavedOptimizationExperiments(ctx, service, *stateDir, *language, *method, request, plan)
+		if err != nil {
+			return err
+		}
+		if *jsonOutput {
+			err = json.NewEncoder(output).Encode(report)
+		} else {
+			err = printExperimentReport(output, report)
+		}
+		if err != nil {
+			return err
+		}
+		return ctx.Err()
+	}
 	started := time.Now()
 	result, err := app.OptimizeSavedProject(ctx, service, *stateDir, *language, *method, request)
 	if err != nil {
@@ -66,6 +86,61 @@ func run(args []string, output io.Writer) error {
 		return json.NewEncoder(output).Encode(result)
 	}
 	return printReport(output, request, result, time.Since(started))
+}
+
+func printExperimentReport(output io.Writer, report app.ExperimentReport) error {
+	w := tabwriter.NewWriter(output, 0, 4, 2, ' ', 0)
+	fmt.Fprintf(w, "%s:\t%s (%s · #%d)\n", report.Text.Profile, report.Profile.Name, report.Profile.ID, report.Profile.CharacterID)
+	sharedVariants := strings.Replace(report.Text.SharedVariants, "{count}", fmt.Sprint(len(report.Variants)), 1)
+	fmt.Fprintf(w, "%s:\t%s\n", report.Text.InputSnapshot, sharedVariants)
+	fmt.Fprintln(w, report.Text.ActionDamageNote)
+	fmt.Fprintln(w, report.Text.RotationNote)
+	fmt.Fprintln(w, report.Text.ScoreScaleNote)
+	actionNames := map[string]string{}
+	actionIDs := []string{}
+	seen := map[string]bool{}
+	for _, variant := range report.Variants {
+		for _, action := range variant.ActionDamage {
+			actionNames[action.ID] = action.Name
+			if !seen[action.ID] {
+				seen[action.ID] = true
+				actionIDs = append(actionIDs, action.ID)
+			}
+		}
+	}
+	sort.Strings(actionIDs)
+	fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s Δ", report.Text.Variant, report.Text.Method, report.Text.Status, report.Text.RetainedEligible, report.Text.Visited, report.Text.Duration, report.Text.Arc, report.Text.BasicDamage)
+	for _, id := range actionIDs {
+		fmt.Fprintf(w, "\t%s Δ", actionNames[id])
+	}
+	fmt.Fprintln(w)
+	for _, variant := range report.Variants {
+		arc := "-"
+		if variant.EffectiveConfig.Arc != nil {
+			arc = fmt.Sprintf("%s %s %d", variant.EffectiveConfig.Arc.Name, report.Text.Level, variant.EffectiveConfig.Arc.Level)
+		}
+		fmt.Fprintf(w, "%s\t%s\t%s\t%d/%d\t%d\t%dms\t%s", variant.Name, variant.EffectiveConfig.Method, variant.Status, variant.SelectedCandidates, variant.EligibleCandidates, variant.VisitedStates, variant.DurationMS, arc)
+		if variant.BasicDamage == nil || variant.BasicDamage.GainPercent == nil {
+			fmt.Fprint(w, "\t-")
+		} else {
+			fmt.Fprintf(w, "\t%+.1f%%", *variant.BasicDamage.GainPercent)
+		}
+		actions := map[string]app.ExperimentActionDamage{}
+		for _, action := range variant.ActionDamage {
+			actions[action.ID] = action
+		}
+		for _, id := range actionIDs {
+			action, ok := actions[id]
+			if !ok || action.GainPercent == nil {
+				fmt.Fprint(w, "\t-")
+			} else {
+				fmt.Fprintf(w, "\t%+.1f%%", *action.GainPercent)
+			}
+		}
+		fmt.Fprintln(w)
+	}
+	fmt.Fprintln(w, report.Text.ScoresNotCompared)
+	return w.Flush()
 }
 
 func defaultStateDir() string {

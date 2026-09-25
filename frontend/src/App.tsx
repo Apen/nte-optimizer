@@ -7,7 +7,7 @@ import { ConsoleGrid } from './components/console-grid'
 import { SearchStatus, StatsEditor, normalizeGoalWeights, weightForGoal, weightKeyForGoal } from './components/optimizer-configuration'
 import { OptimizationLogDialog } from './components/optimization-log-dialog'
 import { DamagePreview } from './components/damage-preview'
-import { BuildRankingTable, ScoreDetailsDialog } from './components/build-ranking'
+import { BuildRankingTable, ScoreDetailsDialog, buildResultSignature, limitBuildResults } from './components/build-ranking'
 import { StatsComparison } from './components/stats-comparison'
 import { AdvancedResultDetails } from './components/advanced-result-details'
 import { UpdateDialog, type UpdateInfo } from './components/update-dialog'
@@ -256,10 +256,10 @@ function ResultView({result,characters,optimizationLog,profileName,onEquip,pinne
   useEffect(()=>setRank(0),[result])
   const allRanked=[result,...(result.alternatives||[]).map(item=>({...result,solution:item.solution,modules:item.modules,weapon:item.weapon,weapon_conditional_note:item.weapon_conditional_note,cartridge:item.cartridge,cartridge_breakdown:item.cartridge_breakdown,stats:item.stats,set:item.set,goals:item.goals,conditional_goals:item.conditional_goals,damage:item.damage}))]
   const seenBuilds=new Set<string>()
-  const ranked=allRanked.filter(build=>{const signature=buildResultSignature(build);if(seenBuilds.has(signature))return false;seenBuilds.add(signature);return true})
+  const ranked=allRanked.filter(build=>{const signature=buildResultSignature(build);if(seenBuilds.has(signature))return false;seenBuilds.add(signature);return true}).sort((left,right)=>(right.solution.ranking?.score??right.solution.score)-(left.solution.ranking?.score??left.solution.score))
   const shown=ranked[rank]||ranked[0]
   return <section className="results-section grid gap-5" aria-label={t('results_aria')}>
-    {ranked.length>1&&<BuildRankingTable builds={ranked.slice(0,40)} active={rank} onSelect={setRank} goals={goals} disabledGoals={disabledGoals} mainStats={mainStats}/>}
+    {ranked.length>1&&<BuildRankingTable builds={limitBuildResults(ranked)} active={rank} onSelect={setRank} goals={goals} disabledGoals={disabledGoals} mainStats={mainStats}/>}
     <div className="selected-build-summary">{shown.character && <img src={`/game_ui/characters/${shown.character.characterId}.png`} alt=""/>}<div className="selected-build-identity"><p className="eyebrow">{t('selected_build_rank',{number:String(rank+1).padStart(2,'0')})}</p><strong>{shown.character?.name || `${t('build')} #${String(rank+1).padStart(2,'0')}`}</strong><span>{profileName}</span></div><div className="selected-build-score"><small>{t('ranking')}</small><strong>{formatRanking(shown.solution.ranking?.score ?? shown.solution.score)}</strong></div><div className="selected-build-actions"><ScoreDetailsDialog build={shown} buildNumber={rank+1}/><AdvancedResultDetails result={shown}/>{(optimizationLog?.entries.length||0)>0&&<OptimizationLogDialog log={optimizationLog!}/>}</div></div>
     <Card><CardContent className="grid gap-5 pt-5"><p className="eyebrow">{t('build_section')}</p><div className="result-toolbar"><div className="result-tabs" role="group" aria-label={t('build_details')}>{[['stats','tab_stats'],['damage','tab_damage'],['equipment','tab_equipment']].map(([id,key])=><button key={id} aria-pressed={tab===id} onClick={()=>setTab(id)}>{t(key)}{id==='equipment'&&<span>{shown.modules.length+(shown.cartridge?1:0)+(shown.weapon?1:0)}</span>}</button>)}</div></div>
       {tab==='stats'&&<StatsComparison result={shown}/>}
@@ -268,11 +268,6 @@ function ResultView({result,characters,optimizationLog,profileName,onEquip,pinne
       <div className="flex justify-end border-t border-slate-800 pt-5"><Button onClick={()=>onEquip(shown)}><Save className="mr-2 size-4"/>{t('equip_build',{number:rank+1})}</Button></div>
     </CardContent></Card>
   </section>
-}
-
-function buildResultSignature(build:Result) {
-  const stats=Object.entries(build.stats.derived).sort(([a],[b])=>a.localeCompare(b)).map(([key,value])=>`${key}:${value.toFixed(6)}`).join('|')
-  return `${build.solution.selected_weapon_id||''}|${build.solution.selected_set_id||build.set.id||''}|${stats}`
 }
 
 function WeightedScore({value,label}:{value:number;label:string}) { return <span className="weighted-score" title={t('stat_relevance_description')}><small className="block">{label}</small><strong className="text-lg tabular-nums">{formatRanking(value)}</strong></span> }

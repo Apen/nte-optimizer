@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
+	"path/filepath"
 	"testing"
 
 	"nte-optimizer/internal/nte"
@@ -126,6 +127,7 @@ func TestPrepareSearchConfiguresExactnessAndTimeout(t *testing.T) {
 	}{
 		{name: "score", plan: searchPlan{requestedMode: "score", solverMode: "score", approximate: true}, configured: 7, wantTimeout: 7},
 		{name: "fast", plan: searchPlan{requestedMode: "fast", solverMode: "objective", approximate: true}, configured: 7, wantTimeout: 7, wantExact: true},
+		{name: "beta", plan: searchPlan{requestedMode: "beta", solverMode: "objective", approximate: true}, configured: 7, wantTimeout: 7, wantExact: true},
 		{name: "exact score", plan: searchPlan{requestedMode: "exact-score", solverMode: "score"}, configured: 20, wantTimeout: 0, wantExact: true},
 	}
 	for _, test := range tests {
@@ -133,8 +135,31 @@ func TestPrepareSearchConfiguresExactnessAndTimeout(t *testing.T) {
 			config := optimizerDataConfig{}
 			config.Optimize.TimeoutSeconds = test.configured
 			setup := (OptimizerService{}).prepareSearch(scoring.Character{}, scoring.References{}, optimizer.ShapeCatalog{}, optimizer.SetCatalog{}, config, nil, nil, nil, nil, test.plan, nil)
-			if setup.timeoutSeconds != test.wantTimeout || setup.solver.Exact != test.wantExact || setup.solver.KeepBest != 50 || setup.evaluator == nil {
-				t.Fatalf("unexpected search setup: timeout=%d exact=%v keep=%d evaluator=%T", setup.timeoutSeconds, setup.solver.Exact, setup.solver.KeepBest, setup.evaluator)
+			if setup.timeoutSeconds != test.wantTimeout || setup.solver.Exact != test.wantExact || setup.solver.KeepBest != 100 || setup.solver.StatReductionKeepBest != 50 || setup.evaluator == nil {
+				t.Fatalf("unexpected search setup: timeout=%d exact=%v keep=%d stat-reduction-keep=%d evaluator=%T", setup.timeoutSeconds, setup.solver.Exact, setup.solver.KeepBest, setup.solver.StatReductionKeepBest, setup.evaluator)
+			}
+		})
+	}
+}
+
+func TestDefaultSearchTimeoutIs60SecondsForFastAndBeta(t *testing.T) {
+	catalog, err := readOptimizerCatalog(filepath.Join("..", "..", "data"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := catalog.config.Optimize.TimeoutSeconds; got != 60 {
+		t.Fatalf("default optimizer timeout = %d seconds, want 60", got)
+	}
+
+	for _, mode := range []string{"fast", "beta"} {
+		t.Run(mode, func(t *testing.T) {
+			plan, err := parseSearchPlan(mode)
+			if err != nil {
+				t.Fatal(err)
+			}
+			setup := (OptimizerService{}).prepareSearch(scoring.Character{}, scoring.References{}, catalog.shapes, catalog.sets, catalog.config, nil, nil, nil, nil, plan, nil)
+			if setup.timeoutSeconds != 60 {
+				t.Fatalf("%s timeout = %d seconds, want 60", mode, setup.timeoutSeconds)
 			}
 		})
 	}

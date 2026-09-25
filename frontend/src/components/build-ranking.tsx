@@ -11,6 +11,27 @@ import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
 
 type Sort = { key: string; direction: 1 | -1 }
 
+export const MAX_DISPLAYED_BUILD_RESULTS = 100
+
+type BuildIdentity = {
+  modules: { module: { local_id: string } }[]
+  cartridge?: { local_id: string }
+  set: { id: string }
+  solution: { selected_weapon_id?: string; selected_cartridge_id?: string; selected_set_id?: string }
+}
+
+export function buildResultSignature(build: BuildIdentity) {
+  const modules = build.modules.map(entry => entry.module.local_id).sort().join(',')
+  const weapon = build.solution.selected_weapon_id || ''
+  const cartridge = build.solution.selected_cartridge_id || build.cartridge?.local_id || ''
+  const set = build.solution.selected_set_id || build.set.id || ''
+  return `${weapon}|${cartridge}|${set}|${modules}`
+}
+
+export function limitBuildResults<T>(builds: T[]) {
+  return builds.slice(0, MAX_DISPLAYED_BUILD_RESULTS)
+}
+
 export function buildResultColumns(goals: Pick<TargetGoal, 'property_id'>[], disabledGoals: string[], mainStats: string[]) {
   const seen = new Set<string>()
   return ['BasicDamageIndex', ...goals.filter(goal => !disabledGoals.includes(goal.property_id)).map(goal => goal.property_id), ...mainStats].filter(property => {

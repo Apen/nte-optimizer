@@ -52,6 +52,17 @@ func SaveProfileSettings(projectDir, profileID string, settings WeightOverrides)
 }
 
 func saveProfileSettings(projectDir, profileID string, settings WeightOverrides, state StrategyOverrides) (WeightOverrides, error) {
+	settings, err := ValidateProfileSettings(profileID, settings)
+	if err != nil {
+		return WeightOverrides{}, err
+	}
+	state.Profiles[profileID] = settings
+	return settings, writeJSON(workspaceFile(projectDir, "strategy_overrides.json"), state)
+}
+
+// ValidateProfileSettings applies the same normalization and validation as a
+// saved strategy without writing it to the user's workspace.
+func ValidateProfileSettings(profileID string, settings WeightOverrides) (WeightOverrides, error) {
 	if profileID == "" {
 		return WeightOverrides{}, fmt.Errorf("profile id is required")
 	}
@@ -69,8 +80,7 @@ func saveProfileSettings(projectDir, profileID string, settings WeightOverrides,
 			return WeightOverrides{}, fmt.Errorf("invalid goal settings for %s", property)
 		}
 	}
-	state.Profiles[profileID] = settings
-	return settings, writeJSON(workspaceFile(projectDir, "strategy_overrides.json"), state)
+	return settings, nil
 }
 
 func DeleteProfileStrategy(projectDir, profileID string) error {

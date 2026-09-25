@@ -2,6 +2,7 @@ package optimizer
 
 import (
 	"context"
+	"fmt"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -192,6 +193,35 @@ func TestSearchSolverKeepsDistinctBestSolutions(t *testing.T) {
 	}
 	if got.Score != 5 || len(got.Alternatives) != 2 || got.Alternatives[0].Score != 4 || got.Alternatives[1].Score != 3 {
 		t.Fatalf("unexpected ranked solutions: %#v", got)
+	}
+}
+
+func TestSearchSolverRetainsTop100Builds(t *testing.T) {
+	grid, err := NewGrid(1, 1, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	catalog := ShapeCatalog{Shapes: map[string]Shape{"SINGLE": {ID: "SINGLE", Cells: []Point{{0, 0}}}}}
+	candidates := make([]Candidate, 101)
+	for index := range candidates {
+		candidates[index] = Candidate{
+			Module: nte.Module{LocalID: fmt.Sprintf("module-%03d", index), Geometry: "SINGLE"},
+			Score:  float64(len(candidates) - index),
+		}
+	}
+
+	got, err := (SearchSolver{Catalog: catalog, Exact: true, KeepBest: 100, StatReductionKeepBest: 50}).Solve(context.Background(), grid, candidates)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !got.Complete || got.Score != 101 || len(got.Alternatives) != 99 {
+		t.Fatalf("retained result count = %d alternatives, best score=%v complete=%v; want 99 alternatives, score 101, complete", len(got.Alternatives), got.Score, got.Complete)
+	}
+	for index, alternative := range got.Alternatives {
+		wantScore := float64(100 - index)
+		if alternative.Score != wantScore {
+			t.Fatalf("alternative %d score = %v, want %v", index, alternative.Score, wantScore)
+		}
 	}
 }
 

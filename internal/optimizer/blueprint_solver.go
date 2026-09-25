@@ -101,6 +101,11 @@ func (s SearchSolver) solveByBlueprint(ctx context.Context, base Grid, candidate
 	if err != nil {
 		return Solution{}, false, err
 	}
+	keepBest := max(1, s.KeepBest)
+	statReductionKeepBest := s.StatReductionKeepBest
+	if statReductionKeepBest < 1 {
+		statReductionKeepBest = keepBest
+	}
 
 	if s.BlueprintCache != nil {
 		s.BlueprintCache.mu.RLock()
@@ -133,7 +138,7 @@ func (s SearchSolver) solveByBlueprint(ctx context.Context, base Grid, candidate
 	metrics.TheoreticalBeforeReduction = blueprintAssignmentTotal(blueprints, byGeometry)
 	if evaluator, ok := bonusEvaluator.(CartridgeSetEvaluator); ok && s.Exact && !s.DisableStatReduction {
 		reductionStarted := time.Now()
-		reduction := s.reduceBlueprintCandidates(base, usable, byGeometry, blueprints, evaluator)
+		reduction := s.reduceBlueprintCandidates(base, usable, byGeometry, blueprints, evaluator, statReductionKeepBest)
 		usable = reduction.usable
 		projection = reduction.projection
 		metrics.StatValues = reduction.statValues
@@ -154,7 +159,6 @@ func (s SearchSolver) solveByBlueprint(ctx context.Context, base Grid, candidate
 	if !placementsContainRequired(best.Placements, s.RequiredIDs) {
 		best = Solution{Complete: true}
 	}
-	keepBest := max(1, s.KeepBest)
 	leaderboard := newSolutionLeaderboard(best, keepBest)
 	var progressMu sync.Mutex
 	var lastProgress uint64
@@ -404,14 +408,14 @@ func finalizeBlueprintSolution(metrics SearchMetrics, best Solution, leaders []S
 	return best
 }
 
-func (s SearchSolver) reduceBlueprintCandidates(base Grid, usable []Candidate, byGeometry map[string][]Candidate, blueprints []geometryBlueprint, evaluator CartridgeSetEvaluator) candidateReduction {
+func (s SearchSolver) reduceBlueprintCandidates(base Grid, usable []Candidate, byGeometry map[string][]Candidate, blueprints []geometryBlueprint, evaluator CartridgeSetEvaluator, statReductionKeepBest int) candidateReduction {
 	maxSlots := map[string]int{}
 	for _, blueprint := range blueprints {
 		for _, group := range blueprintGroups(blueprint) {
 			maxSlots[group.geometry] = max(maxSlots[group.geometry], group.count)
 		}
 	}
-	reduced := evaluator.reduceStatCandidates(usable, s.Catalog, base.FreeCells(), s.KeepBest, s.RequiredIDs, maxSlots)
+	reduced := evaluator.reduceStatCandidates(usable, s.Catalog, base.FreeCells(), statReductionKeepBest, s.RequiredIDs, maxSlots)
 	retained := make(map[string]bool, len(reduced))
 	for _, candidate := range reduced {
 		retained[candidate.Module.LocalID] = true

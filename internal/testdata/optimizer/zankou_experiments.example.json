@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "variants": [
+    {"name": "baseline-fast", "method": "fast", "arc_fork_id": "fork_DemonBlade"},
+    {"name": "baseline-beta", "method": "beta", "arc_fork_id": "fork_DemonBlade"},
+    {"name": "atk-fast", "method": "fast", "arc_fork_id": "fork_DemonBlade", "weights": {"AtkUp": 0.75}},
+    {"name": "atk-beta", "method": "beta", "arc_fork_id": "fork_DemonBlade", "weights": {"AtkUp": 0.75}},
+    {"name": "crit-rate-fast", "method": "fast", "arc_fork_id": "fork_DemonBlade", "weights": {"CritBase": 1.05}},
+    {"name": "crit-rate-beta", "method": "beta", "arc_fork_id": "fork_DemonBlade", "weights": {"CritBase": 1.05}},
+    {"name": "crit-damage-fast", "method": "fast", "arc_fork_id": "fork_DemonBlade", "weights": {"CritDamageBase": 1.2}},
+    {"name": "crit-damage-beta", "method": "beta", "arc_fork_id": "fork_DemonBlade", "weights": {"CritDamageBase": 1.2}},
+    {"name": "cycle-intensity-fast", "method": "fast", "arc_fork_id": "fork_DemonBlade", "weights": {"MagBase": 1.05}},
+    {"name": "cycle-intensity-beta", "method": "beta", "arc_fork_id": "fork_DemonBlade", "weights": {"MagBase": 1.05}},
+    {"name": "universal-damage-fast", "method": "fast", "arc_fork_id": "fork_DemonBlade", "weights": {"DamageUpGeneralBase": 0.9}},
+    {"name": "universal-damage-beta", "method": "beta", "arc_fork_id": "fork_DemonBlade", "weights": {"DamageUpGeneralBase": 0.9}}
+  ]
+}

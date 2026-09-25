@@ -59,9 +59,11 @@ type SearchSolver struct {
 	DisableBound         bool
 	Progress             func(SearchProgress)
 	BlueprintCache       *BlueprintCache
-	KeepBest             int
-	RequiredIDs          map[string]bool
-	GeometryRequirements [][]string
+	KeepBest             int // Maximum ranked solutions retained, including the best solution.
+	// StatReductionKeepBest controls a separate dominance-pruning budget.
+	StatReductionKeepBest int
+	RequiredIDs           map[string]bool
+	GeometryRequirements  [][]string
 }
 
 type SearchProgress struct {

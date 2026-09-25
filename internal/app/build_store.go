@@ -9,6 +9,7 @@ import (
 
 	"nte-optimizer/internal/decoded"
 	ntelocale "nte-optimizer/internal/locale"
+	"nte-optimizer/internal/nte"
 )
 
 const localBuildSchemaVersion = 1
@@ -218,18 +219,35 @@ func HigherPriorityReservations(projectDir string, characterID int) (map[string]
 }
 
 func HigherPriorityReservationsWithArcs(projectDir string, characterID int) (map[string]bool, map[string]bool, map[string]bool, error) {
-	state, builds, err := loadBuildData(projectDir)
-	if err != nil {
-		return nil, nil, nil, err
-	}
-	builds.normalize(state.Characters)
 	inventory, account, loaded, err := loadAccountData(projectDir)
 	if err != nil {
 		return nil, nil, nil, err
 	}
 	if !loaded {
+		var builds LocalBuildState
+		buildsLoaded, buildsErr := readOptionalJSON(workspaceFile(projectDir, "local_builds.json"), &builds)
+		if buildsErr != nil {
+			return nil, nil, nil, buildsErr
+		}
+		if buildsLoaded {
+			return nil, nil, nil, fmt.Errorf("incomplete account workspace: local builds exist without decoded account state")
+		}
 		return nil, nil, nil, fmt.Errorf("no account has been imported")
 	}
+	return higherPriorityReservationsWithSnapshot(projectDir, characterID, inventory, account)
+}
+
+// higherPriorityReservationsWithSnapshot derives reservations from the account
+// data already loaded by a caller, keeping experiment variants on one snapshot.
+func higherPriorityReservationsWithSnapshot(projectDir string, characterID int, inventory nte.Inventory, account decoded.State) (map[string]bool, map[string]bool, map[string]bool, error) {
+	builds := LocalBuildState{SchemaVersion: localBuildSchemaVersion, Builds: map[string]LocalBuild{}}
+	if _, err := readOptionalJSON(workspaceFile(projectDir, "local_builds.json"), &builds); err != nil {
+		return nil, nil, nil, err
+	}
+	if builds.Builds == nil {
+		builds.Builds = map[string]LocalBuild{}
+	}
+	builds.normalize(account.Characters)
 	modules, cartridges, arcs := map[string]bool{}, map[string]bool{}, map[string]bool{}
 	for _, id := range builds.Priority {
 		if id == characterID {
