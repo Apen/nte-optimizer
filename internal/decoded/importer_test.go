@@ -64,6 +64,13 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	source.Identity.CharacterID, source.Identity.Name, source.Identity.NetID = 1036, "Zankou", characterNet
 	source.Progression.Level, source.Progression.BreakthroughLevel, source.Progression.AwakenLevel = 80, 6, 1
 	source.Progression.Skills = []CharacterSkill{{AbilityID: "GA_Zankou_Skill", Category: "Ability.Skill", Level: 8}}
+	attack, defense, critRate, critDamage := 1748.125, 1005.0, .73, 2.304
+	cycle, universalDamage, elementalDamage := 172.0, .2, .1
+	source.Stats = CharacterStats{
+		MaxHP: 23471.475, Attack: &attack, Defense: &defense, CritRate: &critRate, CritDamage: &critDamage,
+		CycleIntensity: &cycle, UniversalDMGBonus: &universalDamage, ElementalDMGBonus: &elementalDamage,
+		PanelBase: &CharacterPanelBase{MaxHP: 15514, Attack: 1230, Defense: 909}, Source: "unreal_attribute_set_and_equipment",
+	}
 	source.Equipment.Weapon = &Weapon{ID: weaponNet, ForkID: "fork_DemonBlade", Level: 80, Star: 1}
 	source.Equipment.Modules = []Equipment{{ID: moduleNet, EquippedPlacement: &EquipmentPlacement{Row: 2, Column: 3}}}
 	source.ObservedAtLogin = ObservedLoginState{Loaded: true, ActiveAwakeningLevels: []int{5}}
@@ -79,6 +86,9 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	character := got.State.Characters[0]
 	if character.AwakenLevel != 5 || character.ReportedAwakenLevel != 1 || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
 		t.Fatalf("new character data was not preserved: %#v", character)
+	}
+	if character.Stats.Attack == nil || *character.Stats.Attack != attack || character.Stats.Defense == nil || *character.Stats.Defense != defense || character.Stats.CritDamage == nil || *character.Stats.CritDamage != critDamage || character.Stats.PanelBase == nil || character.Stats.PanelBase.Attack != 1230 || character.Stats.Source != "unreal_attribute_set_and_equipment" {
+		t.Fatalf("observed panel stats were not preserved: %#v", character.Stats)
 	}
 	if character.ForkNetID == nil || character.ForkNetID.Key() != weaponNet.Key() || got.State.Weapons[0].EquippedCharacterID != 1036 {
 		t.Fatalf("embedded weapon was not linked: %#v %#v", character.ForkNetID, got.State.Weapons[0])

@@ -13,12 +13,13 @@ import (
 // CharacterGameState is a read-only snapshot of what the latest account import
 // reported as equipped in game. It is deliberately separate from LocalBuild.
 type CharacterGameState struct {
-	Character  decoded.Character      `json:"character"`
-	Weapon     *EquipmentCatalogArc   `json:"weapon,omitempty"`
-	Cartridges []nte.Cartridge        `json:"cartridges"`
-	Modules    []nte.Module           `json:"modules"`
-	Stats      *optimizer.StatSummary `json:"stats,omitempty"`
-	ImportedAt string                 `json:"imported_at,omitempty"`
+	Character          decoded.Character       `json:"character"`
+	ObservedPanelStats *decoded.CharacterStats `json:"observed_panel_stats,omitempty"`
+	Weapon             *EquipmentCatalogArc    `json:"weapon,omitempty"`
+	Cartridges         []nte.Cartridge         `json:"cartridges"`
+	Modules            []nte.Module            `json:"modules"`
+	Stats              *optimizer.StatSummary  `json:"stats,omitempty"`
+	ImportedAt         string                  `json:"imported_at,omitempty"`
 }
 
 func LoadCharacterGameState(projectDir, dataDir string, characterID int, language string) (CharacterGameState, error) {
@@ -56,6 +57,10 @@ func LoadCharacterGameState(projectDir, dataDir string, characterID int, languag
 		}
 		character.Name = cleanCharacterName(catalog.CharacterName(character.CharacterID, character.Name))
 		result.Character = character
+		if hasObservedPanelStats(character.Stats) {
+			panelStats := character.Stats
+			result.ObservedPanelStats = &panelStats
+		}
 		found = true
 		break
 	}
@@ -86,6 +91,13 @@ func LoadCharacterGameState(projectDir, dataDir string, characterID int, languag
 	}
 	result.Stats = stats
 	return result, nil
+}
+
+func hasObservedPanelStats(stats decoded.CharacterStats) bool {
+	return stats.Source != "" || stats.Attack != nil || stats.Defense != nil || stats.Endurance != nil ||
+		stats.CritRate != nil || stats.CritDamage != nil || stats.ChargeEfficiency != nil ||
+		stats.CycleIntensity != nil || stats.BreakIntensity != nil || stats.UniversalDMGBonus != nil ||
+		stats.ElementalDMGBonus != nil
 }
 
 func loadCurrentCharacterStats(dataDir string, state *decoded.State, character decoded.Character, modules []nte.Module, cartridges []nte.Cartridge, language string) (*optimizer.StatSummary, error) {

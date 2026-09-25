@@ -62,8 +62,28 @@ type CharacterSkill struct {
 	Category  string `json:"category"`
 	Level     int    `json:"level"`
 }
+
+// CharacterStats preserves the latest scanned in-game panel when available.
 type CharacterStats struct {
-	MaxHP float64 `json:"maxHp,omitempty"`
+	MaxHP             float64             `json:"maxHp,omitempty"`
+	Attack            *float64            `json:"attack,omitempty"`
+	Defense           *float64            `json:"defense,omitempty"`
+	Endurance         *float64            `json:"endurance,omitempty"`
+	CritRate          *float64            `json:"critRate,omitempty"`
+	CritDamage        *float64            `json:"critDamage,omitempty"`
+	ChargeEfficiency  *float64            `json:"chargeEfficiency,omitempty"`
+	CycleIntensity    *float64            `json:"cycleIntensity,omitempty"`
+	BreakIntensity    *float64            `json:"breakIntensity,omitempty"`
+	UniversalDMGBonus *float64            `json:"universalDamageBonus,omitempty"`
+	ElementalDMGBonus *float64            `json:"elementalDamageBonus,omitempty"`
+	PanelBase         *CharacterPanelBase `json:"panelBase,omitempty"`
+	Source            string              `json:"source,omitempty"`
+}
+
+type CharacterPanelBase struct {
+	MaxHP   float64 `json:"maxHp"`
+	Attack  float64 `json:"attack"`
+	Defense float64 `json:"defense"`
 }
 type CharacterSavedState struct {
 	HealthRatio float64 `json:"healthRatio,omitempty"`

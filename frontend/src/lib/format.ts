@@ -1,6 +1,6 @@
 import { currentIntlLocale, t } from '../i18n'
 
-const percentStats = new Set(['CritBase','CritDamageBase','DamageUpGeneralBase','DamageUpIncantationBase','DamageUpChaosBase','DamageUpCosmosBase','DamageUpLakshanaBase','DamageUpNatureBase','DamageUpPsycheBase','DamageUpPsychicallyBase','AtkUp','HPMaxUp','HPUp','DefUp','HealUp','ShieldEfficiency','DefenseIgnoreBase','ChargeGetEfficiencyBase','ResistanceIgnoreChaosBase'])
+const percentStats = new Set(['CritBase','CritDamageBase','DamageUpGeneralBase','DamageUpIncantationBase','DamageUpChaosBase','DamageUpCosmosBase','DamageUpLakshanaBase','DamageUpNatureBase','DamageUpPsycheBase','DamageUpPsychicallyBase','ElementalDMGBonus','AtkUp','HPMaxUp','HPUp','DefUp','HealUp','ShieldEfficiency','DefenseIgnoreBase','ChargeGetEfficiencyBase','ResistanceIgnoreChaosBase'])
 
 export function formatStat(key: string, value: number) {
   if (percentStats.has(key)) return `${(value * 100).toFixed(1)} %`
