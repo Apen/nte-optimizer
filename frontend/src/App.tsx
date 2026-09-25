@@ -20,7 +20,7 @@ import { CharacterStatePage } from './pages/character-state-page'
 import { ArcsPage, CartridgesPage, ModulesPage, ResourcesPage } from './pages/inventory-pages'
 import { formatRanking } from './lib/format'
 import { PresentationProvider } from './presentation'
-import type { AccountImportSummary, BuildWorkspace as Workspace, EquipmentCatalog as Catalog, InventoryArc, LocalizationCatalog, OptimizationLog, OptimizedModule, Profile, Result, SearchProgress, TargetGoal, TargetPreset, WorkspaceCharacter } from './types'
+import type { AccountImportSummary, BuildWorkspace as Workspace, EquipmentCatalog as Catalog, InventoryArc, LocalizationCatalog, OptimizationLog, OptimizedModule, Profile, Result, SavedBuild, SearchProgress, TargetGoal, TargetPreset, WorkspaceCharacter } from './types'
 import { applyLocalization, currentIntlLocale, initialLocale, setActiveLocale, t, type Locale } from './i18n'
 
 const unavailableObjectiveProperties = new Set([
@@ -55,6 +55,7 @@ export function App() {
   const [stopping,setStopping]=useState(false)
   const [progress,setProgress]=useState<SearchProgress>()
   const [result,setResult]=useState<Result>()
+  const [savedBuildSelection,setSavedBuildSelection]=useState<SavedBuild>()
   const [settingsOpen,setSettingsOpen]=useState(true)
   const [pinnedModules,setPinnedModules]=useState<string[]>([])
   const [excludedModules,setExcludedModules]=useState<string[]>([])
@@ -193,7 +194,7 @@ export function App() {
 
   function resetTargets(save=false) { if(preset){const nextGoals=Object.fromEntries(preset.goals.map(goal=>[goal.property_id,displayGoal(goal)])),nextMaximums=Object.fromEntries(preset.goals.map(goal=>[goal.property_id,goal.maximum!=null?(goal.percent?goal.maximum*100:goal.maximum):0])),nextTolerances=Object.fromEntries(preset.goals.map(goal=>[goal.property_id,5]));setCustomGoals([]);setGoals(nextGoals);setMaximums(nextMaximums);setTolerances(nextTolerances);setDisabledGoals([]);setStrictGoals([]);setStrictMinimums({});if(save)void persistSettings(nextGoals,nextMaximums,nextTolerances,[],[],{},preset.goals,weights) } }
   async function optimize() {
-    setRunning(true); setStopping(false); setResult(undefined); setOptimizationError(false); setOptimizationLog(undefined); setProgress({visited:0,total:0,elapsed_ms:0,candidates:0,workers:0})
+    setRunning(true); setStopping(false); setResult(undefined); setSavedBuildSelection(undefined); setOptimizationError(false); setOptimizationLog(undefined); setProgress({visited:0,total:0,elapsed_ms:0,candidates:0,workers:0})
     try {
       if(!await persistSettings())return
       const baseGoalIDs=new Set((preset?.goals||[]).map(goal=>goal.property_id))
@@ -206,12 +207,12 @@ export function App() {
   async function saveCharacterOrder(ids:number[]) { try{setWorkspace(await SetCharacterPriority(ids,locale) as Workspace)}catch(error){console.error('Failed to save character order',error)} }
   async function moveCharacter(characterID:number,direction:-1|1) { const ids=workspace.characters.map(character=>character.character_id),index=ids.indexOf(characterID),target=index+direction;if(index<0||target<0||target>=ids.length)return;[ids[index],ids[target]]=[ids[target],ids[index]];await saveCharacterOrder(ids) }
   async function equipResult(build=result) { if(!build?.character)return;try{setWorkspace(await EquipBuildResult(build,locale) as Workspace)}catch(error){console.error('Failed to equip and save build',error)} }
-  async function openCharacterBuild(id:number) { selectCharacter(id);setPage('builds');const character=workspace.characters.find(item=>item.character_id===id);if(!character?.build){setResult(undefined);return}try{setResult(await SavedBuildResult(id) as Result)}catch(error){setResult(undefined);console.error('Failed to load saved build',error)} }
-  async function refreshImportedData(summary:AccountImportSummary) { const [nextWorkspace,nextCatalog]=await Promise.all([BuildWorkspace(locale),EquipmentCatalog(locale)]);setWorkspace(nextWorkspace as Workspace);setCatalog(nextCatalog as Catalog);setCatalogLoaded(true);setImportSummary(summary);setResult(undefined) }
+  async function openCharacterBuild(id:number) { selectCharacter(id);setPage('builds');const character=workspace.characters.find(item=>item.character_id===id);setSavedBuildSelection(character?.build);if(!character?.build){setResult(undefined);return}try{setResult(await SavedBuildResult(id) as Result)}catch(error){setSavedBuildSelection(undefined);setResult(undefined);console.error('Failed to load saved build',error)} }
+  async function refreshImportedData(summary:AccountImportSummary) { const [nextWorkspace,nextCatalog]=await Promise.all([BuildWorkspace(locale),EquipmentCatalog(locale)]);setWorkspace(nextWorkspace as Workspace);setCatalog(nextCatalog as Catalog);setCatalogLoaded(true);setImportSummary(summary);setResult(undefined);setSavedBuildSelection(undefined) }
 
   const togglePinned=(id:string)=>{setExcludedModules(items=>items.filter(item=>item!==id));setPinnedModules(items=>items.includes(id)?items.filter(item=>item!==id):[...items,id])}
   const toggleExcluded=(id:string)=>{setPinnedModules(items=>items.filter(item=>item!==id));setExcludedModules(items=>items.includes(id)?items.filter(item=>item!==id):[...items,id])}
-  const selectCharacter=(id:number)=>{selectionTouched.current=true;setSelectedCharacter(id);setResult(undefined);setPinnedModules([]);setExcludedModules([])}
+  const selectCharacter=(id:number)=>{selectionTouched.current=true;setSelectedCharacter(id);setResult(undefined);setSavedBuildSelection(undefined);setPinnedModules([]);setExcludedModules([])}
   return <PresentationProvider catalog={presentation}><div className="app-shell">{update&&<UpdateDialog update={update} onClose={()=>setUpdate(undefined)}/>}<AppSidebar page={page} onPage={setPage} characters={workspace.characters} catalog={catalog} importSummary={importSummary} locale={locale} onLocaleChange={setLocale}/><main className="app-main">
     <MobileNavigation page={page} onPage={setPage} locale={locale} onLocaleChange={setLocale}/>
     {page==='characters'?<CharactersPage characters={workspace.characters} selected={selectedCharacter} onSelect={selectCharacter} onMove={moveCharacter} onReorder={ids=>void saveCharacterOrder(ids)} onBuild={openCharacterBuild} onState={id=>{selectCharacter(id);setPage('character-state')}}/>:page==='character-state'?<CharacterStatePage characterID={selectedCharacter} locale={locale} onBack={()=>setPage('characters')}/>:page==='cartridges'?<CartridgesPage items={catalog.cartridges} characters={workspace.characters}/>:page==='modules'?<ModulesPage items={catalog.modules} characters={workspace.characters}/>:page==='arcs'?<ArcsPage items={catalog.arcs}/>:page==='resources'?<ResourcesPage items={catalog.resources}/>:page==='import'?<ImportPage summary={importSummary} locale={locale} onImported={refreshImportedData}/>:<>
@@ -232,7 +233,7 @@ export function App() {
      {optimizationError&&<div className="optimization-error" role="alert"><div><strong>{t('optimization_failed')}</strong><p>{t('optimization_failed_description')}</p></div>{optimizationLog?.status==='error'&&<OptimizationLogDialog log={optimizationLog}/>}</div>}
      {running&&<div className="search-stop-row"><Button variant="destructive" disabled={stopping} onClick={stop}><Square className="mr-2 size-4"/>{stopping?t('stop_loading'):t('stop_and_keep')}</Button></div>}
      {running&&<SearchStatus progress={progress}/>}
-     {result&&<ResultView result={result} characters={workspace.characters} optimizationLog={optimizationLog} profileName={profiles.find(item=>item.id===result.profile_id)?.name || t('profile')} onEquip={equipResult} pinned={pinnedModules} excluded={excludedModules} onPin={togglePinned} onExclude={toggleExcluded} goals={goalDefinitions} disabledGoals={disabledGoals} mainStats={weights.main_stats}/>}
+     {result&&<ResultView result={result} savedBuild={savedBuildSelection} characters={workspace.characters} optimizationLog={optimizationLog} profileName={profiles.find(item=>item.id===result.profile_id)?.name || t('profile')} onEquip={equipResult} pinned={pinnedModules} excluded={excludedModules} onPin={togglePinned} onExclude={toggleExcluded} goals={goalDefinitions} disabledGoals={disabledGoals} mainStats={weights.main_stats}/>}
     </>}
   </main>{saveToast&&<div className={`save-toast fixed bottom-6 right-6 z-[100] flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-semibold shadow-2xl shadow-black/50 ${saveToast.error?'border-rose-700 bg-rose-950/95 text-rose-100':'border-emerald-700 bg-emerald-950/95 text-emerald-100'}`} role={saveToast.error?'alert':'status'} aria-live={saveToast.error?'assertive':'polite'}>{saveToast.error?<CircleAlert className="size-5 text-rose-400" aria-hidden="true"/>:<CheckCircle2 className="size-5 text-emerald-400" aria-hidden="true"/>}<span>{saveToast.message}</span></div>}</div></PresentationProvider>
 }
@@ -250,13 +251,13 @@ function ConstraintChip({id,kind,onRemove}:{id:string;kind:'locked'|'excluded';o
 
 function EmptyGear({label}:{label:string}) { return <div className="grid min-h-28 place-items-center rounded-xl border border-dashed border-slate-700 text-sm text-slate-500">{label}</div> }
 
-function ResultView({result,characters,optimizationLog,profileName,onEquip,pinned,excluded,onPin,onExclude,goals,disabledGoals,mainStats}:{result:Result;characters:WorkspaceCharacter[];optimizationLog?:OptimizationLog;profileName:string;onEquip:(result:Result)=>void;pinned:string[];excluded:string[];onPin:(id:string)=>void;onExclude:(id:string)=>void;goals:TargetGoal[];disabledGoals:string[];mainStats:string[]}) {
+function ResultView({result,savedBuild,characters,optimizationLog,profileName,onEquip,pinned,excluded,onPin,onExclude,goals,disabledGoals,mainStats}:{result:Result;savedBuild?:SavedBuild;characters:WorkspaceCharacter[];optimizationLog?:OptimizationLog;profileName:string;onEquip:(result:Result)=>void;pinned:string[];excluded:string[];onPin:(id:string)=>void;onExclude:(id:string)=>void;goals:TargetGoal[];disabledGoals:string[];mainStats:string[]}) {
   const [rank,setRank]=useState(0)
   const [tab,setTab]=useState('stats')
-  useEffect(()=>setRank(0),[result])
   const allRanked=[result,...(result.alternatives||[]).map(item=>({...result,solution:item.solution,modules:item.modules,weapon:item.weapon,weapon_conditional_note:item.weapon_conditional_note,cartridge:item.cartridge,cartridge_breakdown:item.cartridge_breakdown,stats:item.stats,set:item.set,goals:item.goals,conditional_goals:item.conditional_goals,damage:item.damage}))]
   const seenBuilds=new Set<string>()
   const ranked=allRanked.filter(build=>{const signature=buildResultSignature(build);if(seenBuilds.has(signature))return false;seenBuilds.add(signature);return true}).sort((left,right)=>(right.solution.ranking?.score??right.solution.score)-(left.solution.ranking?.score??left.solution.score))
+  useEffect(()=>setRank(savedBuild?findSavedBuildRank(ranked,savedBuild,result):0),[result,savedBuild])
   const shown=ranked[rank]||ranked[0]
   return <section className="results-section grid gap-5" aria-label={t('results_aria')}>
     {ranked.length>1&&<BuildRankingTable builds={limitBuildResults(ranked)} active={rank} onSelect={setRank} goals={goals} disabledGoals={disabledGoals} mainStats={mainStats}/>}
@@ -268,6 +269,18 @@ function ResultView({result,characters,optimizationLog,profileName,onEquip,pinne
       <div className="flex justify-end border-t border-slate-800 pt-5"><Button onClick={()=>onEquip(shown)}><Save className="mr-2 size-4"/>{t('equip_build',{number:rank+1})}</Button></div>
     </CardContent></Card>
   </section>
+}
+
+function findSavedBuildRank(builds:Result[],savedBuild:SavedBuild,savedResult:Result) {
+  const savedModules=[...savedBuild.module_ids].sort()
+  const savedBuildRank=builds.findIndex(build=>{
+    const moduleIDs=build.modules.map(entry=>entry.module.local_id).sort()
+    return moduleIDs.length===savedModules.length&&moduleIDs.every((id,index)=>id===savedModules[index])
+      &&(build.cartridge?.local_id||'')===(savedBuild.cartridge_id||'')
+      &&(build.solution.selected_weapon_id||'')===(savedBuild.arc_id||'')
+  })
+  if(savedBuildRank>=0)return savedBuildRank
+  return Math.max(0,builds.findIndex(build=>buildResultSignature(build)===buildResultSignature(savedResult)))
 }
 
 function WeightedScore({value,label}:{value:number;label:string}) { return <span className="weighted-score" title={t('stat_relevance_description')}><small className="block">{label}</small><strong className="text-lg tabular-nums">{formatRanking(value)}</strong></span> }
