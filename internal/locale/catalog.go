@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"nte-optimizer/internal/datafiles"
+	"nte-optimizer/internal/decoded"
 	"os"
 	"strconv"
 	"strings"
@@ -30,22 +31,27 @@ type Catalog struct {
 	Items         map[string]Item               `json:"items,omitempty"`
 	Resources     map[string]string             `json:"resources,omitempty"`
 	Sets          map[string]string             `json:"sets,omitempty"`
+	ForkEffects   map[string]string             `json:"fork_effects,omitempty"`
+	SetEffects    map[string]string             `json:"set_effects,omitempty"`
 }
 
 // PresentationCatalog contains labels owned by the application. Labels
 // extracted from NTE are loaded independently from data/game/locales.
 type PresentationCatalog struct {
-	Schema        string                        `json:"schema"`
-	SchemaVersion int                           `json:"schema_version"`
-	Locale        string                        `json:"locale"`
-	Sources       map[string]PresentationSource `json:"sources,omitempty"`
-	UI            map[string]string             `json:"ui"`
-	Stats         map[string]string             `json:"stats"`
-	Qualities     map[string]string             `json:"qualities"`
-	Geometries    map[string]string             `json:"geometries"`
-	StatSources   map[string]string             `json:"stat_sources"`
-	Damage        map[string]PresentationDamage `json:"damage"`
-	Abilities     map[string]string             `json:"abilities,omitempty"`
+	Schema               string                                   `json:"schema"`
+	SchemaVersion        int                                      `json:"schema_version"`
+	Locale               string                                   `json:"locale"`
+	Sources              map[string]PresentationSource            `json:"sources,omitempty"`
+	UI                   map[string]string                        `json:"ui"`
+	Stats                map[string]string                        `json:"stats"`
+	Qualities            map[string]string                        `json:"qualities"`
+	Geometries           map[string]string                        `json:"geometries"`
+	StatSources          map[string]string                        `json:"stat_sources"`
+	Damage               map[string]PresentationDamage            `json:"damage"`
+	Abilities            map[string]string                        `json:"abilities,omitempty"`
+	ForkEffects          map[string]string                        `json:"fork_effects,omitempty"`
+	ForkEffectParameters map[string][]decoded.ForkEffectParameter `json:"fork_effect_parameters,omitempty"`
+	SetEffects           map[string]string                        `json:"set_effects,omitempty"`
 }
 
 type PresentationSource struct {
@@ -93,6 +99,8 @@ func Load(dataDir, language string) (Catalog, error) {
 	catalog.Abilities = game.skillLabels()
 	catalog.Resources = game.Tables["resources"]
 	catalog.Sets = game.Tables["sets"]
+	catalog.ForkEffects = game.Tables["fork_effects"]
+	catalog.SetEffects = game.Tables["set_effects"]
 	return catalog, nil
 }
 
@@ -149,19 +157,40 @@ func LoadPresentation(dataDir, language string) (PresentationCatalog, error) {
 	if err != nil {
 		return PresentationCatalog{}, err
 	}
+	forkCatalog, err := decoded.LoadForkCatalog(datafiles.New(dataDir).Arcs())
+	if err != nil {
+		return PresentationCatalog{}, fmt.Errorf("load Arc effect parameters: %w", err)
+	}
+	forkEffectParameters := forkEffectParametersFromCatalog(forkCatalog)
 	return PresentationCatalog{
-		Schema:        catalog.Schema,
-		SchemaVersion: catalog.SchemaVersion,
-		Locale:        catalog.Locale,
-		Sources:       catalog.Sources,
-		UI:            catalog.UI,
-		Stats:         catalog.Stats,
-		Qualities:     catalog.Qualities,
-		Geometries:    catalog.Geometries,
-		StatSources:   catalog.StatSources,
-		Damage:        catalog.Damage,
-		Abilities:     catalog.Abilities,
+		Schema:               catalog.Schema,
+		SchemaVersion:        catalog.SchemaVersion,
+		Locale:               catalog.Locale,
+		Sources:              catalog.Sources,
+		UI:                   catalog.UI,
+		Stats:                catalog.Stats,
+		Qualities:            catalog.Qualities,
+		Geometries:           catalog.Geometries,
+		StatSources:          catalog.StatSources,
+		Damage:               catalog.Damage,
+		Abilities:            catalog.Abilities,
+		ForkEffects:          catalog.ForkEffects,
+		ForkEffectParameters: forkEffectParameters,
+		SetEffects:           catalog.SetEffects,
 	}, nil
+}
+
+func forkEffectParametersFromCatalog(catalog decoded.ForkCatalog) map[string][]decoded.ForkEffectParameter {
+	parameters := map[string][]decoded.ForkEffectParameter{}
+	for forkID, fork := range catalog.Forks {
+		for star, effect := range fork.EffectsByStar {
+			if len(effect.OrderedParameters) == 0 {
+				continue
+			}
+			parameters[forkID+"_"+star] = effect.OrderedParameters
+		}
+	}
+	return parameters
 }
 
 func (c Catalog) ItemName(id, fallback string) string {

@@ -23,7 +23,7 @@ export type Result = {
   profile_id: string
   grid: { width: number; height: number; playable: Cell[] }
   modules: OptimizedModule[]
-  cartridge?: { local_id: string; game_item_id: string; set_name: string; main_stats: Stat[]; sub_stats: Stat[]; equipped_character_id?:number }
+  cartridge?: { local_id: string; game_item_id: string; set_id: string; set_name: string; main_stats: Stat[]; sub_stats: Stat[]; equipped_character_id?:number }
   cartridge_breakdown?: { total: number; contributions?: EquipmentScoreContribution[] }
   stats: StatSummary
   current_stats?: StatSummary
@@ -53,8 +53,10 @@ export type InventoryCartridge = { local_id:string; game_item_id?:string; set_id
 export type InventoryArc = { id:{solt:number;serial:number}; forkId:string; name:string; quality:string; level:number; breakthrough:number; star:number; equippedCharacterId?:number; equipped_character_name?:string; compatible_characters?:{character_id:number;name:string}[] }
 export type InventoryResource = { id:{solt:number;serial:number}; itemId:string; name:string; quality?:string; quantity:number }
 export type EquipmentCatalog = { modules:InventoryModule[]; cartridges:InventoryCartridge[]; arcs:InventoryArc[]; resources:InventoryResource[] }
-export type LocalizationCatalog = { locale:string; ui:Record<string,string>; stats:Record<string,string>; qualities:Record<string,string>; geometries:Record<string,string>; stat_sources:Record<string,string>; damage:Record<string,{name:string;description?:string}>; abilities?:Record<string,string> }
+export type ArcEffectParameter = { name_id: string; value: number; is_percent: boolean }
+export type LocalizationCatalog = { locale:string; ui:Record<string,string>; stats:Record<string,string>; qualities:Record<string,string>; geometries:Record<string,string>; stat_sources:Record<string,string>; damage:Record<string,{name:string;description?:string}>; abilities?:Record<string,string>; fork_effects?:Record<string,string>; fork_effect_parameters?:Record<string,ArcEffectParameter[]>; set_effects?:Record<string,string> }
 export type CharacterSkill = { abilityId:string; category:string; level:number }
-export type CurrentCharacter = { characterId:number; name:string; codename:string; level:number; breakthroughLevel:number; awakenLevel:number; skills?:CharacterSkill[]; stats?:{maxHp?:number}; savedState?:{healthRatio?:number}; observedAtLogin?:{loaded:boolean;activeAwakeningLevels?:number[];activeAwakeningBuffs?:string[];activeEquipmentBuffs?:{equipmentId:number;buff:string;setId:string;setName:string;pieces:number;effect:string}[];activeWeaponBuffs?:{forkId:string;buff:string;star:number}[]} }
-export type CharacterGameSnapshot = { character:CurrentCharacter; weapon?:InventoryArc; cartridges:InventoryCartridge[]; modules:InventoryModule[]; stats?:StatSummary; imported_at?:string }
+export type ObservedPanelStats = { maxHp?:number; attack?:number; defense?:number; endurance?:number; critRate?:number; critDamage?:number; chargeEfficiency?:number; cycleIntensity?:number; breakIntensity?:number; universalDamageBonus?:number; elementalDamageBonus?:number; panelBase?:{maxHp:number;attack:number;defense:number}; source?:string }
+export type CurrentCharacter = { characterId:number; name:string; codename:string; level:number; breakthroughLevel:number; awakenLevel:number; skills?:CharacterSkill[]; stats?:ObservedPanelStats; savedState?:{healthRatio?:number}; observedAtLogin?:{loaded:boolean;activeAwakeningLevels?:number[];activeAwakeningBuffs?:string[];activeEquipmentBuffs?:{equipmentId:number;buff:string;setId:string;setName:string;pieces:number;effect:string}[];activeWeaponBuffs?:{forkId:string;buff:string;star:number}[]} }
+export type CharacterGameSnapshot = { character:CurrentCharacter; observed_panel_stats?:ObservedPanelStats; weapon?:InventoryArc; cartridges:InventoryCartridge[]; modules:InventoryModule[]; stats?:StatSummary; imported_at?:string }
 export type AccountImportSummary = { has_import:boolean; imported_at?:string; source_generated_at?:string; characters:number; modules:number; cartridges:number; weapons:number; warnings?:string[] }

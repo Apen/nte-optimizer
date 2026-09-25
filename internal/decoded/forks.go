@@ -20,8 +20,58 @@ type ForkDefinition struct {
 }
 
 type ForkEffect struct {
-	Parameters map[string]float64 `json:"parameters,omitempty"`
+	// Parameters is retained for older catalogs. Its map order is not meaningful,
+	// so only OrderedParameters can be used to fill positional description tokens.
+	Parameters        map[string]float64    `json:"-"`
+	OrderedParameters []ForkEffectParameter `json:"-"`
 }
+
+type ForkEffectParameter struct {
+	NameID    string  `json:"name_id"`
+	Value     float64 `json:"value"`
+	IsPercent bool    `json:"is_percent"`
+}
+
+func (effect *ForkEffect) UnmarshalJSON(data []byte) error {
+	var raw struct {
+		Parameters     json.RawMessage       `json:"parameters"`
+		ParameterOrder []ForkEffectParameter `json:"parameter_order,omitempty"`
+	}
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	if len(raw.Parameters) == 0 || string(raw.Parameters) == "null" {
+		*effect = ForkEffect{}
+		return nil
+	}
+
+	if raw.Parameters[0] == '[' {
+		if err := json.Unmarshal(raw.Parameters, &effect.OrderedParameters); err != nil {
+			return err
+		}
+		return nil
+	}
+	if err := json.Unmarshal(raw.Parameters, &effect.Parameters); err != nil {
+		return err
+	}
+	if len(raw.ParameterOrder) > 0 {
+		effect.OrderedParameters = make([]ForkEffectParameter, 0, len(raw.ParameterOrder))
+		for _, parameter := range raw.ParameterOrder {
+			value, ok := effect.Parameters[parameter.NameID]
+			if !ok {
+				continue
+			}
+			parameter.Value = value
+			effect.OrderedParameters = append(effect.OrderedParameters, parameter)
+		}
+	}
+	return nil
+}
+
+func (effect ForkEffect) HasParameters() bool {
+	return len(effect.Parameters) > 0 || len(effect.OrderedParameters) > 0
+}
+
 type ForkCatalog struct {
 	SchemaVersion int                       `json:"schema_version"`
 	Forks         map[string]ForkDefinition `json:"forks"`
@@ -55,7 +105,7 @@ func (c ForkCatalog) Stats(weapon Weapon) (panel, permanent, conditional []nte.S
 	permanent = definition.PermanentByStar[star]
 	conditional = definition.ConditionalByStar[star]
 	note = definition.ConditionalNote
-	if note == "" && len(definition.EffectsByStar[star].Parameters) > 0 && len(conditional) == 0 {
+	if note == "" && definition.EffectsByStar[star].HasParameters() && len(conditional) == 0 {
 		note = "The Arc effect was imported, but its conditions are not yet included in the maximum projection."
 	}
 	return panel, permanent, conditional, note

@@ -4,9 +4,12 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"reflect"
 	"runtime"
 	"strings"
 	"testing"
+
+	"nte-optimizer/internal/decoded"
 )
 
 func TestCatalogUsesStableFallbackForUnknownGameObject(t *testing.T) {
@@ -51,7 +54,7 @@ func TestProductionCatalogLoadsSkillLabelsFromGameLocale(t *testing.T) {
 	}
 }
 
-func TestProductionCatalogLoadsEveryResourceLabelFromGameLocale(t *testing.T) {
+func TestProductionCatalogLoadsAvailableResourceLabelsFromGameLocale(t *testing.T) {
 	dataDir := filepath.Join("..", "..", "data")
 	var decoded struct {
 		Items map[string]json.RawMessage `json:"items"`
@@ -69,13 +72,23 @@ func TestProductionCatalogLoadsEveryResourceLabelFromGameLocale(t *testing.T) {
 			t.Fatal(err)
 		}
 		for id := range decoded.Items {
-			if label, exists := catalog.Resources[id]; !exists || strings.TrimSpace(label) == "" {
-				t.Errorf("%s resource %s has no localized game label", language, id)
+			if label, exists := catalog.Resources[id]; exists && strings.TrimSpace(label) == "" {
+				t.Errorf("%s resource %s has an empty localized game label", language, id)
 			}
 			if _, duplicated := catalog.Items[id]; duplicated {
 				t.Errorf("%s resource %s is duplicated in the character/arc item catalog", language, id)
 			}
 		}
+	}
+}
+
+func TestResourceNameFallsBackToIDWhenGameLabelIsUnavailable(t *testing.T) {
+	catalog, err := Load(filepath.Join("..", "..", "data"), "en")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := catalog.ResourceName("Fishbait01", ""); got != "Fishbait01" {
+		t.Fatalf("ResourceName() = %q, want ID fallback %q", got, "Fishbait01")
 	}
 }
 
@@ -85,7 +98,6 @@ func TestProductionGameLocalesCoverEveryRuntimeCatalogID(t *testing.T) {
 	expected := map[string][]string{
 		"characters": objectKeys(t, filepath.Join(gameDir, "characters", "decode.json"), "characters"),
 		"forks":      objectKeys(t, filepath.Join(gameDir, "forks", "decode.json"), "forks"),
-		"resources":  objectKeys(t, filepath.Join(gameDir, "resources", "decode.json"), "items"),
 		"sets":       arrayIDs(t, filepath.Join(gameDir, "equipment", "sets.json"), "sets"),
 	}
 	for _, language := range []string{"fr", "en"} {
@@ -98,6 +110,15 @@ func TestProductionGameLocalesCoverEveryRuntimeCatalogID(t *testing.T) {
 				if strings.TrimSpace(game.Tables[table][id]) == "" {
 					t.Errorf("%s tables.%s is missing runtime id %q", language, table, id)
 				}
+			}
+		}
+		gameResources, err := loadGameLocale(filepath.Join(gameDir, "locales", language+".json"), language)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, id := range objectKeys(t, filepath.Join(gameDir, "resources", "decode.json"), "items") {
+			if label, exists := gameResources.Tables["resources"][id]; exists && strings.TrimSpace(label) == "" {
+				t.Errorf("%s tables.resources contains an empty value for %q", language, id)
 			}
 		}
 	}
@@ -194,6 +215,64 @@ func TestPresentationCatalogsHaveMatchingKeys(t *testing.T) {
 	for key := range en.Damage {
 		if _, ok := fr.Damage[key]; !ok {
 			t.Errorf("damage key %q missing from fr", key)
+		}
+	}
+}
+
+func TestForkEffectParametersArePresentedInSourceOrder(t *testing.T) {
+	catalog := decoded.ForkCatalog{Forks: map[string]decoded.ForkDefinition{
+		"fork_DemonBlade": {EffectsByStar: map[string]decoded.ForkEffect{
+			"1": {OrderedParameters: []decoded.ForkEffectParameter{
+				{NameID: "buff_DemonBlade_Crit", Value: .16, IsPercent: true},
+				{NameID: "buff_DemonBlade_CritDamageUp", Value: .09, IsPercent: true},
+				{NameID: "buff_DemonBlade_CD", Value: 15},
+			}},
+		}},
+	}}
+
+	got := forkEffectParametersFromCatalog(catalog)["fork_DemonBlade_1"]
+	want := []decoded.ForkEffectParameter{
+		{NameID: "buff_DemonBlade_Crit", Value: .16, IsPercent: true},
+		{NameID: "buff_DemonBlade_CritDamageUp", Value: .09, IsPercent: true},
+		{NameID: "buff_DemonBlade_CD", Value: 15},
+	}
+	if len(got) != len(want) {
+		t.Fatalf("presented parameters = %#v, want %#v", got, want)
+	}
+	for index := range want {
+		if got[index] != want[index] {
+			t.Errorf("presented parameter %d = %#v, want %#v", index, got[index], want[index])
+		}
+	}
+}
+
+func TestProductionArcEffectParametersReachPresentationCatalogInOrder(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	presentation, err := LoadPresentation(dataDir, "fr")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := map[string][]decoded.ForkEffectParameter{
+		"fork_DemonBlade_1": {
+			{NameID: "buff_DemonBlade_Crit", Value: .16, IsPercent: true},
+			{NameID: "buff_DemonBlade_CritDamageUp", Value: .09, IsPercent: true},
+			{NameID: "buff_DemonBlade_CD", Value: 15},
+		},
+		"fork_BlackBook_3": {
+			{NameID: "buff_BlackBook2_Unbal", Value: 74},
+			{NameID: "buff_BlackBook2_CD", Value: 20},
+			{NameID: "buff_BlackBook2_CD2", Value: 5},
+			{NameID: "buff_BlackBook2_DamageUpChaosBase", Value: .28, IsPercent: true},
+			{NameID: "buff_BlackBook2_SkillDamage", Value: 2.6, IsPercent: true},
+		},
+		"fork_mamen_2": {
+			{NameID: "buff_mamen_fons", Value: 100000},
+			{NameID: "buff_mamen_CosmosUp", Value: .03, IsPercent: true},
+		},
+	}
+	for key, expected := range want {
+		if got := presentation.ForkEffectParameters[key]; !reflect.DeepEqual(got, expected) {
+			t.Errorf("%s parameters = %#v, want %#v", key, got, expected)
 		}
 	}
 }

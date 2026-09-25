@@ -2,10 +2,10 @@ import { useEffect, useState, type ReactNode } from 'react'
 
 import { Card, CardContent } from './ui/card'
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
-import { t } from '../i18n'
+import { currentIntlLocale, t } from '../i18n'
 import { formatStat } from '../lib/format'
 import { usePresentation } from '../presentation'
-import type { InventoryCartridge, InventoryModule, Stat } from '../types'
+import type { ArcEffectParameter, InventoryCartridge, InventoryModule, Stat } from '../types'
 
 export type Owner = { id: number; name: string }
 
@@ -17,6 +17,7 @@ type PieceCardProps = {
   leading?: ReactNode
   trailing?: ReactNode
   actions?: ReactNode
+  details?: string[]
   className?: string
 }
 
@@ -24,13 +25,13 @@ export function OwnerBadge({ owner }: { owner: Owner }) {
   return <span className="mt-1 inline-flex h-6 max-w-full items-center gap-1.5 rounded-full border border-amber-800/70 bg-amber-950/50 pr-2 text-xs font-bold text-amber-200"><img className="size-6 rounded-full object-cover object-top" src={`/game_ui/characters/${owner.id}.png`} alt="" /><span className="truncate">{owner.name}</span></span>
 }
 
-function PieceCard({ tone, image, title, meta, owner, ownerCharacter, mainStats, subStats, leading, trailing, actions, className = '' }: { tone: 'module' | 'cartridge'; image: ReactNode; mainStats: Stat[]; subStats: Stat[] } & PieceCardProps) {
+function PieceCard({ tone, image, title, meta, owner, ownerCharacter, mainStats, subStats, leading, trailing, actions, details, className = '' }: { tone: 'module' | 'cartridge'; image: ReactNode; mainStats: Stat[]; subStats: Stat[] } & PieceCardProps) {
   const cartridge = tone === 'cartridge'
-  return <Card className={`overflow-hidden ${className}`}><div className={`flex items-center gap-3 border-b bg-gradient-to-r to-slate-950 p-3 ${cartridge ? 'border-violet-900/60 from-violet-950/80' : 'border-orange-900/60 from-orange-950/80'}`}>{leading}{image}<div className="min-w-0 flex-1"><strong className={`block ${cartridge ? 'text-violet-100' : 'text-orange-100'}`}>{title}</strong>{meta && <small className="block text-slate-400">{meta}</small>}{ownerCharacter ? <OwnerBadge owner={ownerCharacter} /> : owner && <small className="block h-6 leading-6 text-emerald-400">{owner}</small>}</div>{trailing}</div><CardContent className="pt-3"><Stats title={cartridge ? t('main_attribute') : t('main_attributes')} stats={mainStats} /><Stats title={t('secondary_attributes')} stats={subStats} />{actions && <div className="mt-3 flex gap-2 border-t border-slate-800 pt-3">{actions}</div>}</CardContent></Card>
+  return <Card className={`overflow-hidden ${className}`}><div className={`flex items-center gap-3 border-b bg-gradient-to-r to-slate-950 p-3 ${cartridge ? 'border-violet-900/60 from-violet-950/80' : 'border-orange-900/60 from-orange-950/80'}`}>{leading}{image}<div className="min-w-0 flex-1"><strong className={`block ${cartridge ? 'text-violet-100' : 'text-orange-100'}`}>{title}</strong>{meta && <small className="block text-slate-400">{meta}</small>}{ownerCharacter ? <OwnerBadge owner={ownerCharacter} /> : owner && <small className="block h-6 leading-6 text-emerald-400">{owner}</small>}</div>{trailing}</div><CardContent className="pt-3"><Stats title={cartridge ? t('main_attribute') : t('main_attributes')} stats={mainStats} /><Stats title={t('secondary_attributes')} stats={subStats} />{details?.length ? <div className="mt-3 grid gap-2 border-t border-slate-800 pt-3">{details.map((text, index) => <GameEffectText key={`${index}-${text}`} text={text} className="text-xs text-slate-400" />)}</div> : null}{actions && <div className="mt-3 flex gap-2 border-t border-slate-800 pt-3">{actions}</div>}</CardContent></Card>
 }
 
 type ModulePiece = Pick<InventoryModule, 'game_item_id' | 'geometry' | 'main_stats' | 'sub_stats'>
-type CartridgePiece = Pick<InventoryCartridge, 'game_item_id' | 'main_stats' | 'sub_stats'>
+type CartridgePiece = Pick<InventoryCartridge, 'game_item_id' | 'set_id' | 'main_stats' | 'sub_stats'>
 
 export function ModulePieceCard({ item, ...props }: { item: ModulePiece } & PieceCardProps) {
   const { geometries } = usePresentation()
@@ -39,7 +40,40 @@ export function ModulePieceCard({ item, ...props }: { item: ModulePiece } & Piec
 }
 
 export function CartridgePieceCard({ item, ...props }: { item: CartridgePiece } & PieceCardProps) {
-  return <PieceCard tone="cartridge" image={<AssetImage source={`/game_ui/equipment/core/${encodeURIComponent(item.game_item_id || '')}.png`} label={props.title} className="size-14 object-contain" />} mainStats={item.main_stats} subStats={item.sub_stats} {...props} />
+  const { set_effects: setEffects } = usePresentation()
+  const details = [2, 4].map(count => setEffects?.[`${item.set_id}_${count}`]).filter((value): value is string => Boolean(value))
+  return <PieceCard tone="cartridge" image={<AssetImage source={`/game_ui/equipment/core/${encodeURIComponent(item.game_item_id || '')}.png`} label={props.title} className="size-14 object-contain" />} mainStats={item.main_stats} subStats={item.sub_stats} {...props} details={details} />
+}
+
+export function ArcEffectDescription({ forkID, star }: { forkID: string; star: number }) {
+	const { fork_effects: forkEffects, fork_effect_parameters: forkEffectParameters } = usePresentation()
+	const description = forkEffects?.[`${forkID}_${star}`]
+	if (!description) return null
+	return <GameEffectText text={description} parameters={forkEffectParameters?.[`${forkID}_${star}`]} className="mt-2 text-xs text-slate-400" />
+}
+
+export function hasUnresolvedEffectParameters(text: string | undefined, parameters?: ArcEffectParameter[]) {
+	if (!text) return true
+	return [...text.matchAll(/\{(\d+)\}/g)].some(([, rawIndex]) => !parameters?.[Number(rawIndex)])
+}
+
+export function GameEffectText({ text, parameters, className = '' }: { text: string; parameters?: ArcEffectParameter[]; className?: string }) {
+	let unresolvedValues = false
+	const description = text.replaceAll('<lv>', '').replaceAll('</>', '').replace(/\{(\d+)\}/g, (_placeholder, rawIndex: string) => {
+		const parameter = parameters?.[Number(rawIndex)]
+		if (!parameter) {
+			unresolvedValues = true
+			return '…'
+		}
+		return formatEffectParameter(parameter)
+	})
+	return <div className={className}><p className="whitespace-pre-line">{description}</p>{unresolvedValues && <small className="mt-1 block text-[10px] text-slate-500">{t('effect_values_unresolved')}</small>}</div>
+}
+
+function formatEffectParameter(parameter: ArcEffectParameter) {
+	const locale = currentIntlLocale()
+	if (parameter.is_percent) return new Intl.NumberFormat(locale, { style: 'percent', maximumFractionDigits: 1 }).format(parameter.value)
+	return parameter.value.toLocaleString(locale, { maximumFractionDigits: 3 })
 }
 
 function Stats({ title, stats }: { title: string; stats: Stat[] }) {
