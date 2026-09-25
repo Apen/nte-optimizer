@@ -9,7 +9,7 @@ import { Button } from './ui/button'
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
 
 export function AdvancedResultDetails({ result }: { result: Result }) {
-  const { stats: labels, stat_sources: sourceNames, fork_effects: forkEffects, fork_effect_parameters: forkEffectParameters, set_effects: setEffects } = usePresentation()
+  const { stats: labels, stat_sources: sourceNames, fork_effects: forkEffects, fork_effect_parameters: forkEffectParameters, set_effects: setEffects, console_trait_effects: consoleTraitEffects } = usePresentation()
   const weaponEffectKey = result.weapon ? `${result.weapon.forkId}_${result.weapon.star}` : undefined
   const weaponEffectDescription = weaponEffectKey ? forkEffects?.[weaponEffectKey] : undefined
   const canReplaceWeaponEffectStats = Boolean(weaponEffectDescription) && !hasUnresolvedEffectParameters(weaponEffectDescription, weaponEffectKey ? forkEffectParameters?.[weaponEffectKey] : undefined)
@@ -19,6 +19,7 @@ export function AdvancedResultDetails({ result }: { result: Result }) {
   const canReplaceSetEffectStats = activeSetEffects.length > 0 && activeSetEffects.every(effect =>
     Boolean(effect.description) && !hasUnresolvedEffectParameters(effect.description),
   )
+  const consoleTraitDescription = result.character ? consoleTraitEffects?.[String(result.character.characterId)] : undefined
   const visibleSources = Object.entries(result.stats.sources).filter(([source]) =>
     (!canReplaceWeaponEffectStats || (source !== 'weapon_conditional' && source !== 'weapon_permanent')) &&
     (!canReplaceSetEffectStats || (source !== 'set' && source !== 'set_conditional')),
@@ -40,7 +41,10 @@ export function AdvancedResultDetails({ result }: { result: Result }) {
         <div className="grid gap-2">
           {visibleSources.map(([source, values]) => <div className="grid gap-2 rounded-lg bg-slate-950 p-3 text-xs md:grid-cols-[190px_1fr]" key={source}>
             <b>{sourceNames[source] || t('other_bonus_fallback')}</b>
-            <span className="text-slate-400">{Object.entries(values).map(([key, value]) => `${labels[key] || key} ${formatStat(key, value)}`).join(' · ') || '—'}</span>
+            <div>
+              {source === 'console_trait' && consoleTraitDescription && <GameEffectText text={consoleTraitDescription} className="mb-1 text-slate-400" />}
+              <span className="text-slate-400">{Object.entries(values).map(([key, value]) => `${labels[key] || key} ${formatStat(key, value)}`).join(' · ') || '—'}</span>
+            </div>
           </div>)}
           {result.weapon && <div className="rounded-lg bg-slate-950 p-3 text-xs">
             <b>{t('arc_effect')}</b>

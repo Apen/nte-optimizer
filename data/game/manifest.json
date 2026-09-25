@@ -12,6 +12,18 @@
       "warnings": []
     },
     {
+      "path": "characters/bond_bonuses.json",
+      "schema_version": 1,
+      "sha256": "adcb1d4bf56571ecf23b3393e169924e7f0b622513c5fb95a126745a72f65ecb",
+      "sources": [
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_LikeabilityModifyData.json",
+        "datamine/data/datatables/DataTable/Character/DT_Character.json",
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
       "path": "characters/decode.json",
       "schema_version": 1,
       "sha256": "42c36f5987ca04b9acab33b093c86e8d55b520fa70116daf5c1f7bc4f97f917f",
@@ -126,12 +138,15 @@
     {
       "path": "locales/en.json",
       "schema_version": 1,
-      "sha256": "ba01f798c1035283c7fe3b9f06cfe0f5472affeb305b2b11d3371e6515bf0173",
+      "sha256": "dda627d956362fbfccf72458ab7ed79d8b23f2af0f36924d4981767786a13009",
       "sources": [
         "datamine/data/localization/en.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
         "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json",
         "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentSuitData.json",
+        "datamine/data/catalogs/DataTable/Equipment/DT_CharacterEquipmentSlotsData.json",
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_EquipmentModifySlotsEffect.json",
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
         "config/locales.json",
         "overrides/locales.json"
       ],
@@ -141,12 +156,15 @@
     {
       "path": "locales/fr.json",
       "schema_version": 1,
-      "sha256": "c1fcb37fbd24b59bd34598c0b7220a056f767b26b03108279f1f29ed60f14e15",
+      "sha256": "803266a9f03da0f67201d25a8076ee076c408da64c979a4fc81501fd92bc9b4f",
       "sources": [
         "datamine/data/localization/fr.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
         "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json",
         "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentSuitData.json",
+        "datamine/data/catalogs/DataTable/Equipment/DT_CharacterEquipmentSlotsData.json",
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_EquipmentModifySlotsEffect.json",
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
         "config/locales.json",
         "overrides/locales.json"
       ],

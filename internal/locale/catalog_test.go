@@ -92,6 +92,52 @@ func TestResourceNameFallsBackToIDWhenGameLabelIsUnavailable(t *testing.T) {
 	}
 }
 
+func TestProductionCatalogLoadsLocalizedConsoleTraitDescriptions(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	want := map[string]string{
+		"en": "Increases CRIT DMG by 16% for each Type III Module equipped.",
+		"fr": "Augmente DÉG CRIT de 16\u00a0% pour chaque module de type III équipé.",
+	}
+	var ids map[string]bool
+	for _, language := range []string{"en", "fr"} {
+		catalog, err := Load(dataDir, language)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(catalog.ConsoleTraitEffects) != 22 {
+			t.Fatalf("%s console trait descriptions = %d, want 22", language, len(catalog.ConsoleTraitEffects))
+		}
+		if got := catalog.ConsoleTraitEffects["1036"]; got != want[language] {
+			t.Errorf("%s Zankou console trait = %q, want %q", language, got, want[language])
+		}
+		if ids == nil {
+			ids = make(map[string]bool, len(catalog.ConsoleTraitEffects))
+			for id := range catalog.ConsoleTraitEffects {
+				ids[id] = true
+			}
+		} else {
+			for id := range catalog.ConsoleTraitEffects {
+				if !ids[id] {
+					t.Errorf("%s has unexpected console trait character ID %q", language, id)
+				}
+			}
+		}
+		for id, description := range catalog.ConsoleTraitEffects {
+			if strings.TrimSpace(description) == "" {
+				t.Errorf("%s console trait description for character %s is empty", language, id)
+			}
+		}
+
+		presentation, err := LoadPresentation(dataDir, language)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got := presentation.ConsoleTraitEffects["1036"]; got != want[language] {
+			t.Errorf("%s presentation Zankou console trait = %q, want %q", language, got, want[language])
+		}
+	}
+}
+
 func TestProductionGameLocalesCoverEveryRuntimeCatalogID(t *testing.T) {
 	dataDir := filepath.Join("..", "..", "data")
 	gameDir := filepath.Join(dataDir, "game")
@@ -207,6 +253,7 @@ func TestPresentationCatalogsHaveMatchingKeys(t *testing.T) {
 	compare("geometries", fr.Geometries, en.Geometries)
 	compare("stat_sources", fr.StatSources, en.StatSources)
 	compare("abilities", fr.Abilities, en.Abilities)
+	compare("console_trait_effects", fr.ConsoleTraitEffects, en.ConsoleTraitEffects)
 	for key := range fr.Damage {
 		if _, ok := en.Damage[key]; !ok {
 			t.Errorf("damage key %q missing from en", key)

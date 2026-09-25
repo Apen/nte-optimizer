@@ -44,6 +44,7 @@ type characterProgression struct {
 	Level             int32                 `json:"level"`
 	BreakthroughLevel int32                 `json:"breakthroughLevel"`
 	AwakenLevel       int32                 `json:"awakenLevel"`
+	BondLevel         *int                  `json:"bondLevel,omitempty"`
 	Skills            []characterSkillLevel `json:"skills"`
 }
 type characterStats struct {
@@ -118,7 +119,7 @@ func exportCharacters(characters []characterItem, equipmentByCharacter map[uint3
 		}
 		out = append(out, characterExportItem{
 			Identity:        characterIdentity{CharacterID: character.CharacterID, Name: character.Name, Codename: character.Codename, NetID: character.NetID},
-			Progression:     characterProgression{Level: character.Level, BreakthroughLevel: character.BreakthroughLevel, AwakenLevel: character.AwakenLevel, Skills: character.SkillLevels},
+			Progression:     characterProgression{Level: character.Level, BreakthroughLevel: character.BreakthroughLevel, AwakenLevel: character.AwakenLevel, BondLevel: character.BondLevel, Skills: character.SkillLevels},
 			Stats:           stats,
 			SavedState:      characterSavedState{HealthRatio: character.SavedHealthRatio},
 			Equipment:       equipment,
@@ -201,7 +202,7 @@ func writeOutputDirWithWriter(dir string, r report, writer func(string, any) err
 		resourceNote = "No validated resource record was found in this capture."
 	}
 	resources := domainOutput{resourceStatus, "packet_capture", len(r.UDP.Resources), resourceNote, r.UDP.Resources}
-	characters := characterOutput{"nte-scan-characters", 2, generated, r.Input, "decoded", len(chars), "One entry per character with progression, skills, saved state, complete active equipment, and login observations.", characterValidation, exportCharacters(chars, byChar)}
+	characters := characterOutput{"nte-scan-characters", 3, generated, r.Input, "decoded", len(chars), "One entry per character with progression, skills, saved state, complete active equipment, and login observations.", characterValidation, exportCharacters(chars, byChar)}
 	return scannerexport.PublishWithWriter(dir, []scannerexport.File{
 		{Name: "character.json", Value: characters},
 		{Name: "weapons.json", Value: weapons},

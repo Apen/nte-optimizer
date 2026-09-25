@@ -120,6 +120,7 @@ type Character struct {
 	Level               int                 `json:"level"`
 	BreakthroughLevel   int                 `json:"breakthroughLevel"`
 	AwakenLevel         int                 `json:"awakenLevel"`
+	BondLevel           *int                `json:"bondLevel,omitempty"`
 	ReportedAwakenLevel int                 `json:"reportedAwakenLevel,omitempty"`
 	ForkNetID           *NetID              `json:"forkNetId,omitempty"`
 	Skills              []CharacterSkill    `json:"skills,omitempty"`

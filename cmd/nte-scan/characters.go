@@ -26,6 +26,7 @@ type characterItem struct {
 	Level                         int32                   `json:"level"`
 	BreakthroughLevel             int32                   `json:"breakthroughLevel"`
 	AwakenLevel                   int32                   `json:"awakenLevel"`
+	BondLevel                     *int                    `json:"bondLevel,omitempty"`
 	ForkNetID                     *itemNetID              `json:"forkNetId,omitempty"`
 	SkillLevels                   []characterSkillLevel   `json:"skillLevels"`
 	MaxHP                         float32                 `json:"maxHp"`

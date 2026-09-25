@@ -99,6 +99,7 @@ func decodeCharacterDomain(report *udpReport, rawPayloads [][]byte, streams []in
 		report.Characters = append(report.Characters, character)
 	}
 	sort.Slice(report.Characters, func(i, j int) bool { return report.Characters[i].CharacterID < report.Characters[j].CharacterID })
+	attachBondLevels(report.Characters, completed)
 	equipmentCatalog, _ := loadEquipmentCatalog(equipmentCatalogPath)
 	attachObservedActiveAwakenings(report.Characters, report.ExportNames, equipmentCatalog)
 	for index := range report.Characters {

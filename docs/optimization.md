@@ -16,6 +16,10 @@ For each character, the application combines:
 6. the character console trait for the relevant module area;
 7. optional values from `account_overrides.json`.
 
+The imported bond level is shown in the character state. It is not added as a
+calculated stat source: the current import does not distinguish a bond effect
+from values already represented in the character's observed panel stats.
+
 Effects requiring a rotation, target state, stack count, or other combat
 condition remain separate when the data supports that distinction. The normal
 stat column contains guaranteed values; maximum effects contain conditional

@@ -98,6 +98,42 @@ describe('advanced result details dialog', () => {
 		expect(screen.queryByText('Set bonus')).not.toBeInTheDocument()
 	})
 
+	it('shows the localized console trait description alongside its numeric contribution', () => {
+		const traitResult = {
+			...result,
+			character: { characterId: 1036, name: 'Zankou', level: 80, breakthroughLevel: 6, awakenLevel: 5 },
+			stats: { ...result.stats, sources: { ...result.stats.sources, console_trait: { CritDamageBase: .64 } } },
+		} as unknown as Result
+		const traitPresentation: LocalizationCatalog = {
+			...presentation,
+			stat_sources: { ...presentation.stat_sources, console_trait: 'Console trait' },
+			console_trait_effects: { '1036': 'Increases CRIT DMG by 16% for each Type III Module equipped.' },
+		}
+
+		render(createElement(PresentationProvider, { catalog: traitPresentation, children: createElement(AdvancedResultDetails, { result: traitResult }) }))
+		fireEvent.click(screen.getByRole('button', { name: 'Understand the result' }))
+
+		expect(screen.getByText('Increases CRIT DMG by 16% for each Type III Module equipped.')).toBeInTheDocument()
+		expect(screen.getByText('CritDamageBase 64.0 %')).toBeInTheDocument()
+	})
+
+	it('keeps the numeric console trait contribution when its localized description is unavailable', () => {
+		const traitResult = {
+			...result,
+			character: { characterId: 1036, name: 'Zankou', level: 80, breakthroughLevel: 6, awakenLevel: 5 },
+			stats: { ...result.stats, sources: { ...result.stats.sources, console_trait: { CritDamageBase: .64 } } },
+		} as unknown as Result
+		const traitPresentation: LocalizationCatalog = {
+			...presentation,
+			stat_sources: { ...presentation.stat_sources, console_trait: 'Console trait' },
+		}
+
+		render(createElement(PresentationProvider, { catalog: traitPresentation, children: createElement(AdvancedResultDetails, { result: traitResult }) }))
+		fireEvent.click(screen.getByRole('button', { name: 'Understand the result' }))
+
+		expect(screen.getByText('CritDamageBase 64.0 %')).toBeInTheDocument()
+	})
+
 	it('keeps projected Arc effect rows when parameterized description data is incomplete', () => {
 		const incompletePresentation: LocalizationCatalog = { ...presentation, fork_effect_parameters: {} }
 		render(createElement(PresentationProvider, { catalog: incompletePresentation, children: createElement(AdvancedResultDetails, { result }) }))

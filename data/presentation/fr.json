@@ -301,6 +301,7 @@
     "last_calculation_log": "Journal du dernier calcul",
     "latest_import": "Dernier import",
     "level": "Niveau",
+    "bond_level": "Niveau de lien",
     "linked_weight": "Poids lié",
     "loading_imported_state": "Chargement de l’état importé…",
     "lock": "Verrouiller",

@@ -17,26 +17,27 @@ type Item struct {
 }
 
 type Catalog struct {
-	Schema        string                        `json:"schema"`
-	SchemaVersion int                           `json:"schema_version"`
-	Locale        string                        `json:"locale"`
-	Sources       map[string]PresentationSource `json:"sources,omitempty"`
-	UI            map[string]string             `json:"ui,omitempty"`
-	Stats         map[string]string             `json:"stats,omitempty"`
-	Qualities     map[string]string             `json:"qualities,omitempty"`
-	Geometries    map[string]string             `json:"geometries,omitempty"`
-	StatSources   map[string]string             `json:"stat_sources,omitempty"`
-	Damage        map[string]PresentationDamage `json:"damage,omitempty"`
-	Abilities     map[string]string             `json:"abilities,omitempty"`
-	Items         map[string]Item               `json:"items,omitempty"`
-	Resources     map[string]string             `json:"resources,omitempty"`
-	Sets          map[string]string             `json:"sets,omitempty"`
-	ForkEffects   map[string]string             `json:"fork_effects,omitempty"`
-	SetEffects    map[string]string             `json:"set_effects,omitempty"`
+	Schema              string                        `json:"schema"`
+	SchemaVersion       int                           `json:"schema_version"`
+	Locale              string                        `json:"locale"`
+	Sources             map[string]PresentationSource `json:"sources,omitempty"`
+	UI                  map[string]string             `json:"ui,omitempty"`
+	Stats               map[string]string             `json:"stats,omitempty"`
+	Qualities           map[string]string             `json:"qualities,omitempty"`
+	Geometries          map[string]string             `json:"geometries,omitempty"`
+	StatSources         map[string]string             `json:"stat_sources,omitempty"`
+	Damage              map[string]PresentationDamage `json:"damage,omitempty"`
+	Abilities           map[string]string             `json:"abilities,omitempty"`
+	Items               map[string]Item               `json:"items,omitempty"`
+	Resources           map[string]string             `json:"resources,omitempty"`
+	Sets                map[string]string             `json:"sets,omitempty"`
+	ForkEffects         map[string]string             `json:"fork_effects,omitempty"`
+	SetEffects          map[string]string             `json:"set_effects,omitempty"`
+	ConsoleTraitEffects map[string]string             `json:"console_trait_effects,omitempty"`
 }
 
-// PresentationCatalog contains labels owned by the application. Labels
-// extracted from NTE are loaded independently from data/game/locales.
+// PresentationCatalog is the frontend localization payload. It combines
+// application-owned labels with descriptions extracted from the game.
 type PresentationCatalog struct {
 	Schema               string                                   `json:"schema"`
 	SchemaVersion        int                                      `json:"schema_version"`
@@ -52,6 +53,7 @@ type PresentationCatalog struct {
 	ForkEffects          map[string]string                        `json:"fork_effects,omitempty"`
 	ForkEffectParameters map[string][]decoded.ForkEffectParameter `json:"fork_effect_parameters,omitempty"`
 	SetEffects           map[string]string                        `json:"set_effects,omitempty"`
+	ConsoleTraitEffects  map[string]string                        `json:"console_trait_effects,omitempty"`
 }
 
 type PresentationSource struct {
@@ -101,6 +103,7 @@ func Load(dataDir, language string) (Catalog, error) {
 	catalog.Sets = game.Tables["sets"]
 	catalog.ForkEffects = game.Tables["fork_effects"]
 	catalog.SetEffects = game.Tables["set_effects"]
+	catalog.ConsoleTraitEffects = game.Tables["console_trait_effects"]
 	return catalog, nil
 }
 
@@ -177,6 +180,7 @@ func LoadPresentation(dataDir, language string) (PresentationCatalog, error) {
 		ForkEffects:          catalog.ForkEffects,
 		ForkEffectParameters: forkEffectParameters,
 		SetEffects:           catalog.SetEffects,
+		ConsoleTraitEffects:  catalog.ConsoleTraitEffects,
 	}, nil
 }
 

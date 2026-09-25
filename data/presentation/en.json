@@ -301,6 +301,7 @@
     "last_calculation_log": "Last calculation log",
     "latest_import": "Latest import",
     "level": "Level",
+    "bond_level": "Bond level",
     "linked_weight": "Linked weight",
     "loading_imported_state": "Loading imported state…",
     "lock": "Lock",

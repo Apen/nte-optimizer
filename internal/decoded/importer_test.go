@@ -37,7 +37,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	weaponNet := NetID{Slot: 30, Serial: 40}
 	moduleNet := NetID{Slot: 1, Serial: 2}
 	writeFixture(t, dir, "manifest.json", Manifest{Format: "nte-scan-output", FormatVersion: 3, GeneratedAt: time.Date(2026, 9, 16, 7, 54, 38, 0, time.UTC)})
-	export := characterExport{Format: "nte-scan-characters", FormatVersion: 2}
+	export := characterExport{Format: "nte-scan-characters", FormatVersion: 3}
 	export.Characters = append(export.Characters, struct {
 		Identity struct {
 			CharacterID int    `json:"characterId"`
@@ -49,6 +49,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 			Level             int              `json:"level"`
 			BreakthroughLevel int              `json:"breakthroughLevel"`
 			AwakenLevel       int              `json:"awakenLevel"`
+			BondLevel         *int             `json:"bondLevel,omitempty"`
 			Skills            []CharacterSkill `json:"skills"`
 		} `json:"progression"`
 		Stats      CharacterStats      `json:"stats"`
@@ -63,6 +64,8 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	source := &export.Characters[0]
 	source.Identity.CharacterID, source.Identity.Name, source.Identity.NetID = 1036, "Zankou", characterNet
 	source.Progression.Level, source.Progression.BreakthroughLevel, source.Progression.AwakenLevel = 80, 6, 1
+	bondLevel := 10
+	source.Progression.BondLevel = &bondLevel
 	source.Progression.Skills = []CharacterSkill{{AbilityID: "GA_Zankou_Skill", Category: "Ability.Skill", Level: 8}}
 	attack, defense, critRate, critDamage := 1748.125, 1005.0, .73, 2.304
 	cycle, universalDamage, elementalDamage := 172.0, .2, .1
@@ -84,7 +87,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 		t.Fatal(err)
 	}
 	character := got.State.Characters[0]
-	if character.AwakenLevel != 5 || character.ReportedAwakenLevel != 1 || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
+	if character.AwakenLevel != 5 || character.ReportedAwakenLevel != 1 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
 		t.Fatalf("new character data was not preserved: %#v", character)
 	}
 	if character.Stats.Attack == nil || *character.Stats.Attack != attack || character.Stats.Defense == nil || *character.Stats.Defense != defense || character.Stats.CritDamage == nil || *character.Stats.CritDamage != critDamage || character.Stats.PanelBase == nil || character.Stats.PanelBase.Attack != 1230 || character.Stats.Source != "unreal_attribute_set_and_equipment" {
@@ -95,6 +98,22 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	}
 	if got.Inventory.Modules[0].EquippedPlacement == nil || got.Inventory.Modules[0].EquippedPlacement.Row != 2 || got.Inventory.Modules[0].EquippedPlacement.Column != 3 {
 		t.Fatalf("module placement was not preserved: %#v", got.Inventory.Modules[0])
+	}
+}
+
+func TestReadCharactersKeepsVersionTwoExportCompatibility(t *testing.T) {
+	dir := t.TempDir()
+	legacy := `{"format":"nte-scan-characters","formatVersion":2,"characters":[{"identity":{"characterId":1004,"name":"Hotori","codename":"Jin","netId":{"solt":1,"serial":2}},"progression":{"level":80,"breakthroughLevel":6,"awakenLevel":1,"skills":[]}}]}`
+	if err := os.WriteFile(filepath.Join(dir, "character.json"), []byte(legacy), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	characters, _, _, err := readCharacters(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(characters) != 1 || characters[0].CharacterID != 1004 || characters[0].BondLevel != nil {
+		t.Fatalf("version two character export was not preserved: %#v", characters)
 	}
 }
 

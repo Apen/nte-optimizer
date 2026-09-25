@@ -52,11 +52,15 @@ The generated locale contract currently consumes:
 - `tables.forks`;
 - `tables.resources`;
 - `tables.sets`;
+- `tables.console_trait_effects`, keyed by character ID;
 - selected `*_name` entries from skill-description StringTables.
 
 `tables.items` and a separate `locales/items` catalog are not used. Game names
 must not be hardcoded in Go or React as translation fallbacks. If a label is
 missing, fix and republish the generated locale source.
+
+Console trait descriptions are display text only. Their numeric stat values
+remain sourced from `data/game/equipment/console_traits.json` for optimization.
 
 ## Recommendations
 

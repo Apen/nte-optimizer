@@ -703,6 +703,30 @@
       "Suit8_4": "Legendary (4): Increases wearer\u0027s ATK by 25% for 20s after casting a Skill.",
       "Suit9_2": "Epic (2): HP \u002B10%.",
       "Suit9_4": "Legendary (4): Increases wearer\u0027s Healing Bonus by 20%."
+    },
+    "console_trait_effects": {
+      "1033": "Increases DEF by 12% for each Type III Module equipped.",
+      "1023": "Increases CRIT Rate by 7.5% for each Type III Module equipped.",
+      "1039": "Increases HP by 6% for each Type II Module equipped.",
+      "1051": "Increases ATK by 10% for each Type III Module equipped.",
+      "1020": "Increases ATK by 10% for each Type III Module equipped.",
+      "1025": "Increases ATK by 10% for each Type III Module equipped.",
+      "1052": "Increases Cosmos DMG Bonus by 10% for each Type III Module equipped.",
+      "1019": "Increases CRIT Rate by 7.5% for each Type III Module equipped.",
+      "1010": "Increases CRIT Rate by 6% for each Type II Module equipped.",
+      "1003": "Increases Incantation DMG Bonus by 9% for each Type III Module equipped.",
+      "1071": "Increases CRIT DMG by 16% for each Type III Module equipped.",
+      "1073": "Increases Cosmos DMG Bonus by 10% for each Type III Module equipped.",
+      "1054": "Increases Chaos DMG Bonus by 10% for each Type III Module equipped.",
+      "1021": "Increases HP by 10% for each Type III Module equipped.",
+      "1055": "Increases CRIT Rate by 6% for each Type II Module equipped.",
+      "1004": "Increases Chaos DMG Bonus by 10% for each Type III Module equipped.",
+      "1070": "Increases ATK by 10% for each Type III Module equipped.",
+      "1075": "Increases ATK by 10% for each Type III Module equipped.",
+      "1072": "Increases CRIT Rate by 8% for each Type III Module equipped.",
+      "1076": "Increases CRIT DMG by 16% for each Type III Module equipped.",
+      "1008": "Increases ATK by 10% for each Type III Module equipped.",
+      "1036": "Increases CRIT DMG by 16% for each Type III Module equipped."
     }
   }
 }

@@ -38,6 +38,7 @@ type characterExport struct {
 			Level             int              `json:"level"`
 			BreakthroughLevel int              `json:"breakthroughLevel"`
 			AwakenLevel       int              `json:"awakenLevel"`
+			BondLevel         *int             `json:"bondLevel,omitempty"`
 			Skills            []CharacterSkill `json:"skills"`
 		} `json:"progression"`
 		Stats      CharacterStats      `json:"stats"`
@@ -177,7 +178,7 @@ func readCharacters(dir string) ([]Character, map[string]EquipmentPlacement, []W
 	if err := read(filepath.Join(dir, "character.json"), &export); err != nil {
 		return nil, nil, nil, err
 	}
-	if export.Format != "nte-scan-characters" || export.FormatVersion != 2 {
+	if export.Format != "nte-scan-characters" || export.FormatVersion < 2 || export.FormatVersion > 3 {
 		return nil, nil, nil, fmt.Errorf("unsupported character export %q version %d", export.Format, export.FormatVersion)
 	}
 	characters := make([]Character, 0, len(export.Characters))
@@ -196,7 +197,7 @@ func readCharacters(dir string) ([]Character, map[string]EquipmentPlacement, []W
 			NetID: source.Identity.NetID, CharacterID: source.Identity.CharacterID,
 			Name: source.Identity.Name, Codename: source.Identity.Codename,
 			Level: source.Progression.Level, BreakthroughLevel: source.Progression.BreakthroughLevel,
-			AwakenLevel: awakenLevel, ReportedAwakenLevel: source.Progression.AwakenLevel, Skills: source.Progression.Skills,
+			AwakenLevel: awakenLevel, BondLevel: source.Progression.BondLevel, ReportedAwakenLevel: source.Progression.AwakenLevel, Skills: source.Progression.Skills,
 			Stats: source.Stats, SavedState: source.SavedState, ObservedAtLogin: source.ObservedAtLogin,
 		}
 		if source.Equipment.Weapon != nil {
