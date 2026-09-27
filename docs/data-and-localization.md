@@ -9,6 +9,7 @@ data/
 │   ├── combat/              structured damage rules
 │   ├── equipment/           Arcs, traits, grids, sets, shapes, decode data
 │   ├── forks/               Arc network decode projection
+│   ├── housing/             extracted special-furniture modifiers
 │   ├── locales/             one generated file per language
 │   └── resources/           resource network decode projection
 ├── optimizer/               optimizer normalization and configuration
@@ -53,6 +54,7 @@ The generated locale contract currently consumes:
 - `tables.resources`;
 - `tables.sets`;
 - `tables.console_trait_effects`, keyed by character ID;
+- `tables.ST_furniture`, keyed by the extracted furniture progression label ID;
 - selected `*_name` entries from skill-description StringTables.
 
 `tables.items` and a separate `locales/items` catalog are not used. Game names
@@ -61,6 +63,13 @@ missing, fix and republish the generated locale source.
 
 Console trait descriptions are display text only. Their numeric stat values
 remain sourced from `data/game/equipment/console_traits.json` for optimization.
+
+Special-furniture progression labels are exposed for display and diagnostics.
+They do not identify a concrete furniture item or prove its activation or level,
+so they must not be applied to character stats without that runtime evidence.
+The scanner can decode owned furniture items from the general resource inventory,
+but it does not currently decode furniture placement or active special-furniture
+levels. Unreal record type names alone are not evidence of account state.
 
 ## Recommendations
 

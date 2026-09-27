@@ -136,9 +136,20 @@
       "warnings": []
     },
     {
+      "path": "housing/special_furniture_modifiers.json",
+      "schema_version": 1,
+      "sha256": "1c0aba56214c91a329ab2b3bc2a2911c2df328187c6554a1e452160efe952be7",
+      "sources": [
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_SpecialFurnitureModifyData.json",
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
       "path": "locales/en.json",
       "schema_version": 1,
-      "sha256": "dda627d956362fbfccf72458ab7ed79d8b23f2af0f36924d4981767786a13009",
+      "sha256": "4299658bacbd1e93c0e89181f4c22533f7eab1236be0f2e938ed7395fc8ff50a",
       "sources": [
         "datamine/data/localization/en.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -156,7 +167,7 @@
     {
       "path": "locales/fr.json",
       "schema_version": 1,
-      "sha256": "803266a9f03da0f67201d25a8076ee076c408da64c979a4fc81501fd92bc9b4f",
+      "sha256": "0f24238d8ffcae3772db9c31b4d29e8af690dea8e4dd576a904d41148ea4e500",
       "sources": [
         "datamine/data/localization/fr.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",

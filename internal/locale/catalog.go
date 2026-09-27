@@ -34,6 +34,7 @@ type Catalog struct {
 	ForkEffects         map[string]string             `json:"fork_effects,omitempty"`
 	SetEffects          map[string]string             `json:"set_effects,omitempty"`
 	ConsoleTraitEffects map[string]string             `json:"console_trait_effects,omitempty"`
+	Furniture           map[string]string             `json:"furniture,omitempty"`
 }
 
 // PresentationCatalog is the frontend localization payload. It combines
@@ -54,6 +55,7 @@ type PresentationCatalog struct {
 	ForkEffectParameters map[string][]decoded.ForkEffectParameter `json:"fork_effect_parameters,omitempty"`
 	SetEffects           map[string]string                        `json:"set_effects,omitempty"`
 	ConsoleTraitEffects  map[string]string                        `json:"console_trait_effects,omitempty"`
+	Furniture            map[string]string                        `json:"furniture,omitempty"`
 }
 
 type PresentationSource struct {
@@ -104,6 +106,7 @@ func Load(dataDir, language string) (Catalog, error) {
 	catalog.ForkEffects = game.Tables["fork_effects"]
 	catalog.SetEffects = game.Tables["set_effects"]
 	catalog.ConsoleTraitEffects = game.Tables["console_trait_effects"]
+	catalog.Furniture = game.Tables["ST_furniture"]
 	return catalog, nil
 }
 
@@ -181,6 +184,7 @@ func LoadPresentation(dataDir, language string) (PresentationCatalog, error) {
 		ForkEffectParameters: forkEffectParameters,
 		SetEffects:           catalog.SetEffects,
 		ConsoleTraitEffects:  catalog.ConsoleTraitEffects,
+		Furniture:            catalog.Furniture,
 	}, nil
 }
 

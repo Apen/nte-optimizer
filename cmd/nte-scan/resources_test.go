@@ -34,7 +34,10 @@ func TestProductionResourceCatalogDecodesNewAndUnusualResourceIDs(t *testing.T) 
 	if len(catalog.Items) < 200 {
 		t.Fatalf("production resource catalog has %d IDs, want at least 200", len(catalog.Items))
 	}
-	wantIDs := []string{"Annulith", "Food_005", "food_008", "Vehicle007", "Fishbait01", "gold"}
+	wantIDs := []string{
+		"Annulith", "Food_005", "food_008", "Vehicle007", "Fishbait01", "gold",
+		"Furniture_FlowerPot_001", "Visions_furniture_05_UpMaterial",
+	}
 	writer := resourceFixtureWriter{}
 	for index, itemID := range wantIDs {
 		if _, ok := catalog.Items[itemID]; !ok {

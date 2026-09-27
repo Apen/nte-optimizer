@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "modifiers": [
+    {
+      "id": "kaijia_0",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 3,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "kaijia_1",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 6,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "kaijia_2",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 9,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "kaijia_3",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 12,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "kaijia_4",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 15,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "kaijia_5",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 18,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "kaijia_6",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 21,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "kaijia_7",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 24,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "kaijia_8",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 27,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "kaijia_9",
+      "stats": [
+        {
+          "property_id": "DefAdd",
+          "value": 30,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_0",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.004,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_1",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.008,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_2",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.012,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_3",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.016,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_4",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.02,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_5",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.024,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_6",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.028,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_7",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.032,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_8",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.036,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "quantao_9",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.04,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_0",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 2,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_1",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 4,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_2",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 6,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_3",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 8,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_4",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 10,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_5",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 12,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_6",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 14,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_7",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 16,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_8",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 18,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "id": "yaodao_9",
+      "stats": [
+        {
+          "property_id": "AtkAdd",
+          "value": 20,
+          "percent": false,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    }
+  ]
+}

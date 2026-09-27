@@ -32,13 +32,16 @@ func (l Layout) CharacterBaseStats() string { return l.Game("characters", "base_
 func (l Layout) Damage() string             { return l.Game("combat", "damage.json") }
 func (l Layout) Arcs() string               { return l.Game("equipment", "arcs.json") }
 func (l Layout) ConsoleTraits() string      { return l.Game("equipment", "console_traits.json") }
-func (l Layout) Grids() string              { return l.Game("equipment", "grids.json") }
-func (l Layout) Sets() string               { return l.Game("equipment", "sets.json") }
-func (l Layout) Shapes() string             { return l.Game("equipment", "shapes.json") }
-func (l Layout) References() string         { return l.Optimizer("references.json") }
-func (l Layout) Config() string             { return l.Optimizer("config.json") }
-func (l Layout) Target(id string) string    { return l.Recommendation("targets", id+".json") }
-func (l Layout) TargetsDir() string         { return l.Recommendation("targets") }
+func (l Layout) SpecialFurnitureModifiers() string {
+	return l.Game("housing", "special_furniture_modifiers.json")
+}
+func (l Layout) Grids() string           { return l.Game("equipment", "grids.json") }
+func (l Layout) Sets() string            { return l.Game("equipment", "sets.json") }
+func (l Layout) Shapes() string          { return l.Game("equipment", "shapes.json") }
+func (l Layout) References() string      { return l.Optimizer("references.json") }
+func (l Layout) Config() string          { return l.Optimizer("config.json") }
+func (l Layout) Target(id string) string { return l.Recommendation("targets", id+".json") }
+func (l Layout) TargetsDir() string      { return l.Recommendation("targets") }
 func (l Layout) DecodeCatalog(name string) string {
 	switch name {
 	case "characters.json":

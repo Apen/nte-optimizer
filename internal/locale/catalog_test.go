@@ -138,6 +138,86 @@ func TestProductionCatalogLoadsLocalizedConsoleTraitDescriptions(t *testing.T) {
 	}
 }
 
+func TestProductionCatalogLoadsSpecialFurnitureProgressions(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	want := map[string]map[string]string{
+		"en": {
+			"SF_0011_lv10_desc":   "Increases deployed characters' ATK by <Grey>20</>.",
+			"SF_0011_up_des_lv2":  "Deployed Characters ATK Bonus: 2 <img id=\"Image_up\"/> <Green>4</>",
+			"SF_0012_lv10_desc":   "Increases deployed characters' CRIT DMG by <Grey>4%</>.",
+			"SF_0012_up_des_lv10": "Deployed Characters CRIT DMG Bonus: 3.6% <img id=\"Image_up\"/> <Green>4%</>",
+			"SF_0013_lv10_desc":   "Increases deployed characters' DEF by <Grey>30</>.",
+			"SF_0013_up_des_lv10": "Deployed Character DEF Bonus: 27 <img id=\"Image_up\"/> <Green>30</>",
+		},
+		"fr": {
+			"SF_0011_lv10_desc":   "Augmente l’ATQ des personnages déployés de <Grey>20</>.",
+			"SF_0011_up_des_lv2":  "Bonus d’ATQ des personnages déployés : 2 <img id=\"Image_up\"/> <Green>4</>",
+			"SF_0012_lv10_desc":   "Augmente les DÉG critiques des personnages déployés de <Grey>4 %</>.",
+			"SF_0012_up_des_lv10": "Bonus de DÉG critiques des personnages déployés : 3,6 % <img id=\"Image_up\"/> <Green>4 %</>",
+			"SF_0013_lv10_desc":   "Augmente la DÉF des personnages déployés de <Grey>30</>.",
+			"SF_0013_up_des_lv10": "Bonus de DÉF des personnages déployés : 27 <img id=\"Image_up\"/> <Green>30</>",
+		},
+	}
+	var expectedKeys map[string]bool
+	for _, language := range []string{"en", "fr"} {
+		catalog, err := Load(dataDir, language)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(catalog.Furniture) != 30 {
+			t.Fatalf("%s special-furniture labels = %d, want 30", language, len(catalog.Furniture))
+		}
+		for key, value := range want[language] {
+			if got := catalog.Furniture[key]; got != value {
+				t.Errorf("%s furniture label %s = %q, want %q", language, key, got, value)
+			}
+		}
+		for key, value := range catalog.Furniture {
+			if strings.TrimSpace(value) == "" {
+				t.Errorf("%s furniture label %s is empty", language, key)
+			}
+		}
+		if _, exists := catalog.Furniture["SF_0013_Level_Max_des"]; exists {
+			t.Errorf("%s furniture catalog includes the known incorrect max-level DEF label", language)
+		}
+		if expectedKeys == nil {
+			expectedKeys = make(map[string]bool, len(catalog.Furniture))
+			for key := range catalog.Furniture {
+				expectedKeys[key] = true
+			}
+		} else {
+			for key := range catalog.Furniture {
+				if !expectedKeys[key] {
+					t.Errorf("%s furniture catalog has unexpected key %q", language, key)
+				}
+			}
+		}
+
+		presentation, err := LoadPresentation(dataDir, language)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(presentation.Furniture, catalog.Furniture) {
+			t.Errorf("%s presentation furniture labels do not match the loaded game locale", language)
+		}
+		payload, err := json.Marshal(presentation)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var sections map[string]json.RawMessage
+		if err := json.Unmarshal(payload, &sections); err != nil {
+			t.Fatal(err)
+		}
+		var exposed map[string]string
+		if err := json.Unmarshal(sections["furniture"], &exposed); err != nil {
+			t.Fatalf("%s presentation furniture payload: %v", language, err)
+		}
+		if got := exposed["SF_0013_lv10_desc"]; got != want[language]["SF_0013_lv10_desc"] {
+			t.Errorf("%s JSON furniture payload contains DEF progression %q, want %q", language, got, want[language]["SF_0013_lv10_desc"])
+		}
+	}
+}
+
 func TestProductionGameLocalesCoverEveryRuntimeCatalogID(t *testing.T) {
 	dataDir := filepath.Join("..", "..", "data")
 	gameDir := filepath.Join(dataDir, "game")
@@ -254,6 +334,7 @@ func TestPresentationCatalogsHaveMatchingKeys(t *testing.T) {
 	compare("stat_sources", fr.StatSources, en.StatSources)
 	compare("abilities", fr.Abilities, en.Abilities)
 	compare("console_trait_effects", fr.ConsoleTraitEffects, en.ConsoleTraitEffects)
+	compare("furniture", fr.Furniture, en.Furniture)
 	for key := range fr.Damage {
 		if _, ok := en.Damage[key]; !ok {
 			t.Errorf("damage key %q missing from en", key)

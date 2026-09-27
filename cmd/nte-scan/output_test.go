@@ -109,6 +109,7 @@ func TestWriteOutputDirExportsResourcesFromDifferentCatalogGroups(t *testing.T) 
 	resources := []resourceItem{
 		{ID: itemNetID{Solt: 21, Serial: 31}, ItemID: "Annulith", Quantity: 4},
 		{ID: itemNetID{Solt: 22, Serial: 32}, ItemID: "SyntheticEventToken", Quantity: 9},
+		{ID: itemNetID{Solt: 23, Serial: 33}, ItemID: "Furniture_FlowerPot_001", Quantity: 1},
 	}
 	if err := writeOutputDir(dir, report{UDP: udpReport{Resources: resources}}); err != nil {
 		t.Fatal(err)
