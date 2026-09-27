@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import { applyLocalization } from '../i18n'
 import { PresentationProvider } from '../presentation'
-import type { LocalizationCatalog, StatSummary } from '../types'
+import type { LocalizationCatalog, PanelBonus, PotentialHousingEffect, StatSummary } from '../types'
 import { CurrentGameStats } from './current-game-stats'
 
 const catalog: LocalizationCatalog = {
@@ -12,6 +12,12 @@ const catalog: LocalizationCatalog = {
     current_stats: 'Current stats',
     current_stats_description: 'Final calculated stats',
     observed_panel_stats_description: 'Final values read from the in-game panel',
+    possible_panel_bonuses: 'Possible additional in-game bonuses',
+    possible_panel_bonuses_note: 'Positive differences between the scanned panel and the optimizer model. Their source is unknown; these values are diagnostic only and are not added to optimizer calculations.',
+    panel_bonus_comparison: 'Panel: {panel} · Model: {calculated}',
+    possible_housing_modifiers: 'Possible shared housing modifiers',
+    possible_housing_modifiers_note: 'Panel-based hints only; not applied to optimizer calculations.',
+    housing_modifier_evidence: 'Matched on {matching} of {observed} loaded characters',
     max_effects_value: 'Max effects: {value}',
     estimated_stats: 'Some stat sources are missing',
   },
@@ -19,7 +25,7 @@ const catalog: LocalizationCatalog = {
     AtkBase: 'Base ATK', AtkFinal: 'ATK', AtkUp: 'ATK %', AtkAdd: 'Flat ATK',
     DefBase: 'Base DEF', DefFinal: 'DEF', DefUp: 'DEF %', DefAdd: 'Flat DEF', Endurance: 'Endurance',
     HPMaxBase: 'Base HP', HPFinal: 'HP', HPMaxUp: 'HP %', HPMaxAdd: 'Flat HP', HPUp: 'HP %',
-    ElementalDMGBonus: 'Elemental DMG',
+    CritDamageBase: 'CRIT DMG', MagBase: 'Cycle Intensity', ElementalDMGBonus: 'Elemental DMG',
   },
   qualities: {},
   geometries: {},
@@ -91,5 +97,50 @@ describe('CurrentGameStats', () => {
     expect(screen.queryByText('Base ATK')).not.toBeInTheDocument()
     expect(screen.queryByText('1,230')).not.toBeInTheDocument()
     expect(screen.queryByText('Stats are estimated: some account bonuses or temporary effects are not available in imported data.')).not.toBeInTheDocument()
+  })
+
+  it('shows repeated panel residuals as diagnostic housing candidates', () => {
+    const candidates: PotentialHousingEffect[] = [
+      { modifier_id: 'yaodao_1', property_id: 'AtkAdd', panel_property: 'AtkFinal', value: 4, percent: false, matching_characters: 4, observed_characters: 4 },
+      { modifier_id: 'quantao_5', property_id: 'CritDamageBase', panel_property: 'CritDamageBase', value: .024, percent: true, matching_characters: 4, observed_characters: 4 },
+    ]
+    render(<PresentationProvider catalog={catalog}><CurrentGameStats
+      observedPanelStats={{ attack: 1748, critDamage: 2.304 }}
+      calculatedStats={stats}
+      potentialHousingEffects={candidates}
+    /></PresentationProvider>)
+
+    expect(screen.getByText('Possible shared housing modifiers')).toBeInTheDocument()
+    expect(screen.getByText('Panel-based hints only; not applied to optimizer calculations.')).toBeInTheDocument()
+    expect(screen.getAllByText('ATK')).toHaveLength(2)
+    expect(screen.getByText('+4')).toBeInTheDocument()
+    expect(screen.getByText('+2.4 %')).toBeInTheDocument()
+    expect(screen.getAllByText('Matched on 4 of 4 loaded characters')).toHaveLength(2)
+    expect(screen.queryByText('yaodao_1')).not.toBeInTheDocument()
+  })
+
+  it('shows positive panel residuals without requiring a source attribution', () => {
+    const bonuses: PanelBonus[] = [
+      { property_id: 'AtkFinal', observed_value: 1748.125, calculated_value: 1744, difference: 4 },
+      { property_id: 'CritDamageBase', observed_value: 2.304, calculated_value: 2.28, difference: .024 },
+      { property_id: 'MagBase', observed_value: 172, calculated_value: 72, difference: 100 },
+    ]
+    const housing: PotentialHousingEffect[] = [
+      { modifier_id: 'yaodao_1', property_id: 'AtkAdd', panel_property: 'AtkFinal', value: 4, percent: false, matching_characters: 4, observed_characters: 4 },
+    ]
+    render(<PresentationProvider catalog={catalog}><CurrentGameStats
+      observedPanelStats={{ attack: 1748.125, critDamage: 2.304, cycleIntensity: 172 }}
+      calculatedStats={stats}
+      possiblePanelBonuses={bonuses}
+      potentialHousingEffects={housing}
+    /></PresentationProvider>)
+
+    expect(screen.getByText('Possible additional in-game bonuses')).toBeInTheDocument()
+    expect(screen.getByText('Positive differences between the scanned panel and the optimizer model. Their source is unknown; these values are diagnostic only and are not added to optimizer calculations.')).toBeInTheDocument()
+    expect(screen.getByText('+4')).toBeInTheDocument()
+    expect(screen.getByText('+2.4 %')).toBeInTheDocument()
+    expect(screen.getByText('+100')).toBeInTheDocument()
+    expect(screen.getByText('Panel: 1,748 · Model: 1,744')).toBeInTheDocument()
+    expect(screen.queryByText('Possible shared housing modifiers')).not.toBeInTheDocument()
   })
 })

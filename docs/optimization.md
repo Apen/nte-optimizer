@@ -16,6 +16,16 @@ For each character, the application combines:
 6. the character console trait for the relevant module area;
 7. optional values from `account_overrides.json`.
 
+The static `data/game/housing/special_furniture_modifiers.json` catalog lists
+possible special-furniture effects. The character state view may show a
+possible shared effect when its value matches the same panel-to-model residual
+for at least 75% of two or more characters marked as loaded during the latest
+login scan. The diagnostic currently recognizes unconditional additive ATK,
+DEF, and CRIT DMG modifiers; it allows a one-point tolerance for flat panel
+stats and `0.001` for decimal percentage stats. Tied modifier ranks are
+omitted. This is a diagnostic inference, not a decoded furniture placement or
+activation state. It is never added to calculated stats or optimizer scores.
+
 The imported bond level is shown in the character state. It is not added as a
 calculated stat source: the current import does not distinguish a bond effect
 from values already represented in the character's observed panel stats.
