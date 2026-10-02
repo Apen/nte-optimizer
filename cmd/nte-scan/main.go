@@ -111,6 +111,7 @@ func main() {
 	resourceCatalogPath := flag.String("resource-catalog", "resources.json", "NTE resources.json catalog")
 	outputDir := flag.String("output-dir", "", "write all domain JSON files to this directory")
 	loginCapture := flag.Bool("login-capture", false, "capture login traffic and export all JSON files")
+	stopPktmonFirst := flag.Bool("stop-pktmon-first", false, "stop all Pktmon collection before a user-requested recovery scan")
 	loginSeconds := flag.Int("login-seconds", 30, "maximum guided capture duration")
 	cancelFile := flag.String("cancel-file", "", "file used to signal capture cancellation")
 	scanLog := flag.String("scan-log", "", "local privacy-safe scan diagnostic file")
@@ -122,6 +123,9 @@ func main() {
 		fmt.Println(buildinfo.String())
 		return
 	}
+	if *stopPktmonFirst && !*loginCapture {
+		must(fmt.Errorf("-stop-pktmon-first requires -login-capture"))
+	}
 	*catalog = resolveDataFile(*catalog, "equipment.json")
 	*characterCatalogPath = resolveDataFile(*characterCatalogPath, "characters.json")
 	*forkCatalogPath = resolveDataFile(*forkCatalogPath, "forks.json")
@@ -131,12 +135,19 @@ func main() {
 		return
 	}
 	if *loginCapture {
+		if err := scanlog.AppendWithCode(*scanLog, "diagnostic_log", "complete", "", nil); err != nil {
+			must(&captureDiagnosticError{code: "diagnostic_log_not_writable", err: fmt.Errorf("local scan diagnostic is not writable: %w", err)})
+		}
 		_ = scanlog.Append(*scanLog, "capture", "started", nil)
-		pcap, err := captureLoginAutoWithProgress(ctx, "", time.Duration(*loginSeconds)*time.Second, func(stage, status string) {
-			_ = scanlog.Append(*scanLog, stage, status, nil)
+		pcap, err := captureLoginAutoWithProgressAndRecovery(ctx, "", time.Duration(*loginSeconds)*time.Second, *stopPktmonFirst, func(stage, status string) {
+			code := ""
+			if stage == "pktmon_status" && status == "already_running" {
+				code = "pktmon_already_running"
+			}
+			_ = scanlog.AppendWithCode(*scanLog, stage, status, code, nil)
 		})
 		if err != nil {
-			_ = scanlog.Append(*scanLog, "capture", "failed", nil)
+			_ = scanlog.AppendWithCode(*scanLog, "capture", "failed", captureFailureCode(err), nil)
 		}
 		must(err)
 		_ = scanlog.Append(*scanLog, "capture", "complete", nil)
@@ -149,7 +160,7 @@ func main() {
 	_ = scanlog.Append(*scanLog, "packet_read", "started", nil)
 	packets, err := readPCAPNG(*input)
 	if err != nil {
-		_ = scanlog.Append(*scanLog, "packet_read", "failed", nil)
+		_ = scanlog.AppendWithCode(*scanLog, "packet_read", "failed", "capture_file_read_failed", nil)
 	}
 	must(err)
 	mustScanContext(ctx)
@@ -161,7 +172,12 @@ func main() {
 	_ = scanlog.Append(*scanLog, "decode", "complete", map[string]int{"udp_packets": r.UDP.Packets, "equipment": r.UDP.DecodedItems, "characters": len(r.UDP.Characters), "arcs": len(r.UDP.Weapons), "resources": len(r.UDP.Resources)})
 	mustScanContext(ctx)
 	if *loginCapture && (r.UDP.DecodedItems == 0 || len(r.UDP.Characters) == 0 || len(r.UDP.Weapons) == 0) {
-		_ = scanlog.Append(*scanLog, "validation", "incomplete", nil)
+		_ = scanlog.AppendWithCode(*scanLog, "validation", "incomplete", "capture_incomplete", map[string]int{
+			"udp_packets": r.UDP.Packets,
+			"equipment":   r.UDP.DecodedItems,
+			"characters":  len(r.UDP.Characters),
+			"arcs":        len(r.UDP.Weapons),
+		})
 		must(fmt.Errorf("incomplete capture: equipment=%d, characters=%d, Arcs=%d; start another guided scan and log in while the capture is active", r.UDP.DecodedItems, len(r.UDP.Characters), len(r.UDP.Weapons)))
 	}
 	if *loginCapture {
@@ -217,7 +233,7 @@ func main() {
 		_ = scanlog.Append(*scanLog, "export", "started", nil)
 		err := writeOutputDir(*outputDir, r)
 		if err != nil {
-			_ = scanlog.Append(*scanLog, "export", "failed", nil)
+			_ = scanlog.AppendWithCode(*scanLog, "export", "failed", "export_write_failed", nil)
 		}
 		must(err)
 		_ = scanlog.Append(*scanLog, "export", "complete", nil)
@@ -225,7 +241,7 @@ func main() {
 	if *loginCapture {
 		err := removeCaptureFiles(*input)
 		if err != nil {
-			_ = scanlog.Append(*scanLog, "cleanup", "failed", nil)
+			_ = scanlog.AppendWithCode(*scanLog, "cleanup", "failed", "capture_cleanup_failed", nil)
 		}
 		must(err)
 		_ = scanlog.Append(*scanLog, "cleanup", "complete", nil)

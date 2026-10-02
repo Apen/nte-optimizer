@@ -7,3 +7,7 @@ import "fmt"
 func runElevated(_, _, _, _ string, _ int) error {
 	return fmt.Errorf("administrator elevation is not supported on this platform")
 }
+
+func runElevatedWithRecovery(_, _, _, _ string, _ int, _ bool) error {
+	return fmt.Errorf("administrator elevation is not supported on this platform")
+}

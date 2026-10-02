@@ -41,3 +41,33 @@ func TestRunElevatedFallsBackToProcessError(t *testing.T) {
 		t.Fatalf("runElevatedWithRunner() error = %v", err)
 	}
 }
+
+func TestRunElevatedWithRecoveryAddsExplicitStopFlag(t *testing.T) {
+	var script string
+	err := runElevatedWithRecoveryWithRunner(`C:\Program Files\NTE's\nte-scan.exe`, `C:\NTE's`, `C:\output`, `C:\cancel`, 35, true, func(got string) ([]byte, error) {
+		script = got
+		return nil, nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{"Start-Process", "-Verb RunAs", "-Wait", "-login-capture", "-stop-pktmon-first", "NTE''s"} {
+		if !strings.Contains(script, want) {
+			t.Fatalf("PowerShell script does not contain %q: %s", want, script)
+		}
+	}
+}
+
+func TestRunElevatedWithRecoveryOmitsStopFlagByDefault(t *testing.T) {
+	var script string
+	err := runElevatedWithRunner("scanner", "project", "output", "cancel", 30, func(got string) ([]byte, error) {
+		script = got
+		return nil, nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(script, "-stop-pktmon-first") {
+		t.Fatalf("normal scan unexpectedly stops Pktmon: %s", script)
+	}
+}

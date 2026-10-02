@@ -129,6 +129,30 @@ func TestRunFailsBeforeElevationWhenHelperIsMissing(t *testing.T) {
 	}
 }
 
+func TestRunWithRecoveryPassesStopBeforeCaptureRequest(t *testing.T) {
+	if runtime.GOOS != "windows" {
+		t.Skip("scanner elevation is Windows-only")
+	}
+	installDir := t.TempDir()
+	stateDir := t.TempDir()
+	helper := filepath.Join(installDir, "nte-scan.exe")
+	writeTestHelper(t, helper)
+	called := false
+	err := runWithRecovery(context.Background(), installDir, stateDir, 35, true, func(gotHelper, gotInstallDir, gotOutputDir, gotCancelFile string, gotSeconds int, gotStopPktmonFirst bool) error {
+		called = true
+		if gotHelper != helper || gotInstallDir != installDir || gotOutputDir != OutputDir(stateDir) || gotSeconds != 35 || !gotStopPktmonFirst {
+			t.Fatalf("unexpected elevated arguments: %q, %q, %q, %d, %t", gotHelper, gotInstallDir, gotOutputDir, gotSeconds, gotStopPktmonFirst)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !called {
+		t.Fatal("elevated runner was not called")
+	}
+}
+
 func TestRunContextSignalsElevatedScannerCancellation(t *testing.T) {
 	if runtime.GOOS != "windows" {
 		t.Skip("scanner elevation is Windows-only")

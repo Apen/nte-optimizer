@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"path/filepath"
 	"strings"
@@ -180,17 +181,40 @@ func (a *DesktopApp) OpenDownloadURL(url string) {
 // Once its validated JSON export is complete, the normal desktop process reads
 // and imports it without retaining elevated privileges.
 func (a *DesktopApp) ScanAndImportAccount(language string, seconds int) (appservice.AccountImportSummary, error) {
+	return a.scanAndImportAccount(language, seconds, false)
+}
+
+// RecoverAndScanAccount explicitly stops all Pktmon collection before starting
+// a new guided scan. The UI warns that this can stop another tool's capture.
+func (a *DesktopApp) RecoverAndScanAccount(language string, seconds int) (appservice.AccountImportSummary, error) {
+	return a.scanAndImportAccount(language, seconds, true)
+}
+
+func (a *DesktopApp) scanAndImportAccount(language string, seconds int, stopPktmonFirst bool) (appservice.AccountImportSummary, error) {
 	if _, err := ntelocale.Load(a.service.DataDir, language); err != nil {
 		return appservice.AccountImportSummary{}, err
 	}
-	logPath := scanlog.Path(a.stateDir)
-	if err := scanlog.Start(logPath, seconds); err != nil {
-		return appservice.AccountImportSummary{}, fmt.Errorf("start local scan diagnostic: %w", err)
+	a.scanMu.Lock()
+	if a.scanStop != nil {
+		a.scanMu.Unlock()
+		return appservice.AccountImportSummary{}, scannerlauncher.ErrScanAlreadyRunning
 	}
+	a.scanMu.Unlock()
+	releaseScanLock, err := scannerlauncher.AcquireScanLock(a.stateDir)
+	if err != nil {
+		if errors.Is(err, scannerlauncher.ErrScanAlreadyRunning) {
+			return appservice.AccountImportSummary{}, scannerlauncher.ErrScanAlreadyRunning
+		}
+		return appservice.AccountImportSummary{}, err
+	}
+	defer releaseScanLock()
+
 	scanContext, stop := context.WithCancel(a.ctx)
 	a.scanMu.Lock()
 	if a.scanStop != nil {
-		a.scanStop()
+		a.scanMu.Unlock()
+		stop()
+		return appservice.AccountImportSummary{}, scannerlauncher.ErrScanAlreadyRunning
 	}
 	a.scanID++
 	scanID := a.scanID
@@ -204,20 +228,48 @@ func (a *DesktopApp) ScanAndImportAccount(language string, seconds int) (appserv
 		a.scanMu.Unlock()
 		stop()
 	}()
-	if err := scannerlauncher.RunContext(scanContext, a.projectDir, a.stateDir, seconds); err != nil {
-		_ = scanlog.Append(logPath, "scanner", "failed", nil)
-		return appservice.AccountImportSummary{}, err
+
+	logPath := scanlog.Path(a.stateDir)
+	if err := scanlog.Start(logPath, seconds); err != nil {
+		return appservice.AccountImportSummary{}, fmt.Errorf("start local scan diagnostic: %w", err)
+	}
+	if stopPktmonFirst {
+		if err := scanlog.Append(logPath, "pktmon_recovery", "requested", nil); err != nil {
+			return appservice.AccountImportSummary{}, fmt.Errorf("record Pktmon recovery request: %w", err)
+		}
+	}
+	var scanErr error
+	if stopPktmonFirst {
+		scanErr = scannerlauncher.RunContextAfterPktmonRecovery(scanContext, a.projectDir, a.stateDir, seconds)
+	} else {
+		scanErr = scannerlauncher.RunContext(scanContext, a.projectDir, a.stateDir, seconds)
+	}
+	if scanErr != nil {
+		events, readErr := scanlog.Read(logPath)
+		if readErr != nil || !hasScanFailure(events) {
+			_ = scanlog.AppendWithCode(logPath, "scanner", "failed", scannerlauncher.ErrorCode(scanErr), nil)
+		}
+		return appservice.AccountImportSummary{}, scanErr
 	}
 	_ = scanlog.Append(logPath, "import", "started", nil)
 	a.buildMu.Lock()
 	defer a.buildMu.Unlock()
 	summary, err := appservice.ImportDecodedWithSummary(scannerlauncher.OutputDir(a.stateDir), a.stateDir)
 	if err != nil {
-		_ = scanlog.Append(logPath, "import", "failed", nil)
+		_ = scanlog.AppendWithCode(logPath, "import", "failed", "import_failed", nil)
 		return summary, err
 	}
 	_ = scanlog.Append(logPath, "import", "complete", map[string]int{"characters": summary.Characters, "modules": summary.Modules, "cartridges": summary.Cartridges, "arcs": summary.Weapons})
 	return summary, nil
+}
+
+func hasScanFailure(events []scanlog.Event) bool {
+	for _, event := range events {
+		if event.Status == "failed" || event.Status == "incomplete" || event.Status == "already_running" {
+			return true
+		}
+	}
+	return false
 }
 
 func (a *DesktopApp) LastScanLog() ([]scanlog.Event, error) {

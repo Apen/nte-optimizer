@@ -83,3 +83,7 @@ export function StopOptimization() {
 export function LastOptimizationLog() {
   return window['go']['main']['DesktopApp']['LastOptimizationLog']()
 }
+
+export function RecoverAndScanAccount(language, seconds) {
+  return window['go']['main']['DesktopApp']['RecoverAndScanAccount'](language, seconds)
+}

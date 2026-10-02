@@ -12,9 +12,12 @@ import (
 // Event contains only fixed diagnostic codes and aggregate counts. Never add
 // paths, packet contents, account identifiers, or raw errors to this format.
 type Event struct {
-	Time   string         `json:"time"`
-	Stage  string         `json:"stage"`
-	Status string         `json:"status"`
+	Time   string `json:"time"`
+	Stage  string `json:"stage"`
+	Status string `json:"status"`
+	// Code is a fixed, privacy-safe diagnostic identifier. Never put raw errors,
+	// paths, packet contents, or account identifiers here.
+	Code   string         `json:"code,omitempty"`
 	Counts map[string]int `json:"counts,omitempty"`
 }
 
@@ -31,10 +34,14 @@ func Start(path string, seconds int) error {
 }
 
 func Append(path, stage, status string, counts map[string]int) error {
+	return AppendWithCode(path, stage, status, "", counts)
+}
+
+func AppendWithCode(path, stage, status, code string, counts map[string]int) error {
 	if path == "" {
 		return nil
 	}
-	event := Event{Time: time.Now().UTC().Format(time.RFC3339), Stage: stage, Status: status, Counts: counts}
+	event := Event{Time: time.Now().UTC().Format(time.RFC3339), Stage: stage, Status: status, Code: code, Counts: counts}
 	data, err := json.Marshal(event)
 	if err != nil {
 		return err

@@ -121,14 +121,29 @@ $expectedReleaseDir = [System.IO.Path]::GetFullPath((Join-Path $projectDir "buil
 if ([System.IO.Path]::GetFullPath($releaseDir) -ne $expectedReleaseDir) {
     throw "Unexpected release directory: $releaseDir"
 }
-if (Test-Path -LiteralPath $releaseDir) {
-    Remove-Item -LiteralPath $releaseDir -Recurse -Force
+$packageDir = $releaseDir
+$releaseExecutablePath = [System.IO.Path]::GetFullPath((Join-Path $releaseDir $Name))
+$applicationProcessName = [System.IO.Path]::GetFileNameWithoutExtension($Name)
+$runningReleaseProcesses = @(
+    Get-Process -Name $applicationProcessName -ErrorAction SilentlyContinue |
+        Where-Object {
+            $_.Path -and [System.IO.Path]::GetFullPath($_.Path).Equals($releaseExecutablePath, [System.StringComparison]::OrdinalIgnoreCase)
+        }
+)
+if ($runningReleaseProcesses.Count -gt 0) {
+    $packageSuffix = "{0}-{1}-{2}" -f [DateTime]::UtcNow.ToString("yyyyMMdd-HHmmss"), $PID, [guid]::NewGuid().ToString("N").Substring(0, 8)
+    $packageDir = Join-Path $releaseRoot "nte-optimizer-build-$packageSuffix"
+    $processIds = ($runningReleaseProcesses | ForEach-Object { $_.Id }) -join ", "
+    Write-Host "[PACKAGE] Existing portable app is running (PID $processIds); preserving it and writing the new package to $packageDir" -ForegroundColor Yellow
 }
-New-Item -ItemType Directory -Path $releaseDir -Force | Out-Null
-Copy-Item -LiteralPath $outputPath -Destination (Join-Path $releaseDir $Name)
-Copy-Item -LiteralPath (Join-Path $binDir "nte-scan.exe") -Destination (Join-Path $releaseDir "nte-scan.exe")
-Copy-Item -LiteralPath (Join-Path $projectDir "data") -Destination (Join-Path $releaseDir "data") -Recurse
-Write-Host "[PACKAGE] Ready: $releaseDir" -ForegroundColor Green
+if (Test-Path -LiteralPath $packageDir) {
+    Remove-Item -LiteralPath $packageDir -Recurse -Force
+}
+New-Item -ItemType Directory -Path $packageDir -Force | Out-Null
+Copy-Item -LiteralPath $outputPath -Destination (Join-Path $packageDir $Name)
+Copy-Item -LiteralPath (Join-Path $binDir "nte-scan.exe") -Destination (Join-Path $packageDir "nte-scan.exe")
+Copy-Item -LiteralPath (Join-Path $projectDir "data") -Destination (Join-Path $packageDir "data") -Recurse
+Write-Host "[PACKAGE] Ready: $packageDir" -ForegroundColor Green
 
 Write-Host "[PACKAGE] Windows archive and checksum" -ForegroundColor Cyan
 foreach ($generatedPath in @($archivePath, $checksumPath)) {
@@ -136,7 +151,7 @@ foreach ($generatedPath in @($archivePath, $checksumPath)) {
         Remove-Item -LiteralPath $generatedPath -Force
     }
 }
-Compress-Archive -Path (Join-Path $releaseDir "*") -DestinationPath $archivePath -CompressionLevel Optimal
+Compress-Archive -Path (Join-Path $packageDir "*") -DestinationPath $archivePath -CompressionLevel Optimal
 $archiveHash = (Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash.ToLowerInvariant()
 $checksumLine = "$archiveHash  $([System.IO.Path]::GetFileName($archivePath))"
 [System.IO.File]::WriteAllText($checksumPath, "$checksumLine`n", [System.Text.UTF8Encoding]::new($false))
@@ -153,7 +168,7 @@ if ($SmokeTest) {
 
 if ($Launch) {
     Write-Host "[RUN] Starting $($artifact.Name)" -ForegroundColor Cyan
-    $releaseExecutable = Join-Path $releaseDir $Name
-    $process = Start-Process -FilePath $releaseExecutable -WorkingDirectory $releaseDir -PassThru
+    $releaseExecutable = Join-Path $packageDir $Name
+    $process = Start-Process -FilePath $releaseExecutable -WorkingDirectory $packageDir -PassThru
     Write-Host "[RUN] Started with PID $($process.Id)" -ForegroundColor Green
 }
