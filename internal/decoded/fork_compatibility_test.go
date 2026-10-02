@@ -16,7 +16,7 @@ func TestProductionCompatibilityMatchesDataminedArcGroups(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got, want := catalog.CompatibleCharacterIDs("fork_DemonBlade"), []int{1003, 1008, 1036, 1073}; !reflect.DeepEqual(got, want) {
+	if got, want := catalog.CompatibleCharacterIDs("fork_DemonBlade"), []int{1003, 1008, 1036, 1042, 1073}; !reflect.DeepEqual(got, want) {
 		t.Fatalf("DemonBlade compatible characters = %v, want %v", got, want)
 	}
 }

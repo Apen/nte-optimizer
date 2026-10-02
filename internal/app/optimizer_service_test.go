@@ -43,7 +43,7 @@ func TestOptimizerServiceProfilesAreStable(t *testing.T) {
 	if byID["lacrimosa"].CharacterID != 1004 || byID["lacrimosa"].Weights["CritBase"] != .85 || !slices.Contains(byID["lacrimosa"].MainStats, "CritBase") {
 		t.Fatalf("Lacrimosa profile not exposed: %#v", byID["lacrimosa"])
 	}
-	if byID["zankou"].CharacterID != 1036 || byID["zankou"].Weights["CritDamageBase"] != 1 || byID["zankou_sub_dps"].Weights["UnbalIntensityBase"] != .55 {
+	if byID["zankou"].CharacterID != 1036 || byID["zankou"].Weights["CritDamageBase"] != 1 || byID["zankou"].Weights["UnbalIntensityBase"] != .55 || byID["zankou_dps"].Weights["UnbalIntensityBase"] != .4 {
 		t.Fatalf("Zankou profile weights not exposed: %#v", byID)
 	}
 	if byID["zero"].CharacterID != 1046 {

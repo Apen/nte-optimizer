@@ -10,8 +10,8 @@ func TestLoadZankouGrid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(catalog.Definitions) != 23 {
-		t.Fatalf("grid count = %d, want 23", len(catalog.Definitions))
+	if len(catalog.Definitions) != 25 {
+		t.Fatalf("grid count = %d, want 25", len(catalog.Definitions))
 	}
 	definition := catalog.Definitions["zankou"]
 	if definition.Width != 5 || definition.Height != 5 || len(definition.Playable) != 20 {

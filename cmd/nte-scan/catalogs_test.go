@@ -25,8 +25,8 @@ func TestProductionDecodeCatalogsContainOnlyRuntimeData(t *testing.T) {
 	}
 	forks, err := loadForkCatalog(forksPath)
 	demonBlade := forks.Forks["fork_DemonBlade"]
-	if err != nil || len(forks.Forks) != 49 || demonBlade.Quality == "" || demonBlade.MaxBreakthrough <= 0 || demonBlade.MaxStar <= 0 {
-		t.Fatalf("invalid fork decode catalog: count=%d err=%v", len(forks.Forks), err)
+	if err != nil || len(forks.Forks) != 51 || demonBlade.Quality == "" || demonBlade.MaxBreakthrough <= 0 || demonBlade.MaxStar <= 0 {
+		t.Fatalf("invalid fork decode catalog: count=%d, want 51, err=%v", len(forks.Forks), err)
 	}
 	resources, err := loadResourceCatalog(resourcesPath)
 	if err != nil || len(resources.Items) == 0 {

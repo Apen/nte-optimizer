@@ -104,8 +104,8 @@ func TestProductionCatalogLoadsLocalizedConsoleTraitDescriptions(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if len(catalog.ConsoleTraitEffects) != 22 {
-			t.Fatalf("%s console trait descriptions = %d, want 22", language, len(catalog.ConsoleTraitEffects))
+		if len(catalog.ConsoleTraitEffects) != 24 {
+			t.Fatalf("%s console trait descriptions = %d, want 24", language, len(catalog.ConsoleTraitEffects))
 		}
 		if got := catalog.ConsoleTraitEffects["1036"]; got != want[language] {
 			t.Errorf("%s Zankou console trait = %q, want %q", language, got, want[language])
