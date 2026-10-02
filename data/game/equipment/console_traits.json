@@ -8,6 +8,12 @@
       "value_per_module": 0.12
     },
     {
+      "character_id": 1042,
+      "area": 3,
+      "property_id": "CritBase",
+      "value_per_module": 0.08
+    },
+    {
       "character_id": 1023,
       "area": 3,
       "property_id": "CritBase",
@@ -60,6 +66,12 @@
       "area": 3,
       "property_id": "DamageUpIncantationBase",
       "value_per_module": 0.09
+    },
+    {
+      "character_id": 1057,
+      "area": 3,
+      "property_id": "AtkUp",
+      "value_per_module": 0.1
     },
     {
       "character_id": 1071,

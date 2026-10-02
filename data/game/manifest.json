@@ -4,9 +4,10 @@
     {
       "path": "characters/base_stats.json",
       "schema_version": 1,
-      "sha256": "7386cf6d5011454899cc449aa19213e192c0b1e33887ce3061b8bb4410a54748",
+      "sha256": "db987c98db1734bb40a3d1d3469060cf109b38f674d268ff50acc2f0764462ec",
       "sources": [
-        "generated/base_stats.json"
+        "generated/base_stats.json",
+        "config/legacy-character-fallback.json"
       ],
       "status": "generated",
       "warnings": []
@@ -14,11 +15,12 @@
     {
       "path": "characters/bond_bonuses.json",
       "schema_version": 1,
-      "sha256": "adcb1d4bf56571ecf23b3393e169924e7f0b622513c5fb95a126745a72f65ecb",
+      "sha256": "74c3a1ba7146d3df40cae5703ce30fd2c13b041b60cb57724b42cdfcad891928",
       "sources": [
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_LikeabilityModifyData.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
-        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json"
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
+        "config/legacy-character-fallback.json"
       ],
       "status": "generated",
       "warnings": []
@@ -26,12 +28,13 @@
     {
       "path": "characters/decode.json",
       "schema_version": 1,
-      "sha256": "42c36f5987ca04b9acab33b093c86e8d55b520fa70116daf5c1f7bc4f97f917f",
+      "sha256": "156ca30ecfb16ad451464faf871db07392b3bbe15fcb1472d40702bc349dc6d9",
       "sources": [
         "datamine/data/characters/manifest.json",
         "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
-        "overrides/game-data.json"
+        "overrides/game-data.json",
+        "config/legacy-character-fallback.json"
       ],
       "status": "generated",
       "warnings": []
@@ -39,7 +42,7 @@
     {
       "path": "combat/damage.json",
       "schema_version": 1,
-      "sha256": "cf0b8778257e3029bf9060e2d541438ff46c17f42a4d7de04089a7e17de91a9b",
+      "sha256": "8690fb2db4face369a4839b60cd1e9cbaaa8da6c11b7ba1e8af4108821c8e44f",
       "sources": [
         "generated/combat_catalog_draft.json",
         "datamine/data/characters/manifest.json",
@@ -53,7 +56,7 @@
     {
       "path": "equipment/arcs.json",
       "schema_version": 1,
-      "sha256": "0ae3e292bea4d81f2c24ee1e37cf5fb46022079017f602ecae853b059063b607",
+      "sha256": "7ef05658791bb3411ad9ff74c529f8aeb65cf51bd1550386ad44fb0f9a8ce4ab",
       "sources": [
         "generated/fork_stats.json",
         "overrides/equipment-projections.json",
@@ -68,7 +71,7 @@
     {
       "path": "equipment/console_traits.json",
       "schema_version": 1,
-      "sha256": "b24e0657ec2f2667fa32c6be669c0321732dd516c569f5e7bb3668c10bde858f",
+      "sha256": "207c1cfd2b2f9a1d06805ba5c00ef13e7c3bba073fd1d4198113251f1703b54d",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_CharacterEquipmentSlotsData.json",
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_EquipmentModifySlotsEffect.json"
@@ -79,7 +82,7 @@
     {
       "path": "equipment/decode.json",
       "schema_version": 1,
-      "sha256": "23c2efc98e693a1b6db6eb65dd814c9d5ac985bd5b9b392646dcc618a0d47910",
+      "sha256": "59fa21b9319f786d179daeead09f7586945dcf63bd07c222556bbfa366bd712a",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_Equipment.json",
         "datamine/data/catalogs/DataTable/Equipment/CT_EquipmentBaseAttribute.json",
@@ -95,7 +98,7 @@
     {
       "path": "equipment/grids.json",
       "schema_version": 1,
-      "sha256": "94d2ff591e085e973976e8f017e11e916dc287213bfcef5ff58da5a9447ec397",
+      "sha256": "796f69327c16d2aeaa78ee7cc5213d24cee2edf66e591c2caaff8df75ee8bbf8",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentPlanData.json"
       ],
@@ -128,7 +131,7 @@
     {
       "path": "forks/decode.json",
       "schema_version": 1,
-      "sha256": "0937a5056d95a8cd6dbe19187e10bd9d91bd6b02ad292adc1990b59a0a29762f",
+      "sha256": "b30ac22e6558aa92fedf6f3920a28f342970c686aea5409179976271a0c8e37f",
       "sources": [
         "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json"
       ],
@@ -149,17 +152,19 @@
     {
       "path": "locales/en.json",
       "schema_version": 1,
-      "sha256": "4299658bacbd1e93c0e89181f4c22533f7eab1236be0f2e938ed7395fc8ff50a",
+      "sha256": "3df9d67f1416611c24163936c4b7abd7abbe6e914e2a92ea7996647978c06d49",
       "sources": [
         "datamine/data/localization/en.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
         "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json",
+        "datamine/data/catalogs/DataTable/Fork/DT_ForkUpgradeStarDataTable.json",
         "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentSuitData.json",
         "datamine/data/catalogs/DataTable/Equipment/DT_CharacterEquipmentSlotsData.json",
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_EquipmentModifySlotsEffect.json",
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
         "config/locales.json",
-        "overrides/locales.json"
+        "overrides/locales.json",
+        "config/legacy-character-fallback.json"
       ],
       "status": "generated",
       "warnings": []
@@ -167,17 +172,19 @@
     {
       "path": "locales/fr.json",
       "schema_version": 1,
-      "sha256": "0f24238d8ffcae3772db9c31b4d29e8af690dea8e4dd576a904d41148ea4e500",
+      "sha256": "e7347a8086c9322d490b9321c6bfe6f8cbd764bad5ed02489246bbbd47f176ea",
       "sources": [
         "datamine/data/localization/fr.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
         "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json",
+        "datamine/data/catalogs/DataTable/Fork/DT_ForkUpgradeStarDataTable.json",
         "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentSuitData.json",
         "datamine/data/catalogs/DataTable/Equipment/DT_CharacterEquipmentSlotsData.json",
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_EquipmentModifySlotsEffect.json",
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
         "config/locales.json",
-        "overrides/locales.json"
+        "overrides/locales.json",
+        "config/legacy-character-fallback.json"
       ],
       "status": "generated",
       "warnings": []

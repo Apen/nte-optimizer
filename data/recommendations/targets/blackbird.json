@@ -1,0 +1,187 @@
+{
+  "schema_version": 2,
+  "id": "blackbird",
+  "name": "Blackbird",
+  "main_stats": [
+    "CritDamageBase",
+    "DamageUpPsycheBase",
+    "AtkUp",
+    "MagBase"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "DamageUpGeneralBase",
+    "AtkUp",
+    "AtkAdd",
+    "MagBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 1800,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.9,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1.5,
+      "percent": true
+    },
+    {
+      "property_id": "MagBase",
+      "label": "Cycle Intensity",
+      "minimum": 100,
+      "percent": false
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpPsycheBase",
+      "label": "Psyche DMG",
+      "minimum": 0.1,
+      "percent": true
+    }
+  ],
+  "arcs": [
+    {
+      "rank": 1,
+      "name": "Crime and Punishment",
+      "base_atk": 570,
+      "stats": {
+        "CritBase": 0.24
+      }
+    },
+    {
+      "rank": 2,
+      "name": "Fluff of Finesse",
+      "refinement": "M5"
+    },
+    {
+      "rank": 3,
+      "name": "Ravenous Blade",
+      "base_atk": 570,
+      "stats": {
+        "CritBase": 0.24
+      }
+    },
+    {
+      "rank": 4,
+      "name": "Fluff of Finesse",
+      "base_atk": 512,
+      "stats": {
+        "AtkUp": 0.275
+      }
+    },
+    {
+      "rank": 5,
+      "name": "Cosmos Daze, Wild Reverie",
+      "base_atk": 275,
+      "stats": {
+        "AtkUp": 0.25
+      }
+    },
+    {
+      "rank": 6,
+      "name": "Watch Your Heads!",
+      "base_atk": 275,
+      "stats": {
+        "CritDamageBase": 0.4
+      }
+    },
+    {
+      "rank": 7,
+      "name": "Failing You, Heavy in My Heart",
+      "base_atk": 475,
+      "stats": {
+        "UnbalIntensityBase": 120
+      }
+    }
+  ],
+  "sets": [
+    "Devil's Blood: Curse",
+    "Lost Radiance",
+    "Street Boxer"
+  ],
+  "character": {
+    "character_id": 1042,
+    "grid_id": "character_1042"
+  },
+  "builds": [
+    {
+      "id": "blackbird",
+      "name": "DPS",
+      "main_stats": [
+        "CritDamageBase",
+        "DamageUpPsycheBase",
+        "AtkUp",
+        "MagBase"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "DamageUpGeneralBase",
+        "AtkUp",
+        "AtkAdd",
+        "MagBase"
+      ],
+      "weights": {
+        "AtkAdd": 0.55,
+        "AtkUp": 0.7,
+        "CritBase": 1,
+        "CritDamageBase": 0.85,
+        "DamageUpGeneralBase": 0.7,
+        "MagBase": 0.4
+      },
+      "variants": [
+        {
+          "id": "blackbird",
+          "name": "Blackbird — Devil's Blood: Curse",
+          "preferred_sets": [
+            {
+              "set_id": "Suit3",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "blackbird_lost_radiance",
+          "name": "Blackbird — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "blackbird_street_boxer",
+          "name": "Blackbird — Street Boxer",
+          "preferred_sets": [
+            {
+              "set_id": "Suit5",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

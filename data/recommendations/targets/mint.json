@@ -2,7 +2,6 @@
   "schema_version": 2,
   "id": "mint",
   "name": "Mint",
-  "page_updated": "Jun 23, 2026",
   "main_stats": [
     "DamageUpNatureBase",
     "CritBase",

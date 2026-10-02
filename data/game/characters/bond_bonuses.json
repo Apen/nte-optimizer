@@ -197,7 +197,20 @@
       "conditions": []
     },
     {
-      "character_id": null,
+      "character_id": "1042",
+      "likeability_id": "1042",
+      "stats": [
+        {
+          "property_id": "CritBase",
+          "value": 0.04,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "character_id": "1057",
       "likeability_id": "1057",
       "stats": [
         {

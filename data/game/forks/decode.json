@@ -234,6 +234,12 @@
       "max_star": 5,
       "apply_group_type": "CHARACTER_GROUP_TYPE_THREE"
     },
+    "fork_prism": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO"
+    },
     "fork_rishi": {
       "quality": "ORANGE",
       "max_breakthrough": 6,
@@ -257,6 +263,12 @@
       "max_breakthrough": 6,
       "max_star": 5,
       "apply_group_type": "CHARACTER_GROUP_TYPE_FIVE"
+    },
+    "fork_twinbirds": {
+      "quality": "ORANGE",
+      "max_breakthrough": 6,
+      "max_star": 5,
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR"
     },
     "fork_vine": {
       "quality": "BLUE",

@@ -48,6 +48,10 @@
       "codename": "Fadia",
       "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
     },
+    "1042": {
+      "codename": "BlackBird",
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
+    },
     "1046": {
       "codename": "Male",
       "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
@@ -70,6 +74,10 @@
     },
     "1056": {
       "codename": "bat",
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
+    },
+    "1057": {
+      "codename": "Akane",
       "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
     },
     "1070": {

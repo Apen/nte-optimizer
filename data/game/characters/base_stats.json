@@ -7249,6 +7249,610 @@
         "HPMaxBase": 17089
       }
     },
+    "1042": {
+      "1:0": {
+        "AtkBase": 84,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 73,
+        "HPMaxBase": 1280
+      },
+      "2:0": {
+        "AtkBase": 88,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 79,
+        "HPMaxBase": 1382
+      },
+      "3:0": {
+        "AtkBase": 92,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 85,
+        "HPMaxBase": 1485
+      },
+      "4:0": {
+        "AtkBase": 97,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 91,
+        "HPMaxBase": 1587
+      },
+      "5:0": {
+        "AtkBase": 101,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 96,
+        "HPMaxBase": 1690
+      },
+      "6:0": {
+        "AtkBase": 105,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 102,
+        "HPMaxBase": 1792
+      },
+      "7:0": {
+        "AtkBase": 109,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 108,
+        "HPMaxBase": 1894
+      },
+      "8:0": {
+        "AtkBase": 113,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 114,
+        "HPMaxBase": 1997
+      },
+      "9:0": {
+        "AtkBase": 118,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 120,
+        "HPMaxBase": 2099
+      },
+      "10:0": {
+        "AtkBase": 122,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 126,
+        "HPMaxBase": 2202
+      },
+      "11:0": {
+        "AtkBase": 126,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 131,
+        "HPMaxBase": 2304
+      },
+      "12:0": {
+        "AtkBase": 130,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 137,
+        "HPMaxBase": 2406
+      },
+      "13:0": {
+        "AtkBase": 134,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 143,
+        "HPMaxBase": 2509
+      },
+      "14:0": {
+        "AtkBase": 139,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 149,
+        "HPMaxBase": 2611
+      },
+      "15:0": {
+        "AtkBase": 143,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 155,
+        "HPMaxBase": 2714
+      },
+      "16:0": {
+        "AtkBase": 147,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 161,
+        "HPMaxBase": 2816
+      },
+      "17:0": {
+        "AtkBase": 151,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 166,
+        "HPMaxBase": 2918
+      },
+      "18:0": {
+        "AtkBase": 155,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 172,
+        "HPMaxBase": 3021
+      },
+      "19:0": {
+        "AtkBase": 160,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 178,
+        "HPMaxBase": 3123
+      },
+      "20:0": {
+        "AtkBase": 164,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 184,
+        "HPMaxBase": 3226
+      },
+      "20:1": {
+        "AtkBase": 206,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 242,
+        "HPMaxBase": 4250
+      },
+      "21:1": {
+        "AtkBase": 210,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 248,
+        "HPMaxBase": 4352
+      },
+      "22:1": {
+        "AtkBase": 214,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 254,
+        "HPMaxBase": 4454
+      },
+      "23:1": {
+        "AtkBase": 218,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 259,
+        "HPMaxBase": 4557
+      },
+      "24:1": {
+        "AtkBase": 223,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 265,
+        "HPMaxBase": 4659
+      },
+      "25:1": {
+        "AtkBase": 227,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 271,
+        "HPMaxBase": 4762
+      },
+      "26:1": {
+        "AtkBase": 231,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 277,
+        "HPMaxBase": 4864
+      },
+      "27:1": {
+        "AtkBase": 235,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 283,
+        "HPMaxBase": 4966
+      },
+      "28:1": {
+        "AtkBase": 239,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 289,
+        "HPMaxBase": 5069
+      },
+      "29:1": {
+        "AtkBase": 244,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 295,
+        "HPMaxBase": 5171
+      },
+      "30:1": {
+        "AtkBase": 248,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 300,
+        "HPMaxBase": 5274
+      },
+      "30:2": {
+        "AtkBase": 290,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 359,
+        "HPMaxBase": 6298
+      },
+      "31:2": {
+        "AtkBase": 294,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 365,
+        "HPMaxBase": 6400
+      },
+      "32:2": {
+        "AtkBase": 298,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 371,
+        "HPMaxBase": 6502
+      },
+      "33:2": {
+        "AtkBase": 302,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 377,
+        "HPMaxBase": 6605
+      },
+      "34:2": {
+        "AtkBase": 307,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 383,
+        "HPMaxBase": 6707
+      },
+      "35:2": {
+        "AtkBase": 311,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 389,
+        "HPMaxBase": 6810
+      },
+      "36:2": {
+        "AtkBase": 315,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 394,
+        "HPMaxBase": 6912
+      },
+      "37:2": {
+        "AtkBase": 319,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 400,
+        "HPMaxBase": 7014
+      },
+      "38:2": {
+        "AtkBase": 323,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 406,
+        "HPMaxBase": 7117
+      },
+      "39:2": {
+        "AtkBase": 328,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 412,
+        "HPMaxBase": 7219
+      },
+      "40:2": {
+        "AtkBase": 332,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 418,
+        "HPMaxBase": 7322
+      },
+      "40:3": {
+        "AtkBase": 374,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 476,
+        "HPMaxBase": 8346
+      },
+      "41:3": {
+        "AtkBase": 378,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 482,
+        "HPMaxBase": 8448
+      },
+      "42:3": {
+        "AtkBase": 382,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 487,
+        "HPMaxBase": 8550
+      },
+      "43:3": {
+        "AtkBase": 386,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 493,
+        "HPMaxBase": 8653
+      },
+      "44:3": {
+        "AtkBase": 391,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 499,
+        "HPMaxBase": 8755
+      },
+      "45:3": {
+        "AtkBase": 395,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 505,
+        "HPMaxBase": 8858
+      },
+      "46:3": {
+        "AtkBase": 399,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 511,
+        "HPMaxBase": 8960
+      },
+      "47:3": {
+        "AtkBase": 403,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 517,
+        "HPMaxBase": 9062
+      },
+      "48:3": {
+        "AtkBase": 407,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 522,
+        "HPMaxBase": 9165
+      },
+      "49:3": {
+        "AtkBase": 412,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 528,
+        "HPMaxBase": 9267
+      },
+      "50:3": {
+        "AtkBase": 416,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 534,
+        "HPMaxBase": 9370
+      },
+      "50:4": {
+        "AtkBase": 458,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 593,
+        "HPMaxBase": 10394
+      },
+      "51:4": {
+        "AtkBase": 462,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 599,
+        "HPMaxBase": 10496
+      },
+      "52:4": {
+        "AtkBase": 466,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 605,
+        "HPMaxBase": 10598
+      },
+      "53:4": {
+        "AtkBase": 470,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 611,
+        "HPMaxBase": 10701
+      },
+      "54:4": {
+        "AtkBase": 475,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 617,
+        "HPMaxBase": 10803
+      },
+      "55:4": {
+        "AtkBase": 479,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 622,
+        "HPMaxBase": 10906
+      },
+      "56:4": {
+        "AtkBase": 483,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 628,
+        "HPMaxBase": 11008
+      },
+      "57:4": {
+        "AtkBase": 487,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 634,
+        "HPMaxBase": 11110
+      },
+      "58:4": {
+        "AtkBase": 491,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 640,
+        "HPMaxBase": 11213
+      },
+      "59:4": {
+        "AtkBase": 496,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 646,
+        "HPMaxBase": 11315
+      },
+      "60:4": {
+        "AtkBase": 500,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 652,
+        "HPMaxBase": 11418
+      },
+      "60:5": {
+        "AtkBase": 542,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 710,
+        "HPMaxBase": 12442
+      },
+      "61:5": {
+        "AtkBase": 546,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 715,
+        "HPMaxBase": 12544
+      },
+      "62:5": {
+        "AtkBase": 550,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 721,
+        "HPMaxBase": 12646
+      },
+      "63:5": {
+        "AtkBase": 554,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 727,
+        "HPMaxBase": 12749
+      },
+      "64:5": {
+        "AtkBase": 559,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 733,
+        "HPMaxBase": 12851
+      },
+      "65:5": {
+        "AtkBase": 563,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 739,
+        "HPMaxBase": 12954
+      },
+      "66:5": {
+        "AtkBase": 567,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 745,
+        "HPMaxBase": 13056
+      },
+      "67:5": {
+        "AtkBase": 571,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 750,
+        "HPMaxBase": 13158
+      },
+      "68:5": {
+        "AtkBase": 575,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 756,
+        "HPMaxBase": 13261
+      },
+      "69:5": {
+        "AtkBase": 580,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 762,
+        "HPMaxBase": 13363
+      },
+      "70:5": {
+        "AtkBase": 584,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 768,
+        "HPMaxBase": 13466
+      },
+      "70:6": {
+        "AtkBase": 626,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 826,
+        "HPMaxBase": 14490
+      },
+      "71:6": {
+        "AtkBase": 630,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 832,
+        "HPMaxBase": 14592
+      },
+      "72:6": {
+        "AtkBase": 634,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 838,
+        "HPMaxBase": 14694
+      },
+      "73:6": {
+        "AtkBase": 638,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 843,
+        "HPMaxBase": 14797
+      },
+      "74:6": {
+        "AtkBase": 643,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 849,
+        "HPMaxBase": 14899
+      },
+      "75:6": {
+        "AtkBase": 647,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 855,
+        "HPMaxBase": 15002
+      },
+      "76:6": {
+        "AtkBase": 651,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 861,
+        "HPMaxBase": 15104
+      },
+      "77:6": {
+        "AtkBase": 655,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 867,
+        "HPMaxBase": 15206
+      },
+      "78:6": {
+        "AtkBase": 659,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 873,
+        "HPMaxBase": 15309
+      },
+      "79:6": {
+        "AtkBase": 664,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 879,
+        "HPMaxBase": 15411
+      },
+      "80:6": {
+        "AtkBase": 668,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 884,
+        "HPMaxBase": 15514
+      }
+    },
     "1046": {
       "1:0": {
         "AtkBase": 85,
@@ -10870,6 +11474,610 @@
         "CritBase": 0.05,
         "CritDamageBase": 0.5,
         "DefBase": 909,
+        "HPMaxBase": 15998
+      }
+    },
+    "1057": {
+      "1:0": {
+        "AtkBase": 80,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 76,
+        "HPMaxBase": 1320
+      },
+      "2:0": {
+        "AtkBase": 84,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 82,
+        "HPMaxBase": 1426
+      },
+      "3:0": {
+        "AtkBase": 88,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 88,
+        "HPMaxBase": 1531
+      },
+      "4:0": {
+        "AtkBase": 92,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 94,
+        "HPMaxBase": 1637
+      },
+      "5:0": {
+        "AtkBase": 96,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 100,
+        "HPMaxBase": 1742
+      },
+      "6:0": {
+        "AtkBase": 100,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 106,
+        "HPMaxBase": 1848
+      },
+      "7:0": {
+        "AtkBase": 104,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 112,
+        "HPMaxBase": 1954
+      },
+      "8:0": {
+        "AtkBase": 108,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 119,
+        "HPMaxBase": 2059
+      },
+      "9:0": {
+        "AtkBase": 112,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 125,
+        "HPMaxBase": 2165
+      },
+      "10:0": {
+        "AtkBase": 116,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 131,
+        "HPMaxBase": 2270
+      },
+      "11:0": {
+        "AtkBase": 120,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 137,
+        "HPMaxBase": 2376
+      },
+      "12:0": {
+        "AtkBase": 124,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 143,
+        "HPMaxBase": 2482
+      },
+      "13:0": {
+        "AtkBase": 128,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 149,
+        "HPMaxBase": 2587
+      },
+      "14:0": {
+        "AtkBase": 132,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 155,
+        "HPMaxBase": 2693
+      },
+      "15:0": {
+        "AtkBase": 136,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 161,
+        "HPMaxBase": 2798
+      },
+      "16:0": {
+        "AtkBase": 140,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 167,
+        "HPMaxBase": 2904
+      },
+      "17:0": {
+        "AtkBase": 144,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 173,
+        "HPMaxBase": 3010
+      },
+      "18:0": {
+        "AtkBase": 148,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 179,
+        "HPMaxBase": 3115
+      },
+      "19:0": {
+        "AtkBase": 152,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 185,
+        "HPMaxBase": 3221
+      },
+      "20:0": {
+        "AtkBase": 156,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 192,
+        "HPMaxBase": 3326
+      },
+      "20:1": {
+        "AtkBase": 196,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 253,
+        "HPMaxBase": 4382
+      },
+      "21:1": {
+        "AtkBase": 200,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 259,
+        "HPMaxBase": 4488
+      },
+      "22:1": {
+        "AtkBase": 204,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 265,
+        "HPMaxBase": 4594
+      },
+      "23:1": {
+        "AtkBase": 208,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 271,
+        "HPMaxBase": 4699
+      },
+      "24:1": {
+        "AtkBase": 212,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 277,
+        "HPMaxBase": 4805
+      },
+      "25:1": {
+        "AtkBase": 216,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 283,
+        "HPMaxBase": 4910
+      },
+      "26:1": {
+        "AtkBase": 220,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 289,
+        "HPMaxBase": 5016
+      },
+      "27:1": {
+        "AtkBase": 224,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 295,
+        "HPMaxBase": 5122
+      },
+      "28:1": {
+        "AtkBase": 228,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 301,
+        "HPMaxBase": 5227
+      },
+      "29:1": {
+        "AtkBase": 232,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 307,
+        "HPMaxBase": 5333
+      },
+      "30:1": {
+        "AtkBase": 236,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 313,
+        "HPMaxBase": 5438
+      },
+      "30:2": {
+        "AtkBase": 276,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 374,
+        "HPMaxBase": 6494
+      },
+      "31:2": {
+        "AtkBase": 280,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 380,
+        "HPMaxBase": 6600
+      },
+      "32:2": {
+        "AtkBase": 284,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 386,
+        "HPMaxBase": 6706
+      },
+      "33:2": {
+        "AtkBase": 288,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 393,
+        "HPMaxBase": 6811
+      },
+      "34:2": {
+        "AtkBase": 292,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 399,
+        "HPMaxBase": 6917
+      },
+      "35:2": {
+        "AtkBase": 296,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 405,
+        "HPMaxBase": 7022
+      },
+      "36:2": {
+        "AtkBase": 300,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 411,
+        "HPMaxBase": 7128
+      },
+      "37:2": {
+        "AtkBase": 304,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 417,
+        "HPMaxBase": 7234
+      },
+      "38:2": {
+        "AtkBase": 308,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 423,
+        "HPMaxBase": 7339
+      },
+      "39:2": {
+        "AtkBase": 312,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 429,
+        "HPMaxBase": 7445
+      },
+      "40:2": {
+        "AtkBase": 316,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 435,
+        "HPMaxBase": 7550
+      },
+      "40:3": {
+        "AtkBase": 356,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 495,
+        "HPMaxBase": 8606
+      },
+      "41:3": {
+        "AtkBase": 360,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 501,
+        "HPMaxBase": 8712
+      },
+      "42:3": {
+        "AtkBase": 364,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 507,
+        "HPMaxBase": 8818
+      },
+      "43:3": {
+        "AtkBase": 368,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 513,
+        "HPMaxBase": 8923
+      },
+      "44:3": {
+        "AtkBase": 372,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 519,
+        "HPMaxBase": 9029
+      },
+      "45:3": {
+        "AtkBase": 376,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 526,
+        "HPMaxBase": 9134
+      },
+      "46:3": {
+        "AtkBase": 380,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 532,
+        "HPMaxBase": 9240
+      },
+      "47:3": {
+        "AtkBase": 384,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 538,
+        "HPMaxBase": 9346
+      },
+      "48:3": {
+        "AtkBase": 388,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 544,
+        "HPMaxBase": 9451
+      },
+      "49:3": {
+        "AtkBase": 392,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 550,
+        "HPMaxBase": 9557
+      },
+      "50:3": {
+        "AtkBase": 396,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 556,
+        "HPMaxBase": 9662
+      },
+      "50:4": {
+        "AtkBase": 436,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 617,
+        "HPMaxBase": 10718
+      },
+      "51:4": {
+        "AtkBase": 440,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 623,
+        "HPMaxBase": 10824
+      },
+      "52:4": {
+        "AtkBase": 444,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 629,
+        "HPMaxBase": 10930
+      },
+      "53:4": {
+        "AtkBase": 448,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 635,
+        "HPMaxBase": 11035
+      },
+      "54:4": {
+        "AtkBase": 452,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 641,
+        "HPMaxBase": 11141
+      },
+      "55:4": {
+        "AtkBase": 456,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 647,
+        "HPMaxBase": 11246
+      },
+      "56:4": {
+        "AtkBase": 460,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 653,
+        "HPMaxBase": 11352
+      },
+      "57:4": {
+        "AtkBase": 464,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 659,
+        "HPMaxBase": 11458
+      },
+      "58:4": {
+        "AtkBase": 468,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 666,
+        "HPMaxBase": 11563
+      },
+      "59:4": {
+        "AtkBase": 472,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 672,
+        "HPMaxBase": 11669
+      },
+      "60:4": {
+        "AtkBase": 476,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 678,
+        "HPMaxBase": 11774
+      },
+      "60:5": {
+        "AtkBase": 516,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 739,
+        "HPMaxBase": 12830
+      },
+      "61:5": {
+        "AtkBase": 520,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 745,
+        "HPMaxBase": 12936
+      },
+      "62:5": {
+        "AtkBase": 524,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 751,
+        "HPMaxBase": 13042
+      },
+      "63:5": {
+        "AtkBase": 528,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 757,
+        "HPMaxBase": 13147
+      },
+      "64:5": {
+        "AtkBase": 532,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 763,
+        "HPMaxBase": 13253
+      },
+      "65:5": {
+        "AtkBase": 536,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 769,
+        "HPMaxBase": 13358
+      },
+      "66:5": {
+        "AtkBase": 540,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 775,
+        "HPMaxBase": 13464
+      },
+      "67:5": {
+        "AtkBase": 544,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 781,
+        "HPMaxBase": 13570
+      },
+      "68:5": {
+        "AtkBase": 548,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 787,
+        "HPMaxBase": 13675
+      },
+      "69:5": {
+        "AtkBase": 552,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 793,
+        "HPMaxBase": 13781
+      },
+      "70:5": {
+        "AtkBase": 556,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 800,
+        "HPMaxBase": 13886
+      },
+      "70:6": {
+        "AtkBase": 596,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 861,
+        "HPMaxBase": 14942
+      },
+      "71:6": {
+        "AtkBase": 600,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 867,
+        "HPMaxBase": 15048
+      },
+      "72:6": {
+        "AtkBase": 604,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 873,
+        "HPMaxBase": 15154
+      },
+      "73:6": {
+        "AtkBase": 608,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 879,
+        "HPMaxBase": 15259
+      },
+      "74:6": {
+        "AtkBase": 612,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 885,
+        "HPMaxBase": 15365
+      },
+      "75:6": {
+        "AtkBase": 616,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 891,
+        "HPMaxBase": 15470
+      },
+      "76:6": {
+        "AtkBase": 620,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 897,
+        "HPMaxBase": 15576
+      },
+      "77:6": {
+        "AtkBase": 624,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 903,
+        "HPMaxBase": 15682
+      },
+      "78:6": {
+        "AtkBase": 628,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 909,
+        "HPMaxBase": 15787
+      },
+      "79:6": {
+        "AtkBase": 632,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 915,
+        "HPMaxBase": 15893
+      },
+      "80:6": {
+        "AtkBase": 636,
+        "CritBase": 0.05,
+        "CritDamageBase": 0.5,
+        "DefBase": 921,
         "HPMaxBase": 15998
       }
     },

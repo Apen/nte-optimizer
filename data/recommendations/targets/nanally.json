@@ -2,7 +2,6 @@
   "schema_version": 2,
   "id": "nanally",
   "name": "Nanally",
-  "page_updated": "Jun 23, 2026",
   "main_stats": [
     "DamageUpNatureBase",
     "CritDamageBase",
@@ -56,8 +55,7 @@
   "sets": [
     "Fireflies and the Forest",
     "Shadow Creed",
-    "Lost Radiance",
-    "Devil's Blood: Curse"
+    "Lost Radiance"
   ],
   "character": {
     "character_id": 1010,
@@ -90,16 +88,6 @@
           "preferred_sets": [
             {
               "set_id": "Suit2",
-              "priority": 1
-            }
-          ]
-        },
-        {
-          "id": "nanally_devil_s_blood_curse",
-          "name": "Nanally — Devil's Blood: Curse",
-          "preferred_sets": [
-            {
-              "set_id": "Suit3",
               "priority": 1
             }
           ]

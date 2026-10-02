@@ -2,7 +2,6 @@
   "schema_version": 2,
   "id": "zankou",
   "name": "Zankou",
-  "page_updated": "Sep 13, 2026",
   "main_stats": [
     "CritDamageBase",
     "MagBase",
@@ -13,8 +12,8 @@
   "stats": [
     "CritDamageBase",
     "MagBase",
-    "CritBase",
     "DamageUpGeneralBase",
+    "CritBase",
     "AtkUp",
     "UnbalIntensityBase"
   ],
@@ -136,65 +135,6 @@
   "builds": [
     {
       "id": "zankou",
-      "name": "DPS",
-      "main_stats": [
-        "CritDamageBase",
-        "MagBase",
-        "DamageUpIncantationBase",
-        "CritBase",
-        "AtkUp"
-      ],
-      "stats": [
-        "CritDamageBase",
-        "MagBase",
-        "CritBase",
-        "DamageUpGeneralBase",
-        "AtkUp",
-        "UnbalIntensityBase"
-      ],
-      "weights": {
-        "AtkUp": 0.55,
-        "CritBase": 0.85,
-        "CritDamageBase": 1,
-        "DamageUpGeneralBase": 0.7,
-        "MagBase": 0.85,
-        "UnbalIntensityBase": 0.4
-      },
-      "variants": [
-        {
-          "id": "zankou",
-          "name": "Zankou — Crimson: Twin Butterflies",
-          "preferred_sets": [
-            {
-              "set_id": "Suit4",
-              "priority": 1
-            }
-          ]
-        },
-        {
-          "id": "zankou_lost_radiance",
-          "name": "Zankou — Lost Radiance",
-          "preferred_sets": [
-            {
-              "set_id": "Suit6",
-              "priority": 1
-            }
-          ]
-        },
-        {
-          "id": "zankou_shadow_creed",
-          "name": "Zankou — Shadow Creed",
-          "preferred_sets": [
-            {
-              "set_id": "Suit8",
-              "priority": 1
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "zankou_sub_dps",
       "name": "SubDPS",
       "main_stats": [
         "CritDamageBase",
@@ -221,7 +161,7 @@
       },
       "variants": [
         {
-          "id": "zankou_sub_dps",
+          "id": "zankou",
           "name": "Zankou — SubDPS — Crimson: Twin Butterflies",
           "preferred_sets": [
             {
@@ -231,7 +171,7 @@
           ]
         },
         {
-          "id": "zankou_sub_dps_lost_radiance",
+          "id": "zankou_lost_radiance",
           "name": "Zankou — SubDPS — Lost Radiance",
           "preferred_sets": [
             {
@@ -241,8 +181,67 @@
           ]
         },
         {
-          "id": "zankou_sub_dps_shadow_creed",
+          "id": "zankou_shadow_creed",
           "name": "Zankou — SubDPS — Shadow Creed",
+          "preferred_sets": [
+            {
+              "set_id": "Suit8",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zankou_dps",
+      "name": "DPS",
+      "main_stats": [
+        "CritDamageBase",
+        "MagBase",
+        "DamageUpIncantationBase",
+        "CritBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritDamageBase",
+        "MagBase",
+        "CritBase",
+        "DamageUpGeneralBase",
+        "AtkUp",
+        "UnbalIntensityBase"
+      ],
+      "weights": {
+        "AtkUp": 0.55,
+        "CritBase": 0.85,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.7,
+        "MagBase": 0.85,
+        "UnbalIntensityBase": 0.4
+      },
+      "variants": [
+        {
+          "id": "zankou_dps",
+          "name": "Zankou — Crimson: Twin Butterflies",
+          "preferred_sets": [
+            {
+              "set_id": "Suit4",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zankou_dps_lost_radiance",
+          "name": "Zankou — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "zankou_dps_shadow_creed",
+          "name": "Zankou — Shadow Creed",
           "preferred_sets": [
             {
               "set_id": "Suit8",

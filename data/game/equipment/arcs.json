@@ -30554,6 +30554,857 @@
         }
       }
     },
+    "fork_prism": {
+      "panel_by_level_stage": {
+        "80:6": [
+          {
+            "property_id": "AtkBase",
+            "value": 570,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.48,
+            "percent": true
+          }
+        ]
+      },
+      "level_stats": {
+        "1": [
+          {
+            "property_id": "AtkBase",
+            "value": 37,
+            "percent": false
+          }
+        ],
+        "2": [
+          {
+            "property_id": "AtkBase",
+            "value": 42,
+            "percent": false
+          }
+        ],
+        "3": [
+          {
+            "property_id": "AtkBase",
+            "value": 46,
+            "percent": false
+          }
+        ],
+        "4": [
+          {
+            "property_id": "AtkBase",
+            "value": 51,
+            "percent": false
+          }
+        ],
+        "5": [
+          {
+            "property_id": "AtkBase",
+            "value": 56,
+            "percent": false
+          }
+        ],
+        "6": [
+          {
+            "property_id": "AtkBase",
+            "value": 61,
+            "percent": false
+          }
+        ],
+        "7": [
+          {
+            "property_id": "AtkBase",
+            "value": 66,
+            "percent": false
+          }
+        ],
+        "8": [
+          {
+            "property_id": "AtkBase",
+            "value": 70,
+            "percent": false
+          }
+        ],
+        "9": [
+          {
+            "property_id": "AtkBase",
+            "value": 75,
+            "percent": false
+          }
+        ],
+        "10": [
+          {
+            "property_id": "AtkBase",
+            "value": 80,
+            "percent": false
+          }
+        ],
+        "11": [
+          {
+            "property_id": "AtkBase",
+            "value": 85,
+            "percent": false
+          }
+        ],
+        "12": [
+          {
+            "property_id": "AtkBase",
+            "value": 90,
+            "percent": false
+          }
+        ],
+        "13": [
+          {
+            "property_id": "AtkBase",
+            "value": 94,
+            "percent": false
+          }
+        ],
+        "14": [
+          {
+            "property_id": "AtkBase",
+            "value": 99,
+            "percent": false
+          }
+        ],
+        "15": [
+          {
+            "property_id": "AtkBase",
+            "value": 104,
+            "percent": false
+          }
+        ],
+        "16": [
+          {
+            "property_id": "AtkBase",
+            "value": 109,
+            "percent": false
+          }
+        ],
+        "17": [
+          {
+            "property_id": "AtkBase",
+            "value": 114,
+            "percent": false
+          }
+        ],
+        "18": [
+          {
+            "property_id": "AtkBase",
+            "value": 118,
+            "percent": false
+          }
+        ],
+        "19": [
+          {
+            "property_id": "AtkBase",
+            "value": 123,
+            "percent": false
+          }
+        ],
+        "20": [
+          {
+            "property_id": "AtkBase",
+            "value": 128,
+            "percent": false
+          }
+        ],
+        "21": [
+          {
+            "property_id": "AtkBase",
+            "value": 133,
+            "percent": false
+          }
+        ],
+        "22": [
+          {
+            "property_id": "AtkBase",
+            "value": 138,
+            "percent": false
+          }
+        ],
+        "23": [
+          {
+            "property_id": "AtkBase",
+            "value": 142,
+            "percent": false
+          }
+        ],
+        "24": [
+          {
+            "property_id": "AtkBase",
+            "value": 147,
+            "percent": false
+          }
+        ],
+        "25": [
+          {
+            "property_id": "AtkBase",
+            "value": 152,
+            "percent": false
+          }
+        ],
+        "26": [
+          {
+            "property_id": "AtkBase",
+            "value": 157,
+            "percent": false
+          }
+        ],
+        "27": [
+          {
+            "property_id": "AtkBase",
+            "value": 162,
+            "percent": false
+          }
+        ],
+        "28": [
+          {
+            "property_id": "AtkBase",
+            "value": 166,
+            "percent": false
+          }
+        ],
+        "29": [
+          {
+            "property_id": "AtkBase",
+            "value": 171,
+            "percent": false
+          }
+        ],
+        "30": [
+          {
+            "property_id": "AtkBase",
+            "value": 176,
+            "percent": false
+          }
+        ],
+        "31": [
+          {
+            "property_id": "AtkBase",
+            "value": 181,
+            "percent": false
+          }
+        ],
+        "32": [
+          {
+            "property_id": "AtkBase",
+            "value": 186,
+            "percent": false
+          }
+        ],
+        "33": [
+          {
+            "property_id": "AtkBase",
+            "value": 190,
+            "percent": false
+          }
+        ],
+        "34": [
+          {
+            "property_id": "AtkBase",
+            "value": 195,
+            "percent": false
+          }
+        ],
+        "35": [
+          {
+            "property_id": "AtkBase",
+            "value": 200,
+            "percent": false
+          }
+        ],
+        "36": [
+          {
+            "property_id": "AtkBase",
+            "value": 205,
+            "percent": false
+          }
+        ],
+        "37": [
+          {
+            "property_id": "AtkBase",
+            "value": 210,
+            "percent": false
+          }
+        ],
+        "38": [
+          {
+            "property_id": "AtkBase",
+            "value": 214,
+            "percent": false
+          }
+        ],
+        "39": [
+          {
+            "property_id": "AtkBase",
+            "value": 219,
+            "percent": false
+          }
+        ],
+        "40": [
+          {
+            "property_id": "AtkBase",
+            "value": 224,
+            "percent": false
+          }
+        ],
+        "41": [
+          {
+            "property_id": "AtkBase",
+            "value": 229,
+            "percent": false
+          }
+        ],
+        "42": [
+          {
+            "property_id": "AtkBase",
+            "value": 234,
+            "percent": false
+          }
+        ],
+        "43": [
+          {
+            "property_id": "AtkBase",
+            "value": 238,
+            "percent": false
+          }
+        ],
+        "44": [
+          {
+            "property_id": "AtkBase",
+            "value": 243,
+            "percent": false
+          }
+        ],
+        "45": [
+          {
+            "property_id": "AtkBase",
+            "value": 248,
+            "percent": false
+          }
+        ],
+        "46": [
+          {
+            "property_id": "AtkBase",
+            "value": 253,
+            "percent": false
+          }
+        ],
+        "47": [
+          {
+            "property_id": "AtkBase",
+            "value": 258,
+            "percent": false
+          }
+        ],
+        "48": [
+          {
+            "property_id": "AtkBase",
+            "value": 262,
+            "percent": false
+          }
+        ],
+        "49": [
+          {
+            "property_id": "AtkBase",
+            "value": 267,
+            "percent": false
+          }
+        ],
+        "50": [
+          {
+            "property_id": "AtkBase",
+            "value": 272,
+            "percent": false
+          }
+        ],
+        "51": [
+          {
+            "property_id": "AtkBase",
+            "value": 277,
+            "percent": false
+          }
+        ],
+        "52": [
+          {
+            "property_id": "AtkBase",
+            "value": 282,
+            "percent": false
+          }
+        ],
+        "53": [
+          {
+            "property_id": "AtkBase",
+            "value": 286,
+            "percent": false
+          }
+        ],
+        "54": [
+          {
+            "property_id": "AtkBase",
+            "value": 291,
+            "percent": false
+          }
+        ],
+        "55": [
+          {
+            "property_id": "AtkBase",
+            "value": 296,
+            "percent": false
+          }
+        ],
+        "56": [
+          {
+            "property_id": "AtkBase",
+            "value": 301,
+            "percent": false
+          }
+        ],
+        "57": [
+          {
+            "property_id": "AtkBase",
+            "value": 306,
+            "percent": false
+          }
+        ],
+        "58": [
+          {
+            "property_id": "AtkBase",
+            "value": 310,
+            "percent": false
+          }
+        ],
+        "59": [
+          {
+            "property_id": "AtkBase",
+            "value": 315,
+            "percent": false
+          }
+        ],
+        "60": [
+          {
+            "property_id": "AtkBase",
+            "value": 320,
+            "percent": false
+          }
+        ],
+        "61": [
+          {
+            "property_id": "AtkBase",
+            "value": 325,
+            "percent": false
+          }
+        ],
+        "62": [
+          {
+            "property_id": "AtkBase",
+            "value": 330,
+            "percent": false
+          }
+        ],
+        "63": [
+          {
+            "property_id": "AtkBase",
+            "value": 334,
+            "percent": false
+          }
+        ],
+        "64": [
+          {
+            "property_id": "AtkBase",
+            "value": 339,
+            "percent": false
+          }
+        ],
+        "65": [
+          {
+            "property_id": "AtkBase",
+            "value": 344,
+            "percent": false
+          }
+        ],
+        "66": [
+          {
+            "property_id": "AtkBase",
+            "value": 349,
+            "percent": false
+          }
+        ],
+        "67": [
+          {
+            "property_id": "AtkBase",
+            "value": 354,
+            "percent": false
+          }
+        ],
+        "68": [
+          {
+            "property_id": "AtkBase",
+            "value": 358,
+            "percent": false
+          }
+        ],
+        "69": [
+          {
+            "property_id": "AtkBase",
+            "value": 363,
+            "percent": false
+          }
+        ],
+        "70": [
+          {
+            "property_id": "AtkBase",
+            "value": 368,
+            "percent": false
+          }
+        ],
+        "71": [
+          {
+            "property_id": "AtkBase",
+            "value": 373,
+            "percent": false
+          }
+        ],
+        "72": [
+          {
+            "property_id": "AtkBase",
+            "value": 378,
+            "percent": false
+          }
+        ],
+        "73": [
+          {
+            "property_id": "AtkBase",
+            "value": 382,
+            "percent": false
+          }
+        ],
+        "74": [
+          {
+            "property_id": "AtkBase",
+            "value": 387,
+            "percent": false
+          }
+        ],
+        "75": [
+          {
+            "property_id": "AtkBase",
+            "value": 392,
+            "percent": false
+          }
+        ],
+        "76": [
+          {
+            "property_id": "AtkBase",
+            "value": 397,
+            "percent": false
+          }
+        ],
+        "77": [
+          {
+            "property_id": "AtkBase",
+            "value": 402,
+            "percent": false
+          }
+        ],
+        "78": [
+          {
+            "property_id": "AtkBase",
+            "value": 406,
+            "percent": false
+          }
+        ],
+        "79": [
+          {
+            "property_id": "AtkBase",
+            "value": 411,
+            "percent": false
+          }
+        ],
+        "80": [
+          {
+            "property_id": "AtkBase",
+            "value": 416,
+            "percent": false
+          }
+        ]
+      },
+      "breakthrough_stats": {
+        "0": [
+          {
+            "property_id": "AtkBase",
+            "value": 0,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.192,
+            "percent": true
+          }
+        ],
+        "1": [
+          {
+            "property_id": "AtkBase",
+            "value": 26,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.24,
+            "percent": true
+          }
+        ],
+        "2": [
+          {
+            "property_id": "AtkBase",
+            "value": 51,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.288,
+            "percent": true
+          }
+        ],
+        "3": [
+          {
+            "property_id": "AtkBase",
+            "value": 77,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.336,
+            "percent": true
+          }
+        ],
+        "4": [
+          {
+            "property_id": "AtkBase",
+            "value": 102,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.384,
+            "percent": true
+          }
+        ],
+        "5": [
+          {
+            "property_id": "AtkBase",
+            "value": 128,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.432,
+            "percent": true
+          }
+        ],
+        "6": [
+          {
+            "property_id": "AtkBase",
+            "value": 154,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.48,
+            "percent": true
+          }
+        ]
+      },
+      "apply_group_type": "CHARACTER_GROUP_TYPE_TWO",
+      "permanent_by_star": {
+        "1": [
+          {
+            "property_id": "CritBase",
+            "value": 0.16,
+            "percent": true
+          }
+        ],
+        "2": [
+          {
+            "property_id": "CritBase",
+            "value": 0.2,
+            "percent": true
+          }
+        ],
+        "3": [
+          {
+            "property_id": "CritBase",
+            "value": 0.24,
+            "percent": true
+          }
+        ],
+        "4": [
+          {
+            "property_id": "CritBase",
+            "value": 0.28,
+            "percent": true
+          }
+        ],
+        "5": [
+          {
+            "property_id": "CritBase",
+            "value": 0.32,
+            "percent": true
+          }
+        ]
+      },
+      "conditional_by_star": {},
+      "conditional_note": "",
+      "effects_by_star": {
+        "1": {
+          "parameters": [
+            {
+              "name_id": "buff_Prism_CritUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp1",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_LakshanaUp",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
+        },
+        "2": {
+          "parameters": [
+            {
+              "name_id": "buff_Prism_CritUp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp1",
+              "value": 0.35,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2",
+              "value": 0.35,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_LakshanaUp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
+        },
+        "3": {
+          "parameters": [
+            {
+              "name_id": "buff_Prism_CritUp",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp1",
+              "value": 0.42,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2",
+              "value": 0.42,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_LakshanaUp",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
+        },
+        "4": {
+          "parameters": [
+            {
+              "name_id": "buff_Prism_CritUp",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp1",
+              "value": 0.49,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2",
+              "value": 0.49,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_LakshanaUp",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
+        },
+        "5": {
+          "parameters": [
+            {
+              "name_id": "buff_Prism_CritUp",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp1",
+              "value": 0.56,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2",
+              "value": 0.56,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_LakshanaUp",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Prism_DamageUp2_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
+        }
+      }
+    },
     "fork_rishi": {
       "panel_by_level_stage": {
         "80:6": [
@@ -33594,6 +34445,857 @@
             {
               "name_id": "buff_tuansanlang_Unbal",
               "value": 126,
+              "is_percent": false
+            }
+          ]
+        }
+      }
+    },
+    "fork_twinbirds": {
+      "panel_by_level_stage": {
+        "80:6": [
+          {
+            "property_id": "AtkBase",
+            "value": 570,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.24,
+            "percent": true
+          }
+        ]
+      },
+      "level_stats": {
+        "1": [
+          {
+            "property_id": "AtkBase",
+            "value": 37,
+            "percent": false
+          }
+        ],
+        "2": [
+          {
+            "property_id": "AtkBase",
+            "value": 42,
+            "percent": false
+          }
+        ],
+        "3": [
+          {
+            "property_id": "AtkBase",
+            "value": 46,
+            "percent": false
+          }
+        ],
+        "4": [
+          {
+            "property_id": "AtkBase",
+            "value": 51,
+            "percent": false
+          }
+        ],
+        "5": [
+          {
+            "property_id": "AtkBase",
+            "value": 56,
+            "percent": false
+          }
+        ],
+        "6": [
+          {
+            "property_id": "AtkBase",
+            "value": 61,
+            "percent": false
+          }
+        ],
+        "7": [
+          {
+            "property_id": "AtkBase",
+            "value": 66,
+            "percent": false
+          }
+        ],
+        "8": [
+          {
+            "property_id": "AtkBase",
+            "value": 70,
+            "percent": false
+          }
+        ],
+        "9": [
+          {
+            "property_id": "AtkBase",
+            "value": 75,
+            "percent": false
+          }
+        ],
+        "10": [
+          {
+            "property_id": "AtkBase",
+            "value": 80,
+            "percent": false
+          }
+        ],
+        "11": [
+          {
+            "property_id": "AtkBase",
+            "value": 85,
+            "percent": false
+          }
+        ],
+        "12": [
+          {
+            "property_id": "AtkBase",
+            "value": 90,
+            "percent": false
+          }
+        ],
+        "13": [
+          {
+            "property_id": "AtkBase",
+            "value": 94,
+            "percent": false
+          }
+        ],
+        "14": [
+          {
+            "property_id": "AtkBase",
+            "value": 99,
+            "percent": false
+          }
+        ],
+        "15": [
+          {
+            "property_id": "AtkBase",
+            "value": 104,
+            "percent": false
+          }
+        ],
+        "16": [
+          {
+            "property_id": "AtkBase",
+            "value": 109,
+            "percent": false
+          }
+        ],
+        "17": [
+          {
+            "property_id": "AtkBase",
+            "value": 114,
+            "percent": false
+          }
+        ],
+        "18": [
+          {
+            "property_id": "AtkBase",
+            "value": 118,
+            "percent": false
+          }
+        ],
+        "19": [
+          {
+            "property_id": "AtkBase",
+            "value": 123,
+            "percent": false
+          }
+        ],
+        "20": [
+          {
+            "property_id": "AtkBase",
+            "value": 128,
+            "percent": false
+          }
+        ],
+        "21": [
+          {
+            "property_id": "AtkBase",
+            "value": 133,
+            "percent": false
+          }
+        ],
+        "22": [
+          {
+            "property_id": "AtkBase",
+            "value": 138,
+            "percent": false
+          }
+        ],
+        "23": [
+          {
+            "property_id": "AtkBase",
+            "value": 142,
+            "percent": false
+          }
+        ],
+        "24": [
+          {
+            "property_id": "AtkBase",
+            "value": 147,
+            "percent": false
+          }
+        ],
+        "25": [
+          {
+            "property_id": "AtkBase",
+            "value": 152,
+            "percent": false
+          }
+        ],
+        "26": [
+          {
+            "property_id": "AtkBase",
+            "value": 157,
+            "percent": false
+          }
+        ],
+        "27": [
+          {
+            "property_id": "AtkBase",
+            "value": 162,
+            "percent": false
+          }
+        ],
+        "28": [
+          {
+            "property_id": "AtkBase",
+            "value": 166,
+            "percent": false
+          }
+        ],
+        "29": [
+          {
+            "property_id": "AtkBase",
+            "value": 171,
+            "percent": false
+          }
+        ],
+        "30": [
+          {
+            "property_id": "AtkBase",
+            "value": 176,
+            "percent": false
+          }
+        ],
+        "31": [
+          {
+            "property_id": "AtkBase",
+            "value": 181,
+            "percent": false
+          }
+        ],
+        "32": [
+          {
+            "property_id": "AtkBase",
+            "value": 186,
+            "percent": false
+          }
+        ],
+        "33": [
+          {
+            "property_id": "AtkBase",
+            "value": 190,
+            "percent": false
+          }
+        ],
+        "34": [
+          {
+            "property_id": "AtkBase",
+            "value": 195,
+            "percent": false
+          }
+        ],
+        "35": [
+          {
+            "property_id": "AtkBase",
+            "value": 200,
+            "percent": false
+          }
+        ],
+        "36": [
+          {
+            "property_id": "AtkBase",
+            "value": 205,
+            "percent": false
+          }
+        ],
+        "37": [
+          {
+            "property_id": "AtkBase",
+            "value": 210,
+            "percent": false
+          }
+        ],
+        "38": [
+          {
+            "property_id": "AtkBase",
+            "value": 214,
+            "percent": false
+          }
+        ],
+        "39": [
+          {
+            "property_id": "AtkBase",
+            "value": 219,
+            "percent": false
+          }
+        ],
+        "40": [
+          {
+            "property_id": "AtkBase",
+            "value": 224,
+            "percent": false
+          }
+        ],
+        "41": [
+          {
+            "property_id": "AtkBase",
+            "value": 229,
+            "percent": false
+          }
+        ],
+        "42": [
+          {
+            "property_id": "AtkBase",
+            "value": 234,
+            "percent": false
+          }
+        ],
+        "43": [
+          {
+            "property_id": "AtkBase",
+            "value": 238,
+            "percent": false
+          }
+        ],
+        "44": [
+          {
+            "property_id": "AtkBase",
+            "value": 243,
+            "percent": false
+          }
+        ],
+        "45": [
+          {
+            "property_id": "AtkBase",
+            "value": 248,
+            "percent": false
+          }
+        ],
+        "46": [
+          {
+            "property_id": "AtkBase",
+            "value": 253,
+            "percent": false
+          }
+        ],
+        "47": [
+          {
+            "property_id": "AtkBase",
+            "value": 258,
+            "percent": false
+          }
+        ],
+        "48": [
+          {
+            "property_id": "AtkBase",
+            "value": 262,
+            "percent": false
+          }
+        ],
+        "49": [
+          {
+            "property_id": "AtkBase",
+            "value": 267,
+            "percent": false
+          }
+        ],
+        "50": [
+          {
+            "property_id": "AtkBase",
+            "value": 272,
+            "percent": false
+          }
+        ],
+        "51": [
+          {
+            "property_id": "AtkBase",
+            "value": 277,
+            "percent": false
+          }
+        ],
+        "52": [
+          {
+            "property_id": "AtkBase",
+            "value": 282,
+            "percent": false
+          }
+        ],
+        "53": [
+          {
+            "property_id": "AtkBase",
+            "value": 286,
+            "percent": false
+          }
+        ],
+        "54": [
+          {
+            "property_id": "AtkBase",
+            "value": 291,
+            "percent": false
+          }
+        ],
+        "55": [
+          {
+            "property_id": "AtkBase",
+            "value": 296,
+            "percent": false
+          }
+        ],
+        "56": [
+          {
+            "property_id": "AtkBase",
+            "value": 301,
+            "percent": false
+          }
+        ],
+        "57": [
+          {
+            "property_id": "AtkBase",
+            "value": 306,
+            "percent": false
+          }
+        ],
+        "58": [
+          {
+            "property_id": "AtkBase",
+            "value": 310,
+            "percent": false
+          }
+        ],
+        "59": [
+          {
+            "property_id": "AtkBase",
+            "value": 315,
+            "percent": false
+          }
+        ],
+        "60": [
+          {
+            "property_id": "AtkBase",
+            "value": 320,
+            "percent": false
+          }
+        ],
+        "61": [
+          {
+            "property_id": "AtkBase",
+            "value": 325,
+            "percent": false
+          }
+        ],
+        "62": [
+          {
+            "property_id": "AtkBase",
+            "value": 330,
+            "percent": false
+          }
+        ],
+        "63": [
+          {
+            "property_id": "AtkBase",
+            "value": 334,
+            "percent": false
+          }
+        ],
+        "64": [
+          {
+            "property_id": "AtkBase",
+            "value": 339,
+            "percent": false
+          }
+        ],
+        "65": [
+          {
+            "property_id": "AtkBase",
+            "value": 344,
+            "percent": false
+          }
+        ],
+        "66": [
+          {
+            "property_id": "AtkBase",
+            "value": 349,
+            "percent": false
+          }
+        ],
+        "67": [
+          {
+            "property_id": "AtkBase",
+            "value": 354,
+            "percent": false
+          }
+        ],
+        "68": [
+          {
+            "property_id": "AtkBase",
+            "value": 358,
+            "percent": false
+          }
+        ],
+        "69": [
+          {
+            "property_id": "AtkBase",
+            "value": 363,
+            "percent": false
+          }
+        ],
+        "70": [
+          {
+            "property_id": "AtkBase",
+            "value": 368,
+            "percent": false
+          }
+        ],
+        "71": [
+          {
+            "property_id": "AtkBase",
+            "value": 373,
+            "percent": false
+          }
+        ],
+        "72": [
+          {
+            "property_id": "AtkBase",
+            "value": 378,
+            "percent": false
+          }
+        ],
+        "73": [
+          {
+            "property_id": "AtkBase",
+            "value": 382,
+            "percent": false
+          }
+        ],
+        "74": [
+          {
+            "property_id": "AtkBase",
+            "value": 387,
+            "percent": false
+          }
+        ],
+        "75": [
+          {
+            "property_id": "AtkBase",
+            "value": 392,
+            "percent": false
+          }
+        ],
+        "76": [
+          {
+            "property_id": "AtkBase",
+            "value": 397,
+            "percent": false
+          }
+        ],
+        "77": [
+          {
+            "property_id": "AtkBase",
+            "value": 402,
+            "percent": false
+          }
+        ],
+        "78": [
+          {
+            "property_id": "AtkBase",
+            "value": 406,
+            "percent": false
+          }
+        ],
+        "79": [
+          {
+            "property_id": "AtkBase",
+            "value": 411,
+            "percent": false
+          }
+        ],
+        "80": [
+          {
+            "property_id": "AtkBase",
+            "value": 416,
+            "percent": false
+          }
+        ]
+      },
+      "breakthrough_stats": {
+        "0": [
+          {
+            "property_id": "AtkBase",
+            "value": 0,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.096,
+            "percent": true
+          }
+        ],
+        "1": [
+          {
+            "property_id": "AtkBase",
+            "value": 26,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.12,
+            "percent": true
+          }
+        ],
+        "2": [
+          {
+            "property_id": "AtkBase",
+            "value": 51,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.144,
+            "percent": true
+          }
+        ],
+        "3": [
+          {
+            "property_id": "AtkBase",
+            "value": 77,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.168,
+            "percent": true
+          }
+        ],
+        "4": [
+          {
+            "property_id": "AtkBase",
+            "value": 102,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.192,
+            "percent": true
+          }
+        ],
+        "5": [
+          {
+            "property_id": "AtkBase",
+            "value": 128,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.216,
+            "percent": true
+          }
+        ],
+        "6": [
+          {
+            "property_id": "AtkBase",
+            "value": 154,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.24,
+            "percent": true
+          }
+        ]
+      },
+      "apply_group_type": "CHARACTER_GROUP_TYPE_FOUR",
+      "permanent_by_star": {
+        "1": [
+          {
+            "property_id": "DamageUpPsycheBase",
+            "value": 0.2,
+            "percent": true
+          }
+        ],
+        "2": [
+          {
+            "property_id": "DamageUpPsycheBase",
+            "value": 0.25,
+            "percent": true
+          }
+        ],
+        "3": [
+          {
+            "property_id": "DamageUpPsycheBase",
+            "value": 0.3,
+            "percent": true
+          }
+        ],
+        "4": [
+          {
+            "property_id": "DamageUpPsycheBase",
+            "value": 0.35,
+            "percent": true
+          }
+        ],
+        "5": [
+          {
+            "property_id": "DamageUpPsycheBase",
+            "value": 0.4,
+            "percent": true
+          }
+        ]
+      },
+      "conditional_by_star": {},
+      "conditional_note": "",
+      "effects_by_star": {
+        "1": {
+          "parameters": [
+            {
+              "name_id": "Buff_TwinBirds_MagUp",
+              "value": 72,
+              "is_percent": false
+            },
+            {
+              "name_id": "Buff_TwinBirds_PsycheUp",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp3",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
+        },
+        "2": {
+          "parameters": [
+            {
+              "name_id": "Buff_TwinBirds_MagUp",
+              "value": 90,
+              "is_percent": false
+            },
+            {
+              "name_id": "Buff_TwinBirds_PsycheUp",
+              "value": 0.25,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp3",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
+        },
+        "3": {
+          "parameters": [
+            {
+              "name_id": "Buff_TwinBirds_MagUp",
+              "value": 108,
+              "is_percent": false
+            },
+            {
+              "name_id": "Buff_TwinBirds_PsycheUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1",
+              "value": 0.24,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp3",
+              "value": 0.48,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
+        },
+        "4": {
+          "parameters": [
+            {
+              "name_id": "Buff_TwinBirds_MagUp",
+              "value": 126,
+              "is_percent": false
+            },
+            {
+              "name_id": "Buff_TwinBirds_PsycheUp",
+              "value": 0.35,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp3",
+              "value": 0.56,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1_CD",
+              "value": 15,
+              "is_percent": false
+            }
+          ]
+        },
+        "5": {
+          "parameters": [
+            {
+              "name_id": "Buff_TwinBirds_MagUp",
+              "value": 144,
+              "is_percent": false
+            },
+            {
+              "name_id": "Buff_TwinBirds_PsycheUp",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp3",
+              "value": 0.64,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_TwinBirds_CritUp1_CD",
+              "value": 15,
               "is_percent": false
             }
           ]

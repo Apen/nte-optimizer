@@ -2,7 +2,6 @@
   "schema_version": 2,
   "id": "zero",
   "name": "Zero",
-  "page_updated": "May 31, 2026",
   "main_stats": [
     "CritBase",
     "CritDamageBase",
@@ -62,7 +61,9 @@
   ],
   "character": {
     "character_id": 1046,
-    "alternate_character_ids": [1051],
+    "alternate_character_ids": [
+      1051
+    ],
     "grid_id": "character_1046"
   },
   "builds": [
