@@ -263,7 +263,7 @@ func TestRunSavedOptimizationExperimentsSharesSnapshotAndDoesNotPersistOverrides
 		if variant.Status == "" || variant.InventoryModules != len(inventory.Modules) || variant.EligibleCandidates == 0 {
 			t.Fatalf("variant report is missing engine counts: %+v", variant)
 		}
-		if variant.Ranking == nil || variant.RankingScore == nil || *variant.RankingScore != variant.Ranking.Score || variant.SelectedCandidates <= 0 {
+		if variant.Ranking == nil || variant.RankingScore == nil || *variant.RankingScore != variant.Ranking.Score || variant.SelectedCandidates <= 0 || variant.VisitedStates == 0 {
 			t.Fatalf("report ranking/candidates do not match optimizer output fields: %+v", variant)
 		}
 	}
@@ -295,8 +295,10 @@ func TestRunSavedOptimizationExperimentsSharesSnapshotAndDoesNotPersistOverrides
 			t.Fatalf("direct %s optimizer run: %v", definition.Method, err)
 		}
 		reported := report.Variants[index]
-		if reported.RankingScore == nil || *reported.RankingScore != direct.Solution.Ranking.Score || reported.SelectedCandidates != direct.SelectedCandidates || reported.VisitedStates != direct.Solution.Visited {
-			t.Fatalf("variant report drifted from direct engine result for %s: report=%+v direct=%+v", definition.Name, reported, direct.Solution)
+		// Parallel search can visit a different number of states before pruning
+		// in two independent runs, even when both select the same build.
+		if reported.RankingScore == nil || *reported.RankingScore != direct.Solution.Ranking.Score || reported.SelectedCandidates != direct.SelectedCandidates {
+			t.Fatalf("variant report drifted from direct engine result for %s: score=%v candidates=%d; direct score=%v candidates=%d", definition.Name, reported.RankingScore, reported.SelectedCandidates, direct.Solution.Ranking.Score, direct.SelectedCandidates)
 		}
 		if len(reported.Modules) != len(direct.Modules) || reported.Set.ID != direct.Set.ID || reported.Stats.Derived["AtkFinal"] != direct.Stats.Derived["AtkFinal"] {
 			t.Fatalf("reported build summary does not match direct engine result for %s", definition.Name)
