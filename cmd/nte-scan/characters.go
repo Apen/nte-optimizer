@@ -437,6 +437,10 @@ func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog) (c
 	if !o || created < 0 {
 		return characterProbe{}, characterItem{}, 0, false
 	}
+	// Current inventory records include an additional 64-bit header field.
+	if _, o = r.i64(); !o {
+		return characterProbe{}, characterItem{}, 0, false
+	}
 	arr, o := r.u16()
 	if !o || arr != 1 {
 		return characterProbe{}, characterItem{}, 0, false

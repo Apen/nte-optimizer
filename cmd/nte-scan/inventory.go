@@ -214,6 +214,10 @@ func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog) (in
 	if !o || created < 0 {
 		return inventoryItem{}, 0, false
 	}
+	// Current inventory records include an additional 64-bit header field.
+	if _, o = r.i64(); !o {
+		return inventoryItem{}, 0, false
+	}
 	for _, want := range []uint16{0, 0, 1} {
 		v, o := r.u16()
 		if !o || v != want {

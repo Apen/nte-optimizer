@@ -60,6 +60,10 @@ func parseWeaponAt(data []byte, bitLen, off int, c *forkCatalog) (weaponItem, in
 	if !o || created < 0 {
 		return weaponItem{}, 0, false
 	}
+	// Current inventory records include an additional 64-bit header field.
+	if _, o = r.i64(); !o {
+		return weaponItem{}, 0, false
+	}
 	zero, o := r.u16()
 	if !o || zero != 0 {
 		return weaponItem{}, 0, false
