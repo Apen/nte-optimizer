@@ -1,0 +1,153 @@
+{
+  "schema_version": 2,
+  "id": "akane_rin",
+  "name": "Akane Rin",
+  "main_stats": [
+    "CritDamageBase",
+    "DamageUpLakshanaBase",
+    "AtkUp",
+    "CritBase"
+  ],
+  "stats": [
+    "CritBase",
+    "DamageUpGeneralBase",
+    "CritDamageBase",
+    "AtkUp",
+    "AtkAdd",
+    "MagBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2200,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.7,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1.5,
+      "maximum": 2.1,
+      "percent": true
+    },
+    {
+      "property_id": "MagBase",
+      "label": "Cycle Intensity",
+      "minimum": 70,
+      "percent": false
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpLakshanaBase",
+      "label": "Lakshana DMG",
+      "minimum": 0.1,
+      "maximum": 0.47,
+      "percent": true
+    }
+  ],
+  "arcs": [
+    {
+      "rank": 1,
+      "name": "Far Side of the Moon",
+      "base_atk": 570,
+      "stats": {
+        "CritBase": 0.15
+      }
+    },
+    {
+      "rank": 2,
+      "name": "Fluff of Fleetness",
+      "refinement": "M5"
+    },
+    {
+      "rank": 3,
+      "name": "The Last Rose",
+      "base_atk": 570,
+      "stats": {
+        "CritBase": 0.24
+      }
+    },
+    {
+      "rank": 4,
+      "name": "Fluff of Fleetness",
+      "base_atk": 512
+    },
+    {
+      "rank": 5,
+      "name": "Youthful Fantasy",
+      "base_atk": 570
+    },
+    {
+      "rank": 6,
+      "name": "Shiny Days",
+      "base_atk": 475,
+      "stats": {
+        "AtkUp": 0.25
+      }
+    }
+  ],
+  "sets": [
+    "Street Boxer"
+  ],
+  "character": {
+    "character_id": 1057,
+    "grid_id": "character_1057"
+  },
+  "builds": [
+    {
+      "id": "akane_rin",
+      "name": "DPS",
+      "main_stats": [
+        "CritDamageBase",
+        "DamageUpLakshanaBase",
+        "AtkUp",
+        "CritBase"
+      ],
+      "stats": [
+        "CritBase",
+        "DamageUpGeneralBase",
+        "CritDamageBase",
+        "AtkUp",
+        "AtkAdd",
+        "MagBase"
+      ],
+      "weights": {
+        "AtkAdd": 0.4,
+        "AtkUp": 0.55,
+        "CritBase": 1,
+        "CritDamageBase": 0.7,
+        "DamageUpGeneralBase": 0.85,
+        "MagBase": 0.4
+      },
+      "variants": [
+        {
+          "id": "akane_rin",
+          "name": "Akane Rin — Street Boxer",
+          "preferred_sets": [
+            {
+              "set_id": "Suit5",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
