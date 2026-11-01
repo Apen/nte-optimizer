@@ -10,6 +10,7 @@ import (
 )
 
 type optimizationReportInput struct {
+	currentInventory  *nte.Inventory
 	inventory         nte.Inventory
 	profileID         string
 	language          string
@@ -59,7 +60,11 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 	if currentAdditional == nil {
 		currentAdditional = input.additional
 	}
-	currentStats := buildCurrentEquipmentStats(input.inventory, input.profile, input.setCatalog, currentAdditional)
+	currentInventory := input.inventory
+	if input.currentInventory != nil {
+		currentInventory = *input.currentInventory
+	}
+	currentStats := buildCurrentEquipmentStats(currentInventory, input.profile, input.setCatalog, currentAdditional)
 	goals, currentGoals, conditionalGoals, currentConditionalGoals := compareBuildGoals(input.buildTarget, stats, currentStats)
 	alternatives := s.buildAlternatives(input.solution.Alternatives, alternativeBuildContext{
 		moduleByID: moduleByID, cartridges: input.inventory.Cartridges, profile: input.profile, refs: input.refs,

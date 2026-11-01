@@ -18,10 +18,11 @@ import (
 // OptimizerService is the UI-agnostic boundary shared by the CLI and Wails.
 // It returns data structures and never writes files or logs by itself.
 type WeightOverrides struct {
-	MainStats []string                     `json:"main_stats"`
-	Weights   map[string]float64           `json:"weights"`
-	Goals     map[string]SavedGoalSettings `json:"goals,omitempty"`
-	ArcForkID string                       `json:"arc_fork_id,omitempty"`
+	SimulateCartridgeMainStats bool                         `json:"simulate_cartridge_main_stats,omitempty"`
+	MainStats                  []string                     `json:"main_stats"`
+	Weights                    map[string]float64           `json:"weights"`
+	Goals                      map[string]SavedGoalSettings `json:"goals,omitempty"`
+	ArcForkID                  string                       `json:"arc_fork_id,omitempty"`
 }
 
 type SavedGoalSettings struct {
@@ -91,6 +92,7 @@ type ProfileSummary struct {
 }
 
 type OptimizationResult struct {
+	SimulateCartridgeMainStats     bool                      `json:"simulate_cartridge_main_stats,omitempty"`
 	PhaseMS                        map[string]int64          `json:"phase_ms,omitempty"`
 	SchemaVersion                  int                       `json:"schema_version"`
 	ProfileID                      string                    `json:"profile_id"`
@@ -330,11 +332,20 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 	}
 	selected := selection.selected
 	selectionFinished := time.Now()
+	actualInventory := inv
 	cartridges, err := s.prepareCartridges(inv.Cartridges, profile, setCatalog, includeEquipped, plan, len(candidates))
 	if err != nil {
 		return OptimizationResult{}, err
 	}
 	availableCartridges := cartridges.available
+	if s.WeightOverrides != nil && s.WeightOverrides.SimulateCartridgeMainStats {
+		projected, projectionErr := s.simulateCartridgeMainStats(availableCartridges)
+		if projectionErr != nil {
+			return OptimizationResult{}, projectionErr
+		}
+		availableCartridges = projected
+		inv.Cartridges = projected
+	}
 	excludedEquipped += cartridges.excludedEquipped
 	setup := s.prepareSearch(profile, refs, shapeCatalog, setCatalog, cfg, selected, availableCartridges, objectives, additional, plan, arcOption)
 	var seed []optimizer.Placement
@@ -360,7 +371,8 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 		selectedAdditional = additional
 	}
 	result := s.buildOptimizationResult(optimizationReportInput{
-		inventory: inv, profileID: profileID, language: language, plan: plan, profile: profile, refs: refs,
+		currentInventory: &actualInventory,
+		inventory:        inv, profileID: profileID, language: language, plan: plan, profile: profile, refs: refs,
 		setCatalog: setCatalog, displayCatalog: displayCatalog, currentCharacter: currentCharacter, selectedWeapon: selectedWeaponPtr,
 		weaponNote: arcs.notes[execution.solution.SelectedWeaponID], additional: selectedAdditional, currentAdditional: currentAdditional,
 		arcWeapons: arcs.weapons, arcNotes: arcs.notes, arcAdditional: arcs.additional, characterNames: characterNames, buildTarget: buildTarget,
@@ -374,6 +386,7 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 	})
 	result.PhaseMS["reporting"] = time.Since(searchFinished).Milliseconds()
 	result.SearchLimits = SearchLimits{TopPerGeometry: cfg.Optimize.TopPerGeometry, TopPerSet: cfg.Optimize.TopPerSet, TimeoutSeconds: cfg.Optimize.TimeoutSeconds}
+	result.SimulateCartridgeMainStats = s.WeightOverrides != nil && s.WeightOverrides.SimulateCartridgeMainStats
 	return result, nil
 }
 

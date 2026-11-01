@@ -19,11 +19,12 @@ export type DamageGroup = { id:string;name:string;description:string;category:st
 export type DamageAnalysis = { status:string; enemy:{level:number;resistance:number;approximation?:string}; build:DamageResult[]; current?:DamageResult[]; groups?:DamageGroup[]; missing_inputs?:string[]; catalog_source:string }
 export type GoalProgress = TargetGoal & { current: number; missing: number; progress: number; reached: boolean }
 export type Result = {
+  simulate_cartridge_main_stats?: boolean
   optimization_mode: string
   profile_id: string
   grid: { width: number; height: number; playable: Cell[] }
   modules: OptimizedModule[]
-  cartridge?: { local_id: string; game_item_id: string; set_id: string; set_name: string; main_stats: Stat[]; sub_stats: Stat[]; equipped_character_id?:number }
+  cartridge?: { level?:number; simulated_main_stat_level?:number; local_id: string; game_item_id: string; set_id: string; set_name: string; main_stats: Stat[]; sub_stats: Stat[]; equipped_character_id?:number }
   cartridge_breakdown?: { total: number; contributions?: EquipmentScoreContribution[] }
   stats: StatSummary
   current_stats?: StatSummary

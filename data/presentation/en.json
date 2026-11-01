@@ -147,6 +147,10 @@
     "UnbalIntensityBase": "Break Intensity"
   },
   "ui": {
+    "simulate_cartridge_main_stats": "Simulate cartridge main stats at max level",
+    "cartridge_simulation_help": "Include unlevelled cartridges using their main stat at level 20. Existing substats stay unchanged; future rolls are not predicted.",
+    "cartridge_simulation_result": "Simulation: cartridge main stats are evaluated at level 20. Scores, stats and damage assume this upgrade. The equipped build keeps its actual stats; future substat rolls are not included.",
+    "cartridge_upgrade_required": "Main stat simulated at Lv. {target} · Upgrade required: Lv. {current} → {target}",
     "arc": "Arc",
     "search_beta": "Experimental",
     "search_fast": "Fast",

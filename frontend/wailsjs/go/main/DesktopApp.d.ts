@@ -17,6 +17,6 @@ export function OpenDownloadURL(url: string): Promise<void>;
 export function ScanAndImportAccount(language: string, seconds: number): Promise<any>;
 export function RecoverAndScanAccount(language: string, seconds: number): Promise<any>;
 export function LastScanLog(): Promise<Array<{time:string;stage:string;status:string;code?:string;counts?:Record<string,number>}>>;
-export function OptimizeFlexibleSelection(profileID: string, ignorePriority: boolean, language: string, mode: string, goals: Record<string, {target:number; maximum:number; tolerance:number; importance:number}>, pinnedModuleIDs: string[], excludedModuleIDs: string[], weights: {main_stats:string[];weights:Record<string,number>}, arcForkID: string): Promise<any>;
+export function OptimizeFlexibleSelection(profileID: string, ignorePriority: boolean, language: string, mode: string, goals: Record<string, {target:number; maximum:number; tolerance:number; importance:number}>, pinnedModuleIDs: string[], excludedModuleIDs: string[], weights: {main_stats:string[];weights:Record<string,number>;simulate_cartridge_main_stats?:boolean}, arcForkID: string): Promise<any>;
 export function StopOptimization(): Promise<boolean>;
 export function LastOptimizationLog(): Promise<{started_at:string;finished_at?:string;status:string;entries:Array<{level:string;stage:string;message:string}>}>;

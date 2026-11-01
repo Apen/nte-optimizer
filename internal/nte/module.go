@@ -36,16 +36,17 @@ type Placement struct {
 }
 
 type Cartridge struct {
-	LocalID             string `json:"local_id"`
-	GameItemID          string `json:"game_item_id,omitempty"`
-	SetID               string `json:"set_id"`
-	SetName             string `json:"set_name"`
-	Quality             string `json:"quality"`
-	Level               int    `json:"level"`
-	MainStats           []Stat `json:"main_stats"`
-	SubStats            []Stat `json:"sub_stats"`
-	Locked              bool   `json:"locked,omitempty"`
-	EquippedCharacterID int    `json:"equipped_character_id,omitempty"`
+	LocalID                string `json:"local_id"`
+	GameItemID             string `json:"game_item_id,omitempty"`
+	SetID                  string `json:"set_id"`
+	SetName                string `json:"set_name"`
+	Quality                string `json:"quality"`
+	Level                  int    `json:"level"`
+	MainStats              []Stat `json:"main_stats"`
+	SubStats               []Stat `json:"sub_stats"`
+	Locked                 bool   `json:"locked,omitempty"`
+	EquippedCharacterID    int    `json:"equipped_character_id,omitempty"`
+	SimulatedMainStatLevel int    `json:"simulated_main_stat_level,omitempty"`
 }
 
 // Inventory is the decoded account equipment consumed by the optimizer.
