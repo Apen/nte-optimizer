@@ -30,7 +30,7 @@ func ExtractFrames(stream []byte) ([][]byte, error) {
 }
 
 func DecodeLZ4Block(input []byte) ([]byte, bool) {
-	return decodeLZ4Block(input, 0)
+	return decodeLZ4Block(input, 16<<20)
 }
 
 // DecodeLZ4BlockLimited bounds allocations for untrusted compressed properties.

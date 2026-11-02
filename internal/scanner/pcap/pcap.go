@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
+	"io"
 	"net"
 	"os"
 	"sort"
@@ -33,14 +34,34 @@ type Segment struct {
 }
 
 func ReadFile(path string) ([]Packet, error) {
-	contents, err := os.ReadFile(path)
+	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
+	}
+	defer file.Close()
+	info, err := file.Stat()
+	if err != nil {
+		return nil, err
+	}
+	if info.Size() > maxCaptureBytes {
+		return nil, fmt.Errorf("capture exceeds %d byte decoding budget", maxCaptureBytes)
+	}
+	contents, err := io.ReadAll(io.LimitReader(file, maxCaptureBytes+1))
+	if err != nil {
+		return nil, err
+	}
+	if len(contents) > maxCaptureBytes {
+		return nil, fmt.Errorf("capture exceeds %d byte decoding budget", maxCaptureBytes)
 	}
 	return Parse(contents)
 }
 
+const maxCaptureBytes = 256 << 20
+
 func Parse(contents []byte) ([]Packet, error) {
+	if len(contents) > maxCaptureBytes {
+		return nil, fmt.Errorf("capture exceeds decoding budget")
+	}
 	var packets []Packet
 	littleEndian := true
 	timestampScales := []float64{}

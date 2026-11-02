@@ -113,6 +113,9 @@ func ImportDirectory(dir string) (ImportResult, error) {
 	cartridges := make([]nte.Cartridge, 0)
 	assigned := 0
 	for _, item := range equipment {
+		if item.Level < 0 {
+			return ImportResult{}, fmt.Errorf("equipment %q has a negative level", item.ItemID)
+		}
 		localID := fmt.Sprintf("game_%d_%d", item.ID.Slot, item.ID.Serial)
 		if seen[localID] {
 			return ImportResult{}, fmt.Errorf("duplicate equipment id %s", localID)

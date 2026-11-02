@@ -1,10 +1,16 @@
 package main
 
-import "testing"
+import (
+	"context"
+	"testing"
+)
 
 func TestAssembleUnrealMessagesCollectsReadablePayloadWithoutBunches(t *testing.T) {
 	report := udpReport{}
-	completed, inventoryGUIDs, dumpDir := assembleUnrealMessages(&report, []timedUDPPacket{{data: []byte("readable_payload")}}, "")
+	completed, inventoryGUIDs, dumpDir, err := assembleUnrealMessages(context.Background(), &report, []timedUDPPacket{{data: []byte("readable_payload")}}, "")
+	if err != nil {
+		t.Fatal(err)
+	}
 	if len(completed) != 0 || len(inventoryGUIDs) != 0 || dumpDir != "" {
 		t.Fatalf("unexpected assembly result: completed=%d guids=%d dump=%q", len(completed), len(inventoryGUIDs), dumpDir)
 	}
@@ -15,7 +21,7 @@ func TestAssembleUnrealMessagesCollectsReadablePayloadWithoutBunches(t *testing.
 
 func TestInspectCompletedMessagesHandlesEmptyInput(t *testing.T) {
 	report := udpReport{}
-	inspectCompletedMessages(&report, nil, nil, "")
+	inspectCompletedMessages(context.Background(), &report, nil, nil, "")
 	if report.InventoryPayloads != 0 || report.RPC256 != 0 || len(report.InventoryProperties) != 0 {
 		t.Fatalf("empty inspection changed report: %#v", report)
 	}

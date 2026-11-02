@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"crypto/sha256"
 	"fmt"
 	"os"
@@ -17,7 +18,7 @@ type bitBuffer struct {
 	exports bool
 }
 
-func assembleUnrealMessages(report *udpReport, packets []timedUDPPacket, dumpDir string) ([]completedMessage, map[uint32]bool, string) {
+func assembleUnrealMessages(ctx context.Context, report *udpReport, packets []timedUDPPacket, dumpDir string) ([]completedMessage, map[uint32]bool, string, error) {
 	seenReadable := map[string]bool{}
 	channels := map[uint32]bool{}
 	pending := map[uint32]bitBuffer{}
@@ -35,6 +36,9 @@ func assembleUnrealMessages(report *udpReport, packets []timedUDPPacket, dumpDir
 		}
 	}
 	for _, packet := range packets {
+		if err := ctx.Err(); err != nil {
+			return nil, nil, dumpDir, err
+		}
 		if bunches, ok := scannerunreal.ParsePacket(packet.data); ok {
 			report.UnrealPackets++
 			report.UnrealBunches += len(bunches)
@@ -51,6 +55,9 @@ func assembleUnrealMessages(report *udpReport, packets []timedUDPPacket, dumpDir
 				}
 				buffer, exists := pending[bunch.Channel]
 				if exists || bunch.Initial {
+					if (buffer.bits+bunch.DataBits+7)/8 > maxReassembledMessageBytes {
+						return nil, nil, dumpDir, fmt.Errorf("reassembled Unreal message exceeds %d bytes", maxReassembledMessageBytes)
+					}
 					buffer.data, buffer.bits = scannerunreal.AppendBits(buffer.data, buffer.bits, bunch.Data, bunch.DataBits)
 					buffer.exports = buffer.exports || bunch.Exports
 					pending[bunch.Channel] = buffer
@@ -80,7 +87,7 @@ func assembleUnrealMessages(report *udpReport, packets []timedUDPPacket, dumpDir
 	}
 	sort.Slice(report.Channels, func(i, j int) bool { return report.Channels[i] < report.Channels[j] })
 	sort.Slice(report.InventoryGUIDs, func(i, j int) bool { return report.InventoryGUIDs[i] < report.InventoryGUIDs[j] })
-	return completed, inventoryGUIDs, dumpDir
+	return completed, inventoryGUIDs, dumpDir, nil
 }
 
 func collectBunchExports(report *udpReport, bunch scannerunreal.Bunch, inventoryGUIDs map[uint32]bool, inventoryChildren, exportNames map[string]bool) {
@@ -145,7 +152,7 @@ func recordAssembly(report *udpReport, buffer bitBuffer, channel uint32, index i
 	}
 }
 
-func inspectCompletedMessages(report *udpReport, completed []completedMessage, inventoryGUIDs map[uint32]bool, dumpDir string) {
+func inspectCompletedMessages(ctx context.Context, report *udpReport, completed []completedMessage, inventoryGUIDs map[uint32]bool, dumpDir string) error {
 	seenPayload := map[[32]byte]bool{}
 	propertyNames := map[string]bool{}
 	rpcOwners := map[uint32]bool{}
@@ -153,6 +160,9 @@ func inspectCompletedMessages(report *udpReport, completed []completedMessage, i
 	atkValues := map[int]bool{}
 	invIndex, rpcDumpIndex, hitIndex := 0, 0, 0
 	for _, message := range completed {
+		if err := ctx.Err(); err != nil {
+			return err
+		}
 		for _, value := range scannerunreal.ExtractAtkAdd(message.data) {
 			atkValues[value] = true
 		}
@@ -212,6 +222,7 @@ func inspectCompletedMessages(report *udpReport, completed []completedMessage, i
 	sort.Ints(report.AtkAddValues)
 	sort.Slice(report.InventoryHitChannels, func(i, j int) bool { return report.InventoryHitChannels[i] < report.InventoryHitChannels[j] })
 	sort.Slice(report.RPC256Owners, func(i, j int) bool { return report.RPC256Owners[i] < report.RPC256Owners[j] })
+	return ctx.Err()
 }
 
 func inspectRPCBlocks(report *udpReport, block scannerunreal.ContentBlock, channel uint32, inventoryGUIDs map[uint32]bool, propertyNames map[string]bool, rpcOwners map[uint32]bool, dumpDir string, dumpIndex *int) {

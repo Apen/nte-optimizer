@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"context"
+	"testing"
+)
 
 func TestPanelAssociationRejectsEqualHPOwners(t *testing.T) {
 	fields := []struct {
@@ -10,18 +13,18 @@ func TestPanelAssociationRejectsEqualHPOwners(t *testing.T) {
 	data := syntheticPanelFields(fields)
 	messages := []completedMessage{{data: data, bits: len(data) * 8}}
 	characters := []characterItem{{CharacterID: 1004, MaxHP: 16000}, {CharacterID: 1036, MaxHP: 16000}}
-	attachCharacterPanels(characters, messages)
+	attachCharacterPanels(context.Background(), characters, messages)
 	if characters[0].PanelStats != nil || characters[1].PanelStats != nil {
 		t.Fatal("same HP attributed a panel to multiple entities")
 	}
 	characters = characters[:1]
-	attachCharacterPanels(characters, append(messages, messages[0]))
+	attachCharacterPanels(context.Background(), characters, append(messages, messages[0]))
 	if characters[0].PanelStats == nil {
 		t.Fatal("identical repeated evidence should remain usable")
 	}
 	fields[4].value = .5
 	other := syntheticPanelFields(fields)
-	attachCharacterPanels(characters, append(messages, completedMessage{data: other, bits: len(other) * 8}))
+	attachCharacterPanels(context.Background(), characters, append(messages, completedMessage{data: other, bits: len(other) * 8}))
 	if characters[0].PanelStats != nil {
 		t.Fatal("conflicting panels should be unavailable")
 	}

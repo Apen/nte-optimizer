@@ -358,7 +358,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
     `go test ./cmd/nte-scan ./internal/scanner/...`, followed by opt-in private
     capture validation outside source control when available.
 
-- [ ] **CQ-012 — Apply resource budgets and cancellation through the decoder boundary.**
+- [x] **CQ-012 — Apply resource budgets and cancellation through the decoder boundary.**
   - **Priority / category:** P2; robustness debt with concrete reachable gaps.
   - **Evidence:** furniture uses `DecodeLZ4BlockLimited`, but
     `cmd/nte-scan/main.go:222` still uses the unlimited decoder; partial bunches

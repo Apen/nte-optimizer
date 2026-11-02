@@ -61,6 +61,11 @@ scripts/                   quality, build, packaging, and smoke tests
 8. the desktop importer creates one atomic account snapshot.
 
 An incomplete scan never replaces the last valid account import.
+Decoding rejects captures above 256 MiB and fragmented messages or decoded LZ4
+blocks above 16 MiB before allocating their output. These are conservative local
+resource budgets, not assertions about game protocol maxima. Oversized capture
+and reassembly failures abort publication. Cancellation is checked between domain
+records and during panel bit scans; malformed optional fields remain unavailable.
 The elevated helper and desktop process append privacy-safe stage events and
 aggregate counts to the latest local scan diagnostic. The Import page polls
 that file during the scan; raw packets and decoded records are never logged.

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -77,10 +78,16 @@ func sameFloat(a, b float32) bool { return math.Float32bits(a) == math.Float32bi
 // values. Base/current members can be independently omitted, so values must be
 // read by handle rather than by their position in the serialized sequence.
 func parseCharacterPanelStats(data []byte, bitLen int, maxHP float32) (characterPanelStats, bool) {
+	return parseCharacterPanelStatsContext(context.Background(), data, bitLen, maxHP)
+}
+func parseCharacterPanelStatsContext(ctx context.Context, data []byte, bitLen int, maxHP float32) (characterPanelStats, bool) {
 	if bitLen < 0 || bitLen > len(data)*8 {
 		return characterPanelStats{}, false
 	}
 	for totalOff := 0; totalOff+200 <= bitLen; totalOff++ {
+		if totalOff%4096 == 0 && ctx.Err() != nil {
+			return characterPanelStats{}, false
+		}
 		v0, _ := bitFloat32(data, bitLen, totalOff)
 		if !sameFloat(v0, maxHP) {
 			continue

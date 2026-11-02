@@ -171,7 +171,8 @@ func main() {
 	_ = scanlog.Append(*scanLog, "packet_read", "complete", map[string]int{"raw_packets": len(packets), "unique_packets": len(unique)})
 	r := report{Input: *input, RawPackets: len(packets), UniquePackets: len(unique), DuplicateAppearances: len(packets) - len(unique)}
 	_ = scanlog.Append(*scanLog, "decode", "started", nil)
-	r.UDP = analyzeUDP(unique, 0, *dumpUDP, *catalog, *characterCatalogPath, *forkCatalogPath, *resourceCatalogPath, *characterProbeOut != "")
+	r.UDP, err = analyzeUDP(ctx, unique, 0, *dumpUDP, *catalog, *characterCatalogPath, *forkCatalogPath, *resourceCatalogPath, *characterProbeOut != "")
+	must(err)
 	_ = scanlog.Append(*scanLog, "decode", "complete", map[string]int{"udp_packets": r.UDP.Packets, "equipment": r.UDP.DecodedItems, "characters": len(r.UDP.Characters), "arcs": len(r.UDP.Weapons), "resources": len(r.UDP.Resources)})
 	mustScanContext(ctx)
 	if *loginCapture && (r.UDP.DecodedItems == 0 || len(r.UDP.Characters) == 0 || len(r.UDP.Weapons) == 0) {
@@ -342,17 +343,27 @@ func recordNames(b []byte) []string {
 	return out
 }
 
-func analyzeUDP(ps []packet, port uint16, dumpDir, catalogPath, characterCatalogPath, forkCatalogPath, resourceCatalogPath string, probeCharacters bool) udpReport {
+func analyzeUDP(ctx context.Context, ps []packet, port uint16, dumpDir, catalogPath, characterCatalogPath, forkCatalogPath, resourceCatalogPath string, probeCharacters bool) (udpReport, error) {
+	if err := ctx.Err(); err != nil {
+		return udpReport{}, err
+	}
 	key, packets, best := selectPrimaryUDPFlow(ps, port)
 	r := udpReport{Flow: fmt.Sprintf("%s:%d -> %s:%d", key.src, key.sport, key.dst, key.dport), Packets: len(packets), PayloadBytes: best}
 	if len(packets) == 0 {
-		return r
+		return r, nil
 	}
 	r.LargestPacket, r.PeakBurstBytes, r.PeakAtSeconds = measureUDPFlow(packets)
-	completed, inventoryGUIDs, dumpDir := assembleUnrealMessages(&r, packets, dumpDir)
-	inspectCompletedMessages(&r, completed, inventoryGUIDs, dumpDir)
-	decodeDomains(&r, packets, completed, catalogPath, characterCatalogPath, forkCatalogPath, resourceCatalogPath, probeCharacters)
-	return r
+	completed, inventoryGUIDs, dumpDir, err := assembleUnrealMessages(ctx, &r, packets, dumpDir)
+	if err != nil {
+		return r, err
+	}
+	if err := inspectCompletedMessages(ctx, &r, completed, inventoryGUIDs, dumpDir); err != nil {
+		return r, err
+	}
+	if err := decodeDomains(ctx, &r, packets, completed, catalogPath, characterCatalogPath, forkCatalogPath, resourceCatalogPath, probeCharacters); err != nil {
+		return r, err
+	}
+	return r, ctx.Err()
 }
 
 func isPrivateIPv4(s string) bool {
