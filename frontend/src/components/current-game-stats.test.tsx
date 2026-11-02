@@ -15,8 +15,6 @@ const catalog: LocalizationCatalog = {
     possible_panel_bonuses: 'Possible additional in-game bonuses',
     possible_panel_bonuses_note: 'Positive differences between the scanned panel and the optimizer model. Their source is unknown; these values are diagnostic only and are not added to optimizer calculations.',
     panel_bonus_comparison: 'Panel: {panel} · Model: {calculated}',
-    possible_housing_modifiers: 'Possible shared housing modifiers',
-    possible_housing_modifiers_note: 'Panel-based hints only; not applied to optimizer calculations.',
     housing_modifier_evidence: 'Matched on {matching} of {observed} loaded characters',
     max_effects_value: 'Max effects: {value}',
     estimated_stats: 'Some stat sources are missing',

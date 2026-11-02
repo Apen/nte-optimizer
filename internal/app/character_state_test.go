@@ -26,6 +26,28 @@ func TestLoadCurrentCharacterStatsIncludesCharacterPanel(t *testing.T) {
 	}
 }
 
+func TestCharacterStateDoesNotCalculateUnrelatedCharacters(t *testing.T) {
+	dir := t.TempDir()
+	if err := ensureWorkspace(dir); err != nil {
+		t.Fatal(err)
+	}
+	state := scannedBuffFixture()
+	attack := 1000.0
+	state.Characters[0].Stats.Attack = &attack
+	state.Characters[0].ObservedAtLogin.Loaded = true
+	state.Characters = append(state.Characters, decoded.Character{CharacterID: 1004, Level: 80, BreakthroughLevel: 6})
+	if err := writeAccountData(dir, nte.Inventory{}, state); err != nil {
+		t.Fatal(err)
+	}
+	if err := writeJSON(workspaceFile(dir, "account_overrides.json"), map[string]any{"characters": map[int]map[string]float64{1036: {"AtkFinal": 4}}}); err != nil {
+		t.Fatal(err)
+	}
+	got, err := LoadCharacterGameState(dir, filepath.Join("..", "..", "data"), 1004, "en")
+	if err != nil || got.Stats == nil {
+		t.Fatalf("unrelated calibration blocked character view: %+v %v", got, err)
+	}
+}
+
 func TestLoadCharacterGameStateExposesObservedPanelSeparatelyFromCalculatedStats(t *testing.T) {
 	projectDir := t.TempDir()
 	if err := ensureWorkspace(projectDir); err != nil {
@@ -63,7 +85,7 @@ func TestLoadCharacterGameStateExposesObservedPanelSeparatelyFromCalculatedStats
 	}
 }
 
-func TestLoadCharacterGameStateReportsPanelMatchedHousingCandidatesWithoutApplyingThem(t *testing.T) {
+func TestLoadCharacterGameStatePreservesSourceAgnosticResiduals(t *testing.T) {
 	projectDir := t.TempDir()
 	if err := ensureWorkspace(projectDir); err != nil {
 		t.Fatal(err)
@@ -92,9 +114,6 @@ func TestLoadCharacterGameStateReportsPanelMatchedHousingCandidatesWithoutApplyi
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(got.PotentialHousingEffects) != 3 {
-		t.Fatalf("potential housing effects = %#v, want 3 panel-matched candidates", got.PotentialHousingEffects)
-	}
 	if len(got.PossiblePanelBonuses) != 3 {
 		t.Fatalf("possible panel bonuses = %#v, want three source-agnostic residuals", got.PossiblePanelBonuses)
 	}
@@ -108,16 +127,6 @@ func TestLoadCharacterGameStateReportsPanelMatchedHousingCandidatesWithoutApplyi
 	}
 	if len(wantBonuses) != 0 {
 		t.Errorf("missing panel bonus residuals: %#v", wantBonuses)
-	}
-	wantIDs := map[string]bool{"yaodao_1": true, "kaijia_2": true, "quantao_5": true}
-	for _, effect := range got.PotentialHousingEffects {
-		if !wantIDs[effect.ModifierID] || effect.MatchingCharacters != 2 || effect.ObservedCharacters != 2 {
-			t.Errorf("unexpected housing candidate: %#v", effect)
-		}
-		delete(wantIDs, effect.ModifierID)
-	}
-	if len(wantIDs) != 0 {
-		t.Errorf("missing expected housing candidates: %#v", wantIDs)
 	}
 	if got.Stats == nil || got.Stats.Derived["AtkFinal"] == *state.Characters[0].Stats.Attack {
 		t.Fatalf("diagnostic candidate changed calculated stats: %#v", got.Stats)

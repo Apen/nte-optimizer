@@ -6,9 +6,7 @@ import (
 	"sort"
 
 	"nte-optimizer/internal/apperrors"
-	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
-	"nte-optimizer/internal/housing"
 	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/optimizer"
 )
@@ -16,15 +14,14 @@ import (
 // CharacterGameState is a read-only snapshot of what the latest account import
 // reported as equipped in game. It is deliberately separate from LocalBuild.
 type CharacterGameState struct {
-	Character               decoded.Character          `json:"character"`
-	ObservedPanelStats      *decoded.CharacterStats    `json:"observed_panel_stats,omitempty"`
-	PossiblePanelBonuses    []PanelBonus               `json:"possible_panel_bonuses,omitempty"`
-	Weapon                  *EquipmentCatalogArc       `json:"weapon,omitempty"`
-	Cartridges              []nte.Cartridge            `json:"cartridges"`
-	Modules                 []nte.Module               `json:"modules"`
-	Stats                   *optimizer.StatSummary     `json:"stats,omitempty"`
-	PotentialHousingEffects []housing.InferredModifier `json:"potential_housing_effects,omitempty"`
-	ImportedAt              string                     `json:"imported_at,omitempty"`
+	Character            decoded.Character       `json:"character"`
+	ObservedPanelStats   *decoded.CharacterStats `json:"observed_panel_stats,omitempty"`
+	PossiblePanelBonuses []PanelBonus            `json:"possible_panel_bonuses,omitempty"`
+	Weapon               *EquipmentCatalogArc    `json:"weapon,omitempty"`
+	Cartridges           []nte.Cartridge         `json:"cartridges"`
+	Modules              []nte.Module            `json:"modules"`
+	Stats                *optimizer.StatSummary  `json:"stats,omitempty"`
+	ImportedAt           string                  `json:"imported_at,omitempty"`
 }
 
 // PanelBonus is a positive difference between the scanned panel and the
@@ -106,10 +103,6 @@ func LoadCharacterGameState(projectDir, dataDir string, characterID int, languag
 	}
 	result.Stats = stats
 	result.PossiblePanelBonuses = inferPossiblePanelBonuses(result.ObservedPanelStats, stats)
-	result.PotentialHousingEffects, err = service.inferHousingEffects(&state, equipment, language)
-	if err != nil {
-		return CharacterGameState{}, err
-	}
 	return result, nil
 }
 
@@ -141,59 +134,6 @@ func valueOrZero(value *float64) float64 {
 		return 0
 	}
 	return *value
-}
-
-func (service OptimizerService) inferHousingEffects(state *decoded.State, equipment EquipmentCatalog, language string) ([]housing.InferredModifier, error) {
-	catalog, err := housing.Load(datafiles.New(service.DataDir).SpecialFurnitureModifiers())
-	if err != nil {
-		return nil, fmt.Errorf("load special-furniture modifiers: %w", err)
-	}
-	observations := make([]housing.Observation, 0, len(state.Characters))
-	modulesByOwner := map[int][]nte.Module{}
-	cartridgesByOwner := map[int][]nte.Cartridge{}
-	for _, module := range equipment.Modules {
-		modulesByOwner[module.EquippedCharacterID] = append(modulesByOwner[module.EquippedCharacterID], module)
-	}
-	for _, cartridge := range equipment.Cartridges {
-		cartridgesByOwner[cartridge.EquippedCharacterID] = append(cartridgesByOwner[cartridge.EquippedCharacterID], cartridge)
-	}
-	for _, character := range state.Characters {
-		if !character.ObservedAtLogin.Loaded || !hasObservedPanelStats(character.Stats) {
-			continue
-		}
-		modules := modulesByOwner[character.CharacterID]
-		cartridges := cartridgesByOwner[character.CharacterID]
-		stats, err := service.currentCharacterStats(state, character, modules, cartridges, language)
-		if err != nil {
-			return nil, err
-		}
-		if stats == nil {
-			continue
-		}
-		panel := map[string]float64{}
-		if character.Stats.Attack != nil {
-			panel["AtkFinal"] = *character.Stats.Attack
-		}
-		if character.Stats.Defense != nil {
-			panel["DefFinal"] = *character.Stats.Defense
-		}
-		if character.Stats.CritDamage != nil {
-			panel["CritDamageBase"] = *character.Stats.CritDamage
-		}
-		calculated := map[string]float64{}
-		for _, property := range []string{"AtkFinal", "DefFinal", "CritDamageBase"} {
-			if value, ok := stats.Derived[property]; ok {
-				calculated[property] = value
-			}
-		}
-		observations = append(observations, housing.Observation{
-			CharacterID: character.CharacterID,
-			Loaded:      character.ObservedAtLogin.Loaded,
-			Panel:       panel,
-			Calculated:  calculated,
-		})
-	}
-	return housing.InferShared(catalog, observations), nil
 }
 
 func hasObservedPanelStats(stats decoded.CharacterStats) bool {

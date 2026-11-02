@@ -44,10 +44,10 @@ scan-derived bonuses. A new import replaces the active selection; previously
 saved optimization snapshots remain historical and must be regenerated to use
 newly imported values.
 
-The static furniture catalog can also support diagnostics based on repeated
-panel-to-model residuals. Such residual suggestions remain diagnostic; only the
-imported progressions and the level-10 bond policy select calculation inputs.
-Matching the visible menu stats does not prove all conditional combat effects.
+Observed panel differences remain diagnostic and do not select account bonuses.
+The removed `potential_housing_effects` response field had no interface consumer;
+character-state responses retain the source-agnostic `possible_panel_bonuses`.
+Matching visible menu stats does not prove all conditional combat effects.
 
 Effects requiring a rotation, target state, stack count, or other combat
 condition remain separate when the data supports that distinction. The normal
