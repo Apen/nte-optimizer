@@ -30,7 +30,7 @@ func (a *DesktopApp) LastOptimizationLog() OptimizationLog {
 	return result
 }
 
-func (a *DesktopApp) beginOptimizationLog(profileID, mode string, goals map[string]appservice.GoalTuning, pinned, excluded []string, weights *appservice.WeightOverrides) {
+func (a *DesktopApp) beginOptimizationLog(profileID, mode string, goals map[string]appservice.GoalTuning, pinned, excluded []string, weights *appservice.WeightOverrides) uint64 {
 	entries := []OptimizationLogEntry{
 		{Level: "INFO", Stage: "configuration", Message: fmt.Sprintf("profile=%s method=%s objectives=%d", profileID, mode, len(goals))},
 		{Level: "DEBUG", Stage: "constraints", Message: fmt.Sprintf("locked_modules=%d excluded=%d", len(pinned), len(excluded))},
@@ -60,10 +60,18 @@ func (a *DesktopApp) beginOptimizationLog(profileID, mode string, goals map[stri
 			entries = append(entries, OptimizationLogEntry{Level: "DEBUG", Stage: "weight", Message: fmt.Sprintf("%s=%.2f", name, weights.Weights[name])})
 		}
 	}
+	a.searchMu.Lock()
+	defer a.searchMu.Unlock()
+	if a.searchStop != nil {
+		a.searchStop()
+	}
 	a.logMu.Lock()
+	a.logID++
+	id := a.logID
 	a.lastLog = OptimizationLog{StartedAt: time.Now().Format(time.RFC3339), Status: "running", Entries: entries}
 	a.logProgress = optimizer.SearchProgress{}
 	a.logMu.Unlock()
+	return id
 }
 
 func positiveWeightCount(weights map[string]float64) int {
@@ -76,9 +84,12 @@ func positiveWeightCount(weights map[string]float64) int {
 	return count
 }
 
-func (a *DesktopApp) finishOptimizationLog(result appservice.OptimizationResult, runErr error) {
+func (a *DesktopApp) finishOptimizationLog(logID uint64, result appservice.OptimizationResult, runErr error) {
 	a.logMu.Lock()
 	defer a.logMu.Unlock()
+	if a.logID != logID {
+		return
+	}
 	log := &a.lastLog
 	log.FinishedAt = time.Now().Format(time.RFC3339)
 	progress := a.logProgress
@@ -125,4 +136,14 @@ func stringSet(values []string) map[string]bool {
 		}
 	}
 	return result
+}
+
+func (a *DesktopApp) recordOptimizationProgress(logID uint64, progress optimizer.SearchProgress) bool {
+	a.logMu.Lock()
+	defer a.logMu.Unlock()
+	if a.logID != logID {
+		return false
+	}
+	a.logProgress = progress
+	return true
 }

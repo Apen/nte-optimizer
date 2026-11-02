@@ -33,6 +33,7 @@ type DesktopApp struct {
 	scanID      uint64
 	buildMu     sync.Mutex
 	logMu       sync.Mutex
+	logID       uint64
 	lastLog     OptimizationLog
 	logProgress optimizer.SearchProgress
 }
@@ -295,17 +296,17 @@ func (a *DesktopApp) StopScan() bool {
 }
 
 func (a *DesktopApp) OptimizeFlexibleSelection(profileID string, ignorePriority bool, language, mode string, goals map[string]appservice.GoalTuning, pinnedModuleIDs, excludedModuleIDs []string, weights *appservice.WeightOverrides, arcForkID string) (appservice.OptimizationResult, error) {
-	a.beginOptimizationLog(profileID, mode, goals, pinnedModuleIDs, excludedModuleIDs, weights)
+	logID := a.beginOptimizationLog(profileID, mode, goals, pinnedModuleIDs, excludedModuleIDs, weights)
 	service, err := a.optimizerService(profileID, ignorePriority)
 	if err != nil {
-		a.finishOptimizationLog(appservice.OptimizationResult{}, err)
+		a.finishOptimizationLog(logID, appservice.OptimizationResult{}, err)
 		return appservice.OptimizationResult{}, err
 	}
 	service.WeightOverrides = weights
 	service.PinnedModuleIDs = stringSet(pinnedModuleIDs)
 	service.ExcludedModuleIDs = stringSet(excludedModuleIDs)
-	result, err := a.runFlexibleOptimization(service, profileID, true, language, mode, goals, arcForkID)
-	a.finishOptimizationLog(result, err)
+	result, err := a.runFlexibleOptimization(service, profileID, true, language, mode, goals, arcForkID, logID)
+	a.finishOptimizationLog(logID, result, err)
 	return result, err
 }
 
@@ -334,15 +335,23 @@ func (a *DesktopApp) optimizerService(profileID string, ignorePriority bool) (ap
 	return service, err
 }
 
-func (a *DesktopApp) runFlexibleOptimization(service appservice.OptimizerService, profileID string, includeEquipped bool, language, mode string, goals map[string]appservice.GoalTuning, arcForkID string) (appservice.OptimizationResult, error) {
-	return a.runSearch(service, func(ctx context.Context, service appservice.OptimizerService) (appservice.OptimizationResult, error) {
+func (a *DesktopApp) runFlexibleOptimization(service appservice.OptimizerService, profileID string, includeEquipped bool, language, mode string, goals map[string]appservice.GoalTuning, arcForkID string, logID uint64) (appservice.OptimizationResult, error) {
+	return a.runSearch(service, logID, func(ctx context.Context, service appservice.OptimizerService) (appservice.OptimizationResult, error) {
 		return service.OptimizeFlexibleProjectWithArc(ctx, a.stateDir, profileID, includeEquipped, language, mode, goals, arcForkID)
 	})
 }
 
-func (a *DesktopApp) runSearch(service appservice.OptimizerService, run func(context.Context, appservice.OptimizerService) (appservice.OptimizationResult, error)) (appservice.OptimizationResult, error) {
+func (a *DesktopApp) runSearch(service appservice.OptimizerService, logID uint64, run func(context.Context, appservice.OptimizerService) (appservice.OptimizationResult, error)) (appservice.OptimizationResult, error) {
 	searchContext, stop := context.WithCancel(a.ctx)
 	a.searchMu.Lock()
+	a.logMu.Lock()
+	stale := a.logID != logID
+	a.logMu.Unlock()
+	if stale {
+		a.searchMu.Unlock()
+		stop()
+		return appservice.OptimizationResult{}, context.Canceled
+	}
 	if a.searchStop != nil {
 		a.searchStop()
 	}
@@ -359,10 +368,9 @@ func (a *DesktopApp) runSearch(service appservice.OptimizerService, run func(con
 		stop()
 	}()
 	service.Progress = func(progress optimizer.SearchProgress) {
-		a.logMu.Lock()
-		a.logProgress = progress
-		a.logMu.Unlock()
-		runtime.EventsEmit(a.ctx, "optimizer:progress", progress)
+		if a.recordOptimizationProgress(logID, progress) {
+			runtime.EventsEmit(a.ctx, "optimizer:progress", progress)
+		}
 	}
 	return run(searchContext, service)
 }

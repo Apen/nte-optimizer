@@ -264,4 +264,3 @@ function betterArcCopy(candidate:InventoryArc,current:InventoryArc) {
 function Field({label,children}:{label:string;children:React.ReactNode}) { return <label className="grid gap-1.5 text-xs font-medium text-slate-400"><span>{label}</span>{children}</label> }
 
 function ConstraintChip({id,kind,onRemove}:{id:string;kind:'locked'|'excluded';onRemove:()=>void}) { return <button onClick={onRemove} title={t('remove_constraint')} className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-bold ${kind==='locked'?'border-emerald-700 bg-emerald-950/40 text-emerald-300':'border-red-800 bg-red-950/40 text-red-300'}`}>{kind==='locked'?<LockKeyhole className="size-3"/>:<Ban className="size-3"/>}{kind==='locked'?t('locked_state'):t('excluded_state')} · {id}<X className="size-3 opacity-60"/></button> }
-
