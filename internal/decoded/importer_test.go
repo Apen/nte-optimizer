@@ -2,11 +2,27 @@ package decoded
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
 	"time"
 )
+
+func TestImportRejectsEquipmentLevelsOutsideCatalog(t *testing.T) {
+	for _, level := range []int{-1, 21} {
+		t.Run(fmt.Sprint(level), func(t *testing.T) {
+			dir := t.TempDir()
+			writeFixture(t, dir, "manifest.json", Manifest{Format: "nte-scan-output", FormatVersion: 1})
+			writeFixture(t, dir, "characters.json", []Character{})
+			writeFixture(t, dir, "weapons.json", []Weapon{})
+			writeFixture(t, dir, "equipment.json", []Equipment{{ID: NetID{Slot: 1, Serial: 2}, ItemID: "cell3_style6_1_Orange", Kind: "module", Level: level, MainStats: []RawStat{{Property: "AtkAdd", Value: 12}}}})
+			if _, err := ImportDirectory(dir, filepath.Join("..", "..", "data")); err == nil {
+				t.Fatal("invalid level accepted")
+			}
+		})
+	}
+}
 
 func TestImportDirectoryBuildsInventoryAndLinksEquipment(t *testing.T) {
 	dir := t.TempDir()

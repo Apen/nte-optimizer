@@ -1,12 +1,34 @@
 package app
 
 import (
+	"context"
 	"nte-optimizer/internal/decoded"
+	"nte-optimizer/internal/nte"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 )
+
+func TestPublicOptimizerRejectsMissingImportedTier(t *testing.T) {
+	s := NewOptimizerService(filepath.Join("..", "..", "data"))
+	catalog, err := s.loadCharacterBaseStats()
+	if err != nil {
+		t.Fatal(err)
+	}
+	delete(catalog.Stats["1036"], "80:6")
+	dir := t.TempDir()
+	if err := ensureWorkspace(dir); err != nil {
+		t.Fatal(err)
+	}
+	if err := writeAccountData(dir, nte.Inventory{}, decoded.State{Characters: []decoded.Character{{CharacterID: 1036, Level: 80, BreakthroughLevel: 6}}}); err != nil {
+		t.Fatal(err)
+	}
+	_, err = s.OptimizeFlexibleProjectWithArc(context.Background(), dir, "zankou", true, "en", "fast", nil, NoArcForkSelection)
+	if err == nil || !strings.Contains(err.Error(), `stats["1036"]["80:6"]`) {
+		t.Fatalf("missing imported tier accepted: %v", err)
+	}
+}
 
 func TestMissingImportedTierDoesNotUseRecommendationDefaults(t *testing.T) {
 	c := decoded.Character{CharacterID: 1036, Level: 999, BreakthroughLevel: 6}
