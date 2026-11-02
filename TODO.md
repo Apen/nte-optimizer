@@ -106,7 +106,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
   - **Verification:** `go test ./internal/optimizer ./internal/scoring`, then
     `go test ./...`; rerun affected benchmarks after fixture correction.
 
-- [ ] **CQ-004 — Persist complete build results with a single atomic write.**
+- [x] **CQ-004 — Persist complete build results with a single atomic write.**
   - **Priority / category:** P1; confirmed persistence defect.
   - **Evidence:** `internal/app/build_store.go:28` calls `SaveLocalBuild`, which
     writes `local_builds.json`, then adds `Result` and writes the same file again.

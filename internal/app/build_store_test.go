@@ -1,12 +1,48 @@
 package app
 
 import (
+	"bytes"
+	"math"
 	"os"
 	"testing"
 
 	"nte-optimizer/internal/decoded"
 	"nte-optimizer/internal/nte"
+	"nte-optimizer/internal/optimizer"
 )
+
+func TestFailedDetailedSavePreservesPreviousBuild(t *testing.T) {
+	dir := t.TempDir()
+	if err := ensureWorkspace(dir); err != nil {
+		t.Fatal(err)
+	}
+	state := decoded.State{Characters: []decoded.Character{{CharacterID: 1036}}}
+	if err := writeAccountData(dir, nte.Inventory{}, state); err != nil {
+		t.Fatal(err)
+	}
+	result := OptimizationResult{Character: &state.Characters[0], ProfileID: "zankou", Stats: optimizer.StatSummary{Derived: map[string]float64{"AtkFinal": 100}}}
+	for _, previous := range []bool{false, true} {
+		var before []byte
+		if previous {
+			if _, err := SaveOptimizationResult(dir, result); err != nil {
+				t.Fatal(err)
+			}
+			before, _ = os.ReadFile(workspaceFile(dir, "local_builds.json"))
+		}
+		invalid := result
+		invalid.Solution.Score = math.NaN()
+		if _, err := SaveOptimizationResult(dir, invalid); err == nil {
+			t.Fatal("accepted invalid result")
+		}
+		after, err := os.ReadFile(workspaceFile(dir, "local_builds.json"))
+		if previous && (err != nil || !bytes.Equal(before, after)) {
+			t.Fatal("failed save changed the previous complete result")
+		}
+		if !previous && !os.IsNotExist(err) {
+			t.Fatal("failed first save created a partial build")
+		}
+	}
+}
 
 func TestLocalBuildsPreservePriorityAndReservations(t *testing.T) {
 	dir := t.TempDir()

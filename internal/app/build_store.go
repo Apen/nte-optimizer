@@ -41,7 +41,7 @@ func SaveOptimizationResult(projectDir string, result OptimizationResult) (Local
 	if result.Weapon != nil {
 		arcID = result.Weapon.ID.Key()
 	}
-	builds, err := SaveLocalBuild(projectDir, result.ProfileID, result.Character.CharacterID, moduleIDs, cartridgeID, result.Stats.Derived, arcID)
+	builds, err := prepareLocalBuild(projectDir, result.ProfileID, result.Character.CharacterID, moduleIDs, cartridgeID, result.Stats.Derived, arcID)
 	if err != nil {
 		return LocalBuildState{}, err
 	}
@@ -137,6 +137,15 @@ func cleanCategorizedGameName(name string) string {
 }
 
 func SaveLocalBuild(projectDir, profileID string, characterID int, moduleIDs []string, cartridgeID string, stats map[string]float64, arcIDs ...string) (LocalBuildState, error) {
+	builds, err := prepareLocalBuild(projectDir, profileID, characterID, moduleIDs, cartridgeID, stats, arcIDs...)
+	if err != nil {
+		return LocalBuildState{}, err
+	}
+	return builds, writeJSON(workspaceFile(projectDir, "local_builds.json"), builds)
+}
+
+// prepareLocalBuild validates and updates memory without replacing persistent state.
+func prepareLocalBuild(projectDir, profileID string, characterID int, moduleIDs []string, cartridgeID string, stats map[string]float64, arcIDs ...string) (LocalBuildState, error) {
 	state, builds, err := loadBuildData(projectDir)
 	if err != nil {
 		return LocalBuildState{}, err
@@ -186,7 +195,7 @@ func SaveLocalBuild(projectDir, profileID string, characterID int, moduleIDs []s
 		}
 	}
 	builds.Builds[strconv.Itoa(characterID)] = LocalBuild{CharacterID: characterID, ProfileID: profileID, ModuleIDs: append([]string(nil), moduleIDs...), CartridgeID: cartridgeID, ArcID: arcID, Stats: stats, UpdatedAt: time.Now().UTC()}
-	return builds, writeJSON(workspaceFile(projectDir, "local_builds.json"), builds)
+	return builds, nil
 }
 
 func SaveCharacterPriority(projectDir string, priority []int) (LocalBuildState, error) {
