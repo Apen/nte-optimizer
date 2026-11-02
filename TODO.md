@@ -415,7 +415,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
 
 ## Cleanup after behavior is protected
 
-- [ ] **CQ-015 — Reconcile obsolete confirmation vocabulary and source metadata.**
+- [x] **CQ-015 — Reconcile obsolete confirmation vocabulary and source metadata.**
   - **Priority / category:** P3; confirmed stale presentation and metadata debt.
   - **Evidence:** `data/presentation/en.json:154` and the French equivalent still
     contain the retired manual-confirmation workflow, while the informational

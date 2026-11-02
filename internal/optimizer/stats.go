@@ -22,7 +22,7 @@ type StatSummary struct {
 func BuildStatSummary(character scoring.Character, modules []nte.Module, cartridge *nte.Cartridge, set SetDefinition, matched int, additional ...map[string][]nte.Stat) StatSummary {
 	s := StatSummary{
 		Completeness:   "partial",
-		MissingSources: []string{"weapon/Arc", "awakening and passives", "account-specific affinity and bonuses"},
+		MissingSources: []string{"weapon/Arc", "awakening and passives", "other unverified account effects"},
 		Sources:        map[string]map[string]float64{},
 	}
 	s.Sources["base"] = cloneValues(character.BaseStats)

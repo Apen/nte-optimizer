@@ -2,11 +2,28 @@ package optimizer
 
 import (
 	"math"
+	"slices"
 	"testing"
 
 	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/scoring"
 )
+
+func TestAppliedAccountBonusesDoNotClaimAllAccountSourcesAreMissing(t *testing.T) {
+	stats := BuildStatSummary(scoring.Character{}, nil, nil, SetDefinition{}, 0, map[string][]nte.Stat{
+		"account_furniture": {{PropertyID: "AtkAdd", Value: 4}},
+		"account_bond":      {{PropertyID: "CritBase", Value: .04}},
+	})
+	if stats.Sources["account_furniture"]["AtkAdd"] != 4 || stats.Sources["account_bond"]["CritBase"] != .04 {
+		t.Fatal("lost known bonuses")
+	}
+	if stats.Completeness != "partial" || !slices.Contains(stats.MissingSources, "other unverified account effects") {
+		t.Fatal("unmodeled effects must remain explicit")
+	}
+	if slices.Contains(stats.MissingSources, "account-specific affinity and bonuses") {
+		t.Fatal("known bonuses incorrectly reported missing")
+	}
+}
 
 func TestBuildStatSummarySeparatesConditionalSetEffect(t *testing.T) {
 	character := scoring.Character{
