@@ -46,9 +46,9 @@ game files, equip items, or write to the player's account.
 
 ## Privacy and security at a glance
 
-The current codebase contains no telemetry, analytics, account login, remote
-API, or upload feature. It does not send imported account data to a project
-server.
+The current codebase contains no telemetry, analytics, account login, or account
+upload feature. Release builds request public GitHub release metadata to check
+for updates; imported account data is not included in that request.
 
 The scanner uses Windows `pktmon` to passively record network packets during a
 short login window. Administrator permission is required only for the separate
