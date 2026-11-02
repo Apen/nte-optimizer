@@ -1,5 +1,22 @@
 # Release process
 
+## v0.1.13 corrective release
+
+- Exclude inactive secondary attributes on level-zero modules from calculations
+  and optimization, while preserving their imported values.
+- Apply scanned account bonuses when calculating deployed characters and new
+  builds; refresh published Prism and furniture progression data.
+- Associate received final-stat panels with replicated actor identities and
+  owned attribute sets instead of HP equality.
+- Respect reserved Arc copies, reject unresolved progression data, save builds
+  atomically, and prevent stale frontend responses and mixed search logs.
+- Reduce repeated catalog loading, result preparation, and saved-build transfers.
+
+Validation includes Go and frontend tests, production builds, quality checks,
+portable archive startup tests, synthetic decoder fuzzing, and offline comparison
+of the four deployed panels in an authorized private capture. Captures and
+imported account data are excluded from the release.
+
 ## Publish from a Git tag
 
 Push a semantic version tag to create a GitHub Release automatically:
