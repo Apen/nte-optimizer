@@ -103,17 +103,44 @@ recalculates stats for new builds. Received panels serve as comparison evidence;
 they are not reusable base stats and must not be added to equipment bonuses.
 
 Detailed panels come from replicated character attribute blocks, separately from
-the roster. Panel association rejects equal-HP roster collisions and conflicting
-panels rather than assigning the first match. A verified actor-to-roster owner
-contract is still missing; unique-HP association remains supporting evidence,
-not proof of entity ownership. No owner GUID is inferred from unexplained bytes.
+the roster. Panel association uses the roster NetID slot/serial from the
+replicated actor properties, not HP equality or blueprint names. Characters
+with equal or stale saved HP can therefore receive distinct owned panels.
+Duplicate roster identities, conflicting actors or panels, and unsupported
+framing leave the panel unavailable rather than assigning a tentative match.
+
+A subsequent private login capture supplied ownership evidence for four distinct
+deployed characters. Each actor's replicated property sequence contained the
+roster NetID slot and serial, with observed encoded handles 198 and 200. The
+`AttributeSet` package export's outer GUID matched the spawned actor GUID in
+each case. These are actor property handles, separate from identically numbered
+attribute-set handles; they must not be interpreted without their owning layout.
+The decoder enforces this observed identity contract with bounded parsing and
+synthetic regression fixtures, including equal-HP owners, conflicting identities,
+wrong outer GUIDs, wrong attribute references, and truncated messages.
+
+That capture also contained successive package-export sections ahead of a
+must-map GUID list and actor creation data. Parsing only the first export section
+does not locate the actor payload. The decoder reads these sections and locates
+the first complete actor/subobject framing within a bounded spawn-header region,
+without assuming a fixed transform length. It requires declared outer GUIDs for
+every subobject and exact consumption of the message. It never retries a later
+framing after that actor's domain identity is rejected.
+
+Attribute-set base values and the final-value sequence are in separate blocks.
+The decoder reads the former inside the owned `AttributeSet` and the latter
+inside its actor's `AbilitySystemComponent`, requiring an explicit reference to
+that same attribute-set GUID. The observed final-value handles are 36/38/40 for
+the consistent HP triple, 46 for attack, and 56 for endurance. It does not scan
+an entire channel for matching numbers. The raw capture and private analysis
+are not source-controlled fixtures.
 
 Attribute values are decoded separately from
 the saved roster HP values. The scanner reads the observed encoded field handles
 instead of assuming fixed positions: omitted cycle values, independently omitted
 base/current members, and additional elemental fields can change the layout.
-It requires a consistent HP anchor and validated required fields before attaching
-a panel. Missing cycle fields and ambiguous elemental bonuses are omitted from
+It requires a consistent owned HP triple and validated required fields before
+attaching a panel. Missing cycle fields and ambiguous elemental bonuses are omitted from
 the export rather than presented as measured zero values.
 
 A character blueprint observed during login is not proof that every panel field

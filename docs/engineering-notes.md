@@ -43,10 +43,20 @@ November audit as separate scoped commits:
 - decoder budgets, cancellation checks, fuzz seeds, and a read-only CI formatting
   gate protect the updated boundaries.
 
-A verified runtime actor-to-roster ownership contract remains missing. Panel
-association rejects equal-HP roster collisions and conflicting observations;
-unique-HP association is supporting evidence rather than proof of ownership.
-See [remaining work](../TODO.md) for the exact missing contract.
+The runtime ownership follow-up (CQ-011) now binds panels using replicated actor
+NetIDs, declared subobject outer GUIDs, and explicit attribute-set references in
+the ability component. HP equality is no longer an identity rule. Complete
+initial actor snapshots are supported; other layouts remain unavailable, without
+falling back to HP or blueprint names. Decoding budgets bound export sections,
+spawn-header framing, actor payloads, and subobject counts. See the
+[protocol observations](data-and-localization.md#observed-character-panels).
+
+Synthetic tests cover equal and stale saved HP, repeated evidence, conflicting
+identities/actors/stats, foreign attribute references, duplicate roster identities,
+every truncated fixture prefix, trailing data, and cancellation. A five-second
+ownership fuzz run passed. Offline verification against an explicitly authorized
+private login capture recovered the same four complete panels with unchanged
+statistics; raw inputs and research outputs remain outside source control.
 
 ### Measured checks for this pass
 

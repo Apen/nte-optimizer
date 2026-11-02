@@ -5,33 +5,10 @@ refactorings and validation are summarized in [engineering notes](docs/engineeri
 The original evidence and CQ identifiers remain available in Git commit
 `b973993`. This file keeps unresolved work rather than a completed-task log.
 
-## CQ-011 — Verify runtime panel ownership
-
-- [ ] Establish the actor/channel-to-roster ownership contract before describing
-  a runtime panel association as identity-proven.
-  - **Priority / category:** P1; protocol correctness investigation, partially
-    implemented. Equal-HP and conflicting-panel cases are already rejected.
-  - **Evidence:** `cmd/nte-scan/panel_association.go` now rejects multiple roster
-    characters with the same HP and inconsistent panels. The remaining unique-HP
-    path still has no verified actor GUID to roster `netId` (slot/serial) mapping.
-  - **Missing contract:** a demonstrated link between the replicated attribute
-    block's owner and the imported character identity. Neither HP equality nor a
-    loaded blueprint establishes that link. No verified field offset or catalog
-    record currently supplies it; inventing one would make observations less safe.
-  - **Approach:** obtain a sanitized ownership fixture with two distinct owners,
-    including equal-HP characters, and carry the proven owner through decoding.
-    Keep collision rejection and unavailable-panel reconstruction until then.
-    Non-deployed characters' missing final panels must still be recalculated;
-    searching for another RPC is not a substitute for ownership evidence.
-  - **Effort / risk / confidence:** M–L / high / high that ownership evidence is
-    missing; implementation effort depends on the verified protocol structure.
-  - **Prerequisites:** evidence for the actor/channel/roster link, not a guessed
-    Unreal handle or character-specific mapping.
-  - **Acceptance:** repeated or equal-HP entities cannot acquire another owner's
-    panel; unassigned panels remain unavailable; known owners bind deterministically.
-  - **Verification:** extend `panel_association_test.go` with a sanitized owner
-    fixture and run `go test ./cmd/nte-scan ./internal/scanner/...` and the full
-    Go suite. Any private capture verification remains opt-in and outside Git.
+CQ-011 is implemented: runtime panels now require roster NetID and declared
+actor/subobject ownership. Tests and private scan verification are recorded in
+[engineering notes](docs/engineering-notes.md). The items below require measurement
+or an external test environment before further changes are justified.
 
 ## Measured follow-up before further changes
 
