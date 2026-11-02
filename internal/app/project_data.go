@@ -69,27 +69,13 @@ func (s OptimizerService) readCharacters() (map[string]scoring.Character, error)
 			characters[id] = profile
 		}
 	}
-	var traits struct {
-		Traits []struct {
-			CharacterID    int     `json:"character_id"`
-			Area           int     `json:"area"`
-			PropertyID     string  `json:"property_id"`
-			ValuePerModule float64 `json:"value_per_module"`
-		} `json:"traits"`
-	}
-	loaded, err := readOptionalJSON(datafiles.New(s.DataDir).ConsoleTraits(), &traits)
+	traits, err := s.loadConsoleTraits()
 	if err != nil {
 		return nil, err
 	}
-	if loaded {
-		byCharacter := map[int]*scoring.ConsoleTrait{}
-		for _, trait := range traits.Traits {
-			byCharacter[trait.CharacterID] = &scoring.ConsoleTrait{Area: trait.Area, PropertyID: trait.PropertyID, ValuePerModule: trait.ValuePerModule}
-		}
-		for id, character := range characters {
-			character.ConsoleTrait = byCharacter[character.CharacterID]
-			characters[id] = character
-		}
+	for id, character := range characters {
+		character.ConsoleTrait = traits[character.CharacterID]
+		characters[id] = character
 	}
 	for id, character := range characters {
 		if character.GridID == "" && character.CharacterID > 0 {

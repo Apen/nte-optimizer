@@ -3,11 +3,38 @@ package app
 import (
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 
 	"nte-optimizer/internal/decoded"
+	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/scoring"
 )
+
+func TestCurrentStatsDoNotRequireACharacterStrategy(t *testing.T) {
+	s := NewOptimizerService(filepath.Join("..", "..", "data"))
+	if _, err := s.loadCharacters(); err != nil {
+		t.Fatal(err)
+	}
+	for id, profile := range s.static.profiles {
+		if profile.CharacterID == 1004 {
+			delete(s.static.profiles, id)
+		}
+	}
+	c := decoded.Character{CharacterID: 1004, Level: 80, BreakthroughLevel: 6}
+	stats, err := s.currentCharacterStats(&decoded.State{Characters: []decoded.Character{c}}, c, nil, nil, "en")
+	if err != nil || stats == nil || stats.Derived["AtkFinal"] != 636 {
+		t.Fatalf("strategy-independent stats: %+v %v", stats, err)
+	}
+}
+
+func TestLegacyNormalizationReportsMissingCoreDefinition(t *testing.T) {
+	s := NewOptimizerService(filepath.Join("..", "..", "data"))
+	inv := nte.Inventory{Cartridges: []nte.Cartridge{{GameItemID: "missing_core", SetID: "unverified"}}}
+	if err := s.normalizeInventory(&inv); err == nil || !strings.Contains(err.Error(), `items["missing_core"]`) {
+		t.Fatalf("unknown core accepted: %v", err)
+	}
+}
 
 func TestCalculationContextDoesNotMutateAccountOrCachedProfiles(t *testing.T) {
 	s := NewOptimizerService(filepath.Join("..", "..", "data"))

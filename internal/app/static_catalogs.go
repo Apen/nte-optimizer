@@ -1,7 +1,9 @@
 package app
 
 import (
+	"fmt"
 	"maps"
+	"nte-optimizer/internal/apperrors"
 	"sync"
 
 	"nte-optimizer/internal/datafiles"
@@ -16,6 +18,9 @@ import (
 // are never cached here; imports replace them independently. Create a new
 // service after changing the installed data generation.
 type staticCatalogs struct {
+	traitOnce     sync.Once
+	traits        map[int]*scoring.ConsoleTrait
+	traitErr      error
 	equipmentOnce sync.Once
 	equipment     nte.EquipmentDefinitions
 	equipmentErr  error
@@ -126,6 +131,75 @@ func (s OptimizerService) normalizeInventory(inventory *nte.Inventory) error {
 	if err != nil {
 		return err
 	}
+	for _, item := range inventory.Cartridges {
+		if item.GameItemID == "" {
+			continue
+		}
+		if definition, ok := definitions[item.GameItemID]; !ok || definition.Kind != "core" {
+			return apperrors.New("data_missing", fmt.Errorf("equipment/decode.json: missing core items[%q]", item.GameItemID))
+		}
+	}
 	inventory.Normalize(definitions)
 	return nil
+}
+
+func (s OptimizerService) loadConsoleTraits() (map[int]*scoring.ConsoleTrait, error) {
+	if s.static == nil {
+		return s.readConsoleTraits()
+	}
+	s.static.traitOnce.Do(func() { s.static.traits, s.static.traitErr = s.readConsoleTraits() })
+	return s.static.traits, s.static.traitErr
+}
+
+func (s OptimizerService) readConsoleTraits() (map[int]*scoring.ConsoleTrait, error) {
+	var file struct {
+		Traits []struct {
+			CharacterID    int     `json:"character_id"`
+			Area           int     `json:"area"`
+			PropertyID     string  `json:"property_id"`
+			ValuePerModule float64 `json:"value_per_module"`
+		} `json:"traits"`
+	}
+	if _, err := readOptionalJSON(datafiles.New(s.DataDir).ConsoleTraits(), &file); err != nil {
+		return nil, err
+	}
+	result := map[int]*scoring.ConsoleTrait{}
+	for _, trait := range file.Traits {
+		result[trait.CharacterID] = &scoring.ConsoleTrait{Area: trait.Area, PropertyID: trait.PropertyID, ValuePerModule: trait.ValuePerModule}
+	}
+	return result, nil
+}
+
+// Reconstruct character facts independently of strategy weights or selection.
+// Legacy profile corrections remain explicit inputs until their provenance is
+// resolved in game data; conflicting corrections must never depend on map order.
+func (s OptimizerService) characterInputs(character decoded.Character) (scoring.Character, error) {
+	base, err := s.requiredCharacterBaseStats(character.CharacterID, character.Level, character.BreakthroughLevel)
+	if err != nil {
+		return scoring.Character{}, err
+	}
+	traits, err := s.loadConsoleTraits()
+	if err != nil {
+		return scoring.Character{}, err
+	}
+	result := scoring.Character{CharacterID: character.CharacterID, BaseStats: base}
+	if trait := traits[character.CharacterID]; trait != nil {
+		copy := *trait
+		result.ConsoleTrait = &copy
+	}
+	profiles, err := s.loadCharacters()
+	if err != nil {
+		return scoring.Character{}, err
+	}
+	found := false
+	for _, profile := range profiles {
+		if profile.CharacterID == character.CharacterID {
+			if found && !maps.Equal(result.CurrentStats, profile.CurrentStats) {
+				return scoring.Character{}, fmt.Errorf("conflicting recommendation stat corrections for character %d", character.CharacterID)
+			}
+			result.CurrentStats = maps.Clone(profile.CurrentStats)
+			found = true
+		}
+	}
+	return result, nil
 }

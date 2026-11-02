@@ -11,7 +11,6 @@ import (
 	"nte-optimizer/internal/housing"
 	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/optimizer"
-	"nte-optimizer/internal/scoring"
 )
 
 // CharacterGameState is a read-only snapshot of what the latest account import
@@ -209,24 +208,9 @@ func loadCurrentCharacterStats(dataDir string, state *decoded.State, character d
 }
 
 func (service OptimizerService) currentCharacterStats(state *decoded.State, character decoded.Character, modules []nte.Module, cartridges []nte.Cartridge, language string) (*optimizer.StatSummary, error) {
-	profiles, err := service.loadCharacters()
+	profile, err := service.characterInputs(character)
 	if err != nil {
 		return nil, err
-	}
-	var profile scoring.Character
-	for _, candidate := range profiles {
-		if candidate.CharacterID == character.CharacterID {
-			profile = candidate
-			break
-		}
-	}
-	if profile.CharacterID == 0 {
-		return nil, nil
-	}
-	if baseStats, err := service.requiredCharacterBaseStats(character.CharacterID, character.Level, character.BreakthroughLevel); err != nil {
-		return nil, err
-	} else {
-		profile.BaseStats = baseStats
 	}
 	_, _, _, additional, _, err := service.resolveAccountContext(state, profile, language)
 	if err != nil {
