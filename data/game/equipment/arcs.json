@@ -31222,35 +31222,35 @@
         "1": [
           {
             "property_id": "CritBase",
-            "value": 0.16,
+            "value": 0.15,
             "percent": true
           }
         ],
         "2": [
           {
             "property_id": "CritBase",
-            "value": 0.2,
+            "value": 0.18,
             "percent": true
           }
         ],
         "3": [
           {
             "property_id": "CritBase",
-            "value": 0.24,
+            "value": 0.21,
             "percent": true
           }
         ],
         "4": [
           {
             "property_id": "CritBase",
-            "value": 0.28,
+            "value": 0.24,
             "percent": true
           }
         ],
         "5": [
           {
             "property_id": "CritBase",
-            "value": 0.32,
+            "value": 0.27,
             "percent": true
           }
         ]
@@ -31262,7 +31262,7 @@
           "parameters": [
             {
               "name_id": "buff_Prism_CritUp",
-              "value": 0.16,
+              "value": 0.15,
               "is_percent": true
             },
             {
@@ -31277,7 +31277,7 @@
             },
             {
               "name_id": "buff_Prism_LakshanaUp",
-              "value": 0.16,
+              "value": 0.20,
               "is_percent": true
             },
             {
@@ -31291,7 +31291,7 @@
           "parameters": [
             {
               "name_id": "buff_Prism_CritUp",
-              "value": 0.2,
+              "value": 0.18,
               "is_percent": true
             },
             {
@@ -31306,7 +31306,7 @@
             },
             {
               "name_id": "buff_Prism_LakshanaUp",
-              "value": 0.2,
+              "value": 0.25,
               "is_percent": true
             },
             {
@@ -31320,7 +31320,7 @@
           "parameters": [
             {
               "name_id": "buff_Prism_CritUp",
-              "value": 0.24,
+              "value": 0.21,
               "is_percent": true
             },
             {
@@ -31335,7 +31335,7 @@
             },
             {
               "name_id": "buff_Prism_LakshanaUp",
-              "value": 0.24,
+              "value": 0.30,
               "is_percent": true
             },
             {
@@ -31349,7 +31349,7 @@
           "parameters": [
             {
               "name_id": "buff_Prism_CritUp",
-              "value": 0.28,
+              "value": 0.24,
               "is_percent": true
             },
             {
@@ -31364,7 +31364,7 @@
             },
             {
               "name_id": "buff_Prism_LakshanaUp",
-              "value": 0.28,
+              "value": 0.35,
               "is_percent": true
             },
             {
@@ -31378,7 +31378,7 @@
           "parameters": [
             {
               "name_id": "buff_Prism_CritUp",
-              "value": 0.32,
+              "value": 0.27,
               "is_percent": true
             },
             {
@@ -31393,7 +31393,7 @@
             },
             {
               "name_id": "buff_Prism_LakshanaUp",
-              "value": 0.32,
+              "value": 0.40,
               "is_percent": true
             },
             {

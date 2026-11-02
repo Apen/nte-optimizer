@@ -3,6 +3,8 @@
   "modifiers": [
     {
       "id": "kaijia_0",
+      "progression_id": "SF_0013",
+      "level": 1,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -15,6 +17,8 @@
     },
     {
       "id": "kaijia_1",
+      "progression_id": "SF_0013",
+      "level": 2,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -27,6 +31,8 @@
     },
     {
       "id": "kaijia_2",
+      "progression_id": "SF_0013",
+      "level": 3,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -39,6 +45,8 @@
     },
     {
       "id": "kaijia_3",
+      "progression_id": "SF_0013",
+      "level": 4,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -51,6 +59,8 @@
     },
     {
       "id": "kaijia_4",
+      "progression_id": "SF_0013",
+      "level": 5,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -63,6 +73,8 @@
     },
     {
       "id": "kaijia_5",
+      "progression_id": "SF_0013",
+      "level": 6,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -75,6 +87,8 @@
     },
     {
       "id": "kaijia_6",
+      "progression_id": "SF_0013",
+      "level": 7,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -87,6 +101,8 @@
     },
     {
       "id": "kaijia_7",
+      "progression_id": "SF_0013",
+      "level": 8,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -99,6 +115,8 @@
     },
     {
       "id": "kaijia_8",
+      "progression_id": "SF_0013",
+      "level": 9,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -111,6 +129,8 @@
     },
     {
       "id": "kaijia_9",
+      "progression_id": "SF_0013",
+      "level": 10,
       "stats": [
         {
           "property_id": "DefAdd",
@@ -123,6 +143,8 @@
     },
     {
       "id": "quantao_0",
+      "progression_id": "SF_0012",
+      "level": 1,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -135,6 +157,8 @@
     },
     {
       "id": "quantao_1",
+      "progression_id": "SF_0012",
+      "level": 2,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -147,6 +171,8 @@
     },
     {
       "id": "quantao_2",
+      "progression_id": "SF_0012",
+      "level": 3,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -159,6 +185,8 @@
     },
     {
       "id": "quantao_3",
+      "progression_id": "SF_0012",
+      "level": 4,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -171,6 +199,8 @@
     },
     {
       "id": "quantao_4",
+      "progression_id": "SF_0012",
+      "level": 5,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -183,6 +213,8 @@
     },
     {
       "id": "quantao_5",
+      "progression_id": "SF_0012",
+      "level": 6,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -195,6 +227,8 @@
     },
     {
       "id": "quantao_6",
+      "progression_id": "SF_0012",
+      "level": 7,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -207,6 +241,8 @@
     },
     {
       "id": "quantao_7",
+      "progression_id": "SF_0012",
+      "level": 8,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -219,6 +255,8 @@
     },
     {
       "id": "quantao_8",
+      "progression_id": "SF_0012",
+      "level": 9,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -231,6 +269,8 @@
     },
     {
       "id": "quantao_9",
+      "progression_id": "SF_0012",
+      "level": 10,
       "stats": [
         {
           "property_id": "CritDamageBase",
@@ -243,6 +283,8 @@
     },
     {
       "id": "yaodao_0",
+      "progression_id": "SF_0011",
+      "level": 1,
       "stats": [
         {
           "property_id": "AtkAdd",
@@ -255,6 +297,8 @@
     },
     {
       "id": "yaodao_1",
+      "progression_id": "SF_0011",
+      "level": 2,
       "stats": [
         {
           "property_id": "AtkAdd",
@@ -267,6 +311,8 @@
     },
     {
       "id": "yaodao_2",
+      "progression_id": "SF_0011",
+      "level": 3,
       "stats": [
         {
           "property_id": "AtkAdd",
@@ -279,6 +325,8 @@
     },
     {
       "id": "yaodao_3",
+      "progression_id": "SF_0011",
+      "level": 4,
       "stats": [
         {
           "property_id": "AtkAdd",
@@ -291,6 +339,8 @@
     },
     {
       "id": "yaodao_4",
+      "progression_id": "SF_0011",
+      "level": 5,
       "stats": [
         {
           "property_id": "AtkAdd",
@@ -303,6 +353,8 @@
     },
     {
       "id": "yaodao_5",
+      "progression_id": "SF_0011",
+      "level": 6,
       "stats": [
         {
           "property_id": "AtkAdd",
@@ -315,6 +367,8 @@
     },
     {
       "id": "yaodao_6",
+      "progression_id": "SF_0011",
+      "level": 7,
       "stats": [
         {
           "property_id": "AtkAdd",
@@ -327,6 +381,8 @@
     },
     {
       "id": "yaodao_7",
+      "progression_id": "SF_0011",
+      "level": 8,
       "stats": [
         {
           "property_id": "AtkAdd",
@@ -339,6 +395,8 @@
     },
     {
       "id": "yaodao_8",
+      "progression_id": "SF_0011",
+      "level": 9,
       "stats": [
         {
           "property_id": "AtkAdd",
@@ -351,6 +409,8 @@
     },
     {
       "id": "yaodao_9",
+      "progression_id": "SF_0011",
+      "level": 10,
       "stats": [
         {
           "property_id": "AtkAdd",

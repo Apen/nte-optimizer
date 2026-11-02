@@ -107,3 +107,20 @@ func TestInferSharedRequiresUnconditionalAdditiveModifier(t *testing.T) {
 		t.Fatalf("unsupported effect was inferred: %#v", got)
 	}
 }
+
+func TestFurnitureProgressionMetadataIsUnambiguous(t *testing.T) {
+	catalog, err := Load(filepath.Join("..", "..", "data", "game", "housing", "special_furniture_modifiers.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, modifier := range catalog.Modifiers {
+		if modifier.ProgressionID == "" || modifier.Level < 1 || modifier.Level > 10 {
+			t.Fatalf("missing generated metadata: %v", modifier)
+		}
+	}
+	catalog.Modifiers[1].ProgressionID = catalog.Modifiers[0].ProgressionID
+	catalog.Modifiers[1].Level = catalog.Modifiers[0].Level
+	if err := catalog.Validate(); err == nil {
+		t.Fatal("accepted ambiguous progression level")
+	}
+}

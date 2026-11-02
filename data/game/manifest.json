@@ -56,10 +56,11 @@
     {
       "path": "equipment/arcs.json",
       "schema_version": 1,
-      "sha256": "7ef05658791bb3411ad9ff74c529f8aeb65cf51bd1550386ad44fb0f9a8ce4ab",
+      "sha256": "b3091523abf264eadc14287f089e917fc7f983c289cbec7efbd40d3e452d4162",
       "sources": [
         "generated/fork_stats.json",
         "overrides/equipment-projections.json",
+        "config/fork-curve-corrections.json",
         "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json",
         "datamine/data/catalogs/DataTable/Fork/DT_ForkUpgradeStarDataTable.json"
       ],
@@ -141,10 +142,11 @@
     {
       "path": "housing/special_furniture_modifiers.json",
       "schema_version": 1,
-      "sha256": "1c0aba56214c91a329ab2b3bc2a2911c2df328187c6554a1e452160efe952be7",
+      "sha256": "e3745667f71e715e1ef8f12708a4c5c8452a40b523504c7a42d437c067651a01",
       "sources": [
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_SpecialFurnitureModifyData.json",
-        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json"
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
+        "config/special-furniture-progressions.json"
       ],
       "status": "generated",
       "warnings": []
