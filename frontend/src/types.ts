@@ -66,3 +66,8 @@ export type AccountImportSummary = { has_import:boolean; imported_at?:string; so
 export type PanelComparison = { property_id:string; observed:number; calculated:number; difference:number; matches:boolean }
 export type BuffCharacter = { character_id:number; name:string; bond_level?:number; bond_bonus_active:boolean; bond_stats:Stat[]|null }
 export type AccountBuffPage = { furniture:{id:string;stats:Stat[];level?:number;progression_id?:string}[];detected_furniture_ids?:string[]; characters:BuffCharacter[] }
+
+export type SavedGoalSettings = {target:number;label?:string;percent?:boolean;custom?:boolean;minimum?:number;maximum?:number;tolerance:number;strict_minimum?:boolean;disabled?:boolean}
+export type ProfileSettings = {main_stats:string[];weights:Record<string,number>;goals?:Record<string,SavedGoalSettings>;arc_fork_id?:string;simulate_cartridge_main_stats?:boolean}
+export type GoalTuning = {target:number;maximum:number;tolerance:number;importance:number;minimum?:number;strict_minimum?:boolean;custom?:boolean;label?:string;percent?:boolean}
+export type UpdateInfo = {available:boolean;current_version:string;latest_version?:string;download_url?:string}

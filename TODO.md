@@ -288,7 +288,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
     Follow [React effect cleanup guidance](https://react.dev/learn/synchronizing-with-effects)
     when cancelling or ignoring obsolete asynchronous work.
 
-- [ ] **CQ-010 — Type the complete bridge instead of casting `Promise<any>` results.**
+- [x] **CQ-010 — Type the complete bridge instead of casting `Promise<any>` results.**
   - **Priority / category:** P2; confirmed cross-layer contract debt.
   - **Evidence:** `frontend/wailsjs/go/main/DesktopApp.d.ts:3` and most following
     methods return `any`; App supplies assertions from separately maintained

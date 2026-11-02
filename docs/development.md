@@ -45,6 +45,10 @@ npm run dev
 
 After changing a public `DesktopApp` method, regenerate Wails bindings before
 committing if the normal Wails workflow has not already done so.
+When the Wails v2 generator cannot handle the Go toolchain, maintain the explicit
+bridge declarations using named DTOs from `frontend/src/types.ts`. The shared
+sanitized fixture under `internal/testdata/contracts` is checked by Go JSON and
+TypeScript tests. Do not restore `Promise<any>` or cast away contract mismatches.
 
 ## Tests and quality
 

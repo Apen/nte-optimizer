@@ -19,7 +19,7 @@ export function CharacterStatePage({ characterID, locale, onBack }: { characterI
     setSnapshot(undefined)
     setError('')
     CharacterGameState(characterID, locale)
-      .then(value => { if (active) setSnapshot(value as CharacterGameSnapshot) })
+      .then(value => { if (active) setSnapshot(value) })
       .catch(value => { if (active) setError(String(value)) })
     return () => { active = false }
   }, [characterID, locale])

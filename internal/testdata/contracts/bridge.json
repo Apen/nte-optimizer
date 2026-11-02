@@ -1,0 +1,5 @@
+{
+  "module": {"local_id":"synthetic","game_item_id":"synthetic","quality":"blue","set_id":"","set_name":"","geometry":"SYNTHETIC","area":2,"level":0,"main_stats":[],"sub_stats":[],"sub_stats_active":false},
+  "settings": {"main_stats":["CritBase"],"weights":{"CritBase":1},"goals":{"CritBase":{"target":0.5,"minimum":0.4,"tolerance":0.05,"strict_minimum":true,"custom":true,"percent":true,"label":"Critical rate"}}},
+  "bonuses": {"detected_furniture_ids":[],"furniture":[],"characters":[{"bond_bonus_active":false,"character_id":42,"name":"Synthetic","bond_stats":null}]}
+}

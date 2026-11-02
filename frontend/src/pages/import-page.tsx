@@ -45,7 +45,7 @@ export function ImportPage({ summary, locale, onImported }: ImportPageProps) {
     setError('')
     setScanLog([])
     try {
-      const next = await ScanAndImportAccount(locale, seconds) as AccountImportSummary
+      const next = await ScanAndImportAccount(locale, seconds)
       await onImported(next)
       setMessage(t('scan_finished', { characters: next.characters, pieces: next.modules + next.cartridges, arcs: next.weapons }))
     } catch (value) {
@@ -56,7 +56,7 @@ export function ImportPage({ summary, locale, onImported }: ImportPageProps) {
       else setError(t('scan_error_generic'))
     } finally {
       setScanning(false)
-      try { setScanLog(await LastScanLog() as ScanLogEvent[]) } catch { /* The scan error remains visible above. */ }
+      try { setScanLog(await LastScanLog()) } catch { /* The scan error remains visible above. */ }
     }
   }
 
@@ -66,17 +66,17 @@ export function ImportPage({ summary, locale, onImported }: ImportPageProps) {
     setMessage('')
     setError('')
     try {
-      const next = await RecoverAndScanAccount(locale, seconds) as AccountImportSummary
+      const next = await RecoverAndScanAccount(locale, seconds)
       await onImported(next)
       setMessage(t('scan_finished', { characters: next.characters, pieces: next.modules + next.cartridges, arcs: next.weapons }))
     } catch (value) {
       const reason = String(value).toLowerCase()
       setError(reason.includes('scan already running') ? t('scan_error_busy') : t('scan_recovery_failed'))
-      try { setScanLog(await LastScanLog() as ScanLogEvent[]) } catch { /* Keep the recovery error visible. */ }
+      try { setScanLog(await LastScanLog()) } catch { /* Keep the recovery error visible. */ }
     } finally {
       setScanning(false)
       setRecoveringPktmon(false)
-      try { setScanLog(await LastScanLog() as ScanLogEvent[]) } catch { /* The recovery result remains visible above. */ }
+      try { setScanLog(await LastScanLog()) } catch { /* The recovery result remains visible above. */ }
     }
   }
 
