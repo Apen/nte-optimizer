@@ -270,8 +270,8 @@ than silently presented as guaranteed damage.
 
 ## Cartridge main-stat simulation
 
-The desktop optimizer enables cartridge main-stat simulation by default. Disable
-the option in the search configuration to evaluate current equipment values.
+The desktop optimizer always evaluates cartridge main stats at maximum level.
+There is no toggle in the search configuration.
 Simulation uses the cartridge's item definition and quality-specific level-20
 curve in `data/game/equipment/decode.json`, before candidate evaluation and search.
 It affects cartridge selection, ranking, final stats, goals, and predicted damage.
@@ -282,5 +282,6 @@ instead of a guessed value.
 The equipped build comparison retains actual equipment stats. Imported inventory
 is never changed. Results mark the simulation and show the cartridge's actual and
 simulated levels when an upgrade is required. Saved build results retain this
-metadata. The option applies to the current desktop session; API callers opt in
+metadata. Upgrade notices and simulation details appear on the selected cartridge
+card when an upgrade is needed. API callers opt in
 with `simulate_cartridge_main_stats` in the weight overrides.

@@ -147,10 +147,8 @@
     "UnbalIntensityBase": "Intensité de rupture"
   },
   "ui": {
-    "simulate_cartridge_main_stats": "Simuler les attributs principaux des cartouches au niveau maximum",
-    "cartridge_simulation_help": "Inclut les cartouches non montées avec leur attribut principal au niveau 20. Les sous-stats actuelles sont conservées ; les futurs tirages ne sont pas prédits.",
-    "cartridge_simulation_result": "Simulation : les attributs principaux des cartouches sont évalués au niveau 20. Les scores, statistiques et dégâts supposent cette amélioration. Le build équipé conserve ses statistiques réelles ; les futurs tirages de sous-stats ne sont pas inclus.",
-    "cartridge_upgrade_required": "Attribut principal simulé au niv. {target} · À monter : niv. {current} → {target}",
+    "cartridge_simulation_detail": "Attribut principal simulé au niveau {target}. Les scores, statistiques et dégâts du build supposent cette amélioration. Les sous-stats actuelles sont conservées ; les futurs tirages ne sont pas prédits.",
+    "cartridge_upgrade_required": "À monter au niv. {target} · Niveau actuel : {current}",
     "arc": "Arc",
     "search_beta": "Expérimental",
     "search_fast": "Rapide",
