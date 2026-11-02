@@ -221,9 +221,9 @@ func loadCurrentCharacterStats(dataDir string, state *decoded.State, character d
 	if profile.CharacterID == 0 {
 		return nil, nil
 	}
-	if baseStats, ok, err := service.characterBaseStats(character.CharacterID, character.Level, character.BreakthroughLevel); err != nil {
+	if baseStats, err := service.requiredCharacterBaseStats(character.CharacterID, character.Level, character.BreakthroughLevel); err != nil {
 		return nil, err
-	} else if ok {
+	} else {
 		profile.BaseStats = baseStats
 	}
 	_, _, _, additional, _, err := service.resolveAccountContext(state, profile, language)

@@ -299,13 +299,11 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 		additional = arcOption.Additional
 	}
 	if currentCharacter != nil {
-		baseStats, ok, err := s.characterBaseStats(currentCharacter.CharacterID, currentCharacter.Level, currentCharacter.BreakthroughLevel)
+		baseStats, err := s.requiredCharacterBaseStats(currentCharacter.CharacterID, currentCharacter.Level, currentCharacter.BreakthroughLevel)
 		if err != nil {
 			return OptimizationResult{}, err
 		}
-		if ok {
-			profile.BaseStats = baseStats
-		}
+		profile.BaseStats = baseStats
 	}
 	var buildTarget *target.BuildTarget
 	if loaded, readErr := s.Target(profileID); readErr == nil {
@@ -316,6 +314,8 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 			}
 		}
 		buildTarget = &loaded
+	} else {
+		return OptimizationResult{}, fmt.Errorf("load target for profile %q: %w", profileID, readErr)
 	}
 	objectives, requiredGeometry := prepareObjectives(plan.solverMode, buildTarget, goalTunings, s.WeightOverrides, profile, setCatalog)
 	if mode == "beta" {

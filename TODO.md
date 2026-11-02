@@ -129,7 +129,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
 
 ## Focused module refactoring and performance
 
-- [ ] **CQ-002 — Fail explicitly when imported progression or objective data cannot be resolved.**
+- [x] **CQ-002 — Fail explicitly when imported progression or objective data cannot be resolved.**
   - **Priority / category:** P1; confirmed missing-input handling defect.
   - **Evidence:** `internal/app/project_data.go:113` returns `ok=false` for a
     missing base-stat tier. `optimizer_service.go:300` and

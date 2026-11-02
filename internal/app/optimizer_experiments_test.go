@@ -221,7 +221,7 @@ func TestRunSavedOptimizationExperimentsSharesSnapshotAndDoesNotPersistOverrides
 			inventory.Cartridges[index].SetID = "Suit5"
 		}
 	}
-	state := decoded.State{SchemaVersion: 2, Characters: []decoded.Character{{CharacterID: 1036, Name: "Zankou", Level: 80, AwakenLevel: 1}}}
+	state := decoded.State{SchemaVersion: 2, Characters: []decoded.Character{{CharacterID: 1036, Name: "Zankou", Level: 80, BreakthroughLevel: 6, AwakenLevel: 1}}}
 	if err := writeAccountData(dir, inventory, state); err != nil {
 		t.Fatal(err)
 	}

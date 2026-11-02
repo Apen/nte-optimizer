@@ -1,10 +1,20 @@
 package app
 
 import (
+	"nte-optimizer/internal/decoded"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
+
+func TestMissingImportedTierDoesNotUseRecommendationDefaults(t *testing.T) {
+	c := decoded.Character{CharacterID: 1036, Level: 999, BreakthroughLevel: 6}
+	_, err := loadCurrentCharacterStats(filepath.Join("..", "..", "data"), &decoded.State{Characters: []decoded.Character{c}}, c, nil, nil, "en")
+	if err == nil || !strings.Contains(err.Error(), `stats["1036"]["999:6"]`) {
+		t.Fatalf("missing tier not identified: %v", err)
+	}
+}
 
 func TestLoadCharactersDefaultsGridWithoutConsoleTraits(t *testing.T) {
 	dataDir := t.TempDir()

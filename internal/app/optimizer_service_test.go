@@ -95,7 +95,7 @@ func TestOptimizerServiceLocalizesEquippedWeapon(t *testing.T) {
 	service := OptimizerService{DataDir: filepath.Join("..", "..", "data")}
 	weaponID := decoded.NetID{Slot: 1, Serial: 2}
 	state := &decoded.State{
-		Characters: []decoded.Character{{CharacterID: 1036, ForkNetID: &weaponID}},
+		Characters: []decoded.Character{{CharacterID: 1036, Level: 80, BreakthroughLevel: 6, ForkNetID: &weaponID}},
 		Weapons:    []decoded.Weapon{{ID: weaponID, ForkID: "fork_DemonBlade"}},
 	}
 	result, err := service.optimize(context.Background(), nte.Inventory{}, "zankou", state, false, "en", "score", nil)

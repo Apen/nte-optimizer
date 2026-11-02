@@ -122,6 +122,17 @@ func (s OptimizerService) characterBaseStats(characterID, level, breakthrough in
 	return cloneWeights(stats), ok, nil
 }
 
+func (s OptimizerService) requiredCharacterBaseStats(characterID, level, breakthrough int) (map[string]float64, error) {
+	stats, ok, err := s.characterBaseStats(characterID, level, breakthrough)
+	if err != nil {
+		return nil, err
+	}
+	if !ok {
+		return nil, fmt.Errorf("data/game/characters/base_stats.json: missing stats[%q][%q]", fmt.Sprint(characterID), fmt.Sprintf("%d:%d", level, breakthrough))
+	}
+	return stats, nil
+}
+
 func (s OptimizerService) loadCharacterBaseStats() (characterBaseStatsCatalog, error) {
 	load := func() (characterBaseStatsCatalog, error) {
 		var catalog characterBaseStatsCatalog
