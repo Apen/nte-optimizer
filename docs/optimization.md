@@ -14,21 +14,40 @@ For each character, the application combines:
 4. module main and secondary stats;
 5. cartridge stats and activated two-piece or four-piece set bonuses;
 6. the character console trait for the relevant module area;
-7. optional values from `account_overrides.json`.
+7. optional values from `account_overrides.json`;
+8. automatically applied furniture and per-character bond bonuses from the
+   latest imported account and the corresponding game-data catalogs.
 
-The static `data/game/housing/special_furniture_modifiers.json` catalog lists
-possible special-furniture effects. The character state view may show a
-possible shared effect when its value matches the same panel-to-model residual
-for at least 75% of two or more characters marked as loaded during the latest
-login scan. The diagnostic currently recognizes unconditional additive ATK,
-DEF, and CRIT DMG modifiers; it allows a one-point tolerance for flat panel
-stats and `0.001` for decimal percentage stats. Tied modifier ranks are
-omitted. This is a diagnostic inference, not a decoded furniture placement or
-activation state. It is never added to calculated stats or optimizer scores.
+The Account Buffs page and the builder use the same backend selection. Furniture
+progression levels come from `FurnitureActivateStates`; their values are resolved
+through `data/game/housing/special_furniture_modifiers.json`. Each supported
+observed progression contributes one tier, shared by all projected deployed
+characters. Duplicate observations are counted once, conflicting levels are
+rejected, and a missing tier in a supported progression is reported explicitly.
 
-The imported bond level is shown in the character state. It is not added as a
-calculated stat source: the current import does not distinguish a bond effect
-from values already represented in the character's observed panel stats.
+Characters with a scanned bond level of at least 10 receive their own cataloged
+bonus from `data/game/characters/bond_bonuses.json`. Bond-stage flags remain
+available as observations; they do not gate the selected level-10 bonus.
+These rules deliberately assume the displayed bonuses are active for deployed
+builds. They do not claim that the scanner has independently decoded furniture
+activation or bond reward claiming.
+
+The bonuses enter search inputs, objectives, final stats, damage estimates, and
+the reconstructed equipped build as `account_furniture` and `account_bond`.
+They survive Arc selection and are included exactly once in saved results. They
+do not add equipment-quality points or alter raw scanned panel observations.
+Overlapping manual panel calibrations are rejected to prevent double counting.
+
+`account_buffs.json` and its old confirmation API are no longer used. An old
+file may remain in a user workspace, but it cannot gate, replace, or duplicate
+scan-derived bonuses. A new import replaces the active selection; previously
+saved optimization snapshots remain historical and must be regenerated to use
+newly imported values.
+
+The static furniture catalog can also support diagnostics based on repeated
+panel-to-model residuals. Such residual suggestions remain diagnostic; only the
+imported progressions and the level-10 bond policy select calculation inputs.
+Matching the visible menu stats does not prove all conditional combat effects.
 
 Effects requiring a rotation, target state, stack count, or other combat
 condition remain separate when the data supports that distinction. The normal
@@ -65,6 +84,14 @@ NTE does not use random substat roll ranges for modules: for a given module
 size, a particular substat always contributes the same amount. The application
 therefore does not present a fictional roll-quality percentage. It measures how
 relevant the effective stats of a piece are to the selected character strategy.
+
+Modules at level 0 retain their serialized secondary attributes for inspection,
+but those attributes are inactive. They do not contribute to relevance scores,
+final stats, objective feasibility, damage, search bounds, or cached statistical
+states. Main attributes and console-trait geometry contributions still apply.
+Equipment cards label these secondary attributes as inactive using the backend's
+`sub_stats_active` flag; existing account snapshots are handled without a rescan.
+This rule does not change cartridges or infer intermediate module unlock levels.
 
 The amount still matters because two-, three-, and four-cell modules contribute
 different fixed amounts while consuming different areas of the console. The

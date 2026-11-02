@@ -64,12 +64,60 @@ missing, fix and republish the generated locale source.
 Console trait descriptions are display text only. Their numeric stat values
 remain sourced from `data/game/equipment/console_traits.json` for optimization.
 
-Special-furniture progression labels are exposed for display and diagnostics.
-They do not identify a concrete furniture item or prove its activation or level,
-so they must not be applied to character stats without that runtime evidence.
-The scanner can decode owned furniture items from the general resource inventory,
-but it does not currently decode furniture placement or active special-furniture
-levels. Unreal record type names alone are not evidence of account state.
+Special-furniture progression levels and per-character bond levels are imported
+account observations. The furniture modifier catalog includes `progression_id`
+and `level`, resolved by the datamine generator through its progression
+configuration. The application maps scanned levels to those catalog records
+without hardcoded furniture-to-stat exceptions.
+
+The builder treats all supported furniture bonuses displayed on Account Buffs
+as active for deployed characters, and applies each displayed level-10 bond
+bonus to its corresponding character. The informational page and calculations
+share the same backend eligibility rules. Manual `account_buffs.json`
+confirmations are obsolete. The scanner still does not independently establish
+furniture placement, activation flags, or bond reward claiming; assuming the
+selected bonuses active is an explicit application policy, not decoded evidence.
+
+## Observed character panels
+
+Detailed panels come from replicated character attribute blocks, separately from
+the saved roster HP values. The scanner reads the observed encoded field handles
+instead of assuming fixed positions: omitted cycle values, independently omitted
+base/current members, and additional elemental fields can change the layout.
+It requires a consistent HP anchor and validated required fields before attaching
+a panel. Missing cycle fields and ambiguous elemental bonuses are omitted from
+the export rather than presented as measured zero values.
+
+A character blueprint observed during login is not proof that every panel field
+was captured, nor an authoritative team-selection record. Characters without a
+recognized replicated panel retain their saved HP only. Those values must not be
+treated as a complete final-stat reference.
+
+The non-deployed character menu can omit Arc attributes, Arc passive effects,
+and cartridge set effects even when the account record links that equipment to
+the character. Keep that menu state separate from a projected deployed build;
+do not remove equipped Arc or set contributions from optimization merely to
+match an inactive menu. Compare values at the precision actually displayed by
+the game, and verify conditional effects separately. Agreement on the visible
+attributes does not establish correctness for unobserved attributes or combat
+states.
+
+### Reconciling extracted effect curves
+
+An extracted curve, a display description, and a runtime effect can disagree
+across game versions. Resolve discrepancies in the datamine source and republish
+the generated catalogs and manifest; never add a character-specific correction
+to Go or React.
+
+The published Prism catalog uses `CT_ForkBuff.buff_Prism_CritUp` values of
+15/18/21/24/27%, matching the public extracted data at the pinned
+[NTE_Assets revision](https://github.com/Waifus-Grace/NTE_Assets/blob/1816e237ffe9edf687dd6942d028e89cce121381/DataTable/Fork/CT_ForkBuff.json)
+and [NTEData revision](https://github.com/555me/NTEData/blob/cf2508dc39687aab2e08ec62d6eb86fe957a9962/DataTable/Fork/CT_ForkBuff.json)
+revisions. The rank-one value of 15% agrees with the observed panel comparison.
+The published `buff_Prism_LakshanaUp` values are 20/25/30/35/40%. Earlier local
+data used 16/20/24/28/32% for both curves. Keep calculated passives and displayed
+parameters consistent across all five ranks, and prevent source overrides from
+restoring the earlier values during regeneration.
 
 ## Recommendations
 
