@@ -96,6 +96,12 @@ recalculates stats for new builds. Received panels serve as comparison evidence;
 they are not reusable base stats and must not be added to equipment bonuses.
 
 Detailed panels come from replicated character attribute blocks, separately from
+the roster. Panel association rejects equal-HP roster collisions and conflicting
+panels rather than assigning the first match. A verified actor-to-roster owner
+contract is still missing; unique-HP association remains supporting evidence,
+not proof of entity ownership. No owner GUID is inferred from unexplained bytes.
+
+Attribute values are decoded separately from
 the saved roster HP values. The scanner reads the observed encoded field handles
 instead of assuming fixed positions: omitted cycle values, independently omitted
 base/current members, and additional elemental fields can change the layout.

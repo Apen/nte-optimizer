@@ -103,14 +103,7 @@ func decodeCharacterDomain(report *udpReport, rawPayloads [][]byte, streams []in
 	attachBondLevels(report.Characters, completed)
 	equipmentCatalog, _ := loadEquipmentCatalog(equipmentCatalogPath)
 	attachObservedActiveAwakenings(report.Characters, report.ExportNames, equipmentCatalog)
-	for index := range report.Characters {
-		for _, message := range completed {
-			if stats, ok := parseCharacterPanelStats(message.data, message.bits, report.Characters[index].MaxHP); ok {
-				report.Characters[index].PanelStats = &stats
-				break
-			}
-		}
-	}
+	attachCharacterPanels(report.Characters, completed)
 	attachEquipmentPanelStats(report.Characters, report.Items)
 }
 
