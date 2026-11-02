@@ -63,7 +63,7 @@ It runs:
 - a read-only `gofmt` check of tracked Go sources;
 - `go vet ./...`;
 - `go mod tidy -diff`;
-- `staticcheck v0.8.1`;
+- `staticcheck v0.8.2`;
 - `govulncheck v1.8.0`;
 - all Go tests and production-data contract tests;
 - Vitest frontend tests;

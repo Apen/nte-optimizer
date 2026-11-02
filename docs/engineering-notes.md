@@ -27,7 +27,7 @@ The current local release gate verifies:
 - frontend Vitest tests;
 - TypeScript and Vite production build;
 - `go vet` and clean module metadata;
-- `staticcheck v0.8.1`;
+- `staticcheck v0.8.2`;
 - `govulncheck v1.8.0`;
 - Windows scanner and desktop compilation;
 - portable archive contents, checksum, scanner startup, and desktop startup.

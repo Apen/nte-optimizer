@@ -3,7 +3,7 @@ param()
 
 $ErrorActionPreference = "Stop"
 $projectDir = Split-Path -Parent $PSScriptRoot
-$staticcheckVersion = "v0.8.1"
+$staticcheckVersion = "v0.8.2"
 $govulncheckVersion = "v1.8.0"
 
 Push-Location $projectDir

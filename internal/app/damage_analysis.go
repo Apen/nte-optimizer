@@ -13,10 +13,6 @@ import (
 	"nte-optimizer/internal/optimizer"
 )
 
-func (s OptimizerService) localizedDamageAnalysis(character *decoded.Character, build optimizer.StatSummary, current *optimizer.StatSummary, language string) *DamageAnalysis {
-	return s.prepareDamageBatch(character, current, language).evaluate(build)
-}
-
 // damageBatch shares immutable inputs and the equipped baseline across alternatives.
 type damageBatch struct {
 	character  *decoded.Character
