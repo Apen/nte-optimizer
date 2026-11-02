@@ -8,6 +8,8 @@ $govulncheckVersion = "v1.8.0"
 
 Push-Location $projectDir
 try {
+    & (Join-Path $PSScriptRoot "check-format.ps1")
+
     Write-Host "[QUALITY] go vet" -ForegroundColor Cyan
     & go vet ./...
     if ($LASTEXITCODE -ne 0) { throw "go vet failed with exit code $LASTEXITCODE." }

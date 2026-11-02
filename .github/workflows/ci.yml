@@ -41,6 +41,10 @@ jobs:
         shell: pwsh
         run: ./scripts/build-app.ps1
 
+      - name: Check Go formatting
+        shell: pwsh
+        run: ./scripts/check-format.ps1
+
       - name: Check Go module files
         run: go mod tidy -diff
 

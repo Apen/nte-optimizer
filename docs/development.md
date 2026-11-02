@@ -60,6 +60,7 @@ The full local quality gate is:
 
 It runs:
 
+- a read-only `gofmt` check of tracked Go sources;
 - `go vet ./...`;
 - `go mod tidy -diff`;
 - `staticcheck v0.8.1`;

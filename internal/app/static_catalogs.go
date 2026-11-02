@@ -2,7 +2,6 @@ package app
 
 import (
 	"maps"
-	"nte-optimizer/internal/scoring"
 	"sync"
 
 	"nte-optimizer/internal/datafiles"
@@ -10,6 +9,7 @@ import (
 	"nte-optimizer/internal/equipment"
 	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/nte"
+	"nte-optimizer/internal/scoring"
 )
 
 // Static catalogs belong to one service/data directory. Account observations
