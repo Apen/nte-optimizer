@@ -19,6 +19,7 @@ type characterCatalog struct {
 	Characters map[string]characterDefinition `json:"characters"`
 }
 type characterItem struct {
+	BondStageFlags                []bool                  `json:"bondStageFlags,omitempty"`
 	NetID                         itemNetID               `json:"netId"`
 	CharacterID                   uint32                  `json:"characterId"`
 	Name                          string                  `json:"name"`
@@ -40,20 +41,22 @@ type characterItem struct {
 }
 
 type characterPanelStats struct {
-	BaseHP            float32 `json:"baseHp"`
-	BaseAttack        float32 `json:"baseAttack"`
-	BaseDefense       float32 `json:"baseDefense"`
-	MaxHP             float32 `json:"maxHp"`
-	Attack            float32 `json:"attack"`
-	Defense           float32 `json:"defense"`
-	Endurance         float32 `json:"endurance"`
-	CritRate          float32 `json:"critRate"`
-	CritDamage        float32 `json:"critDamage"`
-	ChargeEfficiency  float32 `json:"chargeEfficiency"`
-	CycleIntensity    float32 `json:"cycleIntensity"`
-	BreakIntensity    float32 `json:"breakIntensity"`
-	UniversalDMGBonus float32 `json:"universalDamageBonus"`
-	ElementalDMGBonus float32 `json:"elementalDamageBonus"`
+	BaseHP               float32 `json:"baseHp"`
+	BaseAttack           float32 `json:"baseAttack"`
+	BaseDefense          float32 `json:"baseDefense"`
+	MaxHP                float32 `json:"maxHp"`
+	Attack               float32 `json:"attack"`
+	Defense              float32 `json:"defense"`
+	Endurance            float32 `json:"endurance"`
+	CritRate             float32 `json:"critRate"`
+	CritDamage           float32 `json:"critDamage"`
+	ChargeEfficiency     float32 `json:"chargeEfficiency"`
+	CycleIntensity       float32 `json:"cycleIntensity"`
+	HasCycleIntensity    bool    `json:"-"`
+	BreakIntensity       float32 `json:"breakIntensity"`
+	UniversalDMGBonus    float32 `json:"universalDamageBonus"`
+	ElementalDMGBonus    float32 `json:"elementalDamageBonus"`
+	HasElementalDMGBonus bool    `json:"-"`
 }
 
 func bitFloat32(data []byte, bitLen, off int) (float32, bool) {
@@ -70,94 +73,124 @@ func bitFloat32(data []byte, bitLen, off int) (float32, bool) {
 func sameFloat(a, b float32) bool { return math.Float32bits(a) == math.Float32bits(b) }
 
 // parseCharacterPanelStats recognizes the replicated HTCharacterAttributeSet.
-// Each replicated float is preceded by an 8-bit field handle, hence the stable
-// 40-bit stride. Some unchanged base/current members are omitted independently,
-// so both observed layouts (paired and single cycle intensity) are accepted.
+// The observed attributes use 8-bit encoded field handles followed by float32
+// values. Base/current members can be independently omitted, so values must be
+// read by handle rather than by their position in the serialized sequence.
 func parseCharacterPanelStats(data []byte, bitLen int, maxHP float32) (characterPanelStats, bool) {
-	var totalOff = -1
-	for off := 0; off+200 <= bitLen; off++ {
-		v0, _ := bitFloat32(data, bitLen, off)
-		v1, _ := bitFloat32(data, bitLen, off+40)
-		v2, _ := bitFloat32(data, bitLen, off+80)
-		if sameFloat(v0, maxHP) && sameFloat(v1, maxHP) && sameFloat(v2, maxHP) {
-			totalOff = off
-			break
-		}
-	}
-	if totalOff < 0 {
+	if bitLen < 0 || bitLen > len(data)*8 {
 		return characterPanelStats{}, false
 	}
-	finalAttack, ok1 := bitFloat32(data, bitLen, totalOff+120)
-	endurance, ok2 := bitFloat32(data, bitLen, totalOff+160)
-	if !ok1 || !ok2 || finalAttack < 1 || finalAttack > 100000 || endurance < 1 || endurance > 10000 {
-		return characterPanelStats{}, false
-	}
-	start := totalOff - 6000
-	if start < 0 {
-		start = 0
-	}
-	for off := totalOff - 400; off >= start; off-- {
-		values := make([]float32, 24)
-		valid := true
-		for i := range values {
-			values[i], valid = bitFloat32(data, bitLen, off+i*40)
-			if !valid {
-				break
-			}
-		}
-		if !valid || values[0] < 5000 || values[0] > 50000 || !sameFloat(values[0], values[1]) {
+	for totalOff := 0; totalOff+200 <= bitLen; totalOff++ {
+		v0, _ := bitFloat32(data, bitLen, totalOff)
+		if !sameFloat(v0, maxHP) {
 			continue
 		}
-		magIndex, attackIndex := 2, 3
-		if sameFloat(values[4], values[5]) && values[4] >= 50 && values[4] <= 10000 {
-			// The two cycle values can differ, so their equality cannot
-			// determine whether the cycle field is paired.
-			magIndex, attackIndex = 3, 4
-		} else if !sameFloat(values[3], values[4]) {
+		v1, _ := bitFloat32(data, bitLen, totalOff+40)
+		v2, _ := bitFloat32(data, bitLen, totalOff+80)
+		if !sameFloat(v1, maxHP) || !sameFloat(v2, maxHP) {
 			continue
 		}
-		critIndex := attackIndex + 2
-		critDamageIndex := critIndex + 2
-		chargeIndex := critDamageIndex + 2
-		universalIndex := chargeIndex + 4
-		defenseIndex := universalIndex + 2
-		elementalBonus := float32(0)
-		if defenseIndex+1 >= len(values) || values[defenseIndex] < 50 || values[defenseIndex] > 10000 || !sameFloat(values[defenseIndex], values[defenseIndex+1]) {
-			// A non-zero elemental DMG pair is serialized between universal
-			// damage and defense. It is omitted entirely when it is zero.
-			if defenseIndex+1 >= len(values) || !sameFloat(values[defenseIndex], values[defenseIndex+1]) || values[defenseIndex+1] < 0 || values[defenseIndex+1] > 10 {
+		finalAttack, _ := bitFloat32(data, bitLen, totalOff+120)
+		endurance, _ := bitFloat32(data, bitLen, totalOff+160)
+		if !validPanelFloat(finalAttack, 1, 100000) || !validPanelFloat(endurance, 1, 10000) {
+			continue
+		}
+		for off := totalOff - 400; off >= max(8, totalOff-6000); off-- {
+			stats, ok := readPanelAttributeBlock(data, bitLen, off, totalOff)
+			if !ok {
 				continue
 			}
-			elementalBonus = values[defenseIndex+1]
-			defenseIndex += 2
+			stats.MaxHP = maxHP
+			stats.Attack = finalAttack
+			stats.Endurance = endurance
+			return stats, true
 		}
-		if defenseIndex+3 >= len(values) || !sameFloat(values[attackIndex], values[attackIndex+1]) || !sameFloat(values[defenseIndex], values[defenseIndex+1]) {
-			continue
-		}
-		baseAttack, baseDefense := values[attackIndex], values[defenseIndex]
-		critRate, critDamage := values[critIndex+1], values[critDamageIndex+1]
-		charge, universal := values[chargeIndex+1], values[universalIndex+1]
-		if baseAttack < 50 || baseAttack > 10000 || baseDefense < 50 || baseDefense > 10000 || critRate < 0 || critRate > 5 || critDamage < 0.1 || critDamage > 10 || charge < 0.1 || charge > 10 || universal < 0 || universal > 10 {
-			continue
-		}
-		defUp, defAdd := float32(0), values[defenseIndex+2]
-		if defenseIndex+5 < len(values) && sameFloat(values[defenseIndex+2], values[defenseIndex+3]) && values[defenseIndex+2] >= 0 && values[defenseIndex+2] < 1 {
-			defUp = values[defenseIndex+3]
-			defAdd = values[defenseIndex+4]
-		}
-		if defAdd < 0 || defAdd > 10000 {
-			continue
-		}
-		return characterPanelStats{
-			BaseHP: values[0], BaseAttack: baseAttack, BaseDefense: baseDefense,
-			MaxHP: maxHP, Attack: finalAttack, Defense: baseDefense + float32(math.Floor(float64(baseDefense*defUp+defAdd)+1e-6)), Endurance: endurance,
-			CritRate: critRate, CritDamage: critDamage, ChargeEfficiency: charge,
-			CycleIntensity: values[magIndex], UniversalDMGBonus: universal, ElementalDMGBonus: elementalBonus,
-		}, true
 	}
 	return characterPanelStats{}, false
 }
 
+func panelFieldHandle(data []byte, bitLen, off int) (byte, bool) {
+	if off < 0 || off+8 > bitLen {
+		return 0, false
+	}
+	var value byte
+	for bit := 0; bit < 8; bit++ {
+		value |= ((data[(off+bit)/8] >> uint((off+bit)%8)) & 1) << uint(bit)
+	}
+	return value, true
+}
+
+func validPanelFloat(value, minimum, maximum float32) bool {
+	return !math.IsNaN(float64(value)) && !math.IsInf(float64(value), 0) && value >= minimum && value <= maximum
+}
+
+func readPanelAttributeBlock(data []byte, bitLen, start, end int) (characterPanelStats, bool) {
+	first, ok := panelFieldHandle(data, bitLen, start-8)
+	if !ok || first != 2 {
+		return characterPanelStats{}, false
+	}
+	var values [256]float32
+	var present [256]bool
+	previous := byte(0)
+	for off := start; off+32 <= min(bitLen, end); off += 40 {
+		handle, ok := panelFieldHandle(data, bitLen, off-8)
+		if !ok || handle == 0 || handle&1 != 0 || handle <= previous {
+			break
+		}
+		value, ok := bitFloat32(data, bitLen, off)
+		if !ok || math.IsNaN(float64(value)) || math.IsInf(float64(value), 0) {
+			return characterPanelStats{}, false
+		}
+		values[handle] = value
+		present[handle] = true
+		previous = handle
+	}
+	// Encoded field handles are protocol identifiers, not offsets. In the
+	// observed attribute schema each pair is base/current: HP 2/4, cycle 30/32,
+	// ATK 42/44, CRIT 46/48, CRIT DMG 62/64, charge 70/72, general DMG 82/84,
+	// DEF 194/196, DEF percent 198/200 and flat DEF 202/204.
+	for _, handle := range []byte{2, 4, 42, 44, 48, 64, 72, 84, 194, 196} {
+		if !present[handle] {
+			return characterPanelStats{}, false
+		}
+	}
+	if !sameFloat(values[2], values[4]) || !sameFloat(values[42], values[44]) || !sameFloat(values[194], values[196]) {
+		return characterPanelStats{}, false
+	}
+	if !validPanelFloat(values[2], 1, 1000000) || !validPanelFloat(values[44], 1, 100000) || !validPanelFloat(values[196], 1, 100000) || !validPanelFloat(values[48], 0, 5) || !validPanelFloat(values[64], .1, 10) || !validPanelFloat(values[72], .1, 10) || !validPanelFloat(values[84], 0, 10) || !validPanelFloat(values[200], 0, 10) || !validPanelFloat(values[204], 0, 100000) || !validPanelFloat(values[32], 0, 100000) {
+		return characterPanelStats{}, false
+	}
+	if (present[30] && !present[32]) || (present[198] && !present[200]) || (present[202] && !present[204]) {
+		return characterPanelStats{}, false
+	}
+	stats := characterPanelStats{BaseHP: values[4], BaseAttack: values[44], BaseDefense: values[196], CritRate: values[48], CritDamage: values[64], ChargeEfficiency: values[72], CycleIntensity: values[32], UniversalDMGBonus: values[84], Defense: values[196] + float32(math.Floor(float64(values[196]*values[200]+values[204])+1e-6))}
+	stats.HasCycleIntensity = present[32]
+	// Multiple elemental attributes can be present simultaneously. The current
+	// scalar export cannot identify which applies to the character, so never
+	// pick one by its serialized position. Report a scalar only when the
+	// observed current elemental values agree.
+	elementalSet := false
+	// These three current-value field handles are directly observed in the
+	// captured elemental block. Other unknown fields are not interpreted.
+	for _, handle := range []byte{108, 132, 140} {
+		if !present[handle] {
+			continue
+		}
+		value := values[handle]
+		if !validPanelFloat(value, 0, 10) {
+			return characterPanelStats{}, false
+		}
+		if elementalSet && !sameFloat(stats.ElementalDMGBonus, value) {
+			stats.ElementalDMGBonus = 0
+			stats.HasElementalDMGBonus = false
+			break
+		}
+		stats.ElementalDMGBonus = value
+		stats.HasElementalDMGBonus = true
+		elementalSet = true
+	}
+	return stats, true
+}
 func attachEquipmentPanelStats(characters []characterItem, items []inventoryItem) {
 	byNetID := make(map[itemNetID]*characterPanelStats, len(characters))
 	for i := range characters {
@@ -173,7 +206,11 @@ func attachEquipmentPanelStats(characters []characterItem, items []inventoryItem
 		if stats == nil {
 			continue
 		}
-		for _, stat := range append(append([]inventoryStat(nil), item.MainStats...), item.SubStats...) {
+		subStats := item.SubStats
+		if item.Kind == "module" && item.Level == 0 {
+			subStats = nil
+		}
+		for _, stat := range append(append([]inventoryStat(nil), item.MainStats...), subStats...) {
 			if stat.Property == "UnbalIntensityBase" {
 				stats.BreakIntensity += stat.Value
 			}

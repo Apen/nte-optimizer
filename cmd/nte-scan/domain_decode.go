@@ -14,6 +14,7 @@ func decodeDomains(report *udpReport, packets []timedUDPPacket, completed []comp
 	decodeWeaponDomain(report, rawPayloads, streams, forkCatalogPath)
 	decodeResourceDomain(report, rawPayloads, streams, resourceCatalogPath)
 	attachModulePlacements(report, streams, catalogPath, characterCatalogPath)
+	decodeAccountObservations(report, completed)
 }
 
 func udpPayloads(packets []timedUDPPacket) [][]byte {

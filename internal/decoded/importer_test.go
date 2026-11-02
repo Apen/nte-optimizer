@@ -50,6 +50,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 			BreakthroughLevel int              `json:"breakthroughLevel"`
 			AwakenLevel       int              `json:"awakenLevel"`
 			BondLevel         *int             `json:"bondLevel,omitempty"`
+			BondStageFlags    []bool           `json:"bondStageFlags,omitempty"`
 			Skills            []CharacterSkill `json:"skills"`
 		} `json:"progression"`
 		Stats      CharacterStats      `json:"stats"`
@@ -66,6 +67,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	source.Progression.Level, source.Progression.BreakthroughLevel, source.Progression.AwakenLevel = 80, 6, 1
 	bondLevel := 10
 	source.Progression.BondLevel = &bondLevel
+	source.Progression.BondStageFlags = []bool{true, false}
 	source.Progression.Skills = []CharacterSkill{{AbilityID: "GA_Zankou_Skill", Category: "Ability.Skill", Level: 8}}
 	attack, defense, critRate, critDamage := 1748.125, 1005.0, .73, 2.304
 	cycle, universalDamage, elementalDamage := 172.0, .2, .1
@@ -87,7 +89,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 		t.Fatal(err)
 	}
 	character := got.State.Characters[0]
-	if character.AwakenLevel != 5 || character.ReportedAwakenLevel != 1 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
+	if character.AwakenLevel != 5 || character.ReportedAwakenLevel != 1 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.BondStageFlags) != 2 || !character.BondStageFlags[0] || character.BondStageFlags[1] || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
 		t.Fatalf("new character data was not preserved: %#v", character)
 	}
 	if character.Stats.Attack == nil || *character.Stats.Attack != attack || character.Stats.Defense == nil || *character.Stats.Defense != defense || character.Stats.CritDamage == nil || *character.Stats.CritDamage != critDamage || character.Stats.PanelBase == nil || character.Stats.PanelBase.Attack != 1230 || character.Stats.Source != "unreal_attribute_set_and_equipment" {
@@ -125,5 +127,24 @@ func writeFixture(t *testing.T, dir, name string, value any) {
 	}
 	if err := os.WriteFile(filepath.Join(dir, name), b, 0644); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestImportFurnitureObservationsRemainSeparateFromConfirmation(t *testing.T) {
+	dir := t.TempDir()
+	writeFixture(t, dir, "manifest.json", Manifest{Format: "nte-scan-output", FormatVersion: 3})
+	writeFixture(t, dir, "equipment.json", []Equipment{})
+	writeFixture(t, dir, "weapons.json", []Weapon{})
+	writeFixture(t, dir, "character.json", map[string]any{"format": "nte-scan-characters", "formatVersion": 3, "characters": []any{}, "furnitureLevels": []any{map[string]any{"progression_id": "SF_test", "level": 3}}})
+	result, err := ImportDirectory(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(result.State.FurnitureLevels) != 1 || result.State.FurnitureLevels[0].ProgressionID != "SF_test" || result.State.FurnitureLevels[0].Level != 3 {
+		t.Fatal("lost furniture observations")
+	}
+	writeFixture(t, dir, "character.json", map[string]any{"format": "nte-scan-characters", "formatVersion": 3, "characters": []any{}, "furnitureLevels": []any{map[string]any{"progression_id": "SF_test", "level": 0}}})
+	if _, err := ImportDirectory(dir); err == nil {
+		t.Fatal("accepted invalid furniture level")
 	}
 }

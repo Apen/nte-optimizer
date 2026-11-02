@@ -69,7 +69,9 @@ func TestParseCharacterPanelStats(t *testing.T) {
 	// Paired layout: HP, cycle, ATK, CRIT, CRIT DMG, charge,
 	// auxiliary value, universal DMG, auxiliary value, DEF, DEF%, DEF flat.
 	values := []float32{15514, 15514, 100, 100, 1230, 1230, .59, .75, 2.364, 2.364, 1, 1, 120, 120, .16, .16, .1, .1, 909, 909, .0525, .0525, 41, 41}
+	handles := []byte{2, 4, 30, 32, 42, 44, 46, 48, 62, 64, 70, 72, 78, 80, 82, 84, 138, 140, 194, 196, 198, 200, 202, 204}
 	for i, value := range values {
+		putPanelTestHandle(data, baseOff+i*40-8, handles[i])
 		putFloat(baseOff+i*40, value)
 	}
 	totalOff := 2500
@@ -97,7 +99,9 @@ func TestParseCharacterPanelStatsWithChangedCycleIntensity(t *testing.T) {
 	}
 	baseOff := 400
 	values := []float32{15514, 15514, 72, 172, 1230, 1230, .57, .73, 2.304, 2.304, 1, 1, 120, 120, .2, .2, .1, .1, 909, 909, .07, .07, 33, 33}
+	handles := []byte{2, 4, 30, 32, 42, 44, 46, 48, 62, 64, 70, 72, 78, 80, 82, 84, 138, 140, 194, 196, 198, 200, 202, 204}
 	for i, value := range values {
+		putPanelTestHandle(data, baseOff+i*40-8, handles[i])
 		putFloat(baseOff+i*40, value)
 	}
 	totalOff := 2500
@@ -125,7 +129,9 @@ func TestParseCharacterPanelStatsWithSingleCycleIntensity(t *testing.T) {
 	}
 	baseOff := 400
 	values := []float32{15514, 15514, 172, 1230, 1230, .57, .73, 2.304, 2.304, 1, 1, 120, 120, .2, .2, .1, .1, 909, 909, .07, .07, 33, 33}
+	handles := []byte{2, 4, 32, 42, 44, 46, 48, 62, 64, 70, 72, 78, 80, 82, 84, 138, 140, 194, 196, 198, 200, 202, 204}
 	for i, value := range values {
+		putPanelTestHandle(data, baseOff+i*40-8, handles[i])
 		putFloat(baseOff+i*40, value)
 	}
 	totalOff := 2500

@@ -16,6 +16,7 @@ import (
 
 	"nte-optimizer/internal/buildinfo"
 	"nte-optimizer/internal/datafiles"
+	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/scanlog"
 	scannerpcap "nte-optimizer/internal/scanner/pcap"
 	scannerunreal "nte-optimizer/internal/scanner/unreal"
@@ -25,6 +26,7 @@ type packet struct {
 	ts   float64
 	data []byte
 }
+
 type blockReport struct {
 	Frame           int      `json:"frame"`
 	CompressedBytes int      `json:"compressedBytes"`
@@ -48,43 +50,44 @@ type report struct {
 }
 
 type udpReport struct {
-	Flow                 string           `json:"flow"`
-	Packets              int              `json:"packets"`
-	PayloadBytes         int              `json:"payloadBytes"`
-	LargestPacket        int              `json:"largestPacket"`
-	PeakBurstBytes       int              `json:"peakBurstBytes100ms"`
-	PeakAtSeconds        float64          `json:"peakAtSeconds"`
-	Readable             []string         `json:"readableStrings,omitempty"`
-	UnrealPackets        int              `json:"unrealPackets"`
-	UnrealBunches        int              `json:"unrealBunches"`
-	PartialBunches       int              `json:"partialBunches"`
-	Channels             []uint32         `json:"channels,omitempty"`
-	Assemblies           int              `json:"reassembledMessages"`
-	AssemblyBytes        int              `json:"reassembledBytes"`
-	AssemblyHints        []string         `json:"reassembledHints,omitempty"`
-	UniqueAssemblies     int              `json:"uniqueReassembledMessages"`
-	UniqueAssemblyBytes  int              `json:"uniqueReassembledBytes"`
-	ExportNames          []string         `json:"exportNames,omitempty"`
-	ExportBunches        int              `json:"exportBunches"`
-	ExportParseSuccess   int              `json:"exportParseSuccess"`
-	InventoryGUIDs       []uint32         `json:"inventoryGuids,omitempty"`
-	InventoryPayloads    int              `json:"inventoryPayloads"`
-	InventoryBytes       int              `json:"inventoryPayloadBytes"`
-	RPC256               int              `json:"rpc256"`
-	RPC256Decoded        int              `json:"rpc256Decoded"`
-	RPC256Owners         []uint32         `json:"rpc256Owners,omitempty"`
-	InventoryProperties  []string         `json:"inventoryProperties,omitempty"`
-	InventoryGUIDHits    int              `json:"inventoryGuidBitHits"`
-	InventoryHitChannels []uint32         `json:"inventoryHitChannels,omitempty"`
-	AtkAddValues         []int            `json:"atkAddValues,omitempty"`
-	InventoryContainers  int              `json:"inventoryContainers"`
-	InventoryChildren    []string         `json:"inventoryChildren,omitempty"`
-	DecodedItems         int              `json:"decodedItems"`
-	Items                []inventoryItem  `json:"items,omitempty"`
-	Characters           []characterItem  `json:"characters,omitempty"`
-	Weapons              []weaponItem     `json:"weapons,omitempty"`
-	Resources            []resourceItem   `json:"resources,omitempty"`
-	CharacterProbes      []characterProbe `json:"characterProbes,omitempty"`
+	FurnitureLevels      []nte.FurnitureLevel `json:"furnitureLevels,omitempty"`
+	Flow                 string               `json:"flow"`
+	Packets              int                  `json:"packets"`
+	PayloadBytes         int                  `json:"payloadBytes"`
+	LargestPacket        int                  `json:"largestPacket"`
+	PeakBurstBytes       int                  `json:"peakBurstBytes100ms"`
+	PeakAtSeconds        float64              `json:"peakAtSeconds"`
+	Readable             []string             `json:"readableStrings,omitempty"`
+	UnrealPackets        int                  `json:"unrealPackets"`
+	UnrealBunches        int                  `json:"unrealBunches"`
+	PartialBunches       int                  `json:"partialBunches"`
+	Channels             []uint32             `json:"channels,omitempty"`
+	Assemblies           int                  `json:"reassembledMessages"`
+	AssemblyBytes        int                  `json:"reassembledBytes"`
+	AssemblyHints        []string             `json:"reassembledHints,omitempty"`
+	UniqueAssemblies     int                  `json:"uniqueReassembledMessages"`
+	UniqueAssemblyBytes  int                  `json:"uniqueReassembledBytes"`
+	ExportNames          []string             `json:"exportNames,omitempty"`
+	ExportBunches        int                  `json:"exportBunches"`
+	ExportParseSuccess   int                  `json:"exportParseSuccess"`
+	InventoryGUIDs       []uint32             `json:"inventoryGuids,omitempty"`
+	InventoryPayloads    int                  `json:"inventoryPayloads"`
+	InventoryBytes       int                  `json:"inventoryPayloadBytes"`
+	RPC256               int                  `json:"rpc256"`
+	RPC256Decoded        int                  `json:"rpc256Decoded"`
+	RPC256Owners         []uint32             `json:"rpc256Owners,omitempty"`
+	InventoryProperties  []string             `json:"inventoryProperties,omitempty"`
+	InventoryGUIDHits    int                  `json:"inventoryGuidBitHits"`
+	InventoryHitChannels []uint32             `json:"inventoryHitChannels,omitempty"`
+	AtkAddValues         []int                `json:"atkAddValues,omitempty"`
+	InventoryContainers  int                  `json:"inventoryContainers"`
+	InventoryChildren    []string             `json:"inventoryChildren,omitempty"`
+	DecodedItems         int                  `json:"decodedItems"`
+	Items                []inventoryItem      `json:"items,omitempty"`
+	Characters           []characterItem      `json:"characters,omitempty"`
+	Weapons              []weaponItem         `json:"weapons,omitempty"`
+	Resources            []resourceItem       `json:"resources,omitempty"`
+	CharacterProbes      []characterProbe     `json:"characterProbes,omitempty"`
 }
 
 type completedMessage struct {

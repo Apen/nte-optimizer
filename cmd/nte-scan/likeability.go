@@ -5,8 +5,9 @@ import "strconv"
 const likeabilityInfoType = "FLikeabilityInfo"
 
 type likeabilityRecord struct {
-	key   uint32
-	level int
+	key        uint32
+	level      int
+	stageFlags []bool
 }
 
 func currentCharacterIDForLikeabilityKey(key uint32) uint32 {
@@ -51,7 +52,8 @@ func parseLikeabilityRecords(data []byte, bitLen int) []likeabilityRecord {
 		if !ok || level > 10 {
 			continue
 		}
-		records = append(records, likeabilityRecord{key: uint32(key), level: int(level)})
+		flags, _ := readBondStageFlags(&reader)
+		records = append(records, likeabilityRecord{key: uint32(key), level: int(level), stageFlags: flags})
 	}
 	return records
 }
@@ -106,6 +108,7 @@ func attachBondLevels(characters []characterItem, messages []completedMessage) {
 	}
 
 	levels := make(map[uint32]int)
+	stages := map[uint32][]bool{}
 	for _, message := range messages {
 		if message.channel != 4 {
 			continue
@@ -114,6 +117,9 @@ func attachBondLevels(characters []characterItem, messages []completedMessage) {
 			characterID := currentCharacterIDForLikeabilityKey(record.key)
 			if characterIDs[characterID] {
 				levels[characterID] = record.level
+				if record.stageFlags != nil {
+					stages[characterID] = record.stageFlags
+				}
 			}
 		}
 	}
@@ -121,6 +127,7 @@ func attachBondLevels(characters []characterItem, messages []completedMessage) {
 	for index := range characters {
 		if level, ok := levels[characters[index].CharacterID]; ok {
 			characters[index].BondLevel = &level
+			characters[index].BondStageFlags = stages[characters[index].CharacterID]
 		}
 	}
 }

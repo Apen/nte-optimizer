@@ -30,6 +30,18 @@ func ExtractFrames(stream []byte) ([][]byte, error) {
 }
 
 func DecodeLZ4Block(input []byte) ([]byte, bool) {
+	return decodeLZ4Block(input, 0)
+}
+
+// DecodeLZ4BlockLimited bounds allocations for untrusted compressed properties.
+func DecodeLZ4BlockLimited(input []byte, limit int) ([]byte, bool) {
+	if limit <= 0 {
+		return nil, false
+	}
+	return decodeLZ4Block(input, limit)
+}
+
+func decodeLZ4Block(input []byte, limit int) ([]byte, bool) {
 	output := []byte{}
 	for offset := 0; offset < len(input); {
 		if zeroPadding(input[offset:]) {
@@ -43,6 +55,9 @@ func DecodeLZ4Block(input []byte) ([]byte, bool) {
 		}
 		offset = nextOffset
 		if offset+literalLength > len(input) {
+			return nil, false
+		}
+		if limit > 0 && literalLength > limit-len(output) {
 			return nil, false
 		}
 		output = append(output, input[offset:offset+literalLength]...)
@@ -63,6 +78,9 @@ func DecodeLZ4Block(input []byte) ([]byte, bool) {
 		}
 		matchLength, nextOffset, ok := extendedLength(input, offset, int(token&15))
 		if !ok {
+			return nil, false
+		}
+		if limit > 0 && matchLength+4 > limit-len(output) {
 			return nil, false
 		}
 		offset = nextOffset

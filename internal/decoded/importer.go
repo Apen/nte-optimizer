@@ -39,6 +39,7 @@ type characterExport struct {
 			BreakthroughLevel int              `json:"breakthroughLevel"`
 			AwakenLevel       int              `json:"awakenLevel"`
 			BondLevel         *int             `json:"bondLevel,omitempty"`
+			BondStageFlags    []bool           `json:"bondStageFlags,omitempty"`
 			Skills            []CharacterSkill `json:"skills"`
 		} `json:"progression"`
 		Stats      CharacterStats      `json:"stats"`
@@ -159,6 +160,24 @@ func ImportDirectory(dir string) (ImportResult, error) {
 	}
 	warnings := validateWeaponLinks(characters, weapons)
 	state := State{SchemaVersion: 2, ImportedAt: time.Now().UTC(), SourceGeneratedAt: manifest.GeneratedAt.UTC(), Account: account, Characters: characters, Weapons: weapons, Resources: resources.Data}
+	var observations struct {
+		FurnitureLevels []nte.FurnitureLevel `json:"furnitureLevels"`
+	}
+	if _, err := os.Stat(filepath.Join(dir, "character.json")); err == nil {
+		if err := read(filepath.Join(dir, "character.json"), &observations); err != nil {
+			return ImportResult{}, err
+		}
+		seen := map[string]bool{}
+		for _, level := range observations.FurnitureLevels {
+			if level.ProgressionID == "" || level.Level < 1 || level.Level > 100 || seen[level.ProgressionID] {
+				return ImportResult{}, fmt.Errorf("invalid or duplicate furniture level observation")
+			}
+			seen[level.ProgressionID] = true
+		}
+		state.FurnitureLevels = observations.FurnitureLevels
+	} else if !os.IsNotExist(err) {
+		return ImportResult{}, err
+	}
 	return ImportResult{Inventory: inv, State: state, AssignedEquipment: assigned, Warnings: warnings}, nil
 }
 
@@ -199,6 +218,10 @@ func readCharacters(dir string) ([]Character, map[string]EquipmentPlacement, []W
 			Level: source.Progression.Level, BreakthroughLevel: source.Progression.BreakthroughLevel,
 			AwakenLevel: awakenLevel, BondLevel: source.Progression.BondLevel, ReportedAwakenLevel: source.Progression.AwakenLevel, Skills: source.Progression.Skills,
 			Stats: source.Stats, SavedState: source.SavedState, ObservedAtLogin: source.ObservedAtLogin,
+			BondStageFlags: source.Progression.BondStageFlags,
+		}
+		if len(character.BondStageFlags) > 10 {
+			return nil, nil, nil, fmt.Errorf("invalid bond stage observations")
 		}
 		if source.Equipment.Weapon != nil {
 			weapon := *source.Equipment.Weapon

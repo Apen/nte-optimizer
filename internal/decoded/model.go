@@ -2,6 +2,7 @@ package decoded
 
 import (
 	"fmt"
+	"nte-optimizer/internal/nte"
 	"time"
 )
 
@@ -121,6 +122,7 @@ type Character struct {
 	BreakthroughLevel   int                 `json:"breakthroughLevel"`
 	AwakenLevel         int                 `json:"awakenLevel"`
 	BondLevel           *int                `json:"bondLevel,omitempty"`
+	BondStageFlags      []bool              `json:"bondStageFlags,omitempty"`
 	ReportedAwakenLevel int                 `json:"reportedAwakenLevel,omitempty"`
 	ForkNetID           *NetID              `json:"forkNetId,omitempty"`
 	Skills              []CharacterSkill    `json:"skills,omitempty"`
@@ -148,6 +150,7 @@ type Resource struct {
 }
 
 type State struct {
+	FurnitureLevels   []nte.FurnitureLevel       `json:"furniture_levels,omitempty"`
 	SchemaVersion     int                        `json:"schema_version"`
 	ImportedAt        time.Time                  `json:"imported_at"`
 	SourceGeneratedAt time.Time                  `json:"source_generated_at"`

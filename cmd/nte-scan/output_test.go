@@ -23,7 +23,7 @@ func TestWriteOutputDirMergesCharacterExports(t *testing.T) {
 	characterID := uint32(1036)
 	weaponID := itemNetID{Solt: 30, Serial: 40}
 	report := report{Input: "capture.pcapng", UDP: udpReport{
-		Characters: []characterItem{{CharacterID: characterID, Name: "zankou", NetID: characterNetID, ForkNetID: &weaponID, PanelStats: &characterPanelStats{ElementalDMGBonus: .1}}},
+		Characters: []characterItem{{CharacterID: characterID, Name: "zankou", NetID: characterNetID, ForkNetID: &weaponID, PanelStats: &characterPanelStats{ElementalDMGBonus: .1, HasElementalDMGBonus: true}}},
 		Weapons:    []weaponItem{{ID: weaponID, ForkID: "fork_test", EquippedCharacterID: &characterID}},
 		Items: []inventoryItem{
 			{ID: itemNetID{Solt: 50, Serial: 60}, Kind: "core", CharacterNetID: &characterNetID},
