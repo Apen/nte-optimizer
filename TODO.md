@@ -258,7 +258,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
 
 ## Frontend contracts and lifecycle
 
-- [ ] **CQ-009 — Isolate profile drafts, pending saves, and result request identity.**
+- [x] **CQ-009 — Isolate profile drafts, pending saves, and result request identity.**
   - **Priority / category:** P1; concrete loss path plus asynchronous lifecycle debt.
   - **Evidence:** `frontend/src/App.tsx:128` uses one debounce timer for all
     profiles. Profile changes do not flush that pending draft. Another edit,
