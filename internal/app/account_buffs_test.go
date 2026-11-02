@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"reflect"
+	"sort"
 	"strings"
 	"testing"
 
@@ -45,16 +46,31 @@ func TestInformationalBonusesIgnoreCalculationCalibration(t *testing.T) {
 }
 
 func BenchmarkAccountBuffPage(b *testing.B) {
+	profiles, err := NewOptimizerService(filepath.Join("..", "..", "data")).loadCharacters()
+	if err != nil {
+		b.Fatal(err)
+	}
+	known := map[int]bool{}
+	for _, profile := range profiles {
+		known[profile.CharacterID] = true
+	}
+	ids := make([]int, 0, len(known))
+	for id := range known {
+		ids = append(ids, id)
+	}
+	sort.Ints(ids)
+	if len(ids) < 12 {
+		b.Fatal("benchmark requires twelve cataloged characters")
+	}
 	for _, count := range []int{1, 12} {
 		b.Run(fmt.Sprint(count), func(b *testing.B) {
 			dir := b.TempDir()
 			if err := ensureWorkspace(dir); err != nil {
 				b.Fatal(err)
 			}
-			state := scannedBuffFixture()
-			state.Characters = nil
+			state := decoded.State{}
 			for i := 0; i < count; i++ {
-				state.Characters = append(state.Characters, decoded.Character{CharacterID: 1000 + i, Level: 80, BreakthroughLevel: 6})
+				state.Characters = append(state.Characters, decoded.Character{CharacterID: ids[i], Level: 80, BreakthroughLevel: 6})
 			}
 			if err := writeAccountData(dir, nte.Inventory{}, state); err != nil {
 				b.Fatal(err)

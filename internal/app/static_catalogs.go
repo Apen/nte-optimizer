@@ -3,9 +3,9 @@ package app
 import (
 	"fmt"
 	"maps"
-	"nte-optimizer/internal/apperrors"
 	"sync"
 
+	"nte-optimizer/internal/apperrors"
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
 	"nte-optimizer/internal/equipment"
