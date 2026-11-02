@@ -17,7 +17,6 @@ const catalog: LocalizationCatalog = {
     panel_bonus_comparison: 'Panel: {panel} · Model: {calculated}',
     housing_modifier_evidence: 'Matched on {matching} of {observed} loaded characters',
     max_effects_value: 'Max effects: {value}',
-    estimated_stats: 'Some stat sources are missing',
   },
   stats: {
     AtkBase: 'Base ATK', AtkFinal: 'ATK', AtkUp: 'ATK %', AtkAdd: 'Flat ATK',

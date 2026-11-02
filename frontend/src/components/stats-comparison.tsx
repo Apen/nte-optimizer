@@ -5,7 +5,7 @@ import type { GoalProgress, Result } from '../types'
 
 export function StatsComparison({ result }: { result: Result }) {
   if (!result.goals?.length) return null
-  return <section className="grid gap-4">{result.stats.completeness === 'partial' && <div className="flex justify-end"><span className="rounded-full bg-amber-950 px-3 py-1 text-xs font-bold text-amber-300">{t('estimate')}</span></div>}<div className="overflow-x-auto rounded-xl border border-slate-800"><div className="min-w-[700px]"><div className="comparison-grid bg-slate-950/80 text-[10px] font-black uppercase tracking-wider text-slate-500"><span>{t('statistic')}</span><span>{t('in_game')}</span><span>{t('with_build')}</span><span>{t('objective_label')}</span><span>{t('result')}</span></div>{result.goals.map((goal, index) => <ComparisonRow key={goal.property_id} goal={goal} current={result.current_goals?.[index]} conditional={result.conditional_goals?.[index]} currentConditional={result.current_conditional_goals?.[index]} />)}</div></div></section>
+  return <section className="grid gap-4"><div className="overflow-x-auto rounded-xl border border-slate-800"><div className="min-w-[700px]"><div className="comparison-grid bg-slate-950/80 text-[10px] font-black uppercase tracking-wider text-slate-500"><span>{t('statistic')}</span><span>{t('in_game')}</span><span>{t('with_build')}</span><span>{t('objective_label')}</span><span>{t('result')}</span></div>{result.goals.map((goal, index) => <ComparisonRow key={goal.property_id} goal={goal} current={result.current_goals?.[index]} conditional={result.conditional_goals?.[index]} currentConditional={result.current_conditional_goals?.[index]} />)}</div></div></section>
 }
 
 function signedStat(property: string, value: number) {

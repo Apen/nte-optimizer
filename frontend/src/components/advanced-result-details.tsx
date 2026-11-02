@@ -37,7 +37,6 @@ export function AdvancedResultDetails({ result }: { result: Result }) {
           <Detail title={t('solution_quality_detail')} value={result.solution.complete ? t('best_solution_confirmed_detail') : t('best_solution_found_detail')} />
           <Detail title={t('protected_pieces_detail')} value={result.include_equipped ? t('protection_ignored_detail') : String(result.excluded_equipped)} />
         </div>
-        {result.stats.completeness === 'partial' && <p className="rounded-lg border border-amber-900/60 bg-amber-950/30 p-3 text-xs text-amber-200">{t('estimated_stats')}</p>}
         <div className="grid gap-2">
           {visibleSources.map(([source, values]) => <div className="grid gap-2 rounded-lg bg-slate-950 p-3 text-xs md:grid-cols-[190px_1fr]" key={source}>
             <b>{sourceNames[source] || t('other_bonus_fallback')}</b>
