@@ -31,6 +31,38 @@ func TestPrepareArcSelectionUsesStrongestOwnedCopy(t *testing.T) {
 	}
 }
 
+func TestPrepareArcSelectionRespectsReservedCopies(t *testing.T) {
+	service := NewOptimizerService(filepath.Join("..", "..", "data"))
+	state := &decoded.State{Weapons: []decoded.Weapon{
+		{ID: decoded.NetID{Slot: 4, Serial: 1}, ForkID: "fork_DemonBlade", Level: 50, Breakthrough: 1, Star: 1},
+		{ID: decoded.NetID{Slot: 4, Serial: 2}, ForkID: "fork_DemonBlade", Level: 80, Breakthrough: 6, Star: 5},
+	}}
+	selectCopy := func(explicit bool) (arcCandidateSet, error) {
+		selection := ""
+		if explicit {
+			selection = "fork_DemonBlade"
+		}
+		return service.prepareArcSelection(state, scoring.Character{CharacterID: 1036}, &state.Weapons[1], nil, selection, "en", 1, scoring.References{})
+	}
+	service.ReservedArcIDs = map[string]bool{"4:2": true}
+	got, err := selectCopy(true)
+	if err != nil || got.option == nil || got.option.ID != "4:1" {
+		t.Fatalf("free copy: %+v, %v", got.option, err)
+	}
+	service.ReservedArcIDs["4:1"] = true
+	if _, err := selectCopy(true); err == nil {
+		t.Fatal("explicit selection accepted only reserved copies")
+	}
+	if got, err := selectCopy(false); err != nil || got.option != nil {
+		t.Fatalf("implicit selection: %+v, %v", got.option, err)
+	}
+	service.ReservedArcIDs = nil
+	got, err = selectCopy(true)
+	if err != nil || got.option == nil || got.option.ID != "4:2" {
+		t.Fatalf("reuse: %+v, %v", got.option, err)
+	}
+}
+
 func TestNoArcSelectionRemovesCurrentlyEquippedArcStats(t *testing.T) {
 	service := OptimizerService{}
 	current := decoded.Weapon{ID: decoded.NetID{Slot: 1, Serial: 2}, ForkID: "fork_DemonBlade"}

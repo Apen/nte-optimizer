@@ -62,7 +62,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
 
 ## Small, bounded corrections
 
-- [ ] **CQ-001 — Respect reserved Arc identities during copy selection.**
+- [x] **CQ-001 — Respect reserved Arc identities during copy selection.**
   - **Priority / category:** P1; confirmed correctness defect.
   - **Evidence:** `internal/app/arc_candidates.go:71` selects the strongest
     matching owned copy without consulting `OptimizerService.ReservedArcIDs`.

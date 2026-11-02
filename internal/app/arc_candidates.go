@@ -73,13 +73,16 @@ func (s OptimizerService) prepareArcSelection(state *decoded.State, profile scor
 		if candidate.ForkID != selectedForkID || (candidate.ID.Slot == 0 && candidate.ID.Serial == 0) {
 			continue
 		}
+		if s.ReservedArcIDs[candidate.ID.Key()] {
+			continue
+		}
 		if weapon == nil || betterArcCopy(*candidate, *weapon) {
 			weapon = candidate
 		}
 	}
 	if weapon == nil {
 		if explicitSelection {
-			return arcCandidateSet{}, fmt.Errorf("arc %q is not owned in the imported account data", selectedForkID)
+			return arcCandidateSet{}, fmt.Errorf("arc %q has no available owned copy in the imported account data", selectedForkID)
 		}
 		return result, nil
 	}
