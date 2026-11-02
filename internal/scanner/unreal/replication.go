@@ -59,7 +59,14 @@ func ParsePackageExports(data []byte, bits int) []PackageExport {
 }
 
 func ParsePackageExportsAt(data []byte, bits int) ([]PackageExport, int) {
-	reader := bitReader{data: data, end: bits}
+	return parsePackageExportsFrom(data, bits, 0)
+}
+
+func parsePackageExportsFrom(data []byte, bits, start int) ([]PackageExport, int) {
+	if bits < 0 || bits > len(data)*8 || start < 0 || start > bits {
+		return nil, 0
+	}
+	reader := bitReader{data: data, pos: start, end: bits}
 	hasReplication, ok := reader.bit()
 	if !ok || hasReplication != 0 {
 		return nil, 0
@@ -108,10 +115,10 @@ func ParsePackageExportsAt(data []byte, bits int) ([]PackageExport, int) {
 	}
 	for index := uint64(0); index < count; index++ {
 		if _, ok := load(0); !ok {
-			break
+			return nil, 0
 		}
 	}
-	return result, reader.pos
+	return result, reader.pos - start
 }
 
 func ParseContentBlocks(data []byte, bits, start int) []ContentBlock {
