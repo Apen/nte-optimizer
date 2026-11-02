@@ -42,6 +42,9 @@ func LoadEquipmentCatalog(projectDir, dataDir, language string) (EquipmentCatalo
 func (s OptimizerService) equipmentCatalog(inventory nte.Inventory, state decoded.State, language string) (EquipmentCatalog, error) {
 	inventory.Modules = append([]nte.Module(nil), inventory.Modules...)
 	inventory.Cartridges = append([]nte.Cartridge(nil), inventory.Cartridges...)
+	if err := s.normalizeInventory(&inventory); err != nil {
+		return EquipmentCatalog{}, err
+	}
 	catalog, err := s.loadLocale(language)
 	if err != nil {
 		return EquipmentCatalog{}, fmt.Errorf("load locale catalog: %w", err)

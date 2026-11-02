@@ -18,8 +18,8 @@ type AccountImportSummary struct {
 	Warnings          []string  `json:"warnings,omitempty"`
 }
 
-func ImportDecodedWithSummary(sourceDir, projectDir string) (AccountImportSummary, error) {
-	result, err := decoded.ImportDirectory(sourceDir)
+func ImportDecodedWithSummary(sourceDir, projectDir, dataDir string) (AccountImportSummary, error) {
+	result, err := decoded.ImportDirectory(sourceDir, dataDir)
 	if err != nil {
 		return AccountImportSummary{}, err
 	}

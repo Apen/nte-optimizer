@@ -390,7 +390,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
     creating that target; benchmark bytes/allocations on synthetic captures.
     Follow [Go fuzzing guidance](https://go.dev/doc/security/fuzz/).
 
-- [ ] **CQ-013 — Make imported equipment definitions follow the published data contract.**
+- [x] **CQ-013 — Make imported equipment definitions follow the published data contract.**
   - **Priority / category:** P2; confirmed duplicated game facts.
   - **Evidence:** `internal/decoded/importer.go:60` maintains module item/geometry
     definitions, `internal/decoded/inventory.go:9` maintains supported geometries,

@@ -224,6 +224,10 @@ func (s OptimizerService) optimizeTuned(ctx context.Context, inv nte.Inventory, 
 
 func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inventory, profileID string, state *decoded.State, includeEquipped bool, language, mode string, goalOverrides map[string]float64, goalTunings map[string]GoalTuning, arcForkID string) (OptimizationResult, error) {
 	started := time.Now()
+	inv.Cartridges = append([]nte.Cartridge(nil), inv.Cartridges...)
+	if err := s.normalizeInventory(&inv); err != nil {
+		return OptimizationResult{}, err
+	}
 	language = ntelocale.Normalize(language)
 	plan, err := parseSearchPlan(mode)
 	if err != nil {

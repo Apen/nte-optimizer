@@ -6,14 +6,7 @@ import (
 	"nte-optimizer/internal/nte"
 )
 
-var supportedGeometries = map[string]bool{
-	"H_2": true, "H_3": true, "H_4": true,
-	"V_2": true, "V_3": true, "V_4": true,
-	"Trap_4_H": true, "Trap_4_V": true,
-	"L_3_TR": true, "L_3_BR": true, "L_3_BL": true, "L_3_TL": true,
-}
-
-func validateInventory(inventory nte.Inventory) []error {
+func validateInventory(inventory nte.Inventory, definitions nte.EquipmentDefinitions) []error {
 	var errors []error
 	ids := map[string]bool{}
 	for index, module := range inventory.Modules {
@@ -21,7 +14,7 @@ func validateInventory(inventory nte.Inventory) []error {
 			errors = append(errors, fmt.Errorf("module %d has missing or duplicate local_id", index))
 		}
 		ids[module.LocalID] = true
-		if !supportedGeometries[module.Geometry] {
+		if definition, ok := definitions[module.GameItemID]; !ok || definition.Geometry != module.Geometry {
 			errors = append(errors, fmt.Errorf("%s has unknown geometry %q", module.LocalID, module.Geometry))
 		}
 		if len(module.MainStats) == 0 {

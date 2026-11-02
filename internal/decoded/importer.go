@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"nte-optimizer/internal/equipment"
 	"nte-optimizer/internal/nte"
 )
 
@@ -16,12 +17,6 @@ type ImportResult struct {
 	State             State
 	AssignedEquipment int
 	Warnings          []string
-}
-type itemDefinition struct {
-	geometry string
-	area     int
-	quality  string
-	setID    string
 }
 
 type characterExport struct {
@@ -57,15 +52,11 @@ type resourceExport struct {
 	Data []Resource `json:"data"`
 }
 
-var moduleDefinitions = map[string]itemDefinition{
-	"cell2_style1_1": {"H_2", 2, "", ""}, "cell2_style2_1": {"V_2", 2, "", ""},
-	"cell3_style1_1": {"H_3", 3, "", ""}, "cell3_style2_1_1": {"V_3", 3, "", ""},
-	"cell3_style2_1": {"V_3", 3, "", ""}, "cell3_style3_1": {"L_3_TR", 3, "", ""},
-	"cell3_style4_1": {"L_3_BR", 3, "", ""}, "cell3_style5_1": {"L_3_BL", 3, "", ""}, "cell3_style6_1": {"L_3_TL", 3, "", ""},
-	"cell4_style1_1": {"H_4", 4, "", ""}, "cell4_style2_1": {"V_4", 4, "", ""}, "cell4_style5_1": {"Trap_4_H", 4, "", ""}, "cell4_style6_1": {"Trap_4_V", 4, "", ""},
-}
-
-func ImportDirectory(dir string) (ImportResult, error) {
+func ImportDirectory(dir, dataDir string) (ImportResult, error) {
+	definitions, err := equipment.Load(dataDir)
+	if err != nil {
+		return ImportResult{}, err
+	}
 	var equipment []Equipment
 	var weapons []Weapon
 	var account Account
@@ -138,27 +129,25 @@ func ImportDirectory(dir string) (ImportResult, error) {
 		if err != nil {
 			return ImportResult{}, fmt.Errorf("equipment %s: %w", localID, err)
 		}
-		if item.Kind == "core" {
-			setID, quality, ok := coreSetID(item.ItemID)
-			if !ok {
-				return ImportResult{}, fmt.Errorf("unknown core itemId %q", item.ItemID)
-			}
-			cartridges = append(cartridges, nte.Cartridge{LocalID: localID, GameItemID: item.ItemID, SetID: setID, SetName: item.Name, Quality: quality, Level: item.Level, MainStats: main, SubStats: sub, Locked: item.Locked, EquippedCharacterID: equipped})
-			continue
+		definition, ok := definitions[item.ItemID]
+		if !ok || definition.Kind != item.Kind {
+			return ImportResult{}, fmt.Errorf("equipment/decode.json: missing or incompatible items[%q]", item.ItemID)
 		}
-		base, quality := splitModuleItemID(item.ItemID)
-		definition, ok := moduleDefinitions[base]
-		if item.Kind != "module" || !ok {
-			return ImportResult{}, fmt.Errorf("unknown module itemId %q", item.ItemID)
+		if item.Level > definition.MaxLevel {
+			return ImportResult{}, fmt.Errorf("equipment %q level exceeds catalog max_level %d", item.ItemID, definition.MaxLevel)
+		}
+		if item.Kind == "core" {
+			cartridges = append(cartridges, nte.Cartridge{LocalID: localID, GameItemID: item.ItemID, SetID: definition.SetID, SetName: item.Name, Quality: definition.Quality, Level: item.Level, MainStats: main, SubStats: sub, Locked: item.Locked, EquippedCharacterID: equipped})
+			continue
 		}
 		var placement *nte.Placement
 		if found, ok := placements[item.ID.Key()]; ok {
 			placement = &nte.Placement{Row: found.Row, Column: found.Column}
 		}
-		modules = append(modules, nte.Module{LocalID: localID, GameItemID: item.ItemID, Quality: quality, Geometry: definition.geometry, Area: definition.area, Level: item.Level, MainStats: main, SubStats: sub, Locked: item.Locked, EquippedCharacterID: equipped, EquippedPlacement: placement})
+		modules = append(modules, nte.Module{LocalID: localID, GameItemID: item.ItemID, Quality: definition.Quality, Geometry: definition.Geometry, Area: definition.Area, Level: item.Level, MainStats: main, SubStats: sub, Locked: item.Locked, EquippedCharacterID: equipped, EquippedPlacement: placement})
 	}
 	inv := nte.Inventory{SchemaVersion: 1, Modules: modules, Cartridges: cartridges}
-	if errs := validateInventory(inv); len(errs) > 0 {
+	if errs := validateInventory(inv, definitions); len(errs) > 0 {
 		return ImportResult{}, fmt.Errorf("decoded inventory validation: %v", errs)
 	}
 	warnings := validateWeaponLinks(characters, weapons)
@@ -264,15 +253,6 @@ func mergeWeapons(weapons, embedded []Weapon) []Weapon {
 	return weapons
 }
 
-func coreSetID(itemID string) (setID, quality string, ok bool) {
-	parts := strings.Split(itemID, "_")
-	if len(parts) < 2 {
-		return "", "", false
-	}
-	setID, ok = nte.CartridgeSetID(itemID)
-	return setID, parts[len(parts)-1], ok
-}
-
 func convertStats(input []RawStat) ([]nte.Stat, error) {
 	out := make([]nte.Stat, 0, len(input))
 	for _, stat := range input {
@@ -285,14 +265,6 @@ func convertStats(input []RawStat) ([]nte.Stat, error) {
 }
 func isPercent(id string) bool {
 	return strings.HasSuffix(id, "Up") || strings.HasSuffix(id, "Base") && id != "MagBase" && id != "UnbalIntensityBase" && id != "AtkBase" && id != "DefBase" && id != "HPMaxBase"
-}
-func splitModuleItemID(id string) (string, string) {
-	for _, quality := range []string{"_Orange", "_Purple", "_Blue"} {
-		if strings.HasSuffix(id, quality) {
-			return strings.TrimSuffix(id, quality), strings.ToLower(strings.TrimPrefix(quality, "_"))
-		}
-	}
-	return id, "unknown"
 }
 func validateWeaponLinks(characters []Character, weapons []Weapon) []string {
 	known := map[string]bool{}

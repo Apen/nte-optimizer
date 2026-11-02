@@ -28,7 +28,6 @@ func loadAccountData(projectDir string) (nte.Inventory, decoded.State, bool, err
 		if snapshot.SchemaVersion != accountSnapshotSchemaVersion {
 			return nte.Inventory{}, decoded.State{}, false, fmt.Errorf("unsupported account snapshot schema version %d", snapshot.SchemaVersion)
 		}
-		snapshot.Inventory.Normalize()
 		return snapshot.Inventory, snapshot.State, true, nil
 	}
 

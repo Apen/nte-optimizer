@@ -263,7 +263,7 @@ func (a *DesktopApp) scanAndImportAccount(language string, seconds int, stopPktm
 	_ = scanlog.Append(logPath, "import", "started", nil)
 	a.buildMu.Lock()
 	defer a.buildMu.Unlock()
-	summary, err := appservice.ImportDecodedWithSummary(scannerlauncher.OutputDir(a.stateDir), a.stateDir)
+	summary, err := appservice.ImportDecodedWithSummary(scannerlauncher.OutputDir(a.stateDir), a.stateDir, a.service.DataDir)
 	if err != nil {
 		_ = scanlog.AppendWithCode(logPath, "import", "failed", "import_failed", nil)
 		return summary, err

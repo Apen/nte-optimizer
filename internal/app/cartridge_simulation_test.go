@@ -76,9 +76,9 @@ func TestCartridgeSimulationChangesSelectionAndPreservesCurrentStats(t *testing.
 	input := nte.Inventory{
 		Modules: []nte.Module{{LocalID: "synthetic-module", Geometry: "H_2", Area: 2}},
 		Cartridges: []nte.Cartridge{
-			{LocalID: "upgrade", GameItemID: "Lakshana_orange", SetID: setID, Level: 0, EquippedCharacterID: profile.CharacterID,
+			{LocalID: "upgrade", GameItemID: "Incantation_orange", SetID: setID, Level: 0, EquippedCharacterID: profile.CharacterID,
 				MainStats: []nte.Stat{{PropertyID: "CritDamageBase", Value: .12, Percent: true}}},
-			{LocalID: "maxed", GameItemID: "Lakshana_purple", SetID: setID, Level: 20,
+			{LocalID: "maxed", GameItemID: "Incantation_purple", SetID: setID, Level: 20,
 				MainStats: []nte.Stat{{PropertyID: "CritDamageBase", Value: .48, Percent: true}}},
 		},
 	}

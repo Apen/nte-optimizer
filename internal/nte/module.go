@@ -2,14 +2,14 @@ package nte
 
 import (
 	"encoding/json"
-	"strings"
 )
 
-var cartridgeSetIDs = map[string]string{
-	"Chaos": "Suit1", "Nature": "Suit2", "Psyche": "Suit3", "Incantation": "Suit4",
-	"Lakshana": "Suit5", "Cosmos": "Suit6", "Shield": "Suit7", "Attack": "Suit8",
-	"Heal": "Suit9", "Mag": "Suit10", "GetEfficiency": "Suit11", "Psychically": "Suit12",
+// EquipmentDefinitions are supplied explicitly by the game-data boundary.
+type EquipmentDefinition struct {
+	Kind, Quality, Geometry, SetID string
+	Area, MaxLevel                 int
 }
+type EquipmentDefinitions map[string]EquipmentDefinition
 
 type Stat struct {
 	PropertyID string  `json:"property_id"`
@@ -82,19 +82,10 @@ type Inventory struct {
 // Normalize restores stable protocol identifiers when loading inventories
 // written by older application versions. GameItemID is authoritative because
 // it comes from the captured game object and does not depend on localization.
-func (i *Inventory) Normalize() {
+func (i *Inventory) Normalize(definitions EquipmentDefinitions) {
 	for index := range i.Cartridges {
-		if setID, ok := CartridgeSetID(i.Cartridges[index].GameItemID); ok {
-			i.Cartridges[index].SetID = setID
+		if definition, ok := definitions[i.Cartridges[index].GameItemID]; ok && definition.Kind == "core" {
+			i.Cartridges[index].SetID = definition.SetID
 		}
 	}
-}
-
-func CartridgeSetID(gameItemID string) (string, bool) {
-	prefix, _, found := strings.Cut(gameItemID, "_")
-	if !found {
-		return "", false
-	}
-	setID, ok := cartridgeSetIDs[prefix]
-	return setID, ok
 }

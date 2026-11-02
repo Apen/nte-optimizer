@@ -19,7 +19,7 @@ func TestImportDirectoryBuildsInventoryAndLinksEquipment(t *testing.T) {
 		{ID: NetID{Slot: 1, Serial: 2}, ItemID: "cell3_style6_1_Orange", Kind: "module", Level: 20, MainStats: []RawStat{{Property: "AtkAdd", Value: 63}}, CharacterNetID: &characterNet},
 		{ID: NetID{Slot: 3, Serial: 4}, ItemID: "Incantation_orange", Name: "Crimson", Kind: "core", Level: 20, MainStats: []RawStat{{Property: "CritDamageBase", Value: .6}}, CharacterNetID: &characterNet},
 	})
-	got, err := ImportDirectory(dir)
+	got, err := ImportDirectory(dir, filepath.Join("..", "..", "data"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -84,7 +84,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	writeFixture(t, dir, "equipment.json", []Equipment{{ID: moduleNet, ItemID: "cell3_style6_1_Orange", Kind: "module", Level: 20, MainStats: []RawStat{{Property: "AtkAdd", Value: 16}}, CharacterNetID: &characterNet}})
 	writeFixture(t, dir, "resources.json", resourceExport{Data: []Resource{{ItemID: "CharacterUpMaterial_lv3", Quantity: 218}}})
 
-	got, err := ImportDirectory(dir)
+	got, err := ImportDirectory(dir, filepath.Join("..", "..", "data"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -136,7 +136,7 @@ func TestImportFurnitureObservationsRemainSeparateFromConfirmation(t *testing.T)
 	writeFixture(t, dir, "equipment.json", []Equipment{})
 	writeFixture(t, dir, "weapons.json", []Weapon{})
 	writeFixture(t, dir, "character.json", map[string]any{"format": "nte-scan-characters", "formatVersion": 3, "characters": []any{}, "furnitureLevels": []any{map[string]any{"progression_id": "SF_test", "level": 3}}})
-	result, err := ImportDirectory(dir)
+	result, err := ImportDirectory(dir, filepath.Join("..", "..", "data"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -144,7 +144,7 @@ func TestImportFurnitureObservationsRemainSeparateFromConfirmation(t *testing.T)
 		t.Fatal("lost furniture observations")
 	}
 	writeFixture(t, dir, "character.json", map[string]any{"format": "nte-scan-characters", "formatVersion": 3, "characters": []any{}, "furnitureLevels": []any{map[string]any{"progression_id": "SF_test", "level": 0}}})
-	if _, err := ImportDirectory(dir); err == nil {
+	if _, err := ImportDirectory(dir, filepath.Join("..", "..", "data")); err == nil {
 		t.Fatal("accepted invalid furniture level")
 	}
 }

@@ -64,6 +64,13 @@ missing, fix and republish the generated locale source.
 Console trait descriptions are display text only. Their numeric stat values
 remain sourced from `data/game/equipment/console_traits.json` for optimization.
 
+Equipment import resolves item kind, quality, maximum level, and cartridge set
+from `data/game/equipment/decode.json`. Runtime module shapes are matched to
+`equipment/shapes.json` by translated cell coordinates without rotating them.
+There are no application-owned item-prefix, geometry, or set lookup tables.
+Legacy cartridge set IDs are repaired at data-aware boundaries using these same
+definitions; inventory models receive definitions explicitly and perform no I/O.
+
 Special-furniture progression levels and per-character bond levels are imported
 account observations. The furniture modifier catalog includes `progression_id`
 and `level`, resolved by the datamine generator through its progression

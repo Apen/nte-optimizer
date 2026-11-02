@@ -43,22 +43,12 @@ func readOptionalJSON(path string, destination any) (bool, error) {
 	return false, err
 }
 
-func readInventory(path string) (nte.Inventory, error) {
-	var inventory nte.Inventory
-	if err := readJSON(path, &inventory); err != nil {
-		return nte.Inventory{}, err
-	}
-	inventory.Normalize()
-	return inventory, nil
-}
-
 func readOptionalInventory(path string) (nte.Inventory, bool, error) {
 	var inventory nte.Inventory
 	loaded, err := readOptionalJSON(path, &inventory)
 	if err != nil || !loaded {
 		return nte.Inventory{}, loaded, err
 	}
-	inventory.Normalize()
 	return inventory, true, nil
 }
 

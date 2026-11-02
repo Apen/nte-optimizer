@@ -7,6 +7,7 @@ import (
 
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
+	"nte-optimizer/internal/equipment"
 	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/nte"
 )
@@ -15,18 +16,21 @@ import (
 // are never cached here; imports replace them independently. Create a new
 // service after changing the installed data generation.
 type staticCatalogs struct {
-	profileOnce sync.Once
-	profiles    map[string]scoring.Character
-	profileErr  error
-	arcOnce     sync.Once
-	arcs        decoded.ForkCatalog
-	arcErr      error
-	buffOnce    sync.Once
-	buffs       []BuffOption
-	bonds       map[int][]nte.Stat
-	buffErr     error
-	localeMu    sync.Mutex
-	locales     map[string]localeResult
+	equipmentOnce sync.Once
+	equipment     nte.EquipmentDefinitions
+	equipmentErr  error
+	profileOnce   sync.Once
+	profiles      map[string]scoring.Character
+	profileErr    error
+	arcOnce       sync.Once
+	arcs          decoded.ForkCatalog
+	arcErr        error
+	buffOnce      sync.Once
+	buffs         []BuffOption
+	bonds         map[int][]nte.Stat
+	buffErr       error
+	localeMu      sync.Mutex
+	locales       map[string]localeResult
 }
 
 type localeResult struct {
@@ -101,4 +105,27 @@ func (s OptimizerService) loadCharacters() (map[string]scoring.Character, error)
 		result[id] = profile
 	}
 	return result, nil
+}
+
+func (s OptimizerService) normalizeInventory(inventory *nte.Inventory) error {
+	needed := false
+	for _, item := range inventory.Cartridges {
+		needed = needed || item.GameItemID != ""
+	}
+	if !needed {
+		return nil
+	}
+	var definitions nte.EquipmentDefinitions
+	var err error
+	if s.static == nil {
+		definitions, err = equipment.Load(s.DataDir)
+	} else {
+		s.static.equipmentOnce.Do(func() { s.static.equipment, s.static.equipmentErr = equipment.Load(s.DataDir) })
+		definitions, err = s.static.equipment, s.static.equipmentErr
+	}
+	if err != nil {
+		return err
+	}
+	inventory.Normalize(definitions)
+	return nil
 }

@@ -75,7 +75,11 @@ func TestReadInventoryRepairsLegacyLocalizedSetID(t *testing.T) {
 	path := filepath.Join(dir, "inventory.json")
 	writeTestFile(t, path, `{"schema_version":1,"modules":[],"cartridges":[{"local_id":"c1","game_item_id":"Incantation_orange","set_id":"ecarlate_:_papillons_jumeaux","set_name":"Crimson","quality":"orange","level":20,"main_stats":[],"sub_stats":[]}]}`)
 
-	inventory, err := readInventory(path)
+	var inventory nte.Inventory
+	err := readJSON(path, &inventory)
+	if err == nil {
+		err = NewOptimizerService(filepath.Join("..", "..", "data")).normalizeInventory(&inventory)
+	}
 	if err != nil {
 		t.Fatal(err)
 	}
