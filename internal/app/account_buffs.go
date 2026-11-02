@@ -29,23 +29,17 @@ type BuffOption struct {
 }
 
 type BuffCharacter struct {
-	BondBonusActive     bool                          `json:"bond_bonus_active"`
-	BondStageFlags      []bool                        `json:"bond_stage_flags,omitempty"`
-	PanelLoaded         bool                          `json:"panel_loaded"`
-	CharacterID         int                           `json:"character_id"`
-	Name                string                        `json:"name"`
-	BondLevel           *int                          `json:"bond_level,omitempty"`
-	BondStats           []nte.Stat                    `json:"bond_stats"`
-	Comparison          []PanelComparison             `json:"comparison"`
-	Sources             map[string]map[string]float64 `json:"sources"`
-	CalibrationConflict bool                          `json:"calibration_conflict"`
+	BondBonusActive bool       `json:"bond_bonus_active"`
+	CharacterID     int        `json:"character_id"`
+	Name            string     `json:"name"`
+	BondLevel       *int       `json:"bond_level,omitempty"`
+	BondStats       []nte.Stat `json:"bond_stats"`
 }
 
 type AccountBuffPage struct {
-	DetectedFurnitureIDs []string                   `json:"detected_furniture_ids"`
-	Furniture            []BuffOption               `json:"furniture"`
-	Characters           []BuffCharacter            `json:"characters"`
-	Suggestions          []housing.InferredModifier `json:"suggestions"`
+	DetectedFurnitureIDs []string        `json:"detected_furniture_ids"`
+	Furniture            []BuffOption    `json:"furniture"`
+	Characters           []BuffCharacter `json:"characters"`
 }
 
 type bondCatalog struct {
@@ -228,7 +222,7 @@ func scannedAccountBuffSources(state *decoded.State, dataDir string, characterID
 }
 
 func LoadAccountBuffPage(projectDir, dataDir, language string) (AccountBuffPage, error) {
-	page := AccountBuffPage{Characters: []BuffCharacter{}, Suggestions: []housing.InferredModifier{}, DetectedFurnitureIDs: []string{}}
+	page := AccountBuffPage{Characters: []BuffCharacter{}, DetectedFurnitureIDs: []string{}}
 	var err error
 	var bonds map[int][]nte.Stat
 	page.Furniture, bonds, err = buffOptions(dataDir)
@@ -248,59 +242,12 @@ func LoadAccountBuffPage(projectDir, dataDir, language string) (AccountBuffPage,
 	for _, id := range selection.BondCharacters {
 		activeBonds[id] = true
 	}
-	var overrides struct {
-		Characters map[int]map[string]float64 `json:"characters"`
-	}
-	if _, err = readOptionalJSON(workspaceFile(projectDir, "account_overrides.json"), &overrides); err != nil {
-		return page, err
-	}
-	state.PanelOverrides = overrides.Characters
-	equipment, err := LoadEquipmentCatalog(projectDir, dataDir, language)
-	if err != nil {
-		return page, err
-	}
 	labels, err := ntelocale.Load(dataDir, language)
 	if err != nil {
 		return page, err
 	}
 	for _, character := range state.Characters {
-		entry := BuffCharacter{PanelLoaded: character.ObservedAtLogin.Loaded, CharacterID: character.CharacterID, Name: cleanCharacterName(labels.CharacterName(character.CharacterID, character.Name)), BondLevel: character.BondLevel, BondStats: bonds[character.CharacterID], Comparison: []PanelComparison{}, Sources: map[string]map[string]float64{}}
-		entry.BondStageFlags = character.BondStageFlags
-		entry.BondBonusActive = activeBonds[character.CharacterID]
-		_, conflict := scannedAccountBuffSources(&state, dataDir, character.CharacterID, state.PanelOverrides[character.CharacterID])
-		if conflict != nil {
-			if !errors.Is(conflict, errBuffCalibrationConflict) {
-				return page, conflict
-			}
-			entry.CalibrationConflict = true
-			page.Characters = append(page.Characters, entry)
-			continue
-		}
-		modules := []nte.Module{}
-		cartridges := []nte.Cartridge{}
-		for _, item := range equipment.Modules {
-			if item.EquippedCharacterID == character.CharacterID {
-				modules = append(modules, item)
-			}
-		}
-		for _, item := range equipment.Cartridges {
-			if item.EquippedCharacterID == character.CharacterID {
-				cartridges = append(cartridges, item)
-			}
-		}
-		stats, err := loadCurrentCharacterStats(dataDir, &state, character, modules, cartridges, language)
-		if err != nil {
-			return page, err
-		}
-		if stats != nil {
-			entry.Sources = stats.Sources
-			entry.Comparison = compareObservedPanel(character.Stats, stats)
-		}
-		page.Characters = append(page.Characters, entry)
-	}
-	page.Suggestions, err = inferHousingEffects(dataDir, &state, equipment, language)
-	if err != nil {
-		return page, err
+		page.Characters = append(page.Characters, BuffCharacter{CharacterID: character.CharacterID, Name: cleanCharacterName(labels.CharacterName(character.CharacterID, character.Name)), BondLevel: character.BondLevel, BondStats: bonds[character.CharacterID], BondBonusActive: activeBonds[character.CharacterID]})
 	}
 	sort.Slice(page.Characters, func(i, j int) bool { return page.Characters[i].Name < page.Characters[j].Name })
 	return page, nil

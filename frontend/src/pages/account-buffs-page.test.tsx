@@ -9,8 +9,8 @@ vi.mock('../../wailsjs/go/main/DesktopApp',()=>({AccountBuffs:(...args:unknown[]
 const catalog:LocalizationCatalog={locale:'en',ui:{nav_account_buffs:'Account buffs',account_furniture:'Furniture',account_bond:'Bond bonuses',buff_source_scan_level:'Furniture level {level}',buff_bond_source:'Bond level {level}',buff_no_furniture:'Import furniture levels',buff_no_bond:'No level 10 bond bonus'},stats:{AtkAdd:'Flat ATK',DefAdd:'Flat DEF',CritDamageBase:'CRIT DMG',CritBase:'CRIT'},qualities:{},geometries:{},damage:{},stat_sources:{}}
 function fixture():AccountBuffPage {
  const furniture=[{id:'attack',level:2,stats:[{property_id:'AtkAdd',value:4,percent:false}]},{id:'defense',level:3,stats:[{property_id:'DefAdd',value:9,percent:false}]},{id:'critical',level:6,stats:[{property_id:'CritDamageBase',value:.024,percent:true}]},{id:'other-level',level:3,stats:[{property_id:'AtkAdd',value:6,percent:false}]}]
- const character={character_id:1036,name:'Zankou',bond_level:10,bond_bonus_active:true,bond_stats:[{property_id:'CritBase',value:.04,percent:true}],sources:{},comparison:[],calibration_conflict:false,panel_loaded:true}
- return {detected_furniture_ids:['attack','defense','critical'],furniture,characters:[character,{...character,character_id:1004,name:'Lower bond',bond_level:9,bond_bonus_active:false}],suggestions:[]}
+ const character={character_id:1036,name:'Zankou',bond_level:10,bond_bonus_active:true,bond_stats:[{property_id:'CritBase',value:.04,percent:true}]}
+ return {detected_furniture_ids:['attack','defense','critical'],furniture,characters:[character,{...character,character_id:1004,name:'Lower bond',bond_level:9,bond_bonus_active:false}]}
 }
 function mount(){render(<PresentationProvider catalog={catalog}><AccountBuffsPage locale="en"/></PresentationProvider>)}
 describe('Account buffs page',()=>{

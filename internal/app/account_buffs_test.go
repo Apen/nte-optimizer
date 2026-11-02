@@ -2,6 +2,7 @@ package app
 
 import (
 	"errors"
+	"fmt"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -16,6 +17,56 @@ func scannedBuffFixture() decoded.State {
 	return decoded.State{
 		FurnitureLevels: []nte.FurnitureLevel{{ProgressionID: "SF_0011", Level: 2}, {ProgressionID: "SF_0012", Level: 6}, {ProgressionID: "SF_0013", Level: 3}},
 		Characters:      []decoded.Character{{CharacterID: 1036, Level: 80, BreakthroughLevel: 6, BondLevel: &level, BondStageFlags: []bool{true}}},
+	}
+}
+
+func TestInformationalBonusesIgnoreCalculationCalibration(t *testing.T) {
+	dir := t.TempDir()
+	if err := ensureWorkspace(dir); err != nil {
+		t.Fatal(err)
+	}
+	state := scannedBuffFixture()
+	attack := 1000.0
+	state.Characters[0].ObservedAtLogin.Loaded = true
+	state.Characters[0].Stats.Attack = &attack
+	if err := writeAccountData(dir, nte.Inventory{}, state); err != nil {
+		t.Fatal(err)
+	}
+	if err := writeJSON(workspaceFile(dir, "account_overrides.json"), map[string]any{"characters": map[int]map[string]float64{1036: {"AtkFinal": 4}}}); err != nil {
+		t.Fatal(err)
+	}
+	page, err := LoadAccountBuffPage(dir, filepath.Join("..", "..", "data"), "en")
+	if err != nil || len(page.Characters) != 1 || !page.Characters[0].BondBonusActive {
+		t.Fatalf("informational page: %+v, %v", page, err)
+	}
+	if _, err := scannedAccountBuffSources(&state, filepath.Join("..", "..", "data"), 1036, map[string]float64{"AtkFinal": 4}); !errors.Is(err, errBuffCalibrationConflict) {
+		t.Fatal("calculation must still reject the conflict")
+	}
+}
+
+func BenchmarkAccountBuffPage(b *testing.B) {
+	for _, count := range []int{1, 12} {
+		b.Run(fmt.Sprint(count), func(b *testing.B) {
+			dir := b.TempDir()
+			if err := ensureWorkspace(dir); err != nil {
+				b.Fatal(err)
+			}
+			state := scannedBuffFixture()
+			state.Characters = nil
+			for i := 0; i < count; i++ {
+				state.Characters = append(state.Characters, decoded.Character{CharacterID: 1000 + i, Level: 80, BreakthroughLevel: 6})
+			}
+			if err := writeAccountData(dir, nte.Inventory{}, state); err != nil {
+				b.Fatal(err)
+			}
+			b.ReportAllocs()
+			b.ResetTimer()
+			for b.Loop() {
+				if _, err := LoadAccountBuffPage(dir, filepath.Join("..", "..", "data"), "en"); err != nil {
+					b.Fatal(err)
+				}
+			}
+		})
 	}
 }
 
@@ -103,12 +154,14 @@ func TestAccountBuffPageAndCalculationUseSameScannedSelection(t *testing.T) {
 		if c.BondBonusActive != (c.CharacterID == 1036) {
 			t.Fatalf("wrong bond activation for %d", c.CharacterID)
 		}
-		if c.Sources["account_furniture"]["AtkAdd"] != 4 {
-			t.Fatal("displayed furniture absent from calculation")
+		sources, err := scannedAccountBuffSources(&state, filepath.Join("..", "..", "data"), c.CharacterID, nil)
+		if err != nil {
+			t.Fatal(err)
 		}
-		if c.CharacterID == 1036 && c.Sources["account_bond"]["CritBase"] != .04 {
-			t.Fatal("displayed bond absent from calculation")
+		if len(sources["account_furniture"]) != 3 || (len(sources["account_bond"]) > 0) != c.BondBonusActive {
+			t.Fatal("display and calculation selection differ")
 		}
+
 	}
 	// A newer import replaces the old selection without persisting any settings.
 	if err := writeAccountData(dir, nte.Inventory{}, decoded.State{Characters: state.Characters[1:]}); err != nil {
@@ -118,7 +171,7 @@ func TestAccountBuffPageAndCalculationUseSameScannedSelection(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(page.DetectedFurnitureIDs) != 0 || page.Characters[0].BondBonusActive || len(page.Characters[0].Sources["account_furniture"]) != 0 {
+	if len(page.DetectedFurnitureIDs) != 0 || page.Characters[0].BondBonusActive {
 		t.Fatal("old scan or manual settings leaked into latest import")
 	}
 }

@@ -156,7 +156,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
   - **Verification:** add public-path tests with a copied catalog missing one
     required tier and a target-load failure; run `go test ./...`.
 
-- [ ] **CQ-005 — Remove unused reconstruction and inference from the informational bonus page.**
+- [x] **CQ-005 — Remove unused reconstruction and inference from the informational bonus page.**
   - **Priority / category:** P1; reproduced failure plus measured unnecessary work.
   - **Evidence:** `internal/app/account_buffs.go:230` loads full equipment,
     computes comparisons/sources for every character, and calls
