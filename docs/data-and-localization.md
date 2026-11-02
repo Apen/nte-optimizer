@@ -80,6 +80,21 @@ selected bonuses active is an explicit application policy, not decoded evidence.
 
 ## Observed character panels
 
+In the captures analyzed so far, the game sends final runtime attribute panels
+for deployed characters, not a complete final-stat table for the entire roster.
+Opening a non-deployed character's menu did not reveal an equivalent complete
+panel in the decoded traffic. For this scan workflow, the final stats of
+non-deployed characters are not present in the captured packets: opening their
+menus does not provide those missing final-stat panels. Do not expect to recover
+them by searching the same packets for another API call or RPC. This documents
+the observed behavior; a future protocol change would require new evidence.
+
+For the remaining characters, the application must reconstruct deployed-build
+stats from their progression, equipped modules, cartridges, Arc, set effects,
+console trait, and applicable account bonuses using `data/game`. It also
+recalculates stats for new builds. Received panels serve as comparison evidence;
+they are not reusable base stats and must not be added to equipment bonuses.
+
 Detailed panels come from replicated character attribute blocks, separately from
 the saved roster HP values. The scanner reads the observed encoded field handles
 instead of assuming fixed positions: omitted cycle values, independently omitted
