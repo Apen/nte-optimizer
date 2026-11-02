@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 
+	"nte-optimizer/internal/apperrors"
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
 	"nte-optimizer/internal/nte"
@@ -81,7 +82,7 @@ func (s OptimizerService) prepareArcSelection(state *decoded.State, profile scor
 	}
 	if weapon == nil {
 		if explicitSelection {
-			return arcCandidateSet{}, fmt.Errorf("arc %q has no available owned copy in the imported account data", selectedForkID)
+			return arcCandidateSet{}, apperrors.New("equipment_unavailable", fmt.Errorf("arc %q has no available owned copy in the imported account data", selectedForkID))
 		}
 		return result, nil
 	}

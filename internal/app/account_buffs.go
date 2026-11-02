@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strconv"
 
+	"nte-optimizer/internal/apperrors"
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
 	"nte-optimizer/internal/housing"
@@ -13,7 +14,7 @@ import (
 	"nte-optimizer/internal/nte"
 )
 
-var errBuffCalibrationConflict = errors.New("scanned account bonus overlaps panel calibration")
+var errBuffCalibrationConflict = apperrors.New("calibration_conflict", errors.New("scanned account bonus overlaps panel calibration"))
 
 // accountBuffSelection is derived from the latest import, never persisted.
 type accountBuffSelection struct {

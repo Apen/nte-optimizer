@@ -5,6 +5,7 @@ import (
 	"math"
 	"sort"
 
+	"nte-optimizer/internal/apperrors"
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
 	"nte-optimizer/internal/housing"
@@ -42,7 +43,7 @@ func LoadCharacterGameState(projectDir, dataDir string, characterID int, languag
 		return CharacterGameState{}, err
 	}
 	if !loaded {
-		return CharacterGameState{}, fmt.Errorf("no account has been imported")
+		return CharacterGameState{}, apperrors.New("account_required", fmt.Errorf("no account has been imported"))
 	}
 	var overrides struct {
 		Characters map[int]map[string]float64 `json:"characters"`

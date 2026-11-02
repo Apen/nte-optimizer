@@ -8,6 +8,7 @@ import (
 	"sort"
 	"sync"
 
+	"nte-optimizer/internal/apperrors"
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/scoring"
 	"nte-optimizer/internal/target"
@@ -128,7 +129,7 @@ func (s OptimizerService) requiredCharacterBaseStats(characterID, level, breakth
 		return nil, err
 	}
 	if !ok {
-		return nil, fmt.Errorf("data/game/characters/base_stats.json: missing stats[%q][%q]", fmt.Sprint(characterID), fmt.Sprintf("%d:%d", level, breakthrough))
+		return nil, apperrors.New("data_missing", fmt.Errorf("data/game/characters/base_stats.json: missing stats[%q][%q]", fmt.Sprint(characterID), fmt.Sprintf("%d:%d", level, breakthrough)))
 	}
 	return stats, nil
 }

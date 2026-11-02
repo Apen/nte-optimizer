@@ -13,6 +13,7 @@ import { CharactersPage } from './pages/characters-page'
 import { CharacterStatePage } from './pages/character-state-page'
 import { AccountBuffsPage } from './pages/account-buffs-page'
 import { ArcsPage, CartridgesPage, ModulesPage, ResourcesPage } from './pages/inventory-pages'
+import { errorMessage } from './lib/errors'
 import { ProfileAutosave, RequestScope } from './lib/profile-autosave'
 import { PresentationProvider } from './presentation'
 import type { AccountImportSummary, BuildWorkspace as Workspace, EquipmentCatalog as Catalog, InventoryArc, LocalizationCatalog, OptimizationLog, Profile, Result, SavedBuild, SearchProgress, TargetGoal, TargetPreset } from './types'
@@ -60,7 +61,7 @@ export function App() {
   const [importSummary,setImportSummary]=useState<AccountImportSummary>({has_import:false,characters:0,modules:0,cartridges:0,weapons:0})
   const [saveToast,setSaveToast]=useState<{message:string;error:boolean}>()
   const [optimizationLog,setOptimizationLog]=useState<OptimizationLog>()
-  const [optimizationError,setOptimizationError]=useState(false)
+  const [optimizationError,setOptimizationError]=useState('')
   const [update,setUpdate]=useState<UpdateInfo>()
   const toastTimer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined)
   const autosave=useRef(new ProfileAutosave()).current
@@ -129,7 +130,7 @@ export function App() {
     }catch(error){console.error('Failed to save profile settings',error);showSaveToast(t('profile_save_failed',{name:selectedProfile?.name||profile}),true);return false}
   }
   const scheduleSettingsSave=(...snapshot:Parameters<typeof persistSettings>)=>{
-    setOptimizationError(false)
+    setOptimizationError('')
     const draft:ProfileDraft=[snapshot[0]??goals,snapshot[1]??maximums,snapshot[2]??tolerances,snapshot[3]??disabledGoals,snapshot[4]??strictGoals,snapshot[5]??strictMinimums,snapshot[6]??goalDefinitions,snapshot[7]??weights,snapshot[8]??selectedArcForkID]
     profileDrafts.current.set(profile,draft)
     autosave.schedule(profile,()=>persistSettings(...draft))
@@ -203,14 +204,14 @@ export function App() {
 
   async function optimize() {
     const ticket=requests.begin()
-    setRunning(true); setStopping(false); setResult(undefined); setSavedBuildSelection(undefined); setOptimizationError(false); setOptimizationLog(undefined); setProgress({visited:0,total:0,elapsed_ms:0,candidates:0,workers:0})
+    setRunning(true); setStopping(false); setResult(undefined); setSavedBuildSelection(undefined); setOptimizationError(''); setOptimizationLog(undefined); setProgress({visited:0,total:0,elapsed_ms:0,candidates:0,workers:0})
     try {
       if(!await persistSettings()||!requests.current(ticket))return
       const baseGoalIDs=new Set((preset?.goals||[]).map(goal=>goal.property_id))
       const tuned=Object.fromEntries(goalDefinitions.filter(goal=>!disabledGoals.includes(goal.property_id)).map(goal=>[goal.property_id,{target:(goals[goal.property_id]||0)/(goal.percent?100:1),maximum:(maximums[goal.property_id]||0)/(goal.percent?100:1),tolerance:(tolerances[goal.property_id]||0)/100,importance:importances[goal.property_id]??1,minimum:strictGoals.includes(goal.property_id)?(strictMinimums[goal.property_id]||0)/(goal.percent?100:1):0,strict_minimum:strictGoals.includes(goal.property_id),...(baseGoalIDs.has(goal.property_id)?{}:{custom:true,label:presentation.stats[goal.property_id]||goal.label,percent:goal.percent})}]))
       const value=await OptimizeFlexibleSelection(profile,false,locale,searchMode,tuned,pinnedModules,excludedModules,{...weights,simulate_cartridge_main_stats:true},selectedArcForkID)
       if(requests.current(ticket))setResult(value)
-    } catch(error) { if(!requests.current(ticket))return;setOptimizationError(true);setSettingsOpen(true);console.error('Optimization failed',error) } finally { if(requests.current(ticket)){try{const log=await LastOptimizationLog();if(requests.current(ticket))setOptimizationLog(log)}catch(error){console.error('Failed to load optimization log',error)}if(requests.current(ticket)){setRunning(false);setStopping(false)}} }
+    } catch(error) { if(!requests.current(ticket))return;setOptimizationError(errorMessage(error));setSettingsOpen(true);console.error('Optimization failed',error) } finally { if(requests.current(ticket)){try{const log=await LastOptimizationLog();if(requests.current(ticket))setOptimizationLog(log)}catch(error){console.error('Failed to load optimization log',error)}if(requests.current(ticket)){setRunning(false);setStopping(false)}} }
   }
   async function stop() { setStopping(true); await StopOptimization() }
   async function saveCharacterOrder(ids:number[]) { try{setWorkspace(await SetCharacterPriority(ids,locale))}catch(error){console.error('Failed to save character order',error)} }
@@ -246,7 +247,7 @@ export function App() {
      {(pinnedModules.length>0||excludedModules.length>0)&&<Card className="mb-5 border-amber-900/60"><CardContent className="flex flex-wrap items-center gap-2 pt-5"><div className="mr-2"><strong>{t('piece_constraints')}</strong><p className="text-xs text-slate-500">{t('constraints_next_calculation')}</p></div>{pinnedModules.map(id=><ConstraintChip key={id} id={id} kind="locked" onRemove={()=>togglePinned(id)}/>) }{excludedModules.map(id=><ConstraintChip key={id} id={id} kind="excluded" onRemove={()=>toggleExcluded(id)}/>) }<Button className="ml-auto" variant="secondary" onClick={()=>{setPinnedModules([]);setExcludedModules([])}}><X className="mr-2 size-3"/>{t('clear_all')}</Button></CardContent></Card>}
      <fieldset disabled={running||loadedProfile!==profile}><StatsEditor goalDefinitions={goalDefinitions} availableGoals={availableGoalDefinitions} disabledGoals={disabledGoals} strictGoals={strictGoals} strictMinimums={strictMinimums} goals={goals} maximums={maximums} weights={weights} availableMain={availableMainStats} onGoal={changeGoal} onMaximum={changeMaximum} onMinimum={changeMinimum} onWeight={changeWeight} onMainStats={changeMainStats} onRemove={removeGoal} onAddGoal={addGoal} onReset={resetWeights} onSave={saveSettings}/></fieldset>
      </details>
-     {optimizationError&&<div className="optimization-error" role="alert"><div><strong>{t('optimization_failed')}</strong><p>{t('optimization_failed_description')}</p></div>{optimizationLog?.status==='error'&&<OptimizationLogDialog log={optimizationLog}/>}</div>}
+     {optimizationError&&<div className="optimization-error" role="alert"><div><strong>{t('optimization_failed')}</strong><p>{optimizationError}</p></div>{optimizationLog?.status==='error'&&<OptimizationLogDialog log={optimizationLog}/>}</div>}
      {running&&<div className="search-stop-row"><Button variant="destructive" disabled={stopping} onClick={stop}><Square className="mr-2 size-4"/>{stopping?t('stop_loading'):t('stop_and_keep')}</Button></div>}
      {running&&<SearchStatus progress={progress}/>}
      {result&&<ResultView result={result} savedBuild={savedBuildSelection} characters={workspace.characters} optimizationLog={optimizationLog} profileName={profiles.find(item=>item.id===result.profile_id)?.name || t('profile')} onEquip={equipResult} pinned={pinnedModules} excluded={excludedModules} onPin={togglePinned} onExclude={toggleExcluded} goals={goalDefinitions} disabledGoals={disabledGoals} mainStats={weights.main_stats}/>}

@@ -149,6 +149,13 @@
     "UnbalIntensityBase": "Intensité de rupture"
   },
   "ui": {
+    "error_operation_failed": "L’opération a échoué. Consultez le diagnostic pour plus de détails.",
+    "error_data_missing": "Des données du jeu nécessaires sont absentes. Mettez les données de l’application à jour puis réessayez.",
+    "error_data_unavailable": "Les données locales nécessaires ne peuvent pas être lues.",
+    "error_account_required": "Importez un compte avant de consulter les statistiques des personnages.",
+    "error_calibration_conflict": "Une correction manuelle des statistiques recouvre un bonus de compte. Réconciliez cette correction avant de calculer ce build.",
+    "error_equipment_unavailable": "Aucun exemplaire possédé de cet équipement n’est disponible.",
+    "error_cancelled": "L’opération a été annulée.",
     "nav_account_buffs": "Bonus du compte",
     "nav_account_buffs_detail": "Mobilier et personnages",
     "account_buffs_intro": "Confirmez ici vos bonus actifs. Les confirmations sauvegardées s’appliquent à l’optimiseur et au build équipé. Les valeurs scannées restent intactes.",

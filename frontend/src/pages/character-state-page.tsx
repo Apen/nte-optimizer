@@ -5,6 +5,7 @@ import { CharacterGameState } from '../../wailsjs/go/main/DesktopApp'
 import { ArcEffectDescription, AssetImage, CartridgePieceCard, GameEffectText, ModulePieceCard, type Owner } from '../components/equipment-cards'
 import { Button } from '../components/ui/button'
 import { Card, CardContent } from '../components/ui/card'
+import { errorMessage } from '../lib/errors'
 import { CurrentGameStats } from '../components/current-game-stats'
 import { currentIntlLocale, t, type Locale } from '../i18n'
 import { presentationName, usePresentation } from '../presentation'
@@ -20,11 +21,11 @@ export function CharacterStatePage({ characterID, locale, onBack }: { characterI
     setError('')
     CharacterGameState(characterID, locale)
       .then(value => { if (active) setSnapshot(value) })
-      .catch(value => { if (active) setError(String(value)) })
+      .catch(value => { if (active) setError(errorMessage(value)) })
     return () => { active = false }
   }, [characterID, locale])
 
-  return <div><Button variant="secondary" className="mb-4" onClick={onBack}><ArrowLeft className="mr-2 size-4" />{t('back_characters')}</Button>{error ? <p className="rounded-xl border border-red-900 bg-red-950/40 p-4 text-red-200">{error}</p> : snapshot ? <CurrentGameStateView snapshot={snapshot} /> : <p className="py-16 text-center text-slate-400">{t('loading_imported_state')}</p>}</div>
+  return <div><Button variant="secondary" className="mb-4" onClick={onBack}><ArrowLeft className="mr-2 size-4" />{t('back_characters')}</Button>{error ? <p role="alert" className="rounded-xl border border-red-900 bg-red-950/40 p-4 text-red-200">{error}</p> : snapshot ? <CurrentGameStateView snapshot={snapshot} /> : <p className="py-16 text-center text-slate-400">{t('loading_imported_state')}</p>}</div>
 }
 
 function CurrentGameStateView({ snapshot }: { snapshot: CharacterGameSnapshot }) {

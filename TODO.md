@@ -309,7 +309,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
   - **Verification:** TypeScript production build, frontend contract tests,
     Go DTO serialization tests, and `go test ./...`.
 
-- [ ] **CQ-014 — Return stable error codes and localize user-facing failures.**
+- [x] **CQ-014 — Return stable error codes and localize user-facing failures.**
   - **Priority / category:** P2; confirmed presentation contract violation.
   - **Evidence:** `frontend/src/pages/character-state-page.tsx:23` renders
     `String(value)` from Go directly. `internal/app/json.go:23` wraps file paths

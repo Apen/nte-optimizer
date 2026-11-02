@@ -9,6 +9,7 @@ import (
 	"sync"
 
 	appservice "nte-optimizer/internal/app"
+	"nte-optimizer/internal/apperrors"
 	"nte-optimizer/internal/buildinfo"
 	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/optimizer"
@@ -126,13 +127,15 @@ func (a *DesktopApp) Localization(language string) (ntelocale.PresentationCatalo
 func (a *DesktopApp) CharacterGameState(characterID int, language string) (appservice.CharacterGameState, error) {
 	a.buildMu.Lock()
 	defer a.buildMu.Unlock()
-	return appservice.LoadCharacterGameState(a.stateDir, a.service.DataDir, characterID, language)
+	value, err := appservice.LoadCharacterGameState(a.stateDir, a.service.DataDir, characterID, language)
+	return value, apperrors.ForClient(err)
 }
 
 func (a *DesktopApp) AccountBuffs(language string) (appservice.AccountBuffPage, error) {
 	a.buildMu.Lock()
 	defer a.buildMu.Unlock()
-	return appservice.LoadAccountBuffPage(a.stateDir, a.service.DataDir, language)
+	value, err := appservice.LoadAccountBuffPage(a.stateDir, a.service.DataDir, language)
+	return value, apperrors.ForClient(err)
 }
 
 func (a *DesktopApp) EquipBuild(profileID string, characterID int, moduleIDs []string, cartridgeID string, stats map[string]float64, language string) (appservice.BuildWorkspace, error) {
@@ -190,13 +193,15 @@ func (a *DesktopApp) OpenDownloadURL(url string) {
 // Once its validated JSON export is complete, the normal desktop process reads
 // and imports it without retaining elevated privileges.
 func (a *DesktopApp) ScanAndImportAccount(language string, seconds int) (appservice.AccountImportSummary, error) {
-	return a.scanAndImportAccount(language, seconds, false)
+	value, err := a.scanAndImportAccount(language, seconds, false)
+	return value, scanClientError(err)
 }
 
 // RecoverAndScanAccount explicitly stops all Pktmon collection before starting
 // a new guided scan. The UI warns that this can stop another tool's capture.
 func (a *DesktopApp) RecoverAndScanAccount(language string, seconds int) (appservice.AccountImportSummary, error) {
-	return a.scanAndImportAccount(language, seconds, true)
+	value, err := a.scanAndImportAccount(language, seconds, true)
+	return value, scanClientError(err)
 }
 
 func (a *DesktopApp) scanAndImportAccount(language string, seconds int, stopPktmonFirst bool) (appservice.AccountImportSummary, error) {
@@ -300,14 +305,14 @@ func (a *DesktopApp) OptimizeFlexibleSelection(profileID string, ignorePriority 
 	service, err := a.optimizerService(profileID, ignorePriority)
 	if err != nil {
 		a.finishOptimizationLog(logID, appservice.OptimizationResult{}, err)
-		return appservice.OptimizationResult{}, err
+		return appservice.OptimizationResult{}, apperrors.ForClient(err)
 	}
 	service.WeightOverrides = weights
 	service.PinnedModuleIDs = stringSet(pinnedModuleIDs)
 	service.ExcludedModuleIDs = stringSet(excludedModuleIDs)
 	result, err := a.runFlexibleOptimization(service, profileID, true, language, mode, goals, arcForkID, logID)
 	a.finishOptimizationLog(logID, result, err)
-	return result, err
+	return result, apperrors.ForClient(err)
 }
 
 func (a *DesktopApp) optimizerService(profileID string, ignorePriority bool) (appservice.OptimizerService, error) {
@@ -383,4 +388,22 @@ func (a *DesktopApp) StopOptimization() bool {
 	}
 	a.searchStop()
 	return true
+}
+
+func scanClientError(err error) error {
+	if err == nil {
+		return nil
+	}
+	code := "scan_failed"
+	if errors.Is(err, scannerlauncher.ErrScanAlreadyRunning) {
+		code = "scan_busy"
+	}
+	var diagnostic *scannerlauncher.DiagnosticError
+	if errors.As(err, &diagnostic) {
+		switch diagnostic.Code {
+		case "state_not_writable", "output_not_writable":
+			code = "scan_diagnostic_unavailable"
+		}
+	}
+	return apperrors.ForClient(apperrors.New(code, err))
 }

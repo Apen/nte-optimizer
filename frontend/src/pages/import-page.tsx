@@ -5,6 +5,7 @@ import { LastScanLog, RecoverAndScanAccount, ScanAndImportAccount } from '../../
 import { Button } from '../components/ui/button'
 import { Card, CardContent, CardHeader } from '../components/ui/card'
 import { t, type Locale } from '../i18n'
+import { errorMessage } from '../lib/errors'
 import { formatDateTime } from '../lib/format'
 import type { AccountImportSummary, ScanLogEvent } from '../types'
 
@@ -50,10 +51,7 @@ export function ImportPage({ summary, locale, onImported }: ImportPageProps) {
       setMessage(t('scan_finished', { characters: next.characters, pieces: next.modules + next.cartridges, arcs: next.weapons }))
     } catch (value) {
       setMessage('')
-      const reason = String(value).toLowerCase()
-      if (reason.includes('scan already running')) setError(t('scan_error_busy'))
-      else if (reason.includes('scan diagnostic') || reason.includes('scan lock')) setError(t('scan_error_diagnostic_unavailable'))
-      else setError(t('scan_error_generic'))
+      setError(errorMessage(value,'scan_error_generic'))
     } finally {
       setScanning(false)
       try { setScanLog(await LastScanLog()) } catch { /* The scan error remains visible above. */ }
@@ -70,8 +68,7 @@ export function ImportPage({ summary, locale, onImported }: ImportPageProps) {
       await onImported(next)
       setMessage(t('scan_finished', { characters: next.characters, pieces: next.modules + next.cartridges, arcs: next.weapons }))
     } catch (value) {
-      const reason = String(value).toLowerCase()
-      setError(reason.includes('scan already running') ? t('scan_error_busy') : t('scan_recovery_failed'))
+      setError(errorMessage(value,'scan_recovery_failed'))
       try { setScanLog(await LastScanLog()) } catch { /* Keep the recovery error visible. */ }
     } finally {
       setScanning(false)

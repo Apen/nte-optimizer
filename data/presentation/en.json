@@ -149,6 +149,13 @@
     "UnbalIntensityBase": "Break Intensity"
   },
   "ui": {
+    "error_operation_failed": "The operation could not be completed. See diagnostics for details.",
+    "error_data_missing": "Required game data is missing. Update the application data and try again.",
+    "error_data_unavailable": "Required local data could not be read.",
+    "error_account_required": "Import an account before viewing character statistics.",
+    "error_calibration_conflict": "A manual stat correction overlaps an account bonus. Reconcile the correction before calculating this build.",
+    "error_equipment_unavailable": "The selected equipment has no available owned copy.",
+    "error_cancelled": "The operation was cancelled.",
     "nav_account_buffs": "Account buffs",
     "nav_account_buffs_detail": "Furniture and character",
     "account_buffs_intro": "Confirm your active bonuses here. Saved confirmations apply to the optimizer and the equipped build. Scanned values are kept unchanged.",
