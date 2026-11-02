@@ -7,8 +7,8 @@ import type { Result } from '../types'
 const result = {
   grid: { width: 3, height: 1, playable: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }] },
   modules: [
-    { module: { local_id: 'module-other', geometry: 'triangle', main_stats: [{ property_id: 'HPMaxUp', value: 0.1, percent: true }], sub_stats: [] }, breakdown: { total: 0 } },
-    { module: { local_id: 'module-a', geometry: 'square', main_stats: [{ property_id: 'AtkUp', value: 0.12, percent: true }], sub_stats: [{ property_id: 'CritBase', value: 0.032, percent: true }] }, breakdown: { total: 0 } },
+    { module: { local_id: 'module-other', geometry: 'triangle', sub_stats_active: true, main_stats: [{ property_id: 'HPMaxUp', value: 0.1, percent: true }], sub_stats: [] }, breakdown: { total: 0 } },
+    { module: { local_id: 'module-a', geometry: 'square', sub_stats_active: true, main_stats: [{ property_id: 'AtkUp', value: 0.12, percent: true }], sub_stats: [{ property_id: 'CritBase', value: 0.032, percent: true }] }, breakdown: { total: 0 } },
   ],
   solution: { placements: [{ module_id: 'module-a', cells: [{ x: 0, y: 0 }, { x: 1, y: 0 }] }] },
 } as Result

@@ -60,7 +60,7 @@ func (e CartridgeSetEvaluator) reduceStatCandidates(input []Candidate, catalog S
 	}
 	vectors := make([][]float64, len(input))
 	for i, candidate := range input {
-		if !nonnegative(candidate.Module.MainStats) || !nonnegative(candidate.Module.SubStats) {
+		if !nonnegative(candidate.Module.MainStats) || !nonnegative(candidate.Module.ActiveSubStats()) {
 			return input
 		}
 		vectors[i] = make([]float64, len(p.properties))

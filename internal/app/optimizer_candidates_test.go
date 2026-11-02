@@ -17,11 +17,11 @@ func TestPrepareModuleCandidatesAppliesAvailabilityRules(t *testing.T) {
 		ReservedModuleIDs: map[string]bool{"reserved": true},
 	}
 	modules := []nte.Module{
-		{LocalID: "available", Geometry: "H_2"},
-		{LocalID: "excluded", Geometry: "H_2"},
-		{LocalID: "reserved", Geometry: "H_2"},
-		{LocalID: "other-character", Geometry: "H_2", EquippedCharacterID: 2},
-		{LocalID: "same-character", Geometry: "H_2", EquippedCharacterID: 1},
+		{Level: 20, LocalID: "available", Geometry: "H_2"},
+		{Level: 20, LocalID: "excluded", Geometry: "H_2"},
+		{Level: 20, LocalID: "reserved", Geometry: "H_2"},
+		{Level: 20, LocalID: "other-character", Geometry: "H_2", EquippedCharacterID: 2},
+		{Level: 20, LocalID: "same-character", Geometry: "H_2", EquippedCharacterID: 1},
 	}
 	pool := service.prepareModuleCandidates(modules, scoring.Character{CharacterID: 1}, scoring.References{}, nil, nil, nil, false)
 	if len(pool.eligible) != 2 || pool.eligible[0].Module.LocalID != "available" || pool.eligible[1].Module.LocalID != "same-character" {
@@ -33,7 +33,7 @@ func TestPrepareModuleCandidatesAppliesAvailabilityRules(t *testing.T) {
 }
 
 func TestSelectModuleCandidatesRejectsInvalidLocks(t *testing.T) {
-	pool := moduleCandidatePool{eligible: []optimizer.Candidate{{Module: nte.Module{LocalID: "available", Geometry: "H_2"}}}}
+	pool := moduleCandidatePool{eligible: []optimizer.Candidate{{Module: nte.Module{Level: 20, LocalID: "available", Geometry: "H_2"}}}}
 	config := optimizerDataConfig{}
 	config.Optimize.TopPerGeometry = 1
 	config.Optimize.TopPerSet = 1
@@ -50,8 +50,8 @@ func TestSelectModuleCandidatesRejectsInvalidLocks(t *testing.T) {
 }
 
 func TestAppendUniqueCandidatesPreservesOrder(t *testing.T) {
-	first := optimizer.Candidate{Module: nte.Module{LocalID: "first"}}
-	second := optimizer.Candidate{Module: nte.Module{LocalID: "second"}}
+	first := optimizer.Candidate{Module: nte.Module{Level: 20, LocalID: "first"}}
+	second := optimizer.Candidate{Module: nte.Module{Level: 20, LocalID: "second"}}
 	got := appendUniqueCandidates([]optimizer.Candidate{first}, []optimizer.Candidate{first, second})
 	if len(got) != 2 || got[0].Module.LocalID != "first" || got[1].Module.LocalID != "second" {
 		t.Fatalf("unexpected candidates: %#v", got)
@@ -59,8 +59,8 @@ func TestAppendUniqueCandidatesPreservesOrder(t *testing.T) {
 }
 
 func TestFastSelectionRetainsCurrentEquipment(t *testing.T) {
-	best := optimizer.Candidate{Module: nte.Module{LocalID: "best", Geometry: "H_2"}, Score: 10}
-	current := optimizer.Candidate{Module: nte.Module{LocalID: "current", Geometry: "H_2", EquippedCharacterID: 1}, Score: 1}
+	best := optimizer.Candidate{Module: nte.Module{Level: 20, LocalID: "best", Geometry: "H_2"}, Score: 10}
+	current := optimizer.Candidate{Module: nte.Module{Level: 20, LocalID: "current", Geometry: "H_2", EquippedCharacterID: 1}, Score: 1}
 	pool := moduleCandidatePool{eligible: []optimizer.Candidate{best, current}, raw: []optimizer.Candidate{best, current}, current: []optimizer.Candidate{current}}
 	config := optimizerDataConfig{}
 	config.Optimize.TopPerGeometry = 1
@@ -76,8 +76,8 @@ func TestFastSelectionRetainsCurrentEquipment(t *testing.T) {
 }
 
 func TestFastCandidateSelectionLeavesStrictMaximumToExactEvaluation(t *testing.T) {
-	tooHigh := optimizer.Candidate{Module: nte.Module{LocalID: "too-high", Geometry: "H_2", Area: 2, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .2}}}, Score: 11, Priority: 2, ObjectiveValues: map[string]float64{"CritBase": .2}}
-	admissible := optimizer.Candidate{Module: nte.Module{LocalID: "admissible", Geometry: "H_2", Area: 2, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .1}}}, Score: 10, Priority: 1, ObjectiveValues: map[string]float64{"CritBase": .1}}
+	tooHigh := optimizer.Candidate{Module: nte.Module{Level: 20, LocalID: "too-high", Geometry: "H_2", Area: 2, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .2}}}, Score: 11, Priority: 2, ObjectiveValues: map[string]float64{"CritBase": .2}}
+	admissible := optimizer.Candidate{Module: nte.Module{Level: 20, LocalID: "admissible", Geometry: "H_2", Area: 2, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .1}}}, Score: 10, Priority: 1, ObjectiveValues: map[string]float64{"CritBase": .1}}
 	goal := optimizer.ObjectiveGoal{PropertyID: "CritBase", Minimum: .6, Maximum: .6, StrictMinimum: true, StrictFloor: .6, Importance: 1}
 	pool := moduleCandidatePool{eligible: []optimizer.Candidate{tooHigh, admissible}, raw: []optimizer.Candidate{tooHigh, admissible}, selectionObjectives: []optimizer.ObjectiveGoal{goal}}
 	config := optimizerDataConfig{}
@@ -143,7 +143,7 @@ func TestPrepareModuleCandidatesAddsObjectiveAndGeometryPriority(t *testing.T) {
 	service := OptimizerService{}
 	profile := scoring.Character{BaseStats: map[string]float64{"CritBase": .5}}
 	goals := []optimizer.ObjectiveGoal{{PropertyID: "CritBase", Minimum: .75, Importance: 1}}
-	modules := []nte.Module{{LocalID: "plain", Geometry: "V_2"}, {LocalID: "required", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .1}}}}
+	modules := []nte.Module{{Level: 20, LocalID: "plain", Geometry: "V_2"}, {Level: 20, LocalID: "required", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .1}}}}
 	pool := service.prepareModuleCandidates(modules, profile, scoring.References{}, nil, goals, map[string]bool{"H_2": true}, true)
 	if len(pool.eligible) != 2 || len(pool.selectionObjectives) != 1 {
 		t.Fatalf("unexpected pool: %#v", pool)
@@ -164,7 +164,7 @@ func TestBetaKeepsSpecialistsForStrictFloorAboveSoftTarget(t *testing.T) {
 		t.Fatalf("strict floor was not selected: %#v", strict)
 	}
 	prepared := (OptimizerService{}).prepareModuleCandidates(
-		[]nte.Module{{LocalID: "specialist", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "UnbalIntensityBase", Value: 30}}}},
+		[]nte.Module{{Level: 20, LocalID: "specialist", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "UnbalIntensityBase", Value: 30}}}},
 		scoring.Character{BaseStats: baseline}, scoring.References{}, nil, []optimizer.ObjectiveGoal{goal}, nil, true,
 	)
 	if len(prepared.strictObjectives) != 1 || len(prepared.selectionObjectives) != 0 {
@@ -172,11 +172,11 @@ func TestBetaKeepsSpecialistsForStrictFloorAboveSoftTarget(t *testing.T) {
 	}
 	pool := moduleCandidatePool{strictObjectives: strict, baselineStats: baseline}
 	for i := 0; i < 6; i++ {
-		pool.eligible = append(pool.eligible, optimizer.Candidate{Module: nte.Module{LocalID: string(rune('a' + i)), Geometry: "H_2"}, Priority: float64(10 - i), ObjectiveValues: map[string]float64{"UnbalIntensityBase": 0}})
+		pool.eligible = append(pool.eligible, optimizer.Candidate{Module: nte.Module{Level: 20, LocalID: string(rune('a' + i)), Geometry: "H_2"}, Priority: float64(10 - i), ObjectiveValues: map[string]float64{"UnbalIntensityBase": 0}})
 	}
 	for i := 0; i < 3; i++ {
 		gain := float64(30 - i)
-		pool.eligible = append(pool.eligible, optimizer.Candidate{Module: nte.Module{LocalID: string(rune('x' + i)), Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "UnbalIntensityBase", Value: gain}}}, Priority: float64(i), ObjectiveValues: map[string]float64{"UnbalIntensityBase": gain}})
+		pool.eligible = append(pool.eligible, optimizer.Candidate{Module: nte.Module{Level: 20, LocalID: string(rune('x' + i)), Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "UnbalIntensityBase", Value: gain}}}, Priority: float64(i), ObjectiveValues: map[string]float64{"UnbalIntensityBase": gain}})
 	}
 	pool.raw = pool.eligible
 	if count := strictSpecialistCount(pool.eligible, baseline[goal.PropertyID], goal, 3); count != 3 {
@@ -227,7 +227,7 @@ func TestBetaKeepsSpecialistsForStrictFloorAboveSoftTarget(t *testing.T) {
 func TestGeometryModuleSlotsUsesPlayableCellsAndShapeSize(t *testing.T) {
 	grid := optimizer.GridDefinition{Playable: []optimizer.Point{{X: 0, Y: 0}, {X: 1, Y: 0}, {X: 2, Y: 0}, {X: 3, Y: 0}, {X: 4, Y: 0}, {X: 5, Y: 0}}}
 	shapes := optimizer.ShapeCatalog{Shapes: map[string]optimizer.Shape{"H_2": {Cells: []optimizer.Point{{X: 0, Y: 0}, {X: 1, Y: 0}}}, "H_3": {Cells: []optimizer.Point{{X: 0, Y: 0}, {X: 1, Y: 0}, {X: 2, Y: 0}}}}}
-	candidates := []optimizer.Candidate{{Module: nte.Module{Geometry: "H_2"}}, {Module: nte.Module{Geometry: "H_3"}}}
+	candidates := []optimizer.Candidate{{Module: nte.Module{Level: 20, Geometry: "H_2"}}, {Module: nte.Module{Level: 20, Geometry: "H_3"}}}
 	limits := geometryModuleSlots(grid, shapes, candidates)
 	if limits["H_2"] != 3 || limits["H_3"] != 2 {
 		t.Fatalf("unexpected geometry capacity: %#v", limits)

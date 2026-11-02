@@ -516,6 +516,7 @@
     "search_in": "Rechercher dans les {title}…",
     "second_short": "s",
     "secondary_attributes": "Attributs secondaires",
+    "secondary_attributes_inactive": "Attributs secondaires (inactifs au niveau 0)",
     "secondary_stats": "Secondaires",
     "selected_cartridge": "Cartouche sélectionnée",
     "selected_build": "Build sélectionnée",

@@ -68,7 +68,7 @@ func (e CartridgeSetEvaluator) statProjection() statProjection {
 		if trait := e.character.ConsoleTrait; trait != nil && module.Area == trait.Area {
 			projected.trait = 1
 		}
-		for _, stats := range [][]nte.Stat{module.MainStats, module.SubStats} {
+		for _, stats := range [][]nte.Stat{module.MainStats, module.ActiveSubStats()} {
 			for _, stat := range stats {
 				if index, ok := indexes[stat.PropertyID]; ok {
 					key := atomKey{index, math.Float64bits(stat.Value)}

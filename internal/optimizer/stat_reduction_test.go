@@ -16,7 +16,7 @@ func fixedFixture(n int) (SearchSolver, Grid, []Candidate, CartridgeSetEvaluator
 	solver := SearchSolver{Exact: true, KeepBest: 5, DisableBound: true, Catalog: ShapeCatalog{Shapes: map[string]Shape{"S": {ID: "S", Cells: []Point{{0, 0}}}}}}
 	candidates := make([]Candidate, n)
 	for i := range candidates {
-		candidates[i] = Candidate{Module: nte.Module{LocalID: fmt.Sprintf("item%03d", i), Geometry: "S", Area: 1, MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 8}}, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .02 * float64(1+i%2)}, {PropertyID: "CritDamageBase", Value: .04}}}, Score: float64(i % 4), Priority: float64(n - i)}
+		candidates[i] = Candidate{Module: nte.Module{Level: 20, LocalID: fmt.Sprintf("item%03d", i), Geometry: "S", Area: 1, MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 8}}, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .02 * float64(1+i%2)}, {PropertyID: "CritDamageBase", Value: .04}}}, Score: float64(i % 4), Priority: float64(n - i)}
 	}
 	sets := SetCatalog{Definitions: map[string]SetDefinition{"set": {ID: "set", InventorySetID: "set", RequiredGeometries: []string{"S"}, Bonuses: []SetBonus{{Count: 1, Score: 3, ConditionalStats: []nte.Stat{{PropertyID: "DamageUpGeneralBase", Value: .1}}}}}}}
 	cartridges := []nte.Cartridge{{LocalID: "c1", SetID: "set"}, {LocalID: "c2", SetID: "set", MainStats: []nte.Stat{{PropertyID: "AtkUp", Value: .05}}}}

@@ -169,7 +169,7 @@ func (e CartridgeSetEvaluator) prepareBlueprintEvaluations(geometries []string) 
 				for _, placement := range placements {
 					module := e.modules[placement.ModuleID]
 					addStats(main, module.MainStats)
-					addStats(sub, module.SubStats)
+					addStats(sub, module.ActiveSubStats())
 				}
 			}
 			result := set.result

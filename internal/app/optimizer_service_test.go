@@ -18,7 +18,7 @@ import (
 func TestSelectedStrategyRejectsOtherSetCartridges(t *testing.T) {
 	service := OptimizerService{DataDir: filepath.Join("..", "..", "data")}
 	inv := nte.Inventory{
-		Modules:    []nte.Module{{LocalID: "piece", Geometry: "H_2", Area: 2}},
+		Modules:    []nte.Module{{Level: 20, LocalID: "piece", Geometry: "H_2", Area: 2}},
 		Cartridges: []nte.Cartridge{{LocalID: "wrong", SetID: "diabolos"}},
 	}
 	_, err := service.optimize(context.Background(), inv, "zankou", nil, true, "fr", "fast", nil)
@@ -56,7 +56,7 @@ func TestOptimizerServiceProfilesAreStable(t *testing.T) {
 
 func TestPinnedModuleCannotOverrideReservation(t *testing.T) {
 	service := OptimizerService{DataDir: filepath.Join("..", "..", "data"), ReservedModuleIDs: map[string]bool{"reserved": true}, PinnedModuleIDs: map[string]bool{"reserved": true}}
-	_, err := service.optimize(context.Background(), nte.Inventory{Modules: []nte.Module{{LocalID: "reserved", Geometry: "H_2", Area: 2}}}, "zankou", nil, true, "fr", "fast", nil)
+	_, err := service.optimize(context.Background(), nte.Inventory{Modules: []nte.Module{{Level: 20, LocalID: "reserved", Geometry: "H_2", Area: 2}}}, "zankou", nil, true, "fr", "fast", nil)
 	if err == nil {
 		t.Fatal("reservation overridden by lock")
 	}
@@ -143,7 +143,7 @@ func TestOptimizerServiceAppliesEditableGoalOverrides(t *testing.T) {
 func TestOptimizerServiceReturnsStructuredResult(t *testing.T) {
 	service := OptimizerService{DataDir: filepath.Join("..", "..", "data")}
 	inv := nte.Inventory{Modules: []nte.Module{
-		{LocalID: "module_1", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: 0.064}}},
+		{Level: 20, LocalID: "module_1", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: 0.064}}},
 	}}
 	result, err := service.Optimize(context.Background(), inv, "zankou")
 	if err != nil {
@@ -181,7 +181,7 @@ func TestOptimizerServiceCalculatesBuildWithEachSupportedSubstatAlone(t *testing
 				MainStats: []string{"CritDamageBase"},
 				Weights:   map[string]float64{propertyID: 1},
 			}
-			inventory := nte.Inventory{Modules: []nte.Module{{
+			inventory := nte.Inventory{Modules: []nte.Module{{Level: 20,
 				LocalID: "substat-probe", Geometry: "H_2", Area: 2,
 				SubStats: []nte.Stat{{PropertyID: propertyID, Value: value, Percent: reference < 1}},
 			}}}
@@ -206,7 +206,7 @@ func TestOptimizerServiceCalculatesBuildWithEachSupportedSubstatAlone(t *testing
 
 func TestOptimizerServiceRequiresExplicitOptionForOtherCharactersEquipment(t *testing.T) {
 	service := OptimizerService{DataDir: filepath.Join("..", "..", "data")}
-	inv := nte.Inventory{Modules: []nte.Module{{LocalID: "free", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .01}}}, {LocalID: "borrowed", Geometry: "H_2", EquippedCharacterID: 1004, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .5}}}}}
+	inv := nte.Inventory{Modules: []nte.Module{{Level: 20, LocalID: "free", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .01}}}, {Level: 20, LocalID: "borrowed", Geometry: "H_2", EquippedCharacterID: 1004, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .5}}}}}
 	protected, err := service.optimize(context.Background(), inv, "zankou", nil, false, "fr", "score", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -225,7 +225,7 @@ func TestOptimizerServiceRequiresExplicitOptionForOtherCharactersEquipment(t *te
 
 func TestOptimizerServiceExcludesHigherPriorityReservations(t *testing.T) {
 	service := OptimizerService{DataDir: filepath.Join("..", "..", "data"), ReservedModuleIDs: map[string]bool{"reserved": true}}
-	inv := nte.Inventory{Modules: []nte.Module{{LocalID: "available", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .01}}}, {LocalID: "reserved", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .5}}}}}
+	inv := nte.Inventory{Modules: []nte.Module{{Level: 20, LocalID: "available", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .01}}}, {Level: 20, LocalID: "reserved", Geometry: "H_2", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .5}}}}}
 	result, err := service.optimize(context.Background(), inv, "zankou", nil, true, "fr", "score", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -337,8 +337,8 @@ func TestWeightOverridesDoNotMutateCachedProfile(t *testing.T) {
 func TestBuildCurrentEquipmentStatsUsesOnlyCharacterEquipment(t *testing.T) {
 	profile := scoring.Character{CharacterID: 7}
 	inv := nte.Inventory{Modules: []nte.Module{
-		{LocalID: "current", EquippedCharacterID: 7, MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 42}}},
-		{LocalID: "other", EquippedCharacterID: 8, MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 99}}},
+		{Level: 20, LocalID: "current", EquippedCharacterID: 7, MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 42}}},
+		{Level: 20, LocalID: "other", EquippedCharacterID: 8, MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 99}}},
 	}}
 	stats := buildCurrentEquipmentStats(inv, profile, optimizer.SetCatalog{}, nil)
 	if stats == nil || stats.Sources["modules"]["AtkAdd"] != 42 {
@@ -350,7 +350,7 @@ func TestBuildCurrentEquipmentStatsUsesOnlyCharacterEquipment(t *testing.T) {
 }
 
 func TestBuildAlternativesMaterializesAndFlattensSolutions(t *testing.T) {
-	module := nte.Module{LocalID: "module-1", Geometry: "SINGLE", MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 12}}}
+	module := nte.Module{Level: 20, LocalID: "module-1", Geometry: "SINGLE", MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 12}}}
 	cartridge := nte.Cartridge{LocalID: "cartridge-1", SetID: "set-inventory"}
 	solutions := []optimizer.Solution{{
 		Complete: true, SelectedSetID: "set-1", SelectedCartridgeID: cartridge.LocalID,

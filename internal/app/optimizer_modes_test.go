@@ -43,7 +43,7 @@ func newSyntheticModeFixture(specialistRequired bool) syntheticModeFixture {
 		if intensity > 0 {
 			stats = append(stats, nte.Stat{PropertyID: "UnbalIntensityBase", Value: intensity})
 		}
-		module := nte.Module{
+		module := nte.Module{Level: 20,
 			LocalID: id, SetID: "synthetic-set", Geometry: "H_2", Area: 2,
 			SubStats: stats,
 		}
@@ -517,7 +517,7 @@ func syntheticBenchmarkModules(count int) []nte.Module {
 	for index := range modules {
 		crit := float64((index*17)%100+1) / 1000
 		intensity := float64((index*7)%8) * 10
-		module := nte.Module{
+		module := nte.Module{Level: 20,
 			LocalID: fmt.Sprintf("synthetic-%03d", index), SetID: "synthetic-set", Geometry: "H_2", Area: 2,
 			SubStats: []nte.Stat{{PropertyID: "CritBase", Value: crit, Percent: true}},
 		}

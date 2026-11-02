@@ -30,7 +30,7 @@ func BuildStatSummary(character scoring.Character, modules []nte.Module, cartrid
 	s.Sources["modules"] = map[string]float64{}
 	for _, module := range modules {
 		addStats(s.Sources["modules"], module.MainStats)
-		addStats(s.Sources["modules"], module.SubStats)
+		addStats(s.Sources["modules"], module.ActiveSubStats())
 	}
 	if cartridge != nil {
 		s.Sources["cartridge"] = map[string]float64{}

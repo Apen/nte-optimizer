@@ -1,6 +1,9 @@
 package nte
 
-import "strings"
+import (
+	"encoding/json"
+	"strings"
+)
 
 var cartridgeSetIDs = map[string]string{
 	"Chaos": "Suit1", "Nature": "Suit2", "Psyche": "Suit3", "Incantation": "Suit4",
@@ -33,6 +36,26 @@ type Module struct {
 type Placement struct {
 	Row    int `json:"row"`
 	Column int `json:"column"`
+}
+
+// ActiveSubStats excludes serialized but inactive level-zero module substats.
+// Positive levels preserve the imported values; intermediate unlock thresholds
+// have not been established and must not be inferred from this level-zero rule.
+func (m Module) ActiveSubStats() []Stat {
+	if m.Level == 0 {
+		return nil
+	}
+	return m.SubStats
+}
+
+// MarshalJSON exposes activation separately while preserving the raw substats
+// for inventory inspection and future upgrades.
+func (m Module) MarshalJSON() ([]byte, error) {
+	type module Module
+	return json.Marshal(struct {
+		module
+		SubStatsActive bool `json:"sub_stats_active"`
+	}{module: module(m), SubStatsActive: m.Level != 0})
 }
 
 type Cartridge struct {

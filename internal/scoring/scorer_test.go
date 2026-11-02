@@ -8,7 +8,7 @@ import (
 )
 
 func TestScoreDetailedSeparatesMainAndSubWeights(t *testing.T) {
-	m := nte.Module{
+	m := nte.Module{Level: 20,
 		MainStats: []nte.Stat{{PropertyID: "CritBase", Value: 0.064, Percent: true}},
 		SubStats:  []nte.Stat{{PropertyID: "CritBase", Value: 0.064, Percent: true}},
 	}
@@ -23,7 +23,7 @@ func TestScoreDetailedSeparatesMainAndSubWeights(t *testing.T) {
 }
 
 func TestGeneralWeightAppliesToMainAndSubStats(t *testing.T) {
-	module := nte.Module{
+	module := nte.Module{Level: 20,
 		MainStats: []nte.Stat{{PropertyID: "MagBase", Value: 100}},
 		SubStats:  []nte.Stat{{PropertyID: "MagBase", Value: 50}},
 	}
@@ -45,7 +45,7 @@ func TestDeterministicModuleSubstatsKeepEqualPerCellRelevance(t *testing.T) {
 		{area: 4, value: 0.04},
 	}
 	for _, test := range tests {
-		module := nte.Module{Area: test.area, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: test.value, Percent: true}}}
+		module := nte.Module{Level: 20, Area: test.area, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: test.value, Percent: true}}}
 		density := Score(module, character, references) / float64(test.area)
 		if math.Abs(density-0.5) > 1e-12 {
 			t.Fatalf("area %d relevance density = %v, want 0.5", test.area, density)
@@ -54,7 +54,7 @@ func TestDeterministicModuleSubstatsKeepEqualPerCellRelevance(t *testing.T) {
 }
 
 func TestScoreDetailedAppliesSoftAndHardCaps(t *testing.T) {
-	m := nte.Module{SubStats: []nte.Stat{{PropertyID: "CritBase", Value: 0.2, Percent: true}}}
+	m := nte.Module{Level: 20, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: 0.2, Percent: true}}}
 	c := Character{
 		SubWeights:   map[string]float64{"CritBase": 1},
 		CurrentStats: map[string]float64{"CritBase": 0.85},

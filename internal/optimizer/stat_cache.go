@@ -60,7 +60,7 @@ func (e CartridgeSetEvaluator) cachedBlueprintEvaluations(geometries []string, k
 			for _, placement := range placements {
 				module := e.modules[placement.ModuleID]
 				addStats(main, module.MainStats)
-				addStats(sub, module.SubStats)
+				addStats(sub, module.ActiveSubStats())
 			}
 			for _, property := range p.properties {
 				for _, value := range []float64{main[property], sub[property]} {

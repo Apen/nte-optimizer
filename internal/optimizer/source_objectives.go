@@ -22,7 +22,7 @@ func SourceObjectiveScore(total map[string]float64, modules []nte.Module, cartri
 	main, sub := map[string]float64{}, map[string]float64{}
 	for _, module := range modules {
 		addStats(main, module.MainStats)
-		addStats(sub, module.SubStats)
+		addStats(sub, module.ActiveSubStats())
 	}
 	if cartridge != nil {
 		addStats(main, cartridge.MainStats)

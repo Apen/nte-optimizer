@@ -98,7 +98,7 @@ func Score(m nte.Module, c Character, refs References) float64 {
 }
 
 func ScoreDetailed(m nte.Module, c Character, refs References) Breakdown {
-	return ScoreStatsDetailed(m.MainStats, m.SubStats, c, refs)
+	return ScoreStatsDetailed(m.MainStats, m.ActiveSubStats(), c, refs)
 }
 
 func ScoreCartridgeDetailed(ca nte.Cartridge, c Character, refs References) Breakdown {

@@ -25,18 +25,18 @@ export function OwnerBadge({ owner }: { owner: Owner }) {
   return <span className="mt-1 inline-flex h-6 max-w-full items-center gap-1.5 rounded-full border border-amber-800/70 bg-amber-950/50 pr-2 text-xs font-bold text-amber-200"><img className="size-6 rounded-full object-cover object-top" src={`/game_ui/characters/${owner.id}.png`} alt="" /><span className="truncate">{owner.name}</span></span>
 }
 
-function PieceCard({ tone, image, title, meta, owner, ownerCharacter, mainStats, subStats, leading, trailing, actions, details, className = '' }: { tone: 'module' | 'cartridge'; image: ReactNode; mainStats: Stat[]; subStats: Stat[] } & PieceCardProps) {
+function PieceCard({ tone, image, title, meta, owner, ownerCharacter, mainStats, subStats, subStatsActive = true, leading, trailing, actions, details, className = '' }: { tone: 'module' | 'cartridge'; image: ReactNode; mainStats: Stat[]; subStats: Stat[]; subStatsActive?: boolean } & PieceCardProps) {
   const cartridge = tone === 'cartridge'
-  return <Card className={`overflow-hidden ${className}`}><div className={`flex items-center gap-3 border-b bg-gradient-to-r to-slate-950 p-3 ${cartridge ? 'border-violet-900/60 from-violet-950/80' : 'border-orange-900/60 from-orange-950/80'}`}>{leading}{image}<div className="min-w-0 flex-1"><strong className={`block ${cartridge ? 'text-violet-100' : 'text-orange-100'}`}>{title}</strong>{meta && <small className="block text-slate-400">{meta}</small>}{ownerCharacter ? <OwnerBadge owner={ownerCharacter} /> : owner && <small className="block h-6 leading-6 text-emerald-400">{owner}</small>}</div>{trailing}</div><CardContent className="pt-3"><Stats title={cartridge ? t('main_attribute') : t('main_attributes')} stats={mainStats} /><Stats title={t('secondary_attributes')} stats={subStats} />{details?.length ? <div className="mt-3 grid gap-2 border-t border-slate-800 pt-3">{details.map((text, index) => <GameEffectText key={`${index}-${text}`} text={text} className="text-xs text-slate-400" />)}</div> : null}{actions && <div className="mt-3 flex gap-2 border-t border-slate-800 pt-3">{actions}</div>}</CardContent></Card>
+  return <Card className={`overflow-hidden ${className}`}><div className={`flex items-center gap-3 border-b bg-gradient-to-r to-slate-950 p-3 ${cartridge ? 'border-violet-900/60 from-violet-950/80' : 'border-orange-900/60 from-orange-950/80'}`}>{leading}{image}<div className="min-w-0 flex-1"><strong className={`block ${cartridge ? 'text-violet-100' : 'text-orange-100'}`}>{title}</strong>{meta && <small className="block text-slate-400">{meta}</small>}{ownerCharacter ? <OwnerBadge owner={ownerCharacter} /> : owner && <small className="block h-6 leading-6 text-emerald-400">{owner}</small>}</div>{trailing}</div><CardContent className="pt-3"><Stats title={cartridge ? t('main_attribute') : t('main_attributes')} stats={mainStats} /><Stats title={t(subStatsActive ? 'secondary_attributes' : 'secondary_attributes_inactive')} stats={subStats} inactive={!subStatsActive} />{details?.length ? <div className="mt-3 grid gap-2 border-t border-slate-800 pt-3">{details.map((text, index) => <GameEffectText key={`${index}-${text}`} text={text} className="text-xs text-slate-400" />)}</div> : null}{actions && <div className="mt-3 flex gap-2 border-t border-slate-800 pt-3">{actions}</div>}</CardContent></Card>
 }
 
-type ModulePiece = Pick<InventoryModule, 'game_item_id' | 'geometry' | 'main_stats' | 'sub_stats'>
+type ModulePiece = Pick<InventoryModule, 'game_item_id' | 'geometry' | 'main_stats' | 'sub_stats' | 'sub_stats_active'>
 type CartridgePiece = Pick<InventoryCartridge, 'game_item_id' | 'set_id' | 'main_stats' | 'sub_stats'>
 
 export function ModulePieceCard({ item, ...props }: { item: ModulePiece } & PieceCardProps) {
   const { geometries } = usePresentation()
   const geometry = geometries[item.geometry] || item.geometry
-  return <PieceCard tone="module" image={<ModuleIcon itemID={item.game_item_id} label={geometry} />} mainStats={item.main_stats} subStats={item.sub_stats} {...props} />
+  return <PieceCard tone="module" image={<ModuleIcon itemID={item.game_item_id} label={geometry} />} mainStats={item.main_stats} subStats={item.sub_stats} subStatsActive={item.sub_stats_active} {...props} />
 }
 
 export function CartridgePieceCard({ item, ...props }: { item: CartridgePiece } & PieceCardProps) {
@@ -76,10 +76,10 @@ function formatEffectParameter(parameter: ArcEffectParameter) {
 	return parameter.value.toLocaleString(locale, { maximumFractionDigits: 3 })
 }
 
-function Stats({ title, stats }: { title: string; stats: Stat[] }) {
+function Stats({ title, stats, inactive = false }: { title: string; stats: Stat[]; inactive?: boolean }) {
   const { stats: labels } = usePresentation()
   if (!stats.length) return null
-  return <div className="mt-2 border-t border-slate-800 pt-2"><p className="mb-1 text-[10px] font-black uppercase tracking-wider text-slate-500">{title}</p><div className="grid gap-1 sm:grid-cols-2">{stats.map((stat, index) => <div className="flex justify-between rounded bg-slate-950 px-2 py-1.5 text-xs" key={`${stat.property_id}-${index}`}><span className="text-slate-400">{labels[stat.property_id] || stat.property_id}</span><b>{stat.percent ? `${(stat.value * 100).toFixed(1)} %` : formatStat(stat.property_id, stat.value)}</b></div>)}</div></div>
+  return <div className="mt-2 border-t border-slate-800 pt-2"><p className="mb-1 text-[10px] font-black uppercase tracking-wider text-slate-500">{title}</p><div className={`grid gap-1 sm:grid-cols-2 ${inactive ? "opacity-50" : ""}`}>{stats.map((stat, index) => <div className="flex justify-between rounded bg-slate-950 px-2 py-1.5 text-xs" key={`${stat.property_id}-${index}`}><span className="text-slate-400">{labels[stat.property_id] || stat.property_id}</span><b>{stat.percent ? `${(stat.value * 100).toFixed(1)} %` : formatStat(stat.property_id, stat.value)}</b></div>)}</div></div>
 }
 
 function ModuleIcon({ itemID, label }: { itemID?: string; label: string }) {

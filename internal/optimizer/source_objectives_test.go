@@ -10,7 +10,7 @@ import (
 func TestSourceObjectivePreservesMainAndSubWeights(t *testing.T) {
 	character := scoring.Character{MainWeights: map[string]float64{"MagBase": 1}, SubWeights: map[string]float64{"MagBase": .85}}
 	goals := []ObjectiveGoal{{PropertyID: "MagBase", Minimum: 200, Importance: 1, SourceWeights: true}}
-	modules := []nte.Module{{MainStats: []nte.Stat{{PropertyID: "MagBase", Value: 100}}, SubStats: []nte.Stat{{PropertyID: "MagBase", Value: 100}}}}
+	modules := []nte.Module{{Level: 20, MainStats: []nte.Stat{{PropertyID: "MagBase", Value: 100}}, SubStats: []nte.Stat{{PropertyID: "MagBase", Value: 100}}}}
 	score, rows := SourceObjectiveScore(map[string]float64{"MagBase": 200}, modules, nil, character, goals)
 	if math.Abs(score-9.25) > 1e-10 || len(rows) != 2 || rows[0].Points != 5 || rows[1].Points != 4.25 {
 		t.Fatalf("score=%g rows=%+v", score, rows)

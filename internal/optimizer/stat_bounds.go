@@ -28,7 +28,7 @@ func (e CartridgeSetEvaluator) prepareStatBound(groups []blueprintGroup, pools m
 	moduleStats := func(module nte.Module) map[string]float64 {
 		values := map[string]float64{}
 		addStats(values, module.MainStats)
-		addStats(values, module.SubStats)
+		addStats(values, module.ActiveSubStats())
 		if trait := e.character.ConsoleTrait; trait != nil && module.Area == trait.Area {
 			values[trait.PropertyID] += trait.ValuePerModule
 		}

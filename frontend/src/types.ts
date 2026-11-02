@@ -9,7 +9,7 @@ export type Placement = { module_id: string; cells: Cell[] }
 export type Stat = { property_id: string; value: number; percent: boolean }
 export type EquipmentScoreContribution = { source?:string; property_id:string; value:number; effective_value?:number; reference_value?:number; normalized_value?:number; weight:number; score:number; capped?:boolean }
 export type OptimizedModule = {
-  module: { local_id: string; game_item_id?: string; geometry: string; main_stats: Stat[]; sub_stats: Stat[]; equipped_character_id?: number }
+  module: { local_id: string; game_item_id?: string; geometry: string; main_stats: Stat[]; sub_stats: Stat[]; sub_stats_active: boolean; equipped_character_id?: number }
   breakdown: { total: number; contributions?: EquipmentScoreContribution[] }
   equipped_character_name?: string
 }
@@ -49,7 +49,7 @@ export type OptimizationAlternative = { solution:OptimizationSolution; modules:O
 export type SearchProgress = { visited: number; total?: number; elapsed_ms: number; candidates: number; workers?:number; pruned_branches?:number; finished?:boolean }
 export type OptimizationLog = { started_at:string; finished_at?:string; status:string; entries:{level:string;stage:string;message:string}[] }
 export type ScanLogEvent = { time:string; stage:string; status:string; code?:string; counts?:Record<string,number> }
-export type InventoryModule = { local_id:string; game_item_id?:string; quality:string; set_id:string; set_name:string; geometry:string; area:number; level:number; main_stats:Stat[]; sub_stats:Stat[]; locked?:boolean; equipped_character_id?:number; equipped_placement?:{row:number;column:number} }
+export type InventoryModule = { local_id:string; game_item_id?:string; quality:string; set_id:string; set_name:string; geometry:string; area:number; level:number; main_stats:Stat[]; sub_stats:Stat[]; sub_stats_active:boolean; locked?:boolean; equipped_character_id?:number; equipped_placement?:{row:number;column:number} }
 export type InventoryCartridge = { local_id:string; game_item_id?:string; set_id:string; set_name:string; quality:string; level:number; main_stats:Stat[]; sub_stats:Stat[]; locked?:boolean; equipped_character_id?:number }
 export type InventoryArc = { id:{solt:number;serial:number}; forkId:string; name:string; quality:string; level:number; breakthrough:number; star:number; equippedCharacterId?:number; equipped_character_name?:string; compatible_characters?:{character_id:number;name:string}[] }
 export type InventoryResource = { id:{solt:number;serial:number}; itemId:string; name:string; quality?:string; quantity:number }
