@@ -183,7 +183,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
     update `account-buffs-page.test.tsx` and bridge types; compare synthetic
     one-/twelve-character allocations against the audit baseline below.
 
-- [ ] **CQ-006 — Prepare shared calculation inputs once per operation.**
+- [x] **CQ-006 — Prepare shared calculation inputs once per operation.**
   - **Priority / category:** P2; demonstrated repeated work and state ownership debt.
   - **Evidence:** `character_state.go:208` constructs a new service on every
     reconstruction, discarding service catalog/base caches. `loadCharacters`

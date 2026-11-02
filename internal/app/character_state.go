@@ -8,7 +8,6 @@ import (
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
 	"nte-optimizer/internal/housing"
-	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/optimizer"
 	"nte-optimizer/internal/scoring"
@@ -38,7 +37,7 @@ type PanelBonus struct {
 }
 
 func LoadCharacterGameState(projectDir, dataDir string, characterID int, language string) (CharacterGameState, error) {
-	_, state, loaded, err := loadAccountData(projectDir)
+	inventory, state, loaded, err := loadAccountData(projectDir)
 	if err != nil {
 		return CharacterGameState{}, err
 	}
@@ -53,11 +52,12 @@ func LoadCharacterGameState(projectDir, dataDir string, characterID int, languag
 	} else if loaded {
 		state.PanelOverrides = overrides.Characters
 	}
-	equipment, err := LoadEquipmentCatalog(projectDir, dataDir, language)
+	service := NewOptimizerService(dataDir)
+	equipment, err := service.equipmentCatalog(inventory, state, language)
 	if err != nil {
 		return CharacterGameState{}, err
 	}
-	catalog, err := ntelocale.Load(dataDir, language)
+	catalog, err := service.loadLocale(language)
 	if err != nil {
 		return CharacterGameState{}, err
 	}
@@ -100,13 +100,13 @@ func LoadCharacterGameState(projectDir, dataDir string, characterID int, languag
 			result.Modules = append(result.Modules, module)
 		}
 	}
-	stats, err := loadCurrentCharacterStats(dataDir, &state, result.Character, result.Modules, result.Cartridges, language)
+	stats, err := service.currentCharacterStats(&state, result.Character, result.Modules, result.Cartridges, language)
 	if err != nil {
 		return CharacterGameState{}, err
 	}
 	result.Stats = stats
 	result.PossiblePanelBonuses = inferPossiblePanelBonuses(result.ObservedPanelStats, stats)
-	result.PotentialHousingEffects, err = inferHousingEffects(dataDir, &state, equipment, language)
+	result.PotentialHousingEffects, err = service.inferHousingEffects(&state, equipment, language)
 	if err != nil {
 		return CharacterGameState{}, err
 	}
@@ -143,29 +143,27 @@ func valueOrZero(value *float64) float64 {
 	return *value
 }
 
-func inferHousingEffects(dataDir string, state *decoded.State, equipment EquipmentCatalog, language string) ([]housing.InferredModifier, error) {
-	catalog, err := housing.Load(datafiles.New(dataDir).SpecialFurnitureModifiers())
+func (service OptimizerService) inferHousingEffects(state *decoded.State, equipment EquipmentCatalog, language string) ([]housing.InferredModifier, error) {
+	catalog, err := housing.Load(datafiles.New(service.DataDir).SpecialFurnitureModifiers())
 	if err != nil {
 		return nil, fmt.Errorf("load special-furniture modifiers: %w", err)
 	}
 	observations := make([]housing.Observation, 0, len(state.Characters))
+	modulesByOwner := map[int][]nte.Module{}
+	cartridgesByOwner := map[int][]nte.Cartridge{}
+	for _, module := range equipment.Modules {
+		modulesByOwner[module.EquippedCharacterID] = append(modulesByOwner[module.EquippedCharacterID], module)
+	}
+	for _, cartridge := range equipment.Cartridges {
+		cartridgesByOwner[cartridge.EquippedCharacterID] = append(cartridgesByOwner[cartridge.EquippedCharacterID], cartridge)
+	}
 	for _, character := range state.Characters {
 		if !character.ObservedAtLogin.Loaded || !hasObservedPanelStats(character.Stats) {
 			continue
 		}
-		modules := make([]nte.Module, 0)
-		for _, module := range equipment.Modules {
-			if module.EquippedCharacterID == character.CharacterID {
-				modules = append(modules, module)
-			}
-		}
-		cartridges := make([]nte.Cartridge, 0, 1)
-		for _, cartridge := range equipment.Cartridges {
-			if cartridge.EquippedCharacterID == character.CharacterID {
-				cartridges = append(cartridges, cartridge)
-			}
-		}
-		stats, err := loadCurrentCharacterStats(dataDir, state, character, modules, cartridges, language)
+		modules := modulesByOwner[character.CharacterID]
+		cartridges := cartridgesByOwner[character.CharacterID]
+		stats, err := service.currentCharacterStats(state, character, modules, cartridges, language)
 		if err != nil {
 			return nil, err
 		}
@@ -206,7 +204,10 @@ func hasObservedPanelStats(stats decoded.CharacterStats) bool {
 }
 
 func loadCurrentCharacterStats(dataDir string, state *decoded.State, character decoded.Character, modules []nte.Module, cartridges []nte.Cartridge, language string) (*optimizer.StatSummary, error) {
-	service := NewOptimizerService(dataDir)
+	return NewOptimizerService(dataDir).currentCharacterStats(state, character, modules, cartridges, language)
+}
+
+func (service OptimizerService) currentCharacterStats(state *decoded.State, character decoded.Character, modules []nte.Module, cartridges []nte.Cartridge, language string) (*optimizer.StatSummary, error) {
 	profiles, err := service.loadCharacters()
 	if err != nil {
 		return nil, err

@@ -5,7 +5,6 @@ import (
 
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
-	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/optimizer"
 )
@@ -37,11 +36,17 @@ func LoadEquipmentCatalog(projectDir, dataDir, language string) (EquipmentCatalo
 	if !loaded {
 		return EquipmentCatalog{Modules: []nte.Module{}, Cartridges: []nte.Cartridge{}, Arcs: []EquipmentCatalogArc{}, Resources: []decoded.Resource{}}, nil
 	}
-	catalog, err := ntelocale.Load(dataDir, language)
+	return NewOptimizerService(dataDir).equipmentCatalog(inventory, state, language)
+}
+
+func (s OptimizerService) equipmentCatalog(inventory nte.Inventory, state decoded.State, language string) (EquipmentCatalog, error) {
+	inventory.Modules = append([]nte.Module(nil), inventory.Modules...)
+	inventory.Cartridges = append([]nte.Cartridge(nil), inventory.Cartridges...)
+	catalog, err := s.loadLocale(language)
 	if err != nil {
 		return EquipmentCatalog{}, fmt.Errorf("load locale catalog: %w", err)
 	}
-	layout := datafiles.New(dataDir)
+	layout := datafiles.New(s.DataDir)
 	compatibility, err := decoded.LoadArcCompatibilityCatalog(layout.DecodeCatalog("characters.json"), layout.Arcs())
 	if err != nil {
 		return EquipmentCatalog{}, err

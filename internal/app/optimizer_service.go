@@ -48,6 +48,7 @@ type OptimizerService struct {
 	ReservedArcIDs       map[string]bool
 	PinnedModuleIDs      map[string]bool
 	ExcludedModuleIDs    map[string]bool
+	static               *staticCatalogs
 	catalogs             *optimizerCatalogCache
 	baseStats            *characterBaseStatsCache
 	blueprints           *optimizer.BlueprintCache
@@ -240,7 +241,7 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 	if err != nil {
 		return OptimizationResult{}, err
 	}
-	displayCatalog, err := ntelocale.Load(s.DataDir, language)
+	displayCatalog, err := s.loadLocale(language)
 	if err != nil {
 		return OptimizationResult{}, fmt.Errorf("load %s game labels: %w", language, err)
 	}

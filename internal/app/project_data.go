@@ -46,7 +46,7 @@ func (s OptimizerService) optimizeProjectWithArc(ctx context.Context, projectDir
 	return s.optimizeTunedWithArc(ctx, inventory, profileID, &state, includeEquipped, language, mode, goals, tunings, arcForkID)
 }
 
-func (s OptimizerService) loadCharacters() (map[string]scoring.Character, error) {
+func (s OptimizerService) readCharacters() (map[string]scoring.Character, error) {
 	characters := map[string]scoring.Character{}
 	targetsDir := datafiles.New(s.DataDir).TargetsDir()
 	entries, err := os.ReadDir(targetsDir)

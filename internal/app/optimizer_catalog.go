@@ -26,6 +26,7 @@ type optimizerCatalogCache struct {
 func NewOptimizerService(dataDir string) OptimizerService {
 	return OptimizerService{
 		DataDir:    dataDir,
+		static:     &staticCatalogs{},
 		catalogs:   &optimizerCatalogCache{},
 		baseStats:  &characterBaseStatsCache{},
 		blueprints: optimizer.NewBlueprintCache(),

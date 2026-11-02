@@ -3,9 +3,7 @@ package app
 import (
 	"fmt"
 
-	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
-	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/scoring"
 )
@@ -16,7 +14,7 @@ func (s OptimizerService) resolveAccountContext(state *decoded.State, profile sc
 	if state == nil {
 		return nil, nil, "", additional, characterNames, nil
 	}
-	localizedNames, err := ntelocale.Load(s.DataDir, language)
+	localizedNames, err := s.loadLocale(language)
 	if err != nil {
 		return nil, nil, "", nil, nil, fmt.Errorf("load locale catalog: %w", err)
 	}
@@ -26,7 +24,8 @@ func (s OptimizerService) resolveAccountContext(state *decoded.State, profile sc
 	var currentCharacter *decoded.Character
 	for i := range state.Characters {
 		if state.Characters[i].CharacterID == profile.CharacterID {
-			currentCharacter = &state.Characters[i]
+			copy := state.Characters[i]
+			currentCharacter = &copy
 			currentCharacter.Name = localizedNames.CharacterName(currentCharacter.CharacterID, currentCharacter.Name)
 			break
 		}
@@ -35,7 +34,8 @@ func (s OptimizerService) resolveAccountContext(state *decoded.State, profile sc
 	if currentCharacter != nil && currentCharacter.ForkNetID != nil {
 		for i := range state.Weapons {
 			if state.Weapons[i].ID.Key() == currentCharacter.ForkNetID.Key() {
-				currentWeapon = &state.Weapons[i]
+				copy := state.Weapons[i]
+				currentWeapon = &copy
 				break
 			}
 		}
@@ -43,7 +43,7 @@ func (s OptimizerService) resolveAccountContext(state *decoded.State, profile sc
 	weaponNote := ""
 	if currentWeapon != nil {
 		currentWeapon.Name = cleanArcName(localizedNames.ItemName(currentWeapon.ForkID, currentWeapon.Name))
-		catalog, err := decoded.LoadForkCatalog(datafiles.New(s.DataDir).Arcs())
+		catalog, err := s.loadArcs()
 		if err != nil {
 			return nil, nil, "", nil, nil, err
 		}
@@ -53,7 +53,7 @@ func (s OptimizerService) resolveAccountContext(state *decoded.State, profile sc
 	if values := state.PanelOverrides[profile.CharacterID]; len(values) > 0 {
 		additional["panel_calibration"] = statsFromValues(values)
 	}
-	buffs, err := scannedAccountBuffSources(state, s.DataDir, profile.CharacterID, state.PanelOverrides[profile.CharacterID])
+	buffs, err := s.accountBuffSources(state, profile.CharacterID, state.PanelOverrides[profile.CharacterID])
 	if err != nil {
 		return nil, nil, "", nil, nil, err
 	}

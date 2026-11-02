@@ -5,7 +5,6 @@ import (
 
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
-	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/optimizer"
 	"nte-optimizer/internal/scoring"
@@ -87,11 +86,11 @@ func (s OptimizerService) prepareArcSelection(state *decoded.State, profile scor
 		return result, nil
 	}
 
-	forkCatalog, err := decoded.LoadForkCatalog(layout.Arcs())
+	forkCatalog, err := s.loadArcs()
 	if err != nil {
 		return arcCandidateSet{}, fmt.Errorf("load Arc stat catalog: %w", err)
 	}
-	localizedNames, err := ntelocale.Load(s.DataDir, language)
+	localizedNames, err := s.loadLocale(language)
 	if err != nil {
 		return arcCandidateSet{}, fmt.Errorf("load Arc names: %w", err)
 	}
@@ -103,6 +102,8 @@ func (s OptimizerService) prepareArcSelection(state *decoded.State, profile scor
 	allAlwaysOn := append(append([]nte.Stat(nil), panel...), permanent...)
 	mainScore := scoring.ScoreStatsDetailed(allAlwaysOn, nil, profile, refs).Total
 	subScore := scoring.ScoreStatsDetailed(nil, allAlwaysOn, profile, refs).Total
+	selected := *weapon
+	weapon = &selected
 	weapon.Name = cleanArcName(localizedNames.ItemName(weapon.ForkID, weapon.Name))
 	id := weapon.ID.Key()
 	result.option = &optimizer.ArcOption{ID: id, Additional: additional, Score: max(mainScore, subScore) * scoreScale}

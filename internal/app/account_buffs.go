@@ -149,11 +149,15 @@ func scannedBuffSelection(state *decoded.State, options []BuffOption, bonds map[
 	return selection, nil
 }
 func scannedAccountBuffSources(state *decoded.State, dataDir string, characterID int, calibration map[string]float64) (map[string][]nte.Stat, error) {
-	sources := map[string][]nte.Stat{}
 	options, bonds, err := buffOptions(dataDir)
 	if err != nil {
 		return nil, err
 	}
+	return selectedAccountBuffSources(state, options, bonds, characterID, calibration)
+}
+
+func selectedAccountBuffSources(state *decoded.State, options []BuffOption, bonds map[int][]nte.Stat, characterID int, calibration map[string]float64) (map[string][]nte.Stat, error) {
+	sources := map[string][]nte.Stat{}
 	selection, err := scannedBuffSelection(state, options, bonds)
 	if err != nil {
 		return nil, err
