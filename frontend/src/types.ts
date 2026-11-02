@@ -63,3 +63,6 @@ export type PotentialHousingEffect = { modifier_id:string; property_id:string; p
 export type PanelBonus = { property_id:string; observed_value:number; calculated_value:number; difference:number }
 export type CharacterGameSnapshot = { character:CurrentCharacter; observed_panel_stats?:ObservedPanelStats; possible_panel_bonuses?:PanelBonus[]; potential_housing_effects?:PotentialHousingEffect[]; weapon?:InventoryArc; cartridges:InventoryCartridge[]; modules:InventoryModule[]; stats?:StatSummary; imported_at?:string }
 export type AccountImportSummary = { has_import:boolean; imported_at?:string; source_generated_at?:string; characters:number; modules:number; cartridges:number; weapons:number; warnings?:string[] }
+export type PanelComparison = { property_id:string; observed:number; calculated:number; difference:number; matches:boolean }
+export type BuffCharacter = { character_id:number; name:string; bond_level?:number; bond_bonus_active:boolean; bond_stats:Stat[]|null; bond_stage_flags?:boolean[]; comparison:PanelComparison[]; sources:Record<string,Record<string,number>>; calibration_conflict:boolean; panel_loaded:boolean }
+export type AccountBuffPage = { furniture:{id:string;stats:Stat[];level?:number;progression_id?:string}[];detected_furniture_ids?:string[]; characters:BuffCharacter[]; suggestions:PotentialHousingEffect[]|null }

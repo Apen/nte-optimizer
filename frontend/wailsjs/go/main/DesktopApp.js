@@ -4,6 +4,10 @@ export function Profiles() {
   return window['go']['main']['DesktopApp']['Profiles']()
 }
 
+export function AccountBuffs(language) {
+  return window['go']['main']['DesktopApp']['AccountBuffs'](language)
+}
+
 export function SaveProfileStrategy(profileID, settings) {
   return window['go']['main']['DesktopApp']['SaveProfileStrategy'](profileID, settings)
 }

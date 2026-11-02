@@ -55,11 +55,11 @@ func TestLoadCharacterGameStateExposesObservedPanelSeparatelyFromCalculatedStats
 	if got.ObservedPanelStats.CritRate == nil || *got.ObservedPanelStats.CritRate != critRate {
 		t.Fatalf("observed panel crit rate was not preserved: %#v", got.ObservedPanelStats)
 	}
-	if got.Stats == nil || got.Stats.Derived["AtkFinal"] != 636 || got.Stats.Derived["CritBase"] != .05 {
+	if got.Stats == nil || got.Stats.Derived["AtkFinal"] != 636 || got.Stats.Derived["CritBase"] != .09 {
 		t.Fatalf("calculated optimizer stats were replaced or altered: %#v", got.Stats)
 	}
-	if _, ok := got.Stats.Sources["bond"]; ok {
-		t.Fatalf("bond level was incorrectly applied as a calculated stat source: %#v", got.Stats.Sources["bond"])
+	if got.Stats.Sources["account_bond"]["CritBase"] != .04 {
+		t.Fatalf("scanned bond bonus was not applied exactly once: %#v", got.Stats.Sources["account_bond"])
 	}
 }
 

@@ -6,7 +6,7 @@ import { t, type Locale } from '../i18n'
 import { formatDateTime } from '../lib/format'
 import type { AccountImportSummary, BuildWorkspace, EquipmentCatalog } from '../types'
 
-export type Page = 'characters' | 'character-state' | 'builds' | 'cartridges' | 'modules' | 'arcs' | 'resources' | 'import'
+export type Page = 'characters' | 'character-state' | 'builds' | 'cartridges' | 'modules' | 'arcs' | 'resources' | 'account-buffs' | 'import'
 
 type NavigationProps = {
   page: Page
@@ -28,6 +28,7 @@ export function AppSidebar({ page, onPage, characters, catalog, importSummary, l
     <nav className="grid gap-2">
       <NavButton active={page === 'characters'} onClick={() => onPage('characters')} icon={Users} title={t('nav_characters')} detail={t('nav_available', { count: characters.length })} />
       <NavButton active={page === 'builds'} onClick={() => onPage('builds')} icon={Sparkles} title={t('nav_builds')} detail={t('nav_saved', { count: saved })} />
+      <NavButton active={page === 'account-buffs'} onClick={() => onPage('account-buffs')} icon={Sparkles} title={t('nav_account_buffs')} detail={t('nav_account_buffs_detail')} />
       <NavButton active={page === 'cartridges'} onClick={() => onPage('cartridges')} icon={Package} title={t('nav_cartridges')} detail={t('nav_owned', { count: catalog.cartridges.length })} />
       <NavButton active={page === 'modules'} onClick={() => onPage('modules')} icon={Puzzle} title={t('nav_modules')} detail={t('nav_owned', { count: catalog.modules.length })} />
       <NavButton active={page === 'arcs'} onClick={() => onPage('arcs')} icon={Swords} title={t('nav_arcs')} detail={t('nav_owned', { count: catalog.arcs.length })} />
@@ -43,6 +44,7 @@ export function MobileNavigation({ page, onPage, locale, onLocaleChange }: Navig
   const items: [Page, string, LucideIcon][] = [
     ['characters', 'nav_characters', Users],
     ['builds', 'nav_builds', Sparkles],
+    ['account-buffs', 'nav_account_buffs', Sparkles],
     ['cartridges', 'nav_cartridges', Package],
     ['modules', 'nav_modules', Puzzle],
     ['arcs', 'nav_arcs', Swords],

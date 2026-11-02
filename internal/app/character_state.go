@@ -114,59 +114,28 @@ func LoadCharacterGameState(projectDir, dataDir string, characterID int, languag
 }
 
 func inferPossiblePanelBonuses(panel *decoded.CharacterStats, calculated *optimizer.StatSummary) []PanelBonus {
-	if panel == nil || calculated == nil {
+	if panel == nil {
 		return nil
 	}
-	type panelValue struct {
-		property  string
-		value     float64
-		available bool
-		rounded   bool
-	}
-	values := []panelValue{
-		{property: "HPFinal", value: panel.MaxHP, available: panel.MaxHP > 0, rounded: true},
-		{property: "AtkFinal", value: valueOrZero(panel.Attack), available: panel.Attack != nil, rounded: true},
-		{property: "DefFinal", value: valueOrZero(panel.Defense), available: panel.Defense != nil, rounded: true},
-		{property: "Endurance", value: valueOrZero(panel.Endurance), available: panel.Endurance != nil, rounded: true},
-		{property: "CritBase", value: valueOrZero(panel.CritRate), available: panel.CritRate != nil},
-		{property: "CritDamageBase", value: valueOrZero(panel.CritDamage), available: panel.CritDamage != nil},
-		{property: "ChargeGetEfficiencyBase", value: valueOrZero(panel.ChargeEfficiency), available: panel.ChargeEfficiency != nil},
-		{property: "MagBase", value: valueOrZero(panel.CycleIntensity), available: panel.CycleIntensity != nil, rounded: true},
-		{property: "UnbalIntensityBase", value: valueOrZero(panel.BreakIntensity), available: panel.BreakIntensity != nil, rounded: true},
-		{property: "DamageUpGeneralBase", value: valueOrZero(panel.UniversalDMGBonus), available: panel.UniversalDMGBonus != nil},
-		{property: "ElementalDMGBonus", value: valueOrZero(panel.ElementalDMGBonus), available: panel.ElementalDMGBonus != nil},
-	}
-	bonuses := make([]PanelBonus, 0)
-	for _, observed := range values {
-		calculatedValue, exists := calculated.Derived[observed.property]
-		if !observed.available || !exists {
-			continue
-		}
-		difference := observed.value - calculatedValue
-		if observed.rounded {
-			// Integer-valued panel stats can differ from the model by a fraction
-			// because the game and optimizer round at different stages.
+	bonuses := []PanelBonus{}
+	for _, row := range compareObservedPanel(*panel, calculated) {
+		difference := row.Difference
+		switch row.PropertyID {
+		case "HPFinal", "AtkFinal", "DefFinal", "Endurance", "MagBase", "UnbalIntensityBase":
 			difference = math.Round(difference)
-		} else {
-			// Ignore float serialization noise while preserving small percent
-			// bonuses such as 0.4% (0.004 in the stat model).
+		default:
 			difference = math.Round(difference*10000) / 10000
-			if difference <= 0.001 {
+			if difference <= .001 {
 				continue
 			}
 		}
-		if difference <= 0 {
-			continue
+		if difference > 0 {
+			bonuses = append(bonuses, PanelBonus{PropertyID: row.PropertyID, ObservedValue: row.Observed, CalculatedValue: row.Calculated, Difference: difference})
 		}
-		bonuses = append(bonuses, PanelBonus{
-			PropertyID: observed.property, ObservedValue: observed.value,
-			CalculatedValue: calculatedValue, Difference: difference,
-		})
 	}
 	sort.Slice(bonuses, func(i, j int) bool { return bonuses[i].PropertyID < bonuses[j].PropertyID })
 	return bonuses
 }
-
 func valueOrZero(value *float64) float64 {
 	if value == nil {
 		return 0

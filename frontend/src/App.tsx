@@ -17,6 +17,7 @@ import { Card, CardContent } from './components/ui/card'
 import { ImportPage } from './pages/import-page'
 import { CharactersPage } from './pages/characters-page'
 import { CharacterStatePage } from './pages/character-state-page'
+import { AccountBuffsPage } from './pages/account-buffs-page'
 import { ArcsPage, CartridgesPage, ModulesPage, ResourcesPage } from './pages/inventory-pages'
 import { formatRanking } from './lib/format'
 import { PresentationProvider } from './presentation'
@@ -215,7 +216,7 @@ export function App() {
   const selectCharacter=(id:number)=>{selectionTouched.current=true;setSelectedCharacter(id);setResult(undefined);setSavedBuildSelection(undefined);setPinnedModules([]);setExcludedModules([])}
   return <PresentationProvider catalog={presentation}><div className="app-shell">{update&&<UpdateDialog update={update} onClose={()=>setUpdate(undefined)}/>}<AppSidebar page={page} onPage={setPage} characters={workspace.characters} catalog={catalog} importSummary={importSummary} locale={locale} onLocaleChange={setLocale}/><main className="app-main">
     <MobileNavigation page={page} onPage={setPage} locale={locale} onLocaleChange={setLocale}/>
-    {page==='characters'?<CharactersPage characters={workspace.characters} selected={selectedCharacter} onSelect={selectCharacter} onMove={moveCharacter} onReorder={ids=>void saveCharacterOrder(ids)} onBuild={openCharacterBuild} onState={id=>{selectCharacter(id);setPage('character-state')}}/>:page==='character-state'?<CharacterStatePage characterID={selectedCharacter} locale={locale} onBack={()=>setPage('characters')}/>:page==='cartridges'?<CartridgesPage items={catalog.cartridges} characters={workspace.characters}/>:page==='modules'?<ModulesPage items={catalog.modules} characters={workspace.characters}/>:page==='arcs'?<ArcsPage items={catalog.arcs}/>:page==='resources'?<ResourcesPage items={catalog.resources}/>:page==='import'?<ImportPage summary={importSummary} locale={locale} onImported={refreshImportedData}/>:<>
+    {page==='characters'?<CharactersPage characters={workspace.characters} selected={selectedCharacter} onSelect={selectCharacter} onMove={moveCharacter} onReorder={ids=>void saveCharacterOrder(ids)} onBuild={openCharacterBuild} onState={id=>{selectCharacter(id);setPage('character-state')}}/>:page==='character-state'?<CharacterStatePage characterID={selectedCharacter} locale={locale} onBack={()=>setPage('characters')}/>:page==='account-buffs'?<AccountBuffsPage locale={locale}/>:page==='cartridges'?<CartridgesPage items={catalog.cartridges} characters={workspace.characters}/>:page==='modules'?<ModulesPage items={catalog.modules} characters={workspace.characters}/>:page==='arcs'?<ArcsPage items={catalog.arcs}/>:page==='resources'?<ResourcesPage items={catalog.resources}/>:page==='import'?<ImportPage summary={importSummary} locale={locale} onImported={refreshImportedData}/>:<>
      <details className="settings-disclosure" open={settingsOpen} onToggle={event=>setSettingsOpen(event.currentTarget.open)}>
      <summary aria-expanded={settingsOpen}>
        <span className="settings-disclosure-context">

@@ -1,7 +1,7 @@
 import { currentIntlLocale, t } from '../i18n'
 import { formatStat } from '../lib/format'
 import { usePresentation } from '../presentation'
-import type { ObservedPanelStats, PanelBonus, PotentialHousingEffect, StatSummary } from '../types'
+import type { ObservedPanelStats, PanelBonus, StatSummary } from '../types'
 import { Card, CardContent, CardHeader } from './ui/card'
 
 // These inputs are already represented by the final panel values below.
@@ -17,12 +17,10 @@ export function CurrentGameStats({
   observedPanelStats,
   calculatedStats,
   possiblePanelBonuses,
-  potentialHousingEffects,
 }: {
   observedPanelStats?: ObservedPanelStats
   calculatedStats?: StatSummary
   possiblePanelBonuses?: PanelBonus[]
-  potentialHousingEffects?: PotentialHousingEffect[]
 }) {
   const { stats: labels } = usePresentation()
   if (!observedPanelStats && !calculatedStats) {
@@ -52,8 +50,6 @@ export function CurrentGameStats({
     .filter(([property, value]) => Number.isFinite(value) && !panelStatComponents.has(property))
   const entries: [string, number][] = (observedPanelStats ? observedEntries : calculatedEntries)
     .sort(([left], [right]) => (labels[left] || left).localeCompare(labels[right] || right, currentIntlLocale()))
-  const panelBonusProperties = new Set((possiblePanelBonuses || []).map(effect => effect.property_id))
-  const unmatchedHousingEffects = (potentialHousingEffects || []).filter(effect => !panelBonusProperties.has(effect.panel_property))
   const formatPanelValue = (property: string, value: number) => roundedPanelStats.has(property)
     ? Math.round(value).toLocaleString(currentIntlLocale())
     : formatStat(property, value)
@@ -66,7 +62,6 @@ export function CurrentGameStats({
       </div>
     </CardHeader>
     <CardContent>
-      {!observedPanelStats && calculatedStats?.completeness === 'partial' && <p className="mb-4 rounded-lg border border-amber-900/60 bg-amber-950/30 p-3 text-xs text-amber-200">{t('estimated_stats')}</p>}
       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {entries.map(([key, value]) => <div className="rounded-lg border border-slate-800 bg-slate-950/60 px-3 py-2" key={key}>
           <span className="block text-xs text-slate-500">{labels[key] || key}</span>
@@ -87,17 +82,7 @@ export function CurrentGameStats({
           </li>)}
         </ul>
       </aside>}
-      {unmatchedHousingEffects.length > 0 && <aside className="mt-4 rounded-lg border border-amber-900/60 bg-amber-950/20 p-3">
-        <h3 className="text-sm font-semibold text-amber-200">{t('possible_housing_modifiers')}</h3>
-        <p className="mt-1 text-xs text-amber-100/80">{t('possible_housing_modifiers_note')}</p>
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-          {unmatchedHousingEffects.map(effect => <li className="rounded-md border border-amber-900/40 bg-slate-950/40 px-3 py-2 text-sm" key={effect.modifier_id}>
-            <strong>{labels[effect.panel_property] || effect.property_id}</strong>
-            <span className="ml-2 tabular-nums">+{formatStat(effect.property_id, effect.value)}</span>
-            <small className="mt-1 block text-xs text-slate-400">{t('housing_modifier_evidence', { matching: effect.matching_characters, observed: effect.observed_characters })}</small>
-          </li>)}
-        </ul>
-      </aside>}
+
     </CardContent>
   </Card>
 }

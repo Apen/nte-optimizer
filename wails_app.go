@@ -123,7 +123,15 @@ func (a *DesktopApp) Localization(language string) (ntelocale.PresentationCatalo
 }
 
 func (a *DesktopApp) CharacterGameState(characterID int, language string) (appservice.CharacterGameState, error) {
+	a.buildMu.Lock()
+	defer a.buildMu.Unlock()
 	return appservice.LoadCharacterGameState(a.stateDir, a.service.DataDir, characterID, language)
+}
+
+func (a *DesktopApp) AccountBuffs(language string) (appservice.AccountBuffPage, error) {
+	a.buildMu.Lock()
+	defer a.buildMu.Unlock()
+	return appservice.LoadAccountBuffPage(a.stateDir, a.service.DataDir, language)
 }
 
 func (a *DesktopApp) EquipBuild(profileID string, characterID int, moduleIDs []string, cartridgeID string, stats map[string]float64, language string) (appservice.BuildWorkspace, error) {

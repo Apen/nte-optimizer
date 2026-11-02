@@ -53,5 +53,12 @@ func (s OptimizerService) resolveAccountContext(state *decoded.State, profile sc
 	if values := state.PanelOverrides[profile.CharacterID]; len(values) > 0 {
 		additional["panel_calibration"] = statsFromValues(values)
 	}
+	buffs, err := scannedAccountBuffSources(state, s.DataDir, profile.CharacterID, state.PanelOverrides[profile.CharacterID])
+	if err != nil {
+		return nil, nil, "", nil, nil, err
+	}
+	for source, stats := range buffs {
+		additional[source] = stats
+	}
 	return currentCharacter, currentWeapon, weaponNote, additional, characterNames, nil
 }
