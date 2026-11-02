@@ -43,6 +43,9 @@ func TestBoundPreservesTopK(t *testing.T) {
 
 func TestPreparedEvaluatorMatchesSummary(t *testing.T) {
 	_, _, candidates, e, placements := benchmarkFixture()
+	if got := e.Evaluate(placements); got == e.Evaluate([]Placement{{ModuleID: candidates[len(candidates)-1].Module.LocalID}}) {
+		t.Fatal("fixture must exercise distinct active fractional substat totals")
+	}
 	e.character.ConsoleTrait = &scoring.ConsoleTrait{Area: 1, PropertyID: "AtkUp", ValuePerModule: .025}
 	e.objectives = append(e.objectives, ObjectiveGoal{PropertyID: "AtkFinal", Minimum: 700, Maximum: 850})
 	e.additional = map[string][]nte.Stat{"modules": {{PropertyID: "AtkAdd", Value: 13}}, "console_trait": {{PropertyID: "AtkUp", Value: .1}}, "weapon": {{PropertyID: "AtkBase", Value: 100}}, "weapon_conditional": {{PropertyID: "AtkUp", Value: 100}}}

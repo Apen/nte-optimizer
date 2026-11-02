@@ -22,7 +22,7 @@ func TestExactSearchAgainstSubsetOracle(t *testing.T) {
 				geometry = "D"
 				area = 2
 			}
-			candidates[i] = Candidate{Module: nte.Module{LocalID: string(rune('a' + i)), Geometry: geometry, Area: area, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: float64(rng.Intn(8)) / 10}}}, Score: float64(rng.Intn(9) - 2), Priority: rng.Float64()}
+			candidates[i] = Candidate{Module: nte.Module{Level: 20, LocalID: string(rune('a' + i)), Geometry: geometry, Area: area, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: float64(rng.Intn(8)) / 10}}}, Score: float64(rng.Intn(9) - 2), Priority: rng.Float64()}
 		}
 		sets := SetCatalog{Definitions: map[string]SetDefinition{"set": {ID: "set", InventorySetID: "set", RequiredGeometries: []string{"S"}, Bonuses: []SetBonus{{Count: 1, Score: 3}}}}}
 		cartridges := []nte.Cartridge{{LocalID: "c1", SetID: "set"}, {LocalID: "c2", SetID: "set", SubStats: []nte.Stat{{PropertyID: "CritBase", Value: .1}}}}

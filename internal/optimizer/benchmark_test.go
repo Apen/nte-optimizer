@@ -13,7 +13,7 @@ func benchmarkFixture() (SearchSolver, Grid, []Candidate, CartridgeSetEvaluator,
 	solver := SearchSolver{Catalog: ShapeCatalog{Shapes: map[string]Shape{"S": {ID: "S", Cells: []Point{{0, 0}}}}}, KeepBest: 5, BlueprintCache: NewBlueprintCache()}
 	candidates := make([]Candidate, 24)
 	for i := range candidates {
-		candidates[i] = Candidate{Module: nte.Module{LocalID: fmt.Sprint(i), Geometry: "S", Area: 1, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: float64(i+1) * .001}}}, Score: float64(i + 1)}
+		candidates[i] = Candidate{Module: nte.Module{Level: 20, LocalID: fmt.Sprint(i), Geometry: "S", Area: 1, SubStats: []nte.Stat{{PropertyID: "CritBase", Value: float64(i+1) * .001}}}, Score: float64(i + 1)}
 	}
 	catalog := SetCatalog{Definitions: map[string]SetDefinition{"set": {ID: "set", InventorySetID: "set", RequiredGeometries: []string{"S"}, Bonuses: []SetBonus{{Count: 1, Score: 3}}}}}
 	evaluator := NewObjectiveEvaluator(catalog, []nte.Cartridge{{LocalID: "c", SetID: "set"}}, nil, candidates, scoring.Character{BaseStats: map[string]float64{"AtkBase": 600}}, nil, []ObjectiveGoal{{PropertyID: "CritBase", Minimum: .6}}, nil)

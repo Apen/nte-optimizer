@@ -84,7 +84,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
   - **Verification:** focused tests in `arc_candidates_test.go` and
     `build_store_test.go`, followed by `go test ./...`.
 
-- [ ] **CQ-003 — Repair fixtures whose implicit level zero now disables their test data.**
+- [x] **CQ-003 — Repair fixtures whose implicit level zero now disables their test data.**
   - **Priority / category:** P1; confirmed test-quality regression.
   - **Evidence:** `internal/optimizer/benchmark_test.go:16` creates substats
     without `Level`; `prepared_evaluator_test.go` reuses that fixture.
