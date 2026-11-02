@@ -1,8 +1,10 @@
 package app
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strconv"
 	"strings"
 	"testing"
@@ -12,6 +14,38 @@ import (
 	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/optimizer"
 )
+
+func TestDamageBatchMatchesIndependentCalculation(t *testing.T) {
+	s := NewOptimizerService(filepath.Join("..", "..", "data"))
+	c := &decoded.Character{CharacterID: 1036, Level: 80, AwakenLevel: 6, Skills: []decoded.CharacterSkill{{AbilityID: "GA_Zankou_Skill", Level: 8}, {AbilityID: "GA_Zankou_UltraSkill", Level: 8}}}
+	current := optimizer.StatSummary{DerivedConditional: map[string]float64{"AtkFinal": 1200, "CritBase": .5, "CritDamageBase": 1, "MagBase": 100}}
+	batch := s.prepareDamageBatch(c, &current, "en")
+	for _, attack := range []float64{800, 1600, 2400} {
+		build := optimizer.StatSummary{DerivedConditional: map[string]float64{"AtkFinal": attack, "CritBase": .6, "CritDamageBase": 1.2, "MagBase": 200}}
+		got := batch.evaluate(build)
+		want := s.damageAnalysis(c, build, &current)
+		if !reflect.DeepEqual(got.Build, want.Build) || !reflect.DeepEqual(got.Current, want.Current) {
+			t.Fatal("batch changed damage or equipped baseline")
+		}
+	}
+}
+
+func BenchmarkDamageReportingBatch(b *testing.B) {
+	for _, count := range []int{1, 10, 100} {
+		b.Run(fmt.Sprint(count), func(b *testing.B) {
+			s := NewOptimizerService(filepath.Join("..", "..", "data"))
+			c := &decoded.Character{CharacterID: 1036, Level: 80, Skills: []decoded.CharacterSkill{{AbilityID: "GA_Zankou_Skill", Level: 8}}}
+			stats := optimizer.StatSummary{DerivedConditional: map[string]float64{"AtkFinal": 1200}}
+			b.ReportAllocs()
+			for b.Loop() {
+				batch := s.prepareDamageBatch(c, &stats, "en")
+				for i := 0; i < count; i++ {
+					batch.evaluate(stats)
+				}
+			}
+		})
+	}
+}
 
 func TestDamageAnalysisUsesImportedSkillLevel(t *testing.T) {
 	dir := t.TempDir()

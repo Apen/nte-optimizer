@@ -14,14 +14,39 @@ import (
 )
 
 func (s OptimizerService) localizedDamageAnalysis(character *decoded.Character, build optimizer.StatSummary, current *optimizer.StatSummary, language string) *DamageAnalysis {
-	analysis := s.damageAnalysis(character, build, current)
-	if analysis == nil {
-		return nil
+	return s.prepareDamageBatch(character, current, language).evaluate(build)
+}
+
+// damageBatch shares immutable inputs and the equipped baseline across alternatives.
+type damageBatch struct {
+	character  *decoded.Character
+	catalog    damage.Catalog
+	catalogErr error
+	labels     ntelocale.PresentationCatalog
+	labelsErr  error
+	current    []damage.Result
+}
+
+func (s OptimizerService) prepareDamageBatch(character *decoded.Character, current *optimizer.StatSummary, language string) damageBatch {
+	catalog, catalogErr := damage.ReadCatalog(datafiles.New(s.DataDir).Damage())
+	labels, labelsErr := ntelocale.LoadPresentation(s.DataDir, language)
+	batch := damageBatch{character: character, catalog: catalog, catalogErr: catalogErr, labels: labels, labelsErr: labelsErr}
+	if current != nil {
+		batch.current = damageAnalysisFromCatalog(character, *current, nil, catalog, catalogErr).Build
 	}
-	catalog, err := ntelocale.LoadPresentation(s.DataDir, language)
-	if err != nil {
+	return batch
+}
+
+func (batch damageBatch) evaluate(build optimizer.StatSummary) *DamageAnalysis {
+	analysis := damageAnalysisFromCatalog(batch.character, build, nil, batch.catalog, batch.catalogErr)
+	analysis.Current = batch.current
+	if analysis.Status == "atomic_preview" {
+		analysis.Groups = groupDamageResults(batch.character.CharacterID, analysis.Build, analysis.Current)
+	}
+	if batch.labelsErr != nil {
 		return analysis
 	}
+	catalog := batch.labels
 	for index := range analysis.Groups {
 		if localized, ok := catalog.Damage[analysis.Groups[index].ID]; ok {
 			if localized.Name != "" {
@@ -132,12 +157,16 @@ type DamageGroup struct {
 }
 
 func (s OptimizerService) damageAnalysis(character *decoded.Character, build optimizer.StatSummary, current *optimizer.StatSummary) *DamageAnalysis {
+	catalog, err := damage.ReadCatalog(datafiles.New(s.DataDir).Damage())
+	return damageAnalysisFromCatalog(character, build, current, catalog, err)
+}
+
+func damageAnalysisFromCatalog(character *decoded.Character, build optimizer.StatSummary, current *optimizer.StatSummary, catalog damage.Catalog, err error) *DamageAnalysis {
 	analysis := &DamageAnalysis{Status: "unavailable"}
 	if character == nil {
 		analysis.MissingInputs = append(analysis.MissingInputs, "missing_character")
 		return analysis
 	}
-	catalog, err := damage.ReadCatalog(datafiles.New(s.DataDir).Damage())
 	if err != nil {
 		analysis.MissingInputs = append(analysis.MissingInputs, "missing_damage_catalog")
 		return analysis

@@ -66,15 +66,16 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 	}
 	currentStats := buildCurrentEquipmentStats(currentInventory, input.profile, input.setCatalog, currentAdditional)
 	goals, currentGoals, conditionalGoals, currentConditionalGoals := compareBuildGoals(input.buildTarget, stats, currentStats)
+	damageBatch := s.prepareDamageBatch(input.currentCharacter, currentStats, input.language)
 	alternatives := s.buildAlternatives(input.solution.Alternatives, alternativeBuildContext{
-		moduleByID: moduleByID, cartridges: input.inventory.Cartridges, profile: input.profile, refs: input.refs,
+		damageForBuild: damageBatch.evaluate, moduleByID: moduleByID, cartridges: input.inventory.Cartridges, profile: input.profile, refs: input.refs,
 		characterNames: input.characterNames, setCatalog: input.setCatalog, additional: input.additional,
 		objectives: input.objectives, mode: mode, approximate: input.plan.approximate, buildTarget: input.buildTarget,
 		currentCharacter: input.currentCharacter, currentStats: currentStats, language: input.language, displayCatalog: input.displayCatalog,
 		arcWeapons: input.arcWeapons, arcNotes: input.arcNotes, arcAdditional: input.arcAdditional,
 	})
 	input.solution.Alternatives = nil
-	damageAnalysis := s.localizedDamageAnalysis(input.currentCharacter, stats, currentStats, input.language)
+	damageAnalysis := damageBatch.evaluate(stats)
 	result := OptimizationResult{
 		SchemaVersion: 1, ProfileID: input.profileID, Locale: input.language, OptimizationMode: mode, GridID: input.profile.GridID,
 		PhaseMS: input.phaseMilliseconds, InventoryModules: len(input.inventory.Modules), EligibleCandidates: len(input.candidates), SelectedCandidates: len(input.selected),

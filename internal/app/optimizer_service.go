@@ -429,6 +429,7 @@ type alternativeBuildContext struct {
 	mode             string
 	approximate      bool
 	buildTarget      *target.BuildTarget
+	damageForBuild   func(optimizer.StatSummary) *DamageAnalysis
 	currentCharacter *decoded.Character
 	currentStats     *optimizer.StatSummary
 	language         string
@@ -439,6 +440,10 @@ type alternativeBuildContext struct {
 }
 
 func (s OptimizerService) buildAlternatives(solutions []optimizer.Solution, ctx alternativeBuildContext) []OptimizationAlternative {
+	if ctx.damageForBuild == nil {
+		batch := s.prepareDamageBatch(ctx.currentCharacter, ctx.currentStats, ctx.language)
+		ctx.damageForBuild = batch.evaluate
+	}
 	result := make([]OptimizationAlternative, 0, len(solutions))
 	for _, solution := range solutions {
 		solution.Alternatives = nil
@@ -463,7 +468,7 @@ func (s OptimizerService) buildAlternatives(solutions []optimizer.Solution, ctx 
 		alternative := OptimizationAlternative{
 			Solution: solution, Modules: detailedModules, Weapon: weapon, WeaponConditionalNote: ctx.arcNotes[solution.SelectedWeaponID], Cartridge: cartridge,
 			CartridgeBreakdown: cartridgeBreakdown, Stats: stats, Set: localizedSetDefinition(setDefinition, ctx.displayCatalog),
-			Damage: s.localizedDamageAnalysis(ctx.currentCharacter, stats, ctx.currentStats, ctx.language),
+			Damage: ctx.damageForBuild(stats),
 		}
 		if ctx.buildTarget != nil {
 			alternative.Goals = target.Compare(*ctx.buildTarget, stats.Derived)

@@ -211,7 +211,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
     equipped/new/saved/experiment paths; benchmark character-state reconstruction
     with realistic synthetic inventory sizes; run `go test ./...`.
 
-- [ ] **CQ-007 — Compile damage/reporting context once for all retained alternatives.**
+- [x] **CQ-007 — Compile damage/reporting context once for all retained alternatives.**
   - **Priority / category:** P2; confirmed repeated I/O, unmeasured end-to-end cost.
   - **Evidence:** `optimizer_service.go:440` calls `localizedDamageAnalysis` per
     alternative. `damage_analysis.go:134` rereads the entire damage catalog;
