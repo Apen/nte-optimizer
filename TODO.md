@@ -237,7 +237,7 @@ scope. Effort S/M/L is relative implementation effort, not urgency.
     tests; use Go CPU/allocation profiles; `go test ./internal/app ./internal/damage`
     and full Go tests. See [Go diagnostics](https://go.dev/doc/diagnostics).
 
-- [ ] **CQ-008 — Stop serializing full saved optimization trees in workspace summaries.**
+- [x] **CQ-008 — Stop serializing full saved optimization trees in workspace summaries.**
   - **Priority / category:** P2; confirmed payload and coupling debt.
   - **Evidence:** `build_store.go:25` embeds `Result` in `LocalBuild`;
     `WorkspaceCharacter.Build` at line 83 exposes that persistence type directly,

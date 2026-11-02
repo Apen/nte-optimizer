@@ -2,8 +2,10 @@ package app
 
 import (
 	"bytes"
+	"encoding/json"
 	"math"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"nte-optimizer/internal/decoded"
@@ -41,6 +43,33 @@ func TestFailedDetailedSavePreservesPreviousBuild(t *testing.T) {
 		if !previous && !os.IsNotExist(err) {
 			t.Fatal("failed first save created a partial build")
 		}
+	}
+}
+
+func TestWorkspaceOmitsSavedResultTree(t *testing.T) {
+	dir := t.TempDir()
+	if err := ensureWorkspace(dir); err != nil {
+		t.Fatal(err)
+	}
+	state := decoded.State{Characters: []decoded.Character{{CharacterID: 1036}}}
+	if err := writeAccountData(dir, nte.Inventory{}, state); err != nil {
+		t.Fatal(err)
+	}
+	result := OptimizationResult{Character: &state.Characters[0], ProfileID: "zankou", Stats: optimizer.StatSummary{Derived: map[string]float64{"AtkFinal": 100}}}
+	if _, err := SaveOptimizationResult(dir, result); err != nil {
+		t.Fatal(err)
+	}
+	workspace, err := LoadBuildWorkspace(dir, filepath.Join("..", "..", "data"), "en")
+	if err != nil {
+		t.Fatal(err)
+	}
+	data, err := json.Marshal(workspace)
+	if err != nil || bytes.Contains(data, []byte(`"result"`)) {
+		t.Fatalf("workspace leaked result tree: %s %v", data, err)
+	}
+	saved, err := SavedOptimizationResult(dir, 1036)
+	if err != nil || saved.Stats.Derived["AtkFinal"] != 100 {
+		t.Fatalf("lost saved detail: %+v %v", saved, err)
 	}
 }
 

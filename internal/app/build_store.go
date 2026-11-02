@@ -75,12 +75,23 @@ type LocalBuildState struct {
 }
 
 type WorkspaceCharacter struct {
-	CharacterID int         `json:"character_id"`
-	Name        string      `json:"name"`
-	Level       int         `json:"level"`
-	AwakenLevel int         `json:"awaken_level"`
-	Priority    int         `json:"priority"`
-	Build       *LocalBuild `json:"build,omitempty"`
+	CharacterID int           `json:"character_id"`
+	Name        string        `json:"name"`
+	Level       int           `json:"level"`
+	AwakenLevel int           `json:"awaken_level"`
+	Priority    int           `json:"priority"`
+	Build       *BuildSummary `json:"build,omitempty"`
+}
+
+// BuildSummary deliberately excludes the detailed persisted result tree.
+type BuildSummary struct {
+	CharacterID int                `json:"character_id"`
+	ProfileID   string             `json:"profile_id"`
+	ModuleIDs   []string           `json:"module_ids"`
+	CartridgeID string             `json:"cartridge_id,omitempty"`
+	ArcID       string             `json:"arc_id,omitempty"`
+	Stats       map[string]float64 `json:"stats,omitempty"`
+	UpdatedAt   time.Time          `json:"updated_at"`
 }
 
 type BuildWorkspace struct {
@@ -112,8 +123,7 @@ func LoadBuildWorkspace(projectDir, dataDir, language string) (BuildWorkspace, e
 		}
 		entry := WorkspaceCharacter{CharacterID: id, Name: cleanCharacterName(catalog.CharacterName(id, character.Name)), Level: character.Level, AwakenLevel: character.AwakenLevel, Priority: index + 1}
 		if build, exists := builds.Builds[strconv.Itoa(id)]; exists {
-			copy := build
-			entry.Build = &copy
+			entry.Build = &BuildSummary{CharacterID: build.CharacterID, ProfileID: build.ProfileID, ModuleIDs: build.ModuleIDs, CartridgeID: build.CartridgeID, ArcID: build.ArcID, Stats: build.Stats, UpdatedAt: build.UpdatedAt}
 		}
 		result.Characters = append(result.Characters, entry)
 	}
