@@ -2,111 +2,138 @@
   "characters": {
     "1003": {
       "codename": "Sagiri",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_INCANTATION"
     },
     "1004": {
       "codename": "Lacrimosa",
-      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_CHAOS"
     },
     "1008": {
       "codename": "Skia",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_LAKSHANA"
     },
     "1010": {
       "codename": "Nanally",
-      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_NATURE"
     },
     "1019": {
       "codename": "Mint",
-      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_NATURE"
     },
     "1020": {
       "codename": "Haniel",
-      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_PSYCHE"
     },
     "1021": {
       "codename": "Edgar",
-      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_COSMOS"
     },
     "1023": {
       "codename": "Cang",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_INCANTATION"
     },
     "1025": {
       "codename": "Hathor",
-      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_LAKSHANA"
     },
     "1033": {
       "codename": "Adler",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_INCANTATION"
     },
     "1036": {
       "codename": "zankou",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_INCANTATION"
     },
     "1039": {
       "codename": "Fadia",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_PSYCHE"
     },
     "1042": {
       "codename": "BlackBird",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_PSYCHE"
     },
     "1046": {
       "codename": "Male",
-      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_COSMOS"
     },
     "1051": {
       "codename": "Female",
-      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_COSMOS"
     },
     "1052": {
       "codename": "Jin",
-      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_COSMOS"
     },
     "1054": {
       "codename": "Daffodill",
-      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_CHAOS"
     },
     "1055": {
       "codename": "Kuhara",
-      "character_group_type": "CHARACTER_GROUP_TYPE_ONE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_NATURE"
     },
     "1056": {
       "codename": "bat",
-      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_CHAOS"
     },
     "1057": {
       "codename": "Akane",
-      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_LAKSHANA"
     },
     "1070": {
       "codename": "mitsuki",
-      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_PSYCHE"
     },
     "1071": {
       "codename": "Chaos",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_LAKSHANA"
     },
     "1072": {
       "codename": "radio",
-      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_NATURE"
     },
     "1073": {
       "codename": "chiichan",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FOUR",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_COSMOS"
     },
     "1075": {
       "codename": "Oneiroi",
-      "character_group_type": "CHARACTER_GROUP_TYPE_TWO"
+      "character_group_type": "CHARACTER_GROUP_TYPE_TWO",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_NATURE"
     },
     "1076": {
       "codename": "shinku",
-      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_FIVE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_COSMOS"
     },
     "1091": {
       "codename": "lingke",
-      "character_group_type": "CHARACTER_GROUP_TYPE_THREE"
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_NATURE"
     }
   }
 }

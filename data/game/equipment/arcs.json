@@ -800,7 +800,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_BitGame": {
       "panel_by_level_stage": {
@@ -1615,7 +1616,147 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": [
+        {
+          "id": "bitgame_off_field_active_attack",
+          "status": "supported",
+          "execution_basis": "hardcoded_description_static_snapshot",
+          "application_evidence": {
+            "status": "partially_verified",
+            "binary_sha256": "cc4ad550fec8218174b1bbe44d690087ac001a106b006e9944dab920a180217f",
+            "native_schema_correction": "HTGamePlayEffect:46-\u003E49",
+            "mapping_sha256": "f0c2d4a77322edb7d561277d14b49df437712162e17569708419c1cdc780bc79",
+            "mapping_url": "https://host.getaurora.moe/files/other/NTE_Latest.usmap",
+            "mapping_game_version": null,
+            "native_schema_evidence": {
+              "status": "local_class_layout_corrected",
+              "required_types_present": [
+                "HTGamePlayEffect",
+                "GameplayEffect",
+                "GameplayModifierInfo",
+                "GameplayAttribute",
+                "GameplayEffectModifierMagnitude"
+              ],
+              "conflicting_field": "Buff_Fork_BitGame2_BackEffectShare.Properties.StackPeriodResetPolicy",
+              "historical_unpatched_observed_enum": "EGameplayEffectStackingPeriodPolicy::3",
+              "corrected_observed_enum": "EGameplayEffectStackingPeriodPolicy::NeverReset",
+              "exact_enum_value_defined": false,
+              "native_defaults": "not_obtained",
+              "build_region_binding": "exact_local_binary_hash_for_corrected_class_only"
+            },
+            "native_parent": "/Script/HTGame.HTGamePlayEffect",
+            "rank_application_asset": "/Game/Blueprints/Abilities/Buff/Fork/Fork_BitGame2/Buff_Fork_BitGame2_Lv\u003Crank\u003E",
+            "referenced_effect_asset": "/Game/Blueprints/Abilities/Buff/Fork/Fork_BitGame2/Buff_Fork_BitGame2_BackEffect1",
+            "missing_verified_fields": [
+              "inherited BackEffect1 aggregation defaults",
+              "complete source application and removal semantics",
+              "equal-rank and mixed-rank interactions"
+            ]
+          },
+          "parameter": {
+            "name_id": "buff_BitGame2_AtkUp1",
+            "rank_source": "wearer_arc_rank",
+            "catalog_path": "effects_by_star.\u003Crank\u003E.parameters",
+            "rank_resolution_evidence": {
+              "calculation_actor_parameter": "InstigatorActor",
+              "checked_rank_buff_order": [
+                5,
+                4,
+                3,
+                2,
+                1
+              ],
+              "initial_index": 1,
+              "actor_to_wearer_binding": "unverified",
+              "scope": "rank_buff_checks_on_one_calculation_actor_not_cross_source_selection",
+              "asset": "/Game/Blueprints/Abilities/Calculation/Fork/Fork_BitGame2/Cau_Fork_BitGame2_BackEffect1",
+              "function": "HTCustomCalculateBaseMagnitude"
+            }
+          },
+          "target": {
+            "property_id": "AtkUp",
+            "operation": "add",
+            "native_operation": "EGameplayModOp::Additive",
+            "described_stat": "attack_bonus",
+            "verification": "corrected_application_asset",
+            "provenance": {
+              "asset": "/Game/Blueprints/Abilities/Buff/Fork/Fork_BitGame2/Buff_Fork_BitGame2_BackEffect1",
+              "fields": [
+                "Properties.Modifiers[0].Attribute.AttributeName",
+                "Properties.Modifiers[0].Attribute.Attribute.Path",
+                "Properties.Modifiers[0].ModifierOp",
+                "Properties.Modifiers[0].ModifierMagnitude.CustomMagnitude.CalculationClassMagnitude"
+              ]
+            }
+          },
+          "recipients": {
+            "scope": "active_character",
+            "include_wearer": false,
+            "esper_type_filter": "any"
+          },
+          "conditions": {
+            "wearer_in_team": true,
+            "wearer_off_field": true,
+            "requires_skill": false,
+            "requires_ultimate": false,
+            "requires_damage": false
+          },
+          "excluded_parameter_ids": [
+            "buff_BitGame2_AtkUp2"
+          ],
+          "lifecycle_evidence": {
+            "status": "partially_verified",
+            "asset": "/Game/Blueprints/GameplayCue/Buff/Fork/GC_Buff_Fork_BitGame2",
+            "functions": [
+              "ExecuteUbergraph_GC_Buff_Fork_BitGame2",
+              "PlayerChanged",
+              "OnWhileActiveEvent",
+              "OnRemoveEvent"
+            ],
+            "observed_calls": [
+              "GetMainCharacter",
+              "K2_ActivateGameEffectsWithClassByActor",
+              "K2_RemoveGameEffectsWithClass"
+            ],
+            "parent_settings_evidence": {
+              "parent_asset": "/Game/Blueprints/Abilities/Buff/Fork/Buff_Fork_Sub_Base",
+              "explicit_duration_policy": "EGameplayEffectDurationType::Infinite",
+              "aggregation_settings": "not_explicit_in_blueprint_inheritance_chain",
+              "unrelated_base_settings_not_inherited": "/Game/Blueprints/Abilities/Buff/Fork/Buff_Fork_Base"
+            },
+            "unresolved": [
+              "native removal source filter semantics",
+              "complete event ordering",
+              "equal-rank and mixed-rank source interactions"
+            ]
+          },
+          "stacking": {
+            "group_id": "bitgame_off_field_active_attack",
+            "policy": "unknown",
+            "equal_rank_multiple_sources": "unsupported",
+            "mixed_rank_multiple_sources": "unsupported",
+            "reapplication": "unknown"
+          },
+          "provenance": [
+            {
+              "asset": "/Game/Blueprints/Abilities/Calculation/Fork/Fork_BitGame2/Cau_Fork_BitGame2_BackEffect1",
+              "field": "HTCustomCalculateBaseMagnitude.Script.EvaluateCurveTableRow",
+              "establishes": "buff_BitGame2_AtkUp1 lookup"
+            },
+            {
+              "asset": "/Game/DataTable/Fork/DT_ForkUpgradeStarDataTable",
+              "field": "Rows.upgradestar_pack_fork_BitGame_\u003Crank\u003E.DataList",
+              "establishes": "ordered exact-rank display parameter reference"
+            },
+            {
+              "asset": "/Game/Text/ST_Fork",
+              "field": "buff_fork_BitGame_effect",
+              "establishes": "description-only recipient, off-field and damage-stack distinction"
+            }
+          ]
+        }
+      ]
     },
     "fork_BitterCake": {
       "panel_by_level_stage": {
@@ -2380,7 +2521,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_BlackBook": {
       "panel_by_level_stage": {
@@ -3231,7 +3373,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_BlastCandy": {
       "panel_by_level_stage": {
@@ -3971,7 +4114,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_BoxingCandy": {
       "panel_by_level_stage": {
@@ -4711,7 +4855,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Butterfly": {
       "panel_by_level_stage": {
@@ -5537,7 +5682,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Castle": {
       "panel_by_level_stage": {
@@ -6277,7 +6423,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Crowbar": {
       "panel_by_level_stage": {
@@ -7017,7 +7164,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_DemonBlade": {
       "panel_by_level_stage": {
@@ -7854,7 +8002,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Door": {
       "panel_by_level_stage": {
@@ -8680,7 +8829,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_GoldRecord": {
       "panel_by_level_stage": {
@@ -9506,7 +9656,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_GoldWool": {
       "panel_by_level_stage": {
@@ -10307,7 +10458,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Kite": {
       "panel_by_level_stage": {
@@ -11072,7 +11224,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_KnightCandy": {
       "panel_by_level_stage": {
@@ -11812,7 +11965,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_LunarPhase": {
       "panel_by_level_stage": {
@@ -12638,7 +12792,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_MotorCandy": {
       "panel_by_level_stage": {
@@ -13378,7 +13533,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Nakupeda": {
       "panel_by_level_stage": {
@@ -14254,7 +14410,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_NestBird": {
       "panel_by_level_stage": {
@@ -14939,7 +15096,8 @@
         "5": {
           "parameters": []
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_PaperPlane": {
       "panel_by_level_stage": {
@@ -15654,7 +15812,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_PoliceRat": {
       "panel_by_level_stage": {
@@ -16480,7 +16639,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Prokaryon": {
       "panel_by_level_stage": {
@@ -17195,7 +17355,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Rose": {
       "panel_by_level_stage": {
@@ -18021,7 +18182,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_ThiefCandy": {
       "panel_by_level_stage": {
@@ -18761,7 +18923,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_TigerTally": {
       "panel_by_level_stage": {
@@ -19637,7 +19800,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Time": {
       "panel_by_level_stage": {
@@ -20488,7 +20652,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_Whale": {
       "panel_by_level_stage": {
@@ -21314,7 +21479,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_appliance": {
       "panel_by_level_stage": {
@@ -22029,7 +22195,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_bopu": {
       "panel_by_level_stage": {
@@ -22794,7 +22961,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_dustbin": {
       "panel_by_level_stage": {
@@ -23559,7 +23727,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_jiaojuan": {
       "panel_by_level_stage": {
@@ -24335,7 +24504,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_jingmotingyuan": {
       "panel_by_level_stage": {
@@ -25175,7 +25345,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_koinobori": {
       "panel_by_level_stage": {
@@ -25940,7 +26111,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_lingganzhongjiezhe": {
       "panel_by_level_stage": {
@@ -26680,7 +26852,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_mamen": {
       "panel_by_level_stage": {
@@ -27420,7 +27593,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_mofeikesi": {
       "panel_by_level_stage": {
@@ -28246,7 +28420,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_moon": {
       "panel_by_level_stage": {
@@ -29047,7 +29222,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_nonos": {
       "panel_by_level_stage": {
@@ -29812,7 +29988,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_oulaquantao": {
       "panel_by_level_stage": {
@@ -30552,7 +30729,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_prism": {
       "panel_by_level_stage": {
@@ -31403,7 +31581,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_rishi": {
       "panel_by_level_stage": {
@@ -32254,7 +32433,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_snowman": {
       "panel_by_level_stage": {
@@ -32969,7 +33149,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_spider": {
       "panel_by_level_stage": {
@@ -33734,7 +33915,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_tuansanlang": {
       "panel_by_level_stage": {
@@ -34449,7 +34631,163 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": [
+        {
+          "id": "great_thief_same_esper_break_intensity",
+          "status": "supported",
+          "execution_basis": "hardcoded_description_static_snapshot",
+          "application_evidence": {
+            "status": "partially_verified",
+            "binary_sha256": "cc4ad550fec8218174b1bbe44d690087ac001a106b006e9944dab920a180217f",
+            "native_schema_correction": "HTGamePlayEffect:46-\u003E49",
+            "mapping_sha256": "f0c2d4a77322edb7d561277d14b49df437712162e17569708419c1cdc780bc79",
+            "mapping_url": "https://host.getaurora.moe/files/other/NTE_Latest.usmap",
+            "mapping_game_version": null,
+            "native_schema_evidence": {
+              "status": "local_class_layout_corrected",
+              "required_types_present": [
+                "HTGamePlayEffect",
+                "GameplayEffect",
+                "GameplayModifierInfo",
+                "GameplayAttribute",
+                "GameplayEffectModifierMagnitude"
+              ],
+              "native_defaults": "not_obtained",
+              "build_region_binding": "exact_local_binary_hash_for_corrected_class_only",
+              "related_candidate_conflict": "bitgame_off_field_active_attack.application_evidence.native_schema_evidence"
+            },
+            "native_parent": "/Script/HTGame.HTGamePlayEffect",
+            "rank_application_asset": "/Game/Blueprints/Abilities/Buff/Fork/Fork_Tuansanlang2/Buff_Fork_Tuansanlang2_Lv\u003Crank\u003E",
+            "referenced_effect_asset": "/Game/Blueprints/Abilities/Buff/Fork/Fork_Tuansanlang2/Buff_Fork_Tuansanlang2_Effect",
+            "condition_asset": "/Game/Blueprints/Abilities/Condition/Fork/Con_Fork_Tuansanlang/Con_Fork_Tuansanlang_1",
+            "missing_verified_fields": [
+              "native team count wearer inclusion",
+              "source identity and filtering",
+              "mixed-rank replacement and source departure semantics"
+            ]
+          },
+          "parameter": {
+            "name_id": "buff_tuansanlang_Unbal",
+            "rank_source": "wearer_arc_rank",
+            "catalog_path": "effects_by_star.\u003Crank\u003E.parameters",
+            "rank_resolution_evidence": {
+              "calculation_actor_parameter": "OwnerActor",
+              "checked_rank_buff_order": [
+                5,
+                4,
+                3,
+                2,
+                1
+              ],
+              "initial_index": 1,
+              "actor_to_wearer_binding": "unverified",
+              "scope": "rank_buff_checks_on_one_calculation_actor_not_cross_source_selection",
+              "asset": "/Game/Blueprints/Abilities/Calculation/Fork/Fork_Tuansanlang2/Cau_Fork_Tuansanlang2",
+              "function": "HTCustomCalculateBaseMagnitude"
+            }
+          },
+          "target": {
+            "property_id": "UnbalIntensityBase",
+            "operation": "add",
+            "native_operation": "EGameplayModOp::Additive",
+            "described_stat": "break_intensity",
+            "verification": "corrected_application_asset",
+            "provenance": {
+              "asset": "/Game/Blueprints/Abilities/Buff/Fork/Fork_Tuansanlang2/Buff_Fork_Tuansanlang2_Effect",
+              "fields": [
+                "Properties.Modifiers[0].Attribute.AttributeName",
+                "Properties.Modifiers[0].Attribute.Attribute.Path",
+                "Properties.Modifiers[0].ModifierOp",
+                "Properties.Modifiers[0].ModifierMagnitude.CustomMagnitude.CalculationClassMagnitude"
+              ]
+            }
+          },
+          "recipients": {
+            "scope": "team",
+            "include_wearer": true,
+            "esper_type_filter": "same_as_wearer",
+            "esper_type_field": "esper_type"
+          },
+          "conditions": {
+            "wearer_in_team": true,
+            "matching_team_members": {
+              "minimum": 3,
+              "include_wearer": true,
+              "esper_type_filter": "same_as_wearer",
+              "esper_type_field": "esper_type"
+            },
+            "requires_skill": false,
+            "requires_ultimate": false,
+            "requires_damage": false
+          },
+          "excluded_parameter_ids": [],
+          "lifecycle_evidence": {
+            "status": "partially_verified",
+            "asset": "/Game/Blueprints/GameplayCue/Buff/Fork/GC_Buff_Fork_Tuansanlang2",
+            "functions": [
+              "AddPassiveBuffer",
+              "RemovePassiveBuffer",
+              "EquipCharacter",
+              "UnequipCharacter",
+              "OnRemoveEvent",
+              "ExecuteUbergraph_GC_Buff_Fork_Tuansanlang2"
+            ],
+            "threshold_field": "Default__GC_Buff_Fork_Tuansanlang2_C.Properties.NeedChar",
+            "rank_application_parent_settings": {
+              "asset": "/Game/Blueprints/Abilities/Buff/Fork/Buff_Fork_Base",
+              "StackingType": "EGameplayEffectStackingType::AggregateBySource",
+              "StackLimitCount": 1,
+              "scope": "rank_application_buff_parent_not_recipient_effect"
+            },
+            "observed_calls": [
+              "GetTeamOwnSameElementNum",
+              "GreaterEqual_IntInt",
+              "GetEquippedPlayers",
+              "GetHTPlayerCharacterElementType",
+              "EqualEqual_ByteByte",
+              "K2_RemoveGameEffectsWithClass",
+              "K2_ActivateGameEffectsWithClassByActor"
+            ],
+            "effect_class_settings": {
+              "asset": "/Game/Blueprints/Abilities/Buff/Fork/Fork_Tuansanlang2/Buff_Fork_Tuansanlang2_Effect",
+              "StackingType": "EGameplayEffectStackingType::AggregateByTarget",
+              "StackLimitCount": 1,
+              "scope": "effect_class_only_not_mixed_rank_policy"
+            },
+            "unresolved": [
+              "native count function wearer inclusion",
+              "native removal source filter semantics",
+              "equal-rank and mixed-rank replacement and source departure outcomes"
+            ]
+          },
+          "stacking": {
+            "group_id": "great_thief_same_esper_break_intensity",
+            "policy": "non_stacking",
+            "description_declares_non_stacking": true,
+            "equal_rank_multiple_sources": "apply_once",
+            "mixed_rank_multiple_sources": "unsupported",
+            "reapplication": "unknown"
+          },
+          "provenance": [
+            {
+              "asset": "/Game/Blueprints/Abilities/Calculation/Fork/Fork_Tuansanlang2/Cau_Fork_Tuansanlang2",
+              "field": "HTCustomCalculateBaseMagnitude.Script.EvaluateCurveTableRow",
+              "establishes": "buff_tuansanlang_Unbal lookup"
+            },
+            {
+              "asset": "/Game/DataTable/Fork/DT_ForkUpgradeStarDataTable",
+              "field": "Rows.upgradestar_pack_fork_tuansanlang_\u003Crank\u003E.DataList",
+              "establishes": "ordered exact-rank display parameter reference"
+            },
+            {
+              "asset": "/Game/Text/ST_Fork",
+              "field": "buff_fork_tuansanlang_effect",
+              "establishes": "description-only threshold, wearer inclusion and non-stacking"
+            }
+          ]
+        }
+      ]
     },
     "fork_twinbirds": {
       "panel_by_level_stage": {
@@ -35300,7 +35638,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_vine": {
       "panel_by_level_stage": {
@@ -36040,7 +36379,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_worldrain": {
       "panel_by_level_stage": {
@@ -36805,7 +37145,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_wuhuakuang": {
       "panel_by_level_stage": {
@@ -37545,7 +37886,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_wushoutieyu": {
       "panel_by_level_stage": {
@@ -38371,7 +38713,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_yaodao": {
       "panel_by_level_stage": {
@@ -39086,7 +39429,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     },
     "fork_yuren": {
       "panel_by_level_stage": {
@@ -39862,7 +40206,8 @@
             }
           ]
         }
-      }
+      },
+      "team_effects": []
     }
   },
   "source": {
