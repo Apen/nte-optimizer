@@ -47,7 +47,7 @@ func TestImportDirectoryBuildsInventoryAndLinksEquipment(t *testing.T) {
 	}
 }
 
-func TestReadCharactersAcceptsLegacyAwakeningObservations(t *testing.T) {
+func TestReadCharactersAcceptsLegacyCharacterObservations(t *testing.T) {
 	for _, version := range []int{2, 3} {
 		t.Run(fmt.Sprint(version), func(t *testing.T) {
 			dir := t.TempDir()
@@ -57,10 +57,13 @@ func TestReadCharactersAcceptsLegacyAwakeningObservations(t *testing.T) {
 				"characters": [{
 					"identity": {"characterId": 1036},
 					"progression": {"awakenLevel": 1},
+					"savedState": {"healthRatio": 0.75},
 					"observedAtLogin": {
 						"loaded": true,
 						"activeAwakeningLevels": [5],
-						"activeAwakeningBuffs": ["Buff_Zankou_Level5"]
+						"activeAwakeningBuffs": ["Buff_Zankou_Level5"],
+						"activeWeaponBuffs": [{"forkId": "fork_test", "buff": "Buff_Fork_Test_Lv1", "star": 1}],
+						"activeEquipmentBuffs": [{"buff": "Incantation_4"}]
 					}
 				}]
 			}`, version)))
@@ -69,8 +72,12 @@ func TestReadCharactersAcceptsLegacyAwakeningObservations(t *testing.T) {
 				t.Fatal(err)
 			}
 			if len(characters) != 1 || characters[0].AwakenLevel != 1 ||
-				len(characters[0].RecordedAwakeningLevels) != 0 || !characters[0].ObservedAtLogin.Loaded {
+				len(characters[0].RecordedAwakeningLevels) != 0 {
 				t.Fatalf("unexpected imported character state: %+v", characters)
+			}
+			buffs := characters[0].ObservedAtLogin.ActiveEquipmentBuffs
+			if len(buffs) != 1 || buffs[0].Buff != "Incantation_4" {
+				t.Fatalf("equipment observations were not preserved: %+v", buffs)
 			}
 		})
 	}
@@ -100,9 +107,8 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 			BondStageFlags          []bool           `json:"bondStageFlags,omitempty"`
 			Skills                  []CharacterSkill `json:"skills"`
 		} `json:"progression"`
-		Stats      CharacterStats      `json:"stats"`
-		SavedState CharacterSavedState `json:"savedState"`
-		Equipment  struct {
+		Stats     CharacterStats `json:"stats"`
+		Equipment struct {
 			Weapon  *Weapon     `json:"weapon,omitempty"`
 			Cores   []Equipment `json:"cores"`
 			Modules []Equipment `json:"modules"`
@@ -127,7 +133,6 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	}
 	source.Equipment.Weapon = &Weapon{ID: weaponNet, ForkID: "fork_DemonBlade", Level: 80, Star: 1}
 	source.Equipment.Modules = []Equipment{{ID: moduleNet, EquippedPlacement: &EquipmentPlacement{Row: 2, Column: 3}}}
-	source.ObservedAtLogin = ObservedLoginState{Loaded: true}
 	writeFixture(t, dir, "character.json", export)
 	writeFixture(t, dir, "weapons.json", []Weapon{{ID: weaponNet, ForkID: "fork_DemonBlade", Level: 80, Star: 1}})
 	writeFixture(t, dir, "equipment.json", []Equipment{{ID: moduleNet, ItemID: "cell3_style6_1_Orange", Kind: "module", Level: 20, MainStats: []RawStat{{Property: "AtkAdd", Value: 16}}, CharacterNetID: &characterNet}})
@@ -144,7 +149,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	if len(character.RecordedAwakeningLevels) != 1 || character.RecordedAwakeningLevels[0] != 5 {
 		t.Fatalf("recorded awakening levels were not preserved: %v", character.RecordedAwakeningLevels)
 	}
-	if character.AwakenLevel != 1 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.BondStageFlags) != 2 || !character.BondStageFlags[0] || character.BondStageFlags[1] || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
+	if character.AwakenLevel != 1 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.BondStageFlags) != 2 || !character.BondStageFlags[0] || character.BondStageFlags[1] || len(character.Skills) != 1 || len(got.State.Resources) != 1 {
 		t.Fatalf("new character data was not preserved: %#v", character)
 	}
 	if character.Stats.Attack == nil || *character.Stats.Attack != attack || character.Stats.Defense == nil || *character.Stats.Defense != defense || character.Stats.CritDamage == nil || *character.Stats.CritDamage != critDamage || character.Stats.PanelBase == nil || character.Stats.PanelBase.Attack != 1230 || character.Stats.Source != "unreal_attribute_set_and_equipment" {

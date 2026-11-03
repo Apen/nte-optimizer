@@ -32,7 +32,6 @@ type characterExportItem struct {
 	Identity        characterIdentity        `json:"identity"`
 	Progression     characterProgression     `json:"progression"`
 	Stats           characterStats           `json:"stats"`
-	SavedState      characterSavedState      `json:"savedState"`
 	Equipment       characterEquipment       `json:"equipment"`
 	ObservedAtLogin characterObservedAtLogin `json:"observedAtLogin"`
 }
@@ -72,25 +71,18 @@ type characterBaseStats struct {
 	Attack  float32 `json:"attack"`
 	Defense float32 `json:"defense"`
 }
-type characterSavedState struct {
-	HealthRatio float32 `json:"healthRatio"`
-}
 type characterEquipment struct {
 	Weapon  *weaponItem     `json:"weapon,omitempty"`
 	Cores   []inventoryItem `json:"cores"`
 	Modules []inventoryItem `json:"modules"`
 }
 type characterObservedAtLogin struct {
-	Loaded               bool                    `json:"loaded"`
 	ActiveEquipmentBuffs []observedEquipmentBuff `json:"activeEquipmentBuffs,omitempty"`
-	ActiveWeaponBuffs    []observedWeaponBuff    `json:"activeWeaponBuffs,omitempty"`
 }
 type activeCharacterEquipment struct {
-	CharacterID   uint32          `json:"characterId"`
-	CharacterName string          `json:"characterName"`
-	Weapon        *weaponItem     `json:"weapon,omitempty"`
-	Core          []inventoryItem `json:"cores"`
-	Modules       []inventoryItem `json:"modules"`
+	Weapon  *weaponItem     `json:"weapon,omitempty"`
+	Core    []inventoryItem `json:"cores"`
+	Modules []inventoryItem `json:"modules"`
 }
 
 func writeJSON(path string, v any) error {
@@ -128,9 +120,8 @@ func exportCharacters(characters []characterItem, equipmentByCharacter map[uint3
 			Identity:        characterIdentity{CharacterID: character.CharacterID, Name: character.Name, Codename: character.Codename, NetID: character.NetID},
 			Progression:     characterProgression{BondStageFlags: character.BondStageFlags, Level: character.Level, BreakthroughLevel: character.BreakthroughLevel, AwakenLevel: character.AwakenLevel, RecordedAwakeningLevels: character.RecordedAwakeningLevels, PassiveReferences: character.PassiveReferences, BondLevel: character.BondLevel, Skills: character.SkillLevels},
 			Stats:           stats,
-			SavedState:      characterSavedState{HealthRatio: character.SavedHealthRatio},
 			Equipment:       equipment,
-			ObservedAtLogin: characterObservedAtLogin{Loaded: character.ObservedLoadedAtLogin, ActiveEquipmentBuffs: character.ObservedActiveEquipmentBuffs, ActiveWeaponBuffs: character.ObservedActiveWeaponBuffs},
+			ObservedAtLogin: characterObservedAtLogin{ActiveEquipmentBuffs: character.ObservedActiveEquipmentBuffs},
 		})
 	}
 	return out
@@ -154,7 +145,7 @@ func writeOutputDirWithWriter(dir string, r report, writer func(string, any) err
 	}
 	byChar := map[uint32]*activeCharacterEquipment{}
 	for _, c := range chars {
-		byChar[c.CharacterID] = &activeCharacterEquipment{CharacterID: c.CharacterID, CharacterName: c.Name, Weapon: weaponByChar[c.CharacterID], Core: []inventoryItem{}, Modules: []inventoryItem{}}
+		byChar[c.CharacterID] = &activeCharacterEquipment{Weapon: weaponByChar[c.CharacterID], Core: []inventoryItem{}, Modules: []inventoryItem{}}
 	}
 	for _, it := range items {
 		if it.CharacterNetID == nil {
@@ -209,7 +200,7 @@ func writeOutputDirWithWriter(dir string, r report, writer func(string, any) err
 		resourceNote = "No validated resource record was found in this capture."
 	}
 	resources := domainOutput{resourceStatus, "packet_capture", len(r.UDP.Resources), resourceNote, r.UDP.Resources}
-	characters := characterOutput{r.UDP.FurnitureLevels, "nte-scan-characters", 3, generated, r.Input, "decoded", len(chars), "One entry per character with progression, skills, saved state, complete active equipment, and login observations.", characterValidation, exportCharacters(chars, byChar)}
+	characters := characterOutput{r.UDP.FurnitureLevels, "nte-scan-characters", 3, generated, r.Input, "decoded", len(chars), "One entry per character with progression, skills, complete active equipment, and login observations.", characterValidation, exportCharacters(chars, byChar)}
 	return scannerexport.PublishWithWriter(dir, []scannerexport.File{
 		{Name: "character.json", Value: characters},
 		{Name: "weapons.json", Value: weapons},

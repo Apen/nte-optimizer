@@ -33,7 +33,6 @@ func TestCharacterStateDoesNotCalculateUnrelatedCharacters(t *testing.T) {
 	state := scannedBuffFixture()
 	attack := 1000.0
 	state.Characters[0].Stats.Attack = &attack
-	state.Characters[0].ObservedAtLogin.Loaded = true
 	state.Characters = append(state.Characters, decoded.Character{CharacterID: 1004, Level: 80, BreakthroughLevel: 6})
 	if err := writeAccountData(dir, nte.Inventory{}, state); err != nil {
 		t.Fatal(err)

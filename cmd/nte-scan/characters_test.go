@@ -23,12 +23,6 @@ func TestAttachObservedCharacterState(t *testing.T) {
 
 	attachObservedLoginState(characters, exports, nil)
 
-	if !characters[0].ObservedLoadedAtLogin || !characters[1].ObservedLoadedAtLogin {
-		t.Fatalf("expected Sagiri and Zankou to be observed as loaded: %#v", characters)
-	}
-	if characters[2].ObservedLoadedAtLogin {
-		t.Fatalf("Oneiroi must not be inferred without a player export")
-	}
 	if !reflect.DeepEqual(characters[0].ObservedActiveEquipmentBuffs, []observedEquipmentBuff{{EquipmentID: 15, Buff: "GetEfficiency2_4"}}) {
 		t.Fatalf("unexpected Sagiri equipment buffs: %v", characters[0].ObservedActiveEquipmentBuffs)
 	}

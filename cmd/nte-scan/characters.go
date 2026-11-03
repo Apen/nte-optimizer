@@ -34,9 +34,7 @@ type characterItem struct {
 	ForkNetID                    *itemNetID              `json:"forkNetId,omitempty"`
 	SkillLevels                  []characterSkillLevel   `json:"skillLevels"`
 	MaxHP                        float32                 `json:"maxHp"`
-	SavedHealthRatio             float32                 `json:"savedHealthRatio"`
 	PanelStats                   *characterPanelStats    `json:"panelStats,omitempty"`
-	ObservedLoadedAtLogin        bool                    `json:"observedLoadedAtLogin,omitempty"`
 	ObservedActiveEquipmentBuffs []observedEquipmentBuff `json:"observedActiveEquipmentBuffs,omitempty"`
 	ObservedActiveWeaponBuffs    []observedWeaponBuff    `json:"observedActiveWeaponBuffs,omitempty"`
 }
@@ -244,7 +242,6 @@ var activeEquipmentBuffExport = regexp.MustCompile(`/Equipment/Equipment_(\d+)/B
 var activeWeaponBuffExport = regexp.MustCompile(`/Abilities/(?:Buff/)?Fork/(Fork_[^/]+)/(Buff_Fork_[^/]+_(?:Lv(\d+)|(\d+)_([0-9]+)))$`)
 
 func attachObservedLoginState(characters []characterItem, exportNames []string, catalog *equipmentCatalog) {
-	loaded := make(map[uint32]bool)
 	equipmentBuffs := make(map[uint32][]observedEquipmentBuff)
 	weaponBuffs := make(map[uint32][]observedWeaponBuff)
 	var currentCharacter uint32
@@ -252,7 +249,6 @@ func attachObservedLoginState(characters []characterItem, exportNames []string, 
 		if match := loadedCharacterExport.FindStringSubmatch(name); match != nil {
 			if id, err := strconv.ParseUint(match[1], 10, 32); err == nil {
 				currentCharacter = uint32(id)
-				loaded[currentCharacter] = true
 			}
 		}
 		if match := activeEquipmentBuffExport.FindStringSubmatch(name); match != nil && currentCharacter != 0 {
@@ -290,7 +286,6 @@ func attachObservedLoginState(characters []characterItem, exportNames []string, 
 	}
 	for i := range characters {
 		suffix := characters[i].CharacterID % 1000
-		characters[i].ObservedLoadedAtLogin = loaded[suffix]
 		characters[i].ObservedActiveEquipmentBuffs = equipmentBuffs[suffix]
 		characters[i].ObservedActiveWeaponBuffs = weaponBuffs[suffix]
 	}
@@ -507,7 +502,7 @@ func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog) (c
 		x := fork
 		fp = &x
 	}
-	item := characterItem{NetID: net, CharacterID: uint32(id64), Name: def.Codename, Codename: def.Codename, Level: level, BreakthroughLevel: br, AwakenLevel: aw, ForkNetID: fp, SkillLevels: skills, MaxHP: unknownFloats[1], SavedHealthRatio: unknownFloats[0]}
+	item := characterItem{NetID: net, CharacterID: uint32(id64), Name: def.Codename, Codename: def.Codename, Level: level, BreakthroughLevel: br, AwakenLevel: aw, ForkNetID: fp, SkillLevels: skills, MaxHP: unknownFloats[1]}
 	tailBits := bitLen - r.cursor
 	if tailBits > 8192 {
 		tailBits = 8192

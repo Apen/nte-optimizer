@@ -39,9 +39,8 @@ type characterExport struct {
 			BondStageFlags          []bool           `json:"bondStageFlags,omitempty"`
 			Skills                  []CharacterSkill `json:"skills"`
 		} `json:"progression"`
-		Stats      CharacterStats      `json:"stats"`
-		SavedState CharacterSavedState `json:"savedState"`
-		Equipment  struct {
+		Stats     CharacterStats `json:"stats"`
+		Equipment struct {
 			Weapon  *Weapon     `json:"weapon,omitempty"`
 			Cores   []Equipment `json:"cores"`
 			Modules []Equipment `json:"modules"`
@@ -203,7 +202,7 @@ func readCharacters(dir string) ([]Character, map[string]EquipmentPlacement, []W
 			Name: source.Identity.Name, Codename: source.Identity.Codename,
 			Level: source.Progression.Level, BreakthroughLevel: source.Progression.BreakthroughLevel,
 			AwakenLevel: source.Progression.AwakenLevel, RecordedAwakeningLevels: source.Progression.RecordedAwakeningLevels, PassiveReferences: source.Progression.PassiveReferences, BondLevel: source.Progression.BondLevel, Skills: source.Progression.Skills,
-			Stats: source.Stats, SavedState: source.SavedState, ObservedAtLogin: source.ObservedAtLogin,
+			Stats: source.Stats, ObservedAtLogin: source.ObservedAtLogin,
 			BondStageFlags: source.Progression.BondStageFlags,
 		}
 		if len(character.BondStageFlags) > 10 {

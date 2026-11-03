@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"os"
 	"path/filepath"
@@ -23,8 +24,13 @@ func TestWriteOutputDirMergesCharacterExports(t *testing.T) {
 	characterID := uint32(1036)
 	weaponID := itemNetID{Solt: 30, Serial: 40}
 	report := report{Input: "capture.pcapng", UDP: udpReport{
-		Characters: []characterItem{{CharacterID: characterID, Name: "zankou", NetID: characterNetID, ForkNetID: &weaponID, PanelStats: &characterPanelStats{ElementalDMGBonus: .1, HasElementalDMGBonus: true}}},
-		Weapons:    []weaponItem{{ID: weaponID, ForkID: "fork_test", EquippedCharacterID: &characterID}},
+		Characters: []characterItem{{
+			CharacterID: characterID, Name: "zankou", NetID: characterNetID, ForkNetID: &weaponID,
+			BondStageFlags:            []bool{true},
+			PanelStats:                &characterPanelStats{BaseAttack: 660, ElementalDMGBonus: .1, HasElementalDMGBonus: true},
+			ObservedActiveWeaponBuffs: []observedWeaponBuff{{ForkID: "fork_test", Star: 1}},
+		}},
+		Weapons: []weaponItem{{ID: weaponID, ForkID: "fork_test", Star: 1, EquippedCharacterID: &characterID}},
 		Items: []inventoryItem{
 			{ID: itemNetID{Solt: 50, Serial: 60}, Kind: "core", CharacterNetID: &characterNetID},
 			{ID: itemNetID{Solt: 70, Serial: 80}, Kind: "module", CharacterNetID: &characterNetID},
@@ -49,6 +55,19 @@ func TestWriteOutputDirMergesCharacterExports(t *testing.T) {
 	}
 	if output.Count != 1 || len(output.Characters) != 1 || output.Characters[0].Identity.CharacterID != 1036 {
 		t.Fatalf("unexpected merged character output: %#v", output)
+	}
+	for _, field := range []string{"savedState", "healthRatio", "loaded", "activeWeaponBuffs"} {
+		if bytes.Contains(b, []byte(`"`+field+`"`)) {
+			t.Errorf("obsolete field %q was exported", field)
+		}
+	}
+	if output.Validation["observedWeaponBuffs"] != 1 || output.Validation["matchingObservedWeaponBuffs"] != 1 {
+		t.Fatalf("Arc validation was not preserved: %#v", output.Validation)
+	}
+	character := output.Characters[0]
+	if !reflect.DeepEqual(character.Progression.BondStageFlags, []bool{true}) ||
+		character.Stats.PanelBase == nil || character.Stats.PanelBase.Attack != 660 {
+		t.Fatalf("character diagnostics were not preserved: %#v", character)
 	}
 	if bonus := output.Characters[0].Stats.ElementalDMGBonus; bonus == nil || *bonus != .1 {
 		t.Fatalf("elemental damage bonus was not exported: %#v", bonus)

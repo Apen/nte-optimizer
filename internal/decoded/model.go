@@ -86,9 +86,6 @@ type CharacterPanelBase struct {
 	Attack  float64 `json:"attack"`
 	Defense float64 `json:"defense"`
 }
-type CharacterSavedState struct {
-	HealthRatio float64 `json:"healthRatio,omitempty"`
-}
 type ActiveEquipmentBuff struct {
 	EquipmentID int    `json:"equipmentId"`
 	Buff        string `json:"buff"`
@@ -97,33 +94,25 @@ type ActiveEquipmentBuff struct {
 	Pieces      int    `json:"pieces"`
 	Effect      string `json:"effect"`
 }
-type ActiveWeaponBuff struct {
-	ForkID string `json:"forkId"`
-	Buff   string `json:"buff"`
-	Star   int    `json:"star"`
-}
 type ObservedLoginState struct {
-	Loaded               bool                  `json:"loaded"`
 	ActiveEquipmentBuffs []ActiveEquipmentBuff `json:"activeEquipmentBuffs,omitempty"`
-	ActiveWeaponBuffs    []ActiveWeaponBuff    `json:"activeWeaponBuffs,omitempty"`
 }
 type Character struct {
-	NetID                   NetID               `json:"netId"`
-	CharacterID             int                 `json:"characterId"`
-	Name                    string              `json:"name"`
-	Codename                string              `json:"codename"`
-	Level                   int                 `json:"level"`
-	BreakthroughLevel       int                 `json:"breakthroughLevel"`
-	AwakenLevel             int                 `json:"awakenLevel"`
-	RecordedAwakeningLevels []int               `json:"recordedAwakeningLevels,omitempty"`
-	PassiveReferences       []string            `json:"passiveReferences,omitempty"`
-	BondLevel               *int                `json:"bondLevel,omitempty"`
-	BondStageFlags          []bool              `json:"bondStageFlags,omitempty"`
-	ForkNetID               *NetID              `json:"forkNetId,omitempty"`
-	Skills                  []CharacterSkill    `json:"skills,omitempty"`
-	Stats                   CharacterStats      `json:"stats,omitempty"`
-	SavedState              CharacterSavedState `json:"savedState,omitempty"`
-	ObservedAtLogin         ObservedLoginState  `json:"observedAtLogin,omitempty"`
+	NetID                   NetID              `json:"netId"`
+	CharacterID             int                `json:"characterId"`
+	Name                    string             `json:"name"`
+	Codename                string             `json:"codename"`
+	Level                   int                `json:"level"`
+	BreakthroughLevel       int                `json:"breakthroughLevel"`
+	AwakenLevel             int                `json:"awakenLevel"`
+	RecordedAwakeningLevels []int              `json:"recordedAwakeningLevels,omitempty"`
+	PassiveReferences       []string           `json:"passiveReferences,omitempty"`
+	BondLevel               *int               `json:"bondLevel,omitempty"`
+	BondStageFlags          []bool             `json:"bondStageFlags,omitempty"`
+	ForkNetID               *NetID             `json:"forkNetId,omitempty"`
+	Skills                  []CharacterSkill   `json:"skills,omitempty"`
+	Stats                   CharacterStats     `json:"stats,omitempty"`
+	ObservedAtLogin         ObservedLoginState `json:"observedAtLogin,omitempty"`
 }
 type Account struct {
 	Game    string `json:"game"`

@@ -28,7 +28,6 @@ func TestInformationalBonusesIgnoreCalculationCalibration(t *testing.T) {
 	}
 	state := scannedBuffFixture()
 	attack := 1000.0
-	state.Characters[0].ObservedAtLogin.Loaded = true
 	state.Characters[0].Stats.Attack = &attack
 	if err := writeAccountData(dir, nte.Inventory{}, state); err != nil {
 		t.Fatal(err)
