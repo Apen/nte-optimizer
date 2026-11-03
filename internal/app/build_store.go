@@ -84,13 +84,22 @@ type WorkspaceTeamGear struct {
 }
 
 type WorkspaceCharacter struct {
-	TeamGear    WorkspaceTeamGear `json:"team_gear"`
-	CharacterID int               `json:"character_id"`
-	Name        string            `json:"name"`
-	Level       int               `json:"level"`
-	AwakenLevel int               `json:"awaken_level"`
-	Priority    int               `json:"priority"`
-	Build       *BuildSummary     `json:"build,omitempty"`
+	TeamGear                WorkspaceTeamGear        `json:"team_gear"`
+	CharacterID             int                      `json:"character_id"`
+	Name                    string                   `json:"name"`
+	Level                   int                      `json:"level"`
+	AwakenLevel             int                      `json:"awaken_level"`
+	RecordedAwakeningLevels []int                    `json:"recorded_awakening_levels,omitempty"`
+	PassiveReferences       []string                 `json:"passive_references,omitempty"`
+	EquippedArc             *WorkspaceArc            `json:"equipped_arc,omitempty"`
+	Skills                  []decoded.CharacterSkill `json:"skills,omitempty"`
+	Priority                int                      `json:"priority"`
+	Build                   *BuildSummary            `json:"build,omitempty"`
+}
+
+type WorkspaceArc struct {
+	Name  string `json:"name"`
+	Level int    `json:"level"`
 }
 
 // BuildSummary deliberately excludes the detailed persisted result tree.
@@ -133,13 +142,31 @@ func LoadBuildWorkspace(projectDir, dataDir, language string) (BuildWorkspace, e
 	for _, character := range state.Characters {
 		byID[character.CharacterID] = character
 	}
+	arcsByID := make(map[string]decoded.Weapon, len(state.Weapons))
+	equippedArcs := make(map[int]decoded.Weapon)
+	for _, arc := range state.Weapons {
+		arcsByID[arc.ID.Key()] = arc
+		if arc.EquippedCharacterID != 0 {
+			equippedArcs[arc.EquippedCharacterID] = arc
+		}
+	}
 	result := BuildWorkspace{Characters: make([]WorkspaceCharacter, 0, len(state.Characters))}
 	for index, id := range builds.Priority {
 		character, ok := byID[id]
 		if !ok {
 			continue
 		}
-		entry := WorkspaceCharacter{CharacterID: id, Name: cleanCharacterName(catalog.CharacterName(id, character.Name)), Level: character.Level, AwakenLevel: character.AwakenLevel, Priority: index + 1}
+		entry := WorkspaceCharacter{CharacterID: id, Name: cleanCharacterName(catalog.CharacterName(id, character.Name)), Level: character.Level, AwakenLevel: character.AwakenLevel, RecordedAwakeningLevels: character.RecordedAwakeningLevels, PassiveReferences: character.PassiveReferences, Priority: index + 1}
+		entry.Skills = character.Skills
+		arc, equipped := equippedArcs[id]
+		if character.ForkNetID != nil {
+			if linked, exists := arcsByID[character.ForkNetID.Key()]; exists {
+				arc, equipped = linked, true
+			}
+		}
+		if equipped {
+			entry.EquippedArc = &WorkspaceArc{Name: cleanArcName(catalog.ItemName(arc.ForkID, arc.Name)), Level: arc.Level}
+		}
 		if build, exists := builds.Builds[strconv.Itoa(id)]; exists {
 			entry.Build = &BuildSummary{CharacterID: build.CharacterID, ProfileID: build.ProfileID, ModuleIDs: build.ModuleIDs, CartridgeID: build.CartridgeID, ArcID: build.ArcID, Stats: build.Stats, UpdatedAt: build.UpdatedAt}
 		}

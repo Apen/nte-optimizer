@@ -2,9 +2,10 @@ import { useMemo, useState } from 'react'
 import { ArrowDown, ArrowUp, Eye, GripVertical, Search } from 'lucide-react'
 
 import { Button } from '../components/ui/button'
+import { PassiveSummary } from '../components/passive-summary'
 import { Card, CardContent, CardHeader } from '../components/ui/card'
 import { t } from '../i18n'
-import type { WorkspaceCharacter } from '../types'
+import type { CharacterSkill, WorkspaceCharacter } from '../types'
 
 type CharactersPageProps = {
   characters: WorkspaceCharacter[]
@@ -40,6 +41,8 @@ export function CharactersPage({ characters, selected, onSelect, onMove, onReord
       const index = positions.get(character.character_id) ?? -1
       const isDragging = draggedCharacter === character.character_id
       const isDragTarget = dragOverCharacter === character.character_id
+      const awakeningStages = character.recorded_awakening_levels?.map(level => `${t('awakening_short')}${level}`).join(', ')
+      const skillLevels = compactSkillLevels(character.skills)
       return <div key={character.character_id} draggable onClick={() => onSelect(character.character_id)} onDragStart={event => { if ((event.target as HTMLElement).closest('button')) { event.preventDefault(); return }; event.stopPropagation(); setDraggedCharacter(character.character_id); if (event.dataTransfer) { event.dataTransfer.effectAllowed = 'move'; event.dataTransfer.setData('text/plain', String(character.character_id)) } }} onDragEnd={() => { setDraggedCharacter(undefined); setDragOverCharacter(undefined) }} onDragOver={event => { if (draggedCharacter === undefined || draggedCharacter === character.character_id) return; event.preventDefault(); if (event.dataTransfer) event.dataTransfer.dropEffect = 'move'; setDragOverCharacter(character.character_id) }} onDrop={event => { event.preventDefault(); event.stopPropagation(); const payload = event.dataTransfer?.getData('text/plain'); const sourceID = draggedCharacter ?? (payload ? Number(payload) : undefined); if (sourceID !== undefined && Number.isFinite(sourceID)) reorderCharacters(sourceID, character.character_id); setDraggedCharacter(undefined); setDragOverCharacter(undefined) }} className={`character-row grid cursor-grab active:cursor-grabbing grid-cols-[auto_auto_auto_auto_1fr_auto_auto] items-center gap-3 border-b border-slate-800 transition ${selected === character.character_id ? 'border-l-2 border-l-pink-600 bg-slate-800/60' : 'hover:bg-slate-800/40'} ${isDragTarget ? 'ring-2 ring-slate-400/70' : ''} ${isDragging ? 'opacity-50' : ''}`}>
         <span className="grid size-9 place-items-center rounded-full bg-slate-900 font-black text-slate-300">{character.priority}</span>
         <GripVertical className="size-4 text-slate-600" aria-hidden="true" />
@@ -48,10 +51,44 @@ export function CharactersPage({ characters, selected, onSelect, onMove, onReord
           <button disabled={index === characters.length - 1} onClick={event => { event.stopPropagation(); onMove(character.character_id, 1) }} className="rounded-lg border border-slate-700 bg-slate-900 p-2 hover:border-pink-500 disabled:opacity-20" title={t('move_down')}><ArrowDown className="size-4" /></button>
         </span>
         <img className="size-14 rounded-xl bg-slate-900 object-cover object-top" src={`/game_ui/characters/${character.character_id}.png`} alt="" />
-        <span className="min-w-0"><strong className="block text-base">{character.name}</strong><small className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-slate-400">{character.build && <span className="saved-build-badge">{t('build_saved')}</span>}{!character.build && <span className="text-slate-500">{t('no_build_saved')}</span>}<span>{t('level').toLocaleLowerCase()} {character.level} · {t('awakening_short')}{character.awaken_level}</span></small></span>
+        <span className="min-w-0">
+          <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+            <strong className="text-base">{character.name}</strong>
+            {character.build && <span className="saved-build-badge">{t('build_saved')}</span>}
+          </span>
+          <small className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-xs leading-relaxed text-slate-300 [&>*+*]:before:mr-2 [&>*+*]:before:text-slate-500 [&>*+*]:before:content-['·']">
+            <span>{t('skill_level', { level: character.level })}</span>
+            {awakeningStages && <span title={t('recorded_awakening_levels', { levels: awakeningStages })}>{awakeningStages}</span>}
+            {character.equipped_arc && <span>
+              {character.equipped_arc.name} {t('skill_level', { level: character.equipped_arc.level })}
+            </span>}
+            {skillLevels && <span className="tabular-nums" title={Object.values(skillLabels).map(label => t(label)).join(' / ')}>{skillLevels}</span>}
+            <PassiveSummary references={character.passive_references} />
+          </small>
+        </span>
         <Button variant="secondary" onClick={event => { event.stopPropagation(); onState(character.character_id) }}><Eye className="mr-2 size-4" />{t('game_state')}</Button>
         <Button variant="secondary" onClick={event => { event.stopPropagation(); onBuild(character.character_id) }}>{character.build ? t('view_build') : t('create_build')}</Button>
       </div>
     })}{!visible.length && <p className="py-12 text-center text-slate-500">{t('no_character_match', { query })}</p>}</div></CardContent></Card>
   </>
+}
+
+const skillLabels: Record<string, string> = {
+  'Ability.Melee': 'skill_basic_attack',
+  'Ability.Skill': 'skill_ability',
+  'Ability.UltraSkill': 'skill_ultimate',
+  'Ability.QTE': 'skill_qte',
+}
+
+function compactSkillLevels(skills: CharacterSkill[] = []) {
+  const levels = Object.keys(skillLabels).map(category => skills.find(skill =>
+    skill.category === category || skill.category.startsWith(`${category}.`),
+  )?.level)
+  if (levels.every(level => level !== undefined)) return levels.join('/')
+
+  // Some undeveloped characters use the same unnamed category for all four slots.
+  if (skills.length === 4 && skills.every(skill => skill.category === '#0' && skill.level === skills[0].level)) {
+    return skills.map(skill => skill.level).join('/')
+  }
+  return ''
 }
