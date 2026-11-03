@@ -10,6 +10,7 @@ import (
 )
 
 type optimizationReportInput struct {
+	teamEffects       []TeamPreviewEffect
 	currentInventory  *nte.Inventory
 	inventory         nte.Inventory
 	profileID         string
@@ -49,6 +50,10 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 	selectedCartridge, cartridgeBreakdown := findScoredCartridge(input.inventory.Cartridges, input.solution.SelectedCartridgeID, input.profile, input.refs)
 	setDefinition := input.setCatalog.Definitions[input.solution.SelectedSetID]
 	stats := optimizer.BuildStatSummary(input.profile, selectedModules, selectedCartridge, setDefinition, input.solution.SetMatchedCount, input.additional)
+	var buffEffects []TeamPreviewEffect
+	if input.teamEffects != nil {
+		buffEffects = projectTeamBuffs(&stats, input.teamEffects, setDefinition, input.solution.SetMatchedCount)
+	}
 	displaySetDefinition := localizedSetDefinition(setDefinition, input.displayCatalog)
 	mode := publicOptimizationMode(input.plan)
 	if input.plan.approximate {
@@ -64,10 +69,11 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 	if input.currentInventory != nil {
 		currentInventory = *input.currentInventory
 	}
-	currentStats := buildCurrentEquipmentStats(currentInventory, input.profile, input.setCatalog, currentAdditional)
+	currentStats := buildCurrentEquipmentStats(currentInventory, input.profile, input.setCatalog, currentAdditional, input.teamEffects)
 	goals, currentGoals, conditionalGoals, currentConditionalGoals := compareBuildGoals(input.buildTarget, stats, currentStats)
 	damageBatch := s.prepareDamageBatch(input.currentCharacter, currentStats, input.language)
 	alternatives := s.buildAlternatives(input.solution.Alternatives, alternativeBuildContext{
+		teamEffects:    input.teamEffects,
 		damageForBuild: damageBatch.evaluate, moduleByID: moduleByID, cartridges: input.inventory.Cartridges, profile: input.profile, refs: input.refs,
 		characterNames: input.characterNames, setCatalog: input.setCatalog, additional: input.additional,
 		objectives: input.objectives, mode: mode, approximate: input.plan.approximate, buildTarget: input.buildTarget,
@@ -77,6 +83,7 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 	input.solution.Alternatives = nil
 	damageAnalysis := damageBatch.evaluate(stats)
 	result := OptimizationResult{
+		BuffEffects:   buffEffects,
 		SchemaVersion: 1, ProfileID: input.profileID, Locale: input.language, OptimizationMode: mode, GridID: input.profile.GridID,
 		PhaseMS: input.phaseMilliseconds, InventoryModules: len(input.inventory.Modules), EligibleCandidates: len(input.candidates), SelectedCandidates: len(input.selected),
 		TimeoutSeconds: input.timeoutSeconds, Grid: input.grid, Solution: input.solution, Modules: optimizedModules,

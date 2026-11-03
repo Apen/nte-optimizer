@@ -340,11 +340,11 @@ func TestBuildCurrentEquipmentStatsUsesOnlyCharacterEquipment(t *testing.T) {
 		{Level: 20, LocalID: "current", EquippedCharacterID: 7, MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 42}}},
 		{Level: 20, LocalID: "other", EquippedCharacterID: 8, MainStats: []nte.Stat{{PropertyID: "AtkAdd", Value: 99}}},
 	}}
-	stats := buildCurrentEquipmentStats(inv, profile, optimizer.SetCatalog{}, nil)
+	stats := buildCurrentEquipmentStats(inv, profile, optimizer.SetCatalog{}, nil, nil)
 	if stats == nil || stats.Sources["modules"]["AtkAdd"] != 42 {
 		t.Fatalf("unexpected current equipment stats: %#v", stats)
 	}
-	if got := buildCurrentEquipmentStats(inv, scoring.Character{}, optimizer.SetCatalog{}, nil); got != nil {
+	if got := buildCurrentEquipmentStats(inv, scoring.Character{}, optimizer.SetCatalog{}, nil, nil); got != nil {
 		t.Fatalf("profile without character must not have current stats: %#v", got)
 	}
 }

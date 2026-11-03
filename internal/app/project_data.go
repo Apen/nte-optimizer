@@ -34,6 +34,13 @@ func (s OptimizerService) optimizeProjectWithArc(ctx context.Context, projectDir
 	if !loaded {
 		return s.optimizeTunedWithArc(ctx, inventory, profileID, nil, includeEquipped, language, mode, goals, tunings, arcForkID)
 	}
+	if s.WeightOverrides != nil && len(s.WeightOverrides.TeamAllies) > 0 {
+		builds, err := loadLocalBuilds(projectDir, true)
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		s.teamBuilds = builds.Builds
+	}
 	var overrides struct {
 		Characters map[int]map[string]float64 `json:"characters"`
 	}

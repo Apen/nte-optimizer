@@ -39,6 +39,7 @@ func SaveProfileStrategy(projectDir, profileID string, settings WeightOverrides)
 	if previous, ok := state.Profiles[profileID]; ok {
 		settings.Goals = previous.Goals
 		settings.ArcForkID = previous.ArcForkID
+		settings.TeamAllies = previous.TeamAllies
 	}
 	return saveProfileSettings(projectDir, profileID, settings, state)
 }
@@ -47,6 +48,9 @@ func SaveProfileSettings(projectDir, profileID string, settings WeightOverrides)
 	state, err := LoadStrategyOverrides(projectDir)
 	if err != nil {
 		return WeightOverrides{}, err
+	}
+	if settings.TeamAllies == nil {
+		settings.TeamAllies = state.Profiles[profileID].TeamAllies
 	}
 	return saveProfileSettings(projectDir, profileID, settings, state)
 }
@@ -69,6 +73,16 @@ func ValidateProfileSettings(profileID string, settings WeightOverrides) (Weight
 	settings = normalizeWeightOverrides(settings)
 	if len(settings.MainStats) == 0 {
 		return WeightOverrides{}, fmt.Errorf("select at least one cartridge main stat")
+	}
+	if len(settings.TeamAllies) > 3 {
+		return WeightOverrides{}, fmt.Errorf("select at most three allies")
+	}
+	allies := make(map[int]bool, len(settings.TeamAllies))
+	for _, ally := range settings.TeamAllies {
+		if ally.CharacterID <= 0 || allies[ally.CharacterID] {
+			return WeightOverrides{}, fmt.Errorf("invalid or duplicate ally")
+		}
+		allies[ally.CharacterID] = true
 	}
 	for property, weight := range settings.Weights {
 		if property == "" || math.IsNaN(weight) || math.IsInf(weight, 0) || weight < 0 || weight > 10 {
@@ -106,7 +120,11 @@ func normalizeWeightOverrides(settings WeightOverrides) WeightOverrides {
 	for property, goal := range settings.Goals {
 		goals[property] = goal
 	}
-	return WeightOverrides{MainStats: mainStats, Weights: cloneWeights(settings.Weights), Goals: goals, ArcForkID: settings.ArcForkID}
+	var allies []TeamAlly
+	for _, ally := range settings.TeamAllies {
+		allies = append(allies, TeamAlly{CharacterID: ally.CharacterID})
+	}
+	return WeightOverrides{MainStats: mainStats, Weights: cloneWeights(settings.Weights), Goals: goals, ArcForkID: settings.ArcForkID, TeamAllies: allies}
 }
 
 func finiteNonNegative(value float64) bool {

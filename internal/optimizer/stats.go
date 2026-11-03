@@ -10,13 +10,22 @@ import (
 )
 
 type StatSummary struct {
-	Completeness       string                        `json:"completeness"`
-	MissingSources     []string                      `json:"missing_sources"`
-	Sources            map[string]map[string]float64 `json:"sources"`
-	Unconditional      map[string]float64            `json:"unconditional"`
-	WithConditions     map[string]float64            `json:"with_conditions"`
-	Derived            map[string]float64            `json:"derived"`
-	DerivedConditional map[string]float64            `json:"derived_conditional"`
+	DerivedWithAllBuffs map[string]float64            `json:"derived_with_all_buffs,omitempty"`
+	Completeness        string                        `json:"completeness"`
+	MissingSources      []string                      `json:"missing_sources"`
+	Sources             map[string]map[string]float64 `json:"sources"`
+	Unconditional       map[string]float64            `json:"unconditional"`
+	WithConditions      map[string]float64            `json:"with_conditions"`
+	Derived             map[string]float64            `json:"derived"`
+	DerivedConditional  map[string]float64            `json:"derived_conditional"`
+}
+
+// ProjectTeamBuffs derives a display-only snapshot from the modeled personal
+// conditions and temporary team effects.
+func (s *StatSummary) ProjectTeamBuffs(buffs []nte.Stat) {
+	values := cloneValues(s.WithConditions)
+	addStats(values, buffs)
+	s.DerivedWithAllBuffs = derive(values)
 }
 
 func BuildStatSummary(character scoring.Character, modules []nte.Module, cartridge *nte.Cartridge, set SetDefinition, matched int, additional ...map[string][]nte.Stat) StatSummary {

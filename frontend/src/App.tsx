@@ -1,3 +1,4 @@
+import { TeamSelection, teamArcKey } from './components/team-selection'
 import { ResultView } from './components/build-results'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Ban, CheckCircle2, CircleAlert, ChevronDown, LockKeyhole, Play, Square, X } from 'lucide-react'
@@ -16,7 +17,7 @@ import { ArcsPage, CartridgesPage, ModulesPage, ResourcesPage } from './pages/in
 import { errorMessage } from './lib/errors'
 import { ProfileAutosave, RequestScope } from './lib/profile-autosave'
 import { PresentationProvider } from './presentation'
-import type { AccountImportSummary, BuildWorkspace as Workspace, EquipmentCatalog as Catalog, InventoryArc, LocalizationCatalog, OptimizationLog, Profile, Result, SavedBuild, SearchProgress, TargetGoal, TargetPreset } from './types'
+import type { AccountImportSummary, BuildWorkspace as Workspace, EquipmentCatalog as Catalog, InventoryArc, LocalizationCatalog, OptimizationLog, Profile, Result, SavedBuild, SearchProgress, TargetGoal, TargetPreset, TeamAlly } from './types'
 import { applyLocalization, currentIntlLocale, initialLocale, setActiveLocale, t, type Locale } from './i18n'
 
 const unavailableObjectiveProperties = new Set([
@@ -26,7 +27,7 @@ const unavailableObjectiveProperties = new Set([
 ])
 const noArcForkSelection = '__none__'
 
-type ProfileDraft = [Record<string,number>,Record<string,number>,Record<string,number>,string[],string[],Record<string,number>,TargetGoal[],{main_stats:string[];weights:Record<string,number>},string]
+type ProfileDraft = [Record<string,number>,Record<string,number>,Record<string,number>,string[],string[],Record<string,number>,TargetGoal[],{main_stats:string[];weights:Record<string,number>},string,TeamAlly[]]
 
 function displayGoal(goal:TargetGoal) { return goal.percent ? goal.minimum*100 : goal.minimum }
 
@@ -36,6 +37,7 @@ export function App() {
   const [catalog,setCatalog]=useState<Catalog>({modules:[],cartridges:[],arcs:[],resources:[]})
   const [catalogLoaded,setCatalogLoaded]=useState(false)
   const [selectedCharacter,setSelectedCharacter]=useState(0)
+  const [savedTeamAllies,setTeamAllies]=useState<TeamAlly[]>([])
   const [profile,setProfile]=useState('')
   const [searchMode,setSearchMode]=useState<'fast'|'beta'>('fast')
   const [locale,setLocale]=useState<Locale>(()=>initialLocale(localStorage.getItem('nte-optimizer-locale')))
@@ -71,6 +73,7 @@ export function App() {
   const [profileReload,setProfileReload]=useState(0)
   const settingsSaveQueue=useRef<Promise<void>>(Promise.resolve())
   const selectionTouched=useRef(false)
+  const teamAllies=useMemo(()=>savedTeamAllies.filter(ally=>ally.character_id!==selectedCharacter&&workspace.characters.some(character=>character.character_id===ally.character_id)),[savedTeamAllies,selectedCharacter,workspace.characters])
   const selectedProfile=useMemo(()=>profiles.find(item=>item.id===profile),[profiles,profile])
   const weights=useMemo(()=>normalizeGoalWeights(weightEdits[profile]||{main_stats:selectedProfile?.main_stats||Object.keys(selectedProfile?.main_weights||{}),weights:selectedProfile?.weights||selectedProfile?.sub_weights||{}}),[weightEdits,profile,selectedProfile])
   const goalDefinitions=useMemo(()=>[...(preset?.goals||[]),...customGoals],[preset,customGoals])
@@ -80,11 +83,12 @@ export function App() {
     const byFork=new Map<string,InventoryArc>()
     for(const arc of catalog.arcs){
       if(!arc.compatible_characters?.some(character=>character.character_id===selectedCharacter))continue
+      if(teamAllies.some(ally=>workspace.characters.find(character=>character.character_id===ally.character_id)?.team_gear?.arc_id===teamArcKey(arc)))continue
       const current=byFork.get(arc.forkId)
       if(!current||betterArcCopy(arc,current))byFork.set(arc.forkId,arc)
     }
     return Array.from(byFork.values()).sort((a,b)=>b.level-a.level||(a.name||a.forkId).localeCompare(b.name||b.forkId,currentIntlLocale()))
-  },[catalog.arcs,selectedCharacter])
+  },[catalog.arcs,selectedCharacter,teamAllies,workspace.characters])
   const savedArcForkID=selectedProfile?.arc_fork_id||''
   const selectedArcForkID=savedArcForkID===noArcForkSelection||compatibleArcs.some(arc=>arc.forkId===savedArcForkID)?savedArcForkID:catalogLoaded&&compatibleArcs.length===0?noArcForkSelection:''
   const availableMainStats=useMemo(()=>Array.from(new Set(catalog.cartridges.flatMap(item=>item.main_stats.map(stat=>stat.property_id)))),[catalog.cartridges])
@@ -103,13 +107,13 @@ export function App() {
   const changeWeight=(id:string,value:number)=>{const nextWeights={...weights,weights:{...weights.weights,[id]:value}};setWeightEdits(current=>({...current,[profile]:nextWeights}));scheduleSettingsSave(goals,maximums,tolerances,disabledGoals,strictGoals,strictMinimums,goalDefinitions,nextWeights)}
   const changeMainStats=(main_stats:string[])=>{const nextWeights={...weights,main_stats};setWeightEdits(current=>({...current,[profile]:nextWeights}));scheduleSettingsSave(goals,maximums,tolerances,disabledGoals,strictGoals,strictMinimums,goalDefinitions,nextWeights)}
   const showSaveToast=(message:string,error=false)=>{if(toastTimer.current)clearTimeout(toastTimer.current);setSaveToast({message,error});toastTimer.current=setTimeout(()=>setSaveToast(undefined),3500)}
-  const persistSettings=async(nextGoals=goals,nextMaximums=maximums,nextTolerances=tolerances,nextDisabled=disabledGoals,nextStrict=strictGoals,nextMinimums=strictMinimums,nextDefinitions=goalDefinitions,nextWeights=weights,nextArcForkID=selectedArcForkID)=>{
+  const persistSettings=async(nextGoals=goals,nextMaximums=maximums,nextTolerances=tolerances,nextDisabled=disabledGoals,nextStrict=strictGoals,nextMinimums=strictMinimums,nextDefinitions=goalDefinitions,nextWeights=weights,nextArcForkID=selectedArcForkID,nextTeamAllies=teamAllies)=>{
     autosave.cancel(profile)
     if(!profile)return false
     try{
       const profileID=profile
       const version=autosave.version(profileID)
-      profileDrafts.current.set(profileID,[nextGoals,nextMaximums,nextTolerances,nextDisabled,nextStrict,nextMinimums,nextDefinitions,nextWeights,nextArcForkID])
+      profileDrafts.current.set(profileID,[nextGoals,nextMaximums,nextTolerances,nextDisabled,nextStrict,nextMinimums,nextDefinitions,nextWeights,nextArcForkID,nextTeamAllies])
       const profileName=selectedProfile?.name||profileID
       const baseGoalIDs=new Set((preset?.goals||[]).map(goal=>goal.property_id))
       const savedGoals=Object.fromEntries(nextDefinitions.map(goal=>{
@@ -117,11 +121,11 @@ export function App() {
         const settings={target:(nextGoals[goal.property_id]||0)/(goal.percent?100:1),maximum:(nextMaximums[goal.property_id]||0)/(goal.percent?100:1),minimum:nextStrict.includes(goal.property_id)?(nextMinimums[goal.property_id]||0)/(goal.percent?100:1):undefined,tolerance:(nextTolerances[goal.property_id]||0)/100,strict_minimum:nextStrict.includes(goal.property_id),disabled:nextDisabled.includes(goal.property_id),...(custom?{label:presentation.stats[goal.property_id]||goal.label,percent:goal.percent,custom:true}:{})}
         return [goal.property_id,settings]
       }))
-      const settings={...nextWeights,arc_fork_id:nextArcForkID,goals:savedGoals}
+      const settings={...nextWeights,arc_fork_id:nextArcForkID,team_allies:nextTeamAllies,goals:savedGoals}
       const save=settingsSaveQueue.current.catch(()=>undefined).then(async()=>{
         await SaveProfileSettings(profileID,settings)
         if(autosave.version(profileID)!==version)return
-        setProfiles(items=>items.map(item=>item.id===profileID?{...item,main_stats:nextWeights.main_stats,weights:nextWeights.weights,arc_fork_id:nextArcForkID,saved_goals:savedGoals}:item))
+        setProfiles(items=>items.map(item=>item.id===profileID?{...item,main_stats:nextWeights.main_stats,weights:nextWeights.weights,arc_fork_id:nextArcForkID,team_allies:nextTeamAllies,saved_goals:savedGoals}:item))
         showSaveToast(t('profile_saved',{name:profileName}))
       })
       settingsSaveQueue.current=save.then(()=>undefined,()=>undefined)
@@ -131,9 +135,16 @@ export function App() {
   }
   const scheduleSettingsSave=(...snapshot:Parameters<typeof persistSettings>)=>{
     setOptimizationError('')
-    const draft:ProfileDraft=[snapshot[0]??goals,snapshot[1]??maximums,snapshot[2]??tolerances,snapshot[3]??disabledGoals,snapshot[4]??strictGoals,snapshot[5]??strictMinimums,snapshot[6]??goalDefinitions,snapshot[7]??weights,snapshot[8]??selectedArcForkID]
+    const draft:ProfileDraft=[snapshot[0]??goals,snapshot[1]??maximums,snapshot[2]??tolerances,snapshot[3]??disabledGoals,snapshot[4]??strictGoals,snapshot[5]??strictMinimums,snapshot[6]??goalDefinitions,snapshot[7]??weights,snapshot[8]??selectedArcForkID,snapshot[9]??teamAllies]
     profileDrafts.current.set(profile,draft)
     autosave.schedule(profile,()=>persistSettings(...draft))
+  }
+  const changeTeam=(allies:TeamAlly[])=>{
+    requests.invalidate()
+    setTeamAllies(allies)
+    setResult(undefined)
+    setSavedBuildSelection(undefined)
+    void persistSettings(goals,maximums,tolerances,disabledGoals,strictGoals,strictMinimums,goalDefinitions,weights,selectedArcForkID,allies)
   }
   const changeArc=(arcForkID:string)=>{
     autosave.cancel(profile)
@@ -174,7 +185,7 @@ export function App() {
   useEffect(() => { let active=true;requests.invalidate();setResult(undefined);setRunning(false);void StopOptimization();setActiveLocale(locale);localStorage.setItem('nte-optimizer-locale',locale);Localization(locale).then((value:LocalizationCatalog)=>{if(!active)return;applyLocalization(locale,value);setPresentation(value)}).catch(error=>{if(active)console.error('Failed to load localization',error)});return()=>{active=false} },[locale])
   useEffect(() => { const matches=profiles.filter(item=>item.character_id===selectedCharacter); setProfile(current=>matches.some(item=>item.id===current)?current:(matches[0]?.id||'')) },[selectedCharacter,profiles])
   useEffect(() => {
-    requests.invalidate();setRunning(false);setStopping(false);setLoadedProfile('');void StopOptimization()
+    requests.invalidate();setRunning(false);setStopping(false);setLoadedProfile('');setTeamAllies([]);void StopOptimization()
     if(!profile){setPreset(undefined);setCustomGoals([]);setGoals({});setMaximums({});setDisabledGoals([]);setStrictGoals([]);setStrictMinimums({});return}
     let active=true
     Target(profile).then((value:TargetPreset)=>{
@@ -183,6 +194,7 @@ export function App() {
       const baseIDs=new Set(value.goals.map(goal=>goal.property_id))
       const savedCustomGoals:TargetGoal[]=Object.entries(saved?.saved_goals||{}).filter(([id,settings])=>settings.custom&&!baseIDs.has(id)).map(([id,settings])=>({property_id:id,label:settings.label||id,minimum:settings.target,percent:!!settings.percent}))
       const draft=profileDrafts.current.get(profile)
+      setTeamAllies(draft?.[9]??saved?.team_allies??[])
       if(draft){setPreset(value);setCustomGoals(draft[6].filter(goal=>!baseIDs.has(goal.property_id)));setGoals(draft[0]);setMaximums(draft[1]);setTolerances(draft[2]);setDisabledGoals(draft[3]);setStrictGoals(draft[4]);setStrictMinimums(draft[5]);setLoadedProfile(profile);return}
       setLoadedProfile(profile)
       const definitions=[...value.goals,...savedCustomGoals]
@@ -209,7 +221,7 @@ export function App() {
       if(!await persistSettings()||!requests.current(ticket))return
       const baseGoalIDs=new Set((preset?.goals||[]).map(goal=>goal.property_id))
       const tuned=Object.fromEntries(goalDefinitions.filter(goal=>!disabledGoals.includes(goal.property_id)).map(goal=>[goal.property_id,{target:(goals[goal.property_id]||0)/(goal.percent?100:1),maximum:(maximums[goal.property_id]||0)/(goal.percent?100:1),tolerance:(tolerances[goal.property_id]||0)/100,importance:importances[goal.property_id]??1,minimum:strictGoals.includes(goal.property_id)?(strictMinimums[goal.property_id]||0)/(goal.percent?100:1):0,strict_minimum:strictGoals.includes(goal.property_id),...(baseGoalIDs.has(goal.property_id)?{}:{custom:true,label:presentation.stats[goal.property_id]||goal.label,percent:goal.percent})}]))
-      const value=await OptimizeFlexibleSelection(profile,false,locale,searchMode,tuned,pinnedModules,excludedModules,{...weights,simulate_cartridge_main_stats:true},selectedArcForkID)
+      const value=await OptimizeFlexibleSelection(profile,false,locale,searchMode,tuned,pinnedModules,excludedModules,{...weights,simulate_cartridge_main_stats:true,team_allies:teamAllies},selectedArcForkID)
       if(requests.current(ticket))setResult(value)
     } catch(error) { if(!requests.current(ticket))return;setOptimizationError(errorMessage(error));setSettingsOpen(true);console.error('Optimization failed',error) } finally { if(requests.current(ticket)){try{const log=await LastOptimizationLog();if(requests.current(ticket))setOptimizationLog(log)}catch(error){console.error('Failed to load optimization log',error)}if(requests.current(ticket)){setRunning(false);setStopping(false)}} }
   }
@@ -243,6 +255,8 @@ export function App() {
      </summary>
      <fieldset disabled={running||loadedProfile!==profile} className="configuration-panel mb-3">
       <div className="strategy-field">{workspace.characters.find(character=>character.character_id===selectedCharacter)&&<img className="strategy-character-image" src={`/game_ui/characters/${selectedCharacter}.png`} alt=""/>}<Field label={t('profile')}><select disabled={!compatibleProfiles.length} value={profile} onChange={e=>{setSavedBuildSelection(undefined);setProfile(e.target.value)}}>{compatibleProfiles.length?compatibleProfiles.map(item=><option key={item.id} value={item.id}>{item.name||item.id}</option>):<option>{t('no_profile')}</option>}</select></Field><Field label={t('arc')}><select disabled={!profile||!catalogLoaded} value={selectedArcForkID} onChange={event=>changeArc(event.target.value)}><option value="" disabled>{t('select_arc')}</option>{compatibleArcs.map(arc=><option key={arc.forkId} value={arc.forkId}>{arc.name||arc.forkId} · {t('level')} {arc.level}</option>)}<option value={noArcForkSelection}>{t('no_arc')}</option></select></Field><Field label={t('search_method')}><select value={searchMode} onChange={event=>{setSearchMode(event.target.value as 'fast'|'beta');setResult(undefined)}}><option value="fast">{t('search_fast')}</option><option value="beta">{t('search_beta')}</option></select></Field><Button className="strategy-search-button" disabled={!profile||!selectedArcForkID} onClick={optimize}><Play className="mr-2 size-4"/>{t('find_best_build')}</Button></div>
+      <TeamSelection activeID={selectedCharacter} characters={workspace.characters} arcs={catalog.arcs} allies={teamAllies} onChange={changeTeam}>
+      </TeamSelection>
     </fieldset>
      {(pinnedModules.length>0||excludedModules.length>0)&&<Card className="mb-5 border-amber-900/60"><CardContent className="flex flex-wrap items-center gap-2 pt-5"><div className="mr-2"><strong>{t('piece_constraints')}</strong><p className="text-xs text-slate-500">{t('constraints_next_calculation')}</p></div>{pinnedModules.map(id=><ConstraintChip key={id} id={id} kind="locked" onRemove={()=>togglePinned(id)}/>) }{excludedModules.map(id=><ConstraintChip key={id} id={id} kind="excluded" onRemove={()=>toggleExcluded(id)}/>) }<Button className="ml-auto" variant="secondary" onClick={()=>{setPinnedModules([]);setExcludedModules([])}}><X className="mr-2 size-3"/>{t('clear_all')}</Button></CardContent></Card>}
      <fieldset disabled={running||loadedProfile!==profile}><StatsEditor goalDefinitions={goalDefinitions} availableGoals={availableGoalDefinitions} disabledGoals={disabledGoals} strictGoals={strictGoals} strictMinimums={strictMinimums} goals={goals} maximums={maximums} weights={weights} availableMain={availableMainStats} onGoal={changeGoal} onMaximum={changeMaximum} onMinimum={changeMinimum} onWeight={changeWeight} onMainStats={changeMainStats} onRemove={removeGoal} onAddGoal={addGoal} onReset={resetWeights} onSave={saveSettings}/></fieldset>

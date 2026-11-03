@@ -4,6 +4,7 @@ const errorKeys: Record<string, string> = {
   operation_failed: 'error_operation_failed', data_missing: 'error_data_missing',
   data_unavailable: 'error_data_unavailable', account_required: 'error_account_required',
   calibration_conflict: 'error_calibration_conflict', equipment_unavailable: 'error_equipment_unavailable',
+  invalid_team: 'error_invalid_team',
   cancelled: 'error_cancelled', scan_busy: 'scan_error_busy',
   scan_diagnostic_unavailable: 'scan_error_diagnostic_unavailable', scan_failed: 'scan_error_generic',
 }

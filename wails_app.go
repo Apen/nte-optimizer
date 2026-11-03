@@ -73,6 +73,7 @@ func (a *DesktopApp) Profiles() ([]appservice.ProfileSummary, error) {
 			profiles[index].Weights = settings.Weights
 			profiles[index].SavedGoals = settings.Goals
 			profiles[index].ArcForkID = settings.ArcForkID
+			profiles[index].TeamAllies = settings.TeamAllies
 		}
 	}
 	return profiles, nil
@@ -406,4 +407,13 @@ func scanClientError(err error) error {
 		}
 	}
 	return apperrors.ForClient(apperrors.New(code, err))
+}
+
+func (a *DesktopApp) PreviewTeam(profileID, language, arcForkID string, allies []appservice.TeamAlly) (appservice.TeamPreview, error) {
+	service, err := a.optimizerService(profileID, false)
+	if err != nil {
+		return appservice.TeamPreview{}, apperrors.ForClient(err)
+	}
+	preview, err := service.PreviewTeam(a.stateDir, profileID, language, arcForkID, allies)
+	return preview, apperrors.ForClient(err)
 }

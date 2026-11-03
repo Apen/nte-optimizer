@@ -30,6 +30,33 @@ func TestDamageBatchMatchesIndependentCalculation(t *testing.T) {
 	}
 }
 
+func TestDamageBatchProjectsBuffsForBothBuilds(t *testing.T) {
+	s := NewOptimizerService(filepath.Join("..", "..", "data"))
+	character := &decoded.Character{CharacterID: 1036, Level: 80, Skills: []decoded.CharacterSkill{{AbilityID: "GA_Zankou_Skill", Level: 8}}}
+	current := optimizer.StatSummary{
+		Derived:             map[string]float64{"AtkFinal": 1000},
+		DerivedConditional:  map[string]float64{"AtkFinal": 1200},
+		DerivedWithAllBuffs: map[string]float64{"AtkFinal": 1600},
+	}
+	build := optimizer.StatSummary{
+		Derived:             map[string]float64{"AtkFinal": 1000},
+		DerivedConditional:  map[string]float64{"AtkFinal": 1300},
+		DerivedWithAllBuffs: map[string]float64{"AtkFinal": 2000},
+	}
+	result := s.prepareDamageBatch(character, &current, "en").evaluate(build)
+	for _, group := range result.Groups {
+		if group.Category == "dot" || group.Category == "reaction" || group.BuildDamage <= 0 {
+			continue
+		}
+		if group.BuildDamage != group.CurrentDamage || group.Buffed == nil ||
+			group.Buffed.Build <= group.Buffed.Current || group.Buffed.Current <= group.CurrentDamage {
+			t.Fatalf("unexpected normal and buffed damage: %+v, buffs %+v", group, group.Buffed)
+		}
+		return
+	}
+	t.Fatal("missing direct damage comparison")
+}
+
 func BenchmarkDamageReportingBatch(b *testing.B) {
 	for _, count := range []int{1, 10, 100} {
 		b.Run(fmt.Sprint(count), func(b *testing.B) {

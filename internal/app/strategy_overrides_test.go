@@ -42,8 +42,9 @@ func TestProfileSettingsStayIsolatedAndWeightSavePreservesGoals(t *testing.T) {
 	}
 	zankou := WeightOverrides{
 		MainStats: []string{"CritDamageBase"}, Weights: map[string]float64{"CritDamageBase": 1},
-		ArcForkID: "fork_DemonBlade",
-		Goals:     map[string]SavedGoalSettings{"CritDamageBase": {Target: 2.1, Maximum: 2.5, Tolerance: .05, Disabled: true}},
+		ArcForkID:  "fork_DemonBlade",
+		TeamAllies: []TeamAlly{{CharacterID: 1003, ArcID: "old-copy"}, {CharacterID: 1042}},
+		Goals:      map[string]SavedGoalSettings{"CritDamageBase": {Target: 2.1, Maximum: 2.5, Tolerance: .05, Disabled: true}},
 	}
 	if _, err := SaveProfileSettings(dir, "zankou", zankou); err != nil {
 		t.Fatal(err)
@@ -61,8 +62,22 @@ func TestProfileSettingsStayIsolatedAndWeightSavePreservesGoals(t *testing.T) {
 	if state.Profiles["zankou"].Weights["CritDamageBase"] != .9 || state.Profiles["zankou"].ArcForkID != "fork_DemonBlade" || state.Profiles["zankou"].Goals["CritDamageBase"].Target != 2.1 || !state.Profiles["zankou"].Goals["CritDamageBase"].Disabled {
 		t.Fatalf("Zankou settings were not preserved: %#v", state.Profiles["zankou"])
 	}
-	if state.Profiles["zero"].Weights["MagBase"] != .8 || len(state.Profiles["zero"].Goals) != 0 {
+	allies := state.Profiles["zankou"].TeamAllies
+	if len(allies) != 2 || allies[0] != (TeamAlly{CharacterID: 1003}) || allies[1] != (TeamAlly{CharacterID: 1042}) {
+		t.Fatalf("saved ally selection was not preserved: %#v", allies)
+	}
+	if state.Profiles["zero"].Weights["MagBase"] != .8 || len(state.Profiles["zero"].Goals) != 0 || len(state.Profiles["zero"].TeamAllies) != 0 {
 		t.Fatalf("Zero settings were modified by Zankou save: %#v", state.Profiles["zero"])
+	}
+	zankou.TeamAllies = nil
+	preserved, err := SaveProfileSettings(dir, "zankou", zankou)
+	if err != nil || len(preserved.TeamAllies) != 2 {
+		t.Fatalf("a save without an ally field lost the team: %#v, %v", preserved.TeamAllies, err)
+	}
+	zankou.TeamAllies = []TeamAlly{}
+	cleared, err := SaveProfileSettings(dir, "zankou", zankou)
+	if err != nil || len(cleared.TeamAllies) != 0 {
+		t.Fatalf("an explicit empty team did not clear the selection: %#v, %v", cleared.TeamAllies, err)
 	}
 }
 

@@ -15,12 +15,13 @@ import (
 
 // damageBatch shares immutable inputs and the equipped baseline across alternatives.
 type damageBatch struct {
-	character  *decoded.Character
-	catalog    damage.Catalog
-	catalogErr error
-	labels     ntelocale.PresentationCatalog
-	labelsErr  error
-	current    []damage.Result
+	character     *decoded.Character
+	catalog       damage.Catalog
+	catalogErr    error
+	labels        ntelocale.PresentationCatalog
+	labelsErr     error
+	current       []damage.Result
+	currentBuffed []damage.Result
 }
 
 func (s OptimizerService) prepareDamageBatch(character *decoded.Character, current *optimizer.StatSummary, language string) damageBatch {
@@ -28,16 +29,38 @@ func (s OptimizerService) prepareDamageBatch(character *decoded.Character, curre
 	labels, labelsErr := ntelocale.LoadPresentation(s.DataDir, language)
 	batch := damageBatch{character: character, catalog: catalog, catalogErr: catalogErr, labels: labels, labelsErr: labelsErr}
 	if current != nil {
-		batch.current = damageAnalysisFromCatalog(character, *current, nil, catalog, catalogErr).Build
+		batch.currentBuffed = batch.calculate(*current, true).Build
+		batch.current = batch.calculate(*current, false).Build
 	}
 	return batch
 }
 
 func (batch damageBatch) evaluate(build optimizer.StatSummary) *DamageAnalysis {
-	analysis := damageAnalysisFromCatalog(batch.character, build, nil, batch.catalog, batch.catalogErr)
+	analysis := batch.calculate(build, false)
 	analysis.Current = batch.current
 	if analysis.Status == "atomic_preview" {
 		analysis.Groups = groupDamageResults(batch.character.CharacterID, analysis.Build, analysis.Current)
+		buffed := batch.calculate(build, true)
+		groups := groupDamageResults(batch.character.CharacterID, buffed.Build, batch.currentBuffed)
+		byID := make(map[string]DamageGroup, len(groups))
+		for _, group := range groups {
+			byID[group.ID] = group
+		}
+		for index := range analysis.Groups {
+			group := &analysis.Groups[index]
+			if projection, ok := byID[group.ID]; ok {
+				group.Buffed = &DamageBuffedValues{
+					Build: projection.BuildDamage, Current: projection.CurrentDamage,
+					BuildCrit: projection.BuildCrit, CurrentCrit: projection.CurrentCrit,
+				}
+				if group.Category == "dot" || group.Category == "reaction" {
+					group.Buffed = &DamageBuffedValues{
+						Build: projection.BuildMaxTick, Current: projection.CurrentMaxTick,
+						BuildCrit: projection.BuildMaxCritTick, CurrentCrit: projection.CurrentMaxCritTick,
+					}
+				}
+			}
+		}
 	}
 	if batch.labelsErr != nil {
 		return analysis
@@ -59,6 +82,15 @@ func (batch damageBatch) evaluate(build optimizer.StatSummary) *DamageAnalysis {
 		}
 	}
 	return analysis
+}
+
+func (batch damageBatch) calculate(stats optimizer.StatSummary, buffed bool) *DamageAnalysis {
+	if buffed && stats.DerivedWithAllBuffs != nil {
+		stats.DerivedConditional = stats.DerivedWithAllBuffs
+	} else if !buffed && stats.Derived != nil {
+		stats.DerivedConditional = stats.Derived
+	}
+	return damageAnalysisFromCatalog(batch.character, stats, nil, batch.catalog, batch.catalogErr)
 }
 
 func localizedAbilityLabel(labels map[string]string, abilityID string) string {
@@ -133,23 +165,31 @@ type DamageAnalysis struct {
 }
 
 type DamageGroup struct {
-	ID                 string  `json:"id"`
-	Name               string  `json:"name"`
-	Description        string  `json:"description"`
-	Category           string  `json:"category"`
-	ActionType         string  `json:"action_type"`
-	BuildDamage        float64 `json:"build_damage"`
-	CurrentDamage      float64 `json:"current_damage,omitempty"`
-	BuildNonCrit       float64 `json:"build_non_crit"`
-	CurrentNonCrit     float64 `json:"current_non_crit,omitempty"`
-	BuildCrit          float64 `json:"build_crit"`
-	CurrentCrit        float64 `json:"current_crit,omitempty"`
-	Instances          int     `json:"instances"`
-	MaxStacks          int     `json:"max_stacks,omitempty"`
-	BuildMaxTick       float64 `json:"build_max_tick,omitempty"`
-	CurrentMaxTick     float64 `json:"current_max_tick,omitempty"`
-	BuildMaxCritTick   float64 `json:"build_max_crit_tick,omitempty"`
-	CurrentMaxCritTick float64 `json:"current_max_crit_tick,omitempty"`
+	Buffed             *DamageBuffedValues `json:"buffed,omitempty"`
+	ID                 string              `json:"id"`
+	Name               string              `json:"name"`
+	Description        string              `json:"description"`
+	Category           string              `json:"category"`
+	ActionType         string              `json:"action_type"`
+	BuildDamage        float64             `json:"build_damage"`
+	CurrentDamage      float64             `json:"current_damage,omitempty"`
+	BuildNonCrit       float64             `json:"build_non_crit"`
+	CurrentNonCrit     float64             `json:"current_non_crit,omitempty"`
+	BuildCrit          float64             `json:"build_crit"`
+	CurrentCrit        float64             `json:"current_crit,omitempty"`
+	Instances          int                 `json:"instances"`
+	MaxStacks          int                 `json:"max_stacks,omitempty"`
+	BuildMaxTick       float64             `json:"build_max_tick,omitempty"`
+	CurrentMaxTick     float64             `json:"current_max_tick,omitempty"`
+	BuildMaxCritTick   float64             `json:"build_max_crit_tick,omitempty"`
+	CurrentMaxCritTick float64             `json:"current_max_crit_tick,omitempty"`
+}
+
+type DamageBuffedValues struct {
+	Build       float64 `json:"build"`
+	Current     float64 `json:"current"`
+	BuildCrit   float64 `json:"build_crit"`
+	CurrentCrit float64 `json:"current_crit"`
 }
 
 func (s OptimizerService) damageAnalysis(character *decoded.Character, build optimizer.StatSummary, current *optimizer.StatSummary) *DamageAnalysis {

@@ -1,17 +1,18 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { App } from './App'
-import type { WorkspaceCharacter } from './types'
+import type { TeamAlly, WorkspaceCharacter } from './types'
 
-const api = vi.hoisted(() => ({ save: vi.fn(), target: vi.fn() }))
+const api = vi.hoisted(() => ({ save: vi.fn(), target: vi.fn(), teams: new Map<string, TeamAlly[]>() }))
 vi.mock('../wailsjs/go/main/DesktopApp', () => ({
-  Profiles: async () => [1036, 1004].map(id => ({ id: `p${id}`, character_id: id, name: `P${id}`, main_stats: [], weights: { CritBase: 1 } })),
+  Profiles: async () => [1036, 1004].map(id => ({ id: `p${id}`, character_id: id, name: `P${id}`, main_stats: [], weights: { CritBase: 1 }, team_allies: api.teams.get(`p${id}`) })),
   BuildWorkspace: async () => ({ characters: [1036, 1004].map(id => ({ character_id: id, name: `C${id}`, level: 80, awaken_level: 0, priority: 1 })) }),
   EquipmentCatalog: async () => ({ modules: [], cartridges: [], arcs: [], resources: [] }),
-  Localization: async () => ({ locale: 'en', ui: {}, stats: {}, qualities: {}, geometries: {}, stat_sources: {}, damage: {} }),
+  Localization: async () => ({ locale: 'en', ui: { team_ally: 'Ally {number}' }, stats: {}, qualities: {}, geometries: {}, stat_sources: {}, damage: {} }),
   AccountImportStatus: async () => ({ has_import: false }), CheckForUpdate: async () => ({ available: false }),
   Target: (...args: unknown[]) => api.target(...args), SaveProfileSettings: (...args: unknown[]) => api.save(...args),
   StopOptimization: async () => false,
+  PreviewTeam: async () => ({ applied: [], conditional: [] }),
 }))
 vi.mock('./components/app-navigation', () => ({
   AppSidebar: ({ onPage }: { onPage: (page: string) => void }) => <button onClick={() => onPage('characters')}>Characters</button>,
@@ -24,6 +25,7 @@ vi.mock('./components/optimizer-configuration', async importOriginal => {
 })
 
 beforeEach(() => {
+  api.teams.clear()
   api.save.mockReset().mockResolvedValue({})
   api.target.mockReset().mockResolvedValue({ name: 'Target', goals: [{ property_id: 'CritBase', minimum: .5, percent: true }] })
   Object.defineProperty(window, 'runtime', { configurable: true, value: { EventsOn: () => () => {} } })
@@ -31,6 +33,30 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers())
 
 describe('profile draft lifecycle', () => {
+  it('keeps an ally when reopening the same profile and restores it after relaunch', async () => {
+    api.save.mockImplementation(async (id, settings) => {
+      api.teams.set(id, settings.team_allies)
+      return settings
+    })
+    const first = render(<App />)
+    fireEvent.click(await screen.findByText('Open 1036'))
+    await act(async () => {})
+    fireEvent.click(screen.getByLabelText('Ally 1'))
+    fireEvent.click(screen.getByRole('button', { name: 'C1004' }))
+    await act(async () => {})
+    expect(api.teams.get('p1036')).toEqual([{ character_id: 1004 }])
+
+    fireEvent.click(screen.getByText('Characters'))
+    fireEvent.click(screen.getByText('Open 1036'))
+    expect(screen.getByLabelText('Ally 1')).toHaveTextContent('C1004')
+
+    first.unmount()
+    render(<App />)
+    fireEvent.click(await screen.findByText('Open 1036'))
+    await act(async () => {})
+    expect(screen.getByLabelText('Ally 1')).toHaveTextContent('C1004')
+  })
+
   it('persists A and B edits without a late A acknowledgment resetting B', async () => {
     let acknowledgeA!: () => void
     api.save.mockImplementationOnce(() => new Promise<void>(resolve => { acknowledgeA = resolve }))

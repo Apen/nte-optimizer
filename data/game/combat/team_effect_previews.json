@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "effects": [
+    {"kind":"arc","id":"fork_mofeikesi","detail":"sakiri_arc","trigger":"ultimate_control","rotation_action":"ultimate","duration_parameter":"buff_mofeikesi_CD","projection_parameters":{"buff_mofeikesi_Atk":"AtkUp","buff_mofeikesi_Up":"AtkUp"}},
+    {"kind":"arc","id":"fork_twinbirds","detail":"blackbird_arc","trigger":"ultimate","duration_parameter":"buff_TwinBirds_CritUp1_CD","projection_parameters":{"buff_TwinBirds_CritUp1":"CritDamageBase"}},
+    {"kind":"arc","id":"fork_Door","detail":"iroi_arc","trigger":"healing","rotation_action":"redirect_press","duration_parameter":"buff_Door_CD","projection_parameters":{"buff_Door_OtherUp":"DamageUpGeneralBase"}},
+    {"kind":"set","id":"Suit11","pieces":4,"detail":"hedgehog_set","trigger":"ultimate","duration_seconds":20,"non_stacking":true},
+    {"kind":"skill","id":"GA_Sagiri_UltraSkill","character_id":1003,"detail":"sakiri_skill","trigger":"ultimate","duration_seconds":20,"base_attack_ratio":0.3,"source":"DT_SagiriEffectFigure: Sagiri_QDamUp_AtkAdd, Sagiri_QDamUp_AtkAddDur"},
+    {"kind":"skill","id":"GA_BlackBird_UltraSkill","character_id":1042,"detail":"blackbird_skill","trigger":"ultimate","duration_seconds":15,"bonus":{"property_id":"AtkUp","value":0.2,"percent":true},"source":"https://www.kaiden.gg/nte/guides/blackbird-rotation-and-team-composition-guide/"},
+    {"kind":"skill","id":"GA_Oneiroi_Skill","character_id":1075,"detail":"iroi_skill","trigger":"redirect_press","duration_seconds":20,"base_attack_ratio":0.2,"max_attack_bonus":500,"source":"DT_OneiroiEffectFigure: Oneiroi_Skill_AtkAdd, Oneiroi_Skill_AtkAddMax, Oneiroi_Skill_AtkAdd_Time"},
+    {"kind":"skill","id":"GA_Haniel_Skill","character_id":1020,"detail":"haniel_skill","trigger":"skill","duration_seconds":8,"projection_group":"haniel_atk","base_attack_ratios_by_level":[0.10,0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.20,0.21,0.22],"source":"DT_HanielEffectFigure: Haniel_Skill_AtkAdd, Haniel_Skill_ActorDuaration"},
+    {"kind":"skill","id":"GA_Haniel_UltraSkill","character_id":1020,"detail":"haniel_skill","trigger":"ultimate","duration_seconds":10,"projection_group":"haniel_atk","base_attack_ratios_by_level":[0.10,0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.20,0.21,0.22],"source":"DT_HanielEffectFigure: Haniel_UltraSkill_AtkAdd, Haniel_UltraSkillDuaration"}
+  ]
+}

@@ -7,9 +7,11 @@ import (
 	"strings"
 	"time"
 
+	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
 	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/nte"
+	"nte-optimizer/internal/optimizer"
 )
 
 const localBuildSchemaVersion = 1
@@ -74,13 +76,21 @@ type LocalBuildState struct {
 	Builds        map[string]LocalBuild `json:"builds"`
 }
 
+type WorkspaceTeamGear struct {
+	ArcID     string `json:"arc_id,omitempty"`
+	SetName   string `json:"set_name,omitempty"`
+	SetPieces int    `json:"set_pieces,omitempty"`
+	Saved     bool   `json:"saved"`
+}
+
 type WorkspaceCharacter struct {
-	CharacterID int           `json:"character_id"`
-	Name        string        `json:"name"`
-	Level       int           `json:"level"`
-	AwakenLevel int           `json:"awaken_level"`
-	Priority    int           `json:"priority"`
-	Build       *BuildSummary `json:"build,omitempty"`
+	TeamGear    WorkspaceTeamGear `json:"team_gear"`
+	CharacterID int               `json:"character_id"`
+	Name        string            `json:"name"`
+	Level       int               `json:"level"`
+	AwakenLevel int               `json:"awaken_level"`
+	Priority    int               `json:"priority"`
+	Build       *BuildSummary     `json:"build,omitempty"`
 }
 
 // BuildSummary deliberately excludes the detailed persisted result tree.
@@ -99,7 +109,11 @@ type BuildWorkspace struct {
 }
 
 func LoadBuildWorkspace(projectDir, dataDir, language string) (BuildWorkspace, error) {
-	state, builds, err := loadBuildData(projectDir)
+	inventory, state, loaded, err := loadAccountData(projectDir)
+	if err != nil {
+		return BuildWorkspace{}, err
+	}
+	builds, err := loadLocalBuilds(projectDir, loaded)
 	if err != nil {
 		return BuildWorkspace{}, err
 	}
@@ -110,6 +124,10 @@ func LoadBuildWorkspace(projectDir, dataDir, language string) (BuildWorkspace, e
 	catalog, err := ntelocale.Load(dataDir, language)
 	if err != nil {
 		return BuildWorkspace{}, fmt.Errorf("load locale catalog: %w", err)
+	}
+	sets, err := optimizer.LoadSetCatalog(datafiles.New(dataDir).Sets())
+	if err != nil {
+		return BuildWorkspace{}, err
 	}
 	byID := make(map[int]decoded.Character, len(state.Characters))
 	for _, character := range state.Characters {
@@ -124,6 +142,20 @@ func LoadBuildWorkspace(projectDir, dataDir, language string) (BuildWorkspace, e
 		entry := WorkspaceCharacter{CharacterID: id, Name: cleanCharacterName(catalog.CharacterName(id, character.Name)), Level: character.Level, AwakenLevel: character.AwakenLevel, Priority: index + 1}
 		if build, exists := builds.Builds[strconv.Itoa(id)]; exists {
 			entry.Build = &BuildSummary{CharacterID: build.CharacterID, ProfileID: build.ProfileID, ModuleIDs: build.ModuleIDs, CartridgeID: build.CartridgeID, ArcID: build.ArcID, Stats: build.Stats, UpdatedAt: build.UpdatedAt}
+		}
+		gear := resolveTeamGear(character, builds.Builds[strconv.Itoa(id)], inventory, state.Weapons)
+		entry.TeamGear.Saved = gear.saved
+		if gear.arc != nil {
+			entry.TeamGear.ArcID = gear.arc.ID.Key()
+		}
+		if gear.cartridge != nil {
+			entry.TeamGear.SetName = catalog.SetName(gear.cartridge.SetID, gear.cartridge.SetName)
+			for _, definition := range sets.Definitions {
+				if definition.InventorySetID == gear.cartridge.SetID {
+					entry.TeamGear.SetPieces = matchedRequiredGeometries(gear.modules, definition.RequiredGeometries)
+					break
+				}
+			}
 		}
 		result.Characters = append(result.Characters, entry)
 	}
@@ -317,18 +349,23 @@ func loadBuildData(projectDir string) (decoded.State, LocalBuildState, error) {
 	if err != nil {
 		return state, LocalBuildState{}, err
 	}
+	builds, err := loadLocalBuilds(projectDir, stateLoaded)
+	return state, builds, err
+}
+
+func loadLocalBuilds(projectDir string, stateLoaded bool) (LocalBuildState, error) {
 	builds := LocalBuildState{SchemaVersion: localBuildSchemaVersion, Builds: map[string]LocalBuild{}}
 	buildsLoaded, err := readOptionalJSON(workspaceFile(projectDir, "local_builds.json"), &builds)
 	if err != nil {
-		return state, LocalBuildState{}, err
+		return LocalBuildState{}, err
 	}
 	if !stateLoaded && buildsLoaded {
-		return state, LocalBuildState{}, fmt.Errorf("incomplete account workspace: local builds exist without decoded account state")
+		return LocalBuildState{}, fmt.Errorf("incomplete account workspace: local builds exist without decoded account state")
 	}
 	if builds.Builds == nil {
 		builds.Builds = map[string]LocalBuild{}
 	}
-	return state, builds, nil
+	return builds, nil
 }
 
 func (s *LocalBuildState) normalize(characters []decoded.Character) {

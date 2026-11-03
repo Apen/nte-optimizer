@@ -91,3 +91,6 @@ export function LastOptimizationLog() {
 export function RecoverAndScanAccount(language, seconds) {
   return window['go']['main']['DesktopApp']['RecoverAndScanAccount'](language, seconds)
 }
+export function PreviewTeam(profileID, language, arcForkID, allies) {
+  return window['go']['main']['DesktopApp']['PreviewTeam'](profileID, language, arcForkID, allies);
+}

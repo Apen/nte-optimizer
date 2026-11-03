@@ -23,3 +23,4 @@ export function OptimizeFlexibleSelection(profileID:string,ignorePriority:boolea
 export function StopOptimization():Promise<boolean>;
 export function LastOptimizationLog():Promise<OptimizationLog>;
 export function AccountBuffs(language:string):Promise<AccountBuffPage>;
+export function PreviewTeam(profileID:string,language:string,arcForkID:string,allies:import('../../../src/types').TeamAlly[]):Promise<import('../../../src/types').TeamPreview>;

@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
+	"slices"
 	"sort"
 	"time"
 
@@ -18,6 +19,7 @@ import (
 // OptimizerService is the UI-agnostic boundary shared by the CLI and Wails.
 // It returns data structures and never writes files or logs by itself.
 type WeightOverrides struct {
+	TeamAllies                 []TeamAlly                   `json:"team_allies,omitempty"`
 	SimulateCartridgeMainStats bool                         `json:"simulate_cartridge_main_stats,omitempty"`
 	MainStats                  []string                     `json:"main_stats"`
 	Weights                    map[string]float64           `json:"weights"`
@@ -38,6 +40,7 @@ type SavedGoalSettings struct {
 }
 
 type OptimizerService struct {
+	teamBuilds           map[string]LocalBuild
 	WeightOverrides      *WeightOverrides
 	SearchLimitsOverride *SearchLimitsOverride
 	Measure              bool
@@ -77,6 +80,7 @@ type optimizerDataConfig struct {
 }
 
 type ProfileSummary struct {
+	TeamAllies    []TeamAlly                   `json:"team_allies,omitempty"`
 	ID            string                       `json:"id"`
 	CharacterID   int                          `json:"character_id"`
 	Name          string                       `json:"name"`
@@ -93,6 +97,9 @@ type ProfileSummary struct {
 }
 
 type OptimizationResult struct {
+	BuffEffects                    []TeamPreviewEffect       `json:"buff_effects"`
+	TeamAllies                     []TeamAlly                `json:"team_allies,omitempty"`
+	TeamWarnings                   []string                  `json:"team_warnings,omitempty"`
 	SimulateCartridgeMainStats     bool                      `json:"simulate_cartridge_main_stats,omitempty"`
 	PhaseMS                        map[string]int64          `json:"phase_ms,omitempty"`
 	SchemaVersion                  int                       `json:"schema_version"`
@@ -129,6 +136,7 @@ type OptimizationResult struct {
 }
 
 type OptimizationAlternative struct {
+	BuffEffects           []TeamPreviewEffect   `json:"buff_effects"`
 	Solution              optimizer.Solution    `json:"solution"`
 	Modules               []OptimizationModule  `json:"modules"`
 	Weapon                *decoded.Weapon       `json:"weapon,omitempty"`
@@ -289,6 +297,10 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 	if err != nil {
 		return OptimizationResult{}, err
 	}
+	scenario, err := s.prepareTeam(inv, state, profile.CharacterID, currentWeapon)
+	if err != nil {
+		return OptimizationResult{}, err
+	}
 	arcScoreScale := optimizer.EquipmentTieBreakScale
 	if plan.solverMode == "score" {
 		arcScoreScale = 1
@@ -302,6 +314,27 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 	if arcs.option != nil {
 		arcOption = arcs.option
 		additional = arcOption.Additional
+	}
+	var teamWarnings []string
+	if scenario != nil {
+		var buildArc *decoded.Weapon
+		if arcOption != nil {
+			weapon := arcs.weapons[arcOption.ID]
+			buildArc = &weapon
+		}
+		teamWarnings, err = scenario.apply(buildArc, additional)
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		currentWarnings, err := scenario.apply(currentWeapon, currentAdditional)
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		for _, warning := range currentWarnings {
+			if !slices.Contains(teamWarnings, warning) {
+				teamWarnings = append(teamWarnings, warning)
+			}
+		}
 	}
 	if currentCharacter != nil {
 		baseStats, err := s.requiredCharacterBaseStats(currentCharacter.CharacterID, currentCharacter.Level, currentCharacter.BreakthroughLevel)
@@ -375,7 +408,33 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 	if selectedAdditional == nil {
 		selectedAdditional = additional
 	}
+	var teamEffects []TeamPreviewEffect
+	if scenario != nil {
+		teamEffects, err = s.conditionalTeamEffects(state, scenario, setCatalog)
+		if err != nil {
+			teamEffects = nil
+			teamWarnings = append(teamWarnings, "projection_unavailable")
+		}
+		for index := range teamEffects {
+			effect := &teamEffects[index]
+			ids := effect.SourceIDs
+			if len(ids) == 0 {
+				ids = []int{effect.CharacterID}
+			}
+			for _, id := range ids {
+				effect.SourceNames = append(effect.SourceNames, characterNames[id])
+			}
+			gear := scenario.gear[effect.CharacterID]
+			switch effect.Kind {
+			case "arc":
+				effect.EquipmentName = cleanArcName(displayCatalog.ItemName(effect.ID, gear.arc.Name))
+			case "set":
+				effect.EquipmentName = displayCatalog.SetName(effect.ID, gear.cartridge.SetName)
+			}
+		}
+	}
 	result := s.buildOptimizationResult(optimizationReportInput{
+		teamEffects:      teamEffects,
 		currentInventory: &actualInventory,
 		inventory:        inv, profileID: profileID, language: language, plan: plan, profile: profile, refs: refs,
 		setCatalog: setCatalog, displayCatalog: displayCatalog, currentCharacter: currentCharacter, selectedWeapon: selectedWeaponPtr,
@@ -389,6 +448,10 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 			"evaluator_and_seed": searchStarted.Sub(selectionFinished).Milliseconds(), "search": execution.searchMS,
 		},
 	})
+	if scenario != nil {
+		result.TeamAllies = scenario.allies
+		result.TeamWarnings = teamWarnings
+	}
 	result.PhaseMS["reporting"] = time.Since(searchFinished).Milliseconds()
 	result.SearchLimits = SearchLimits{TopPerGeometry: cfg.Optimize.TopPerGeometry, TopPerSet: cfg.Optimize.TopPerSet, TimeoutSeconds: cfg.Optimize.TimeoutSeconds}
 	result.SimulateCartridgeMainStats = s.WeightOverrides != nil && s.WeightOverrides.SimulateCartridgeMainStats
@@ -422,6 +485,7 @@ func appendCustomTargetGoals(buildTarget *target.BuildTarget, tunings map[string
 }
 
 type alternativeBuildContext struct {
+	teamEffects      []TeamPreviewEffect
 	moduleByID       map[string]nte.Module
 	cartridges       []nte.Cartridge
 	profile          scoring.Character
@@ -463,6 +527,10 @@ func (s OptimizerService) buildAlternatives(solutions []optimizer.Solution, ctx 
 		}
 		normalizePublicScore(&solution, detailedModules, cartridgeBreakdown)
 		stats := optimizer.BuildStatSummary(ctx.profile, modules, cartridge, setDefinition, solution.SetMatchedCount, additional)
+		var buffEffects []TeamPreviewEffect
+		if ctx.teamEffects != nil {
+			buffEffects = projectTeamBuffs(&stats, ctx.teamEffects, setDefinition, solution.SetMatchedCount)
+		}
 		explainRanking(&solution, stats.Derived, ctx.objectives, ctx.mode)
 		var weapon *decoded.Weapon
 		if selected, exists := ctx.arcWeapons[solution.SelectedWeaponID]; exists {
@@ -470,7 +538,8 @@ func (s OptimizerService) buildAlternatives(solutions []optimizer.Solution, ctx 
 			weapon = &copy
 		}
 		alternative := OptimizationAlternative{
-			Solution: solution, Modules: detailedModules, Weapon: weapon, WeaponConditionalNote: ctx.arcNotes[solution.SelectedWeaponID], Cartridge: cartridge,
+			BuffEffects: buffEffects,
+			Solution:    solution, Modules: detailedModules, Weapon: weapon, WeaponConditionalNote: ctx.arcNotes[solution.SelectedWeaponID], Cartridge: cartridge,
 			CartridgeBreakdown: cartridgeBreakdown, Stats: stats, Set: localizedSetDefinition(setDefinition, ctx.displayCatalog),
 			Damage: ctx.damageForBuild(stats),
 		}
@@ -491,7 +560,7 @@ func localizedSetDefinition(definition optimizer.SetDefinition, catalog ntelocal
 	}
 }
 
-func buildCurrentEquipmentStats(inv nte.Inventory, profile scoring.Character, setCatalog optimizer.SetCatalog, additional map[string][]nte.Stat) *optimizer.StatSummary {
+func buildCurrentEquipmentStats(inv nte.Inventory, profile scoring.Character, setCatalog optimizer.SetCatalog, additional map[string][]nte.Stat, teamEffects []TeamPreviewEffect) *optimizer.StatSummary {
 	if profile.CharacterID == 0 {
 		return nil
 	}
@@ -522,6 +591,9 @@ func buildCurrentEquipmentStats(inv nte.Inventory, profile scoring.Character, se
 	}
 	matched := matchedRequiredGeometries(currentModules, currentSet.RequiredGeometries)
 	value := optimizer.BuildStatSummary(profile, currentModules, currentCartridge, currentSet, matched, additional)
+	if teamEffects != nil {
+		projectTeamBuffs(&value, teamEffects, currentSet, matched)
+	}
 	return &value
 }
 

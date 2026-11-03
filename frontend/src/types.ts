@@ -1,6 +1,6 @@
-export type Profile = { id: string; character_id:number; name: string; grid_id: string; preferred_sets?: { set_id:string; priority:number }[]; main_weights?: Record<string,number>; sub_weights?: Record<string,number>; main_stats?:string[]; weights?:Record<string,number>; arc_fork_id?:string; saved_goals?:Record<string,{target:number;label?:string;percent?:boolean;custom?:boolean;minimum?:number;maximum?:number;tolerance:number;strict_minimum?:boolean;disabled?:boolean}>; caps?: Record<string,{soft_cap:number;hard_cap:number;after_soft_scale:number}>; console_trait?: {area:number;property_id:string;value_per_module:number} }
+export type Profile = { id: string; character_id:number; name: string; grid_id: string; preferred_sets?: { set_id:string; priority:number }[]; main_weights?: Record<string,number>; sub_weights?: Record<string,number>; main_stats?:string[]; weights?:Record<string,number>; arc_fork_id?:string; team_allies?:TeamAlly[]; saved_goals?:Record<string,{target:number;label?:string;percent?:boolean;custom?:boolean;minimum?:number;maximum?:number;tolerance:number;strict_minimum?:boolean;disabled?:boolean}>; caps?: Record<string,{soft_cap:number;hard_cap:number;after_soft_scale:number}>; console_trait?: {area:number;property_id:string;value_per_module:number} }
 export type SavedBuild = { character_id:number; profile_id:string; module_ids:string[]; cartridge_id?:string; arc_id?:string; stats?:Record<string,number>; updated_at:string }
-export type WorkspaceCharacter = { character_id:number; name:string; level:number; awaken_level:number; priority:number; build?:SavedBuild }
+export type WorkspaceCharacter = { character_id:number; name:string; level:number; awaken_level:number; priority:number; build?:SavedBuild; team_gear?:{arc_id?:string;set_name?:string;set_pieces?:number;saved:boolean} }
 export type BuildWorkspace = { characters:WorkspaceCharacter[] }
 export type TargetGoal = { property_id: string; label: string; minimum: number; maximum?: number; percent: boolean }
 export type TargetPreset = { name: string; goals: TargetGoal[] }
@@ -13,12 +13,16 @@ export type OptimizedModule = {
   breakdown: { total: number; contributions?: EquipmentScoreContribution[] }
   equipped_character_name?: string
 }
-export type StatSummary = { completeness: string; missing_sources: string[]; sources: Record<string, Record<string, number>>; derived: Record<string, number>; derived_conditional: Record<string, number> }
+export type StatSummary = { completeness: string; missing_sources: string[]; sources: Record<string, Record<string, number>>; derived: Record<string, number>; derived_conditional: Record<string, number>; derived_with_all_buffs?: Record<string, number> }
 export type DamageResult = { instance_id:string; name:string; category:string; non_crit:number; crit:number; expected:number; total:number; factors:{coefficient:number;crit_rate:number;crit_damage:number;damage_zone:number;defense_zone:number;resistance_zone:number}; warnings?:string[] }
-export type DamageGroup = { id:string;name:string;description:string;category:string;action_type?:string;build_damage:number;current_damage?:number;build_non_crit:number;current_non_crit?:number;build_crit:number;current_crit?:number;instances:number;max_stacks?:number;build_max_tick?:number;current_max_tick?:number;build_max_crit_tick?:number;current_max_crit_tick?:number }
+export type DamageGroup = { buffed?: { build:number; current:number; build_crit:number; current_crit:number }; id:string;name:string;description:string;category:string;action_type?:string;build_damage:number;current_damage?:number;build_non_crit:number;current_non_crit?:number;build_crit:number;current_crit?:number;instances:number;max_stacks?:number;build_max_tick?:number;current_max_tick?:number;build_max_crit_tick?:number;current_max_crit_tick?:number }
 export type DamageAnalysis = { status:string; enemy:{level:number;resistance:number;approximation?:string}; build:DamageResult[]; current?:DamageResult[]; groups?:DamageGroup[]; missing_inputs?:string[]; catalog_source:string }
 export type GoalProgress = TargetGoal & { current: number; missing: number; progress: number; reached: boolean }
+export type TeamAlly = { character_id: number; arc_id?: string }
 export type Result = {
+  buff_effects?: TeamPreview['conditional'] | null
+  team_allies?: TeamAlly[]
+  team_warnings?: string[]
   simulate_cartridge_main_stats?: boolean
   optimization_mode: string
   profile_id: string
@@ -45,7 +49,7 @@ export type Result = {
   solution: OptimizationSolution
 }
 export type OptimizationSolution = { ranking?: { score:number; equipment:number; tie_break?:number; objectives:number; structure:number; contributions?: {property_id:string; source?:string; input_property_id?:string; value:number; target:number; importance:number; points:number; score_scale?:number}[] }; score: number; module_score: number; set_bonus_score: number; cartridge_score: number; weapon_score?:number; selected_weapon_id?:string; selected_set_id?: string; set_matched_count?: number; complete: boolean; visited_states: number; placements: Placement[] }
-export type OptimizationAlternative = { solution:OptimizationSolution; modules:OptimizedModule[]; weapon?:Result['weapon']; weapon_conditional_note?:string; cartridge?:Result['cartridge']; cartridge_breakdown?:Result['cartridge_breakdown']; stats:StatSummary; set:Result['set']; goals?:GoalProgress[]; conditional_goals?:GoalProgress[]; damage?:DamageAnalysis }
+export type OptimizationAlternative = { buff_effects?: Result['buff_effects']; solution:OptimizationSolution; modules:OptimizedModule[]; weapon?:Result['weapon']; weapon_conditional_note?:string; cartridge?:Result['cartridge']; cartridge_breakdown?:Result['cartridge_breakdown']; stats:StatSummary; set:Result['set']; goals?:GoalProgress[]; conditional_goals?:GoalProgress[]; damage?:DamageAnalysis }
 export type SearchProgress = { visited: number; total?: number; elapsed_ms: number; candidates: number; workers?:number; pruned_branches?:number; finished?:boolean }
 export type OptimizationLog = { started_at:string; finished_at?:string; status:string; entries:{level:string;stage:string;message:string}[] }
 export type ScanLogEvent = { time:string; stage:string; status:string; code?:string; counts?:Record<string,number> }
@@ -66,6 +70,10 @@ export type BuffCharacter = { character_id:number; name:string; bond_level?:numb
 export type AccountBuffPage = { furniture:{id:string;stats:Stat[];level?:number;progression_id?:string}[];detected_furniture_ids?:string[]; characters:BuffCharacter[] }
 
 export type SavedGoalSettings = {target:number;label?:string;percent?:boolean;custom?:boolean;minimum?:number;maximum?:number;tolerance:number;strict_minimum?:boolean;disabled?:boolean}
-export type ProfileSettings = {main_stats:string[];weights:Record<string,number>;goals?:Record<string,SavedGoalSettings>;arc_fork_id?:string;simulate_cartridge_main_stats?:boolean}
+export type ProfileSettings = {main_stats:string[];weights:Record<string,number>;goals?:Record<string,SavedGoalSettings>;arc_fork_id?:string;simulate_cartridge_main_stats?:boolean;team_allies?:TeamAlly[]}
 export type GoalTuning = {target:number;maximum:number;tolerance:number;importance:number;minimum?:number;strict_minimum?:boolean;custom?:boolean;label?:string;percent?:boolean}
 export type UpdateInfo = {available:boolean;current_version:string;latest_version?:string;download_url?:string}
+export type TeamPreview = {
+  applied: { rule_id: string; source_ids: number[]; stat: Stat }[]
+  conditional: { kind: 'skill' | 'arc' | 'set'; id: string; character_id: number; detail: string; trigger: string; star?: number; pieces?: number; source_ids?: number[]; non_stacking?: boolean; duration_seconds?: number; rotation_action?: string; bonus?: Stat; included?: boolean; projected_stats?: Stat[]; source_names?: string[]; equipment_name?: string }[]
+}
