@@ -62,12 +62,14 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 			NetID       NetID  `json:"netId"`
 		} `json:"identity"`
 		Progression struct {
-			Level             int              `json:"level"`
-			BreakthroughLevel int              `json:"breakthroughLevel"`
-			AwakenLevel       int              `json:"awakenLevel"`
-			BondLevel         *int             `json:"bondLevel,omitempty"`
-			BondStageFlags    []bool           `json:"bondStageFlags,omitempty"`
-			Skills            []CharacterSkill `json:"skills"`
+			Level                   int              `json:"level"`
+			BreakthroughLevel       int              `json:"breakthroughLevel"`
+			AwakenLevel             int              `json:"awakenLevel"`
+			RecordedAwakeningLevels []int            `json:"recordedAwakeningLevels,omitempty"`
+			PassiveReferences       []string         `json:"passiveReferences,omitempty"`
+			BondLevel               *int             `json:"bondLevel,omitempty"`
+			BondStageFlags          []bool           `json:"bondStageFlags,omitempty"`
+			Skills                  []CharacterSkill `json:"skills"`
 		} `json:"progression"`
 		Stats      CharacterStats      `json:"stats"`
 		SavedState CharacterSavedState `json:"savedState"`
@@ -81,6 +83,8 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	source := &export.Characters[0]
 	source.Identity.CharacterID, source.Identity.Name, source.Identity.NetID = 1036, "Zankou", characterNet
 	source.Progression.Level, source.Progression.BreakthroughLevel, source.Progression.AwakenLevel = 80, 6, 1
+	source.Progression.RecordedAwakeningLevels = []int{5}
+	source.Progression.PassiveReferences = []string{"GA_Zankou_Passive1", "GA_Zankou_Passive2"}
 	bondLevel := 10
 	source.Progression.BondLevel = &bondLevel
 	source.Progression.BondStageFlags = []bool{true, false}
@@ -105,7 +109,13 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 		t.Fatal(err)
 	}
 	character := got.State.Characters[0]
-	if character.AwakenLevel != 5 || character.ReportedAwakenLevel != 1 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.BondStageFlags) != 2 || !character.BondStageFlags[0] || character.BondStageFlags[1] || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
+	if len(character.PassiveReferences) != 2 || character.PassiveReferences[0] != "GA_Zankou_Passive1" || character.PassiveReferences[1] != "GA_Zankou_Passive2" {
+		t.Fatalf("passive references were not preserved: %v", character.PassiveReferences)
+	}
+	if len(character.RecordedAwakeningLevels) != 1 || character.RecordedAwakeningLevels[0] != 5 {
+		t.Fatalf("recorded awakening levels were not preserved: %v", character.RecordedAwakeningLevels)
+	}
+	if character.AwakenLevel != 1 || len(character.ObservedAtLogin.ActiveAwakeningLevels) != 1 || character.ObservedAtLogin.ActiveAwakeningLevels[0] != 5 || character.ReportedAwakenLevel != 1 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.BondStageFlags) != 2 || !character.BondStageFlags[0] || character.BondStageFlags[1] || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
 		t.Fatalf("new character data was not preserved: %#v", character)
 	}
 	if character.Stats.Attack == nil || *character.Stats.Attack != attack || character.Stats.Defense == nil || *character.Stats.Defense != defense || character.Stats.CritDamage == nil || *character.Stats.CritDamage != critDamage || character.Stats.PanelBase == nil || character.Stats.PanelBase.Attack != 1230 || character.Stats.Source != "unreal_attribute_set_and_equipment" {

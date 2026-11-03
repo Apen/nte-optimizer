@@ -43,12 +43,14 @@ type characterIdentity struct {
 	NetID       itemNetID `json:"netId"`
 }
 type characterProgression struct {
-	BondStageFlags    []bool                `json:"bondStageFlags,omitempty"`
-	Level             int32                 `json:"level"`
-	BreakthroughLevel int32                 `json:"breakthroughLevel"`
-	AwakenLevel       int32                 `json:"awakenLevel"`
-	BondLevel         *int                  `json:"bondLevel,omitempty"`
-	Skills            []characterSkillLevel `json:"skills"`
+	BondStageFlags          []bool                `json:"bondStageFlags,omitempty"`
+	Level                   int32                 `json:"level"`
+	BreakthroughLevel       int32                 `json:"breakthroughLevel"`
+	AwakenLevel             int32                 `json:"awakenLevel"`
+	RecordedAwakeningLevels []int                 `json:"recordedAwakeningLevels,omitempty"`
+	PassiveReferences       []string              `json:"passiveReferences,omitempty"`
+	BondLevel               *int                  `json:"bondLevel,omitempty"`
+	Skills                  []characterSkillLevel `json:"skills"`
 }
 type characterStats struct {
 	MaxHP             float32             `json:"maxHp"`
@@ -126,7 +128,7 @@ func exportCharacters(characters []characterItem, equipmentByCharacter map[uint3
 		}
 		out = append(out, characterExportItem{
 			Identity:        characterIdentity{CharacterID: character.CharacterID, Name: character.Name, Codename: character.Codename, NetID: character.NetID},
-			Progression:     characterProgression{BondStageFlags: character.BondStageFlags, Level: character.Level, BreakthroughLevel: character.BreakthroughLevel, AwakenLevel: character.AwakenLevel, BondLevel: character.BondLevel, Skills: character.SkillLevels},
+			Progression:     characterProgression{BondStageFlags: character.BondStageFlags, Level: character.Level, BreakthroughLevel: character.BreakthroughLevel, AwakenLevel: character.AwakenLevel, RecordedAwakeningLevels: character.RecordedAwakeningLevels, PassiveReferences: character.PassiveReferences, BondLevel: character.BondLevel, Skills: character.SkillLevels},
 			Stats:           stats,
 			SavedState:      characterSavedState{HealthRatio: character.SavedHealthRatio},
 			Equipment:       equipment,

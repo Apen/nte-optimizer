@@ -55,6 +55,88 @@ func TestAttachObservedCharacterState(t *testing.T) {
 	}
 }
 
+func TestObserveMultipleAwakeningUpgradeAssets(t *testing.T) {
+	characters := []characterItem{{CharacterID: 1057, AwakenLevel: 1}, {CharacterID: 1051}, {CharacterID: 1036}}
+	exports := []string{
+		"/Game/Blueprints/Abilities/Player/Ability_057_Akane/Upgrade/Buff_Akane057_Level3",
+		"/Game/Blueprints/Abilities/Player/Ability_057_Akane/PassiveEffect/Buff_Akane057_Level2",
+		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level6/Buff_Female051_Level6",
+		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level5/Buff_Female051_Level5",
+		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level4/Buff_Female051_Level4",
+		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level3/Buff_Female051_Level3",
+		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level2/Buff_Female051_Level2",
+		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level1/Buff_Female051_Level1",
+		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/LevelExtra/Buff_Female051_LevelExtra",
+	}
+
+	attachObservedActiveAwakenings(characters, exports, nil)
+
+	akane := characters[0]
+	if akane.AwakenLevel != 1 || !reflect.DeepEqual(akane.ObservedActiveAwakeningLevels, []int32{3}) ||
+		!reflect.DeepEqual(akane.ObservedActiveAwakeningBuffs, []string{"Buff_Akane057_Level3"}) {
+		t.Fatalf("unexpected Akane progression or upgrade observation: %+v", akane)
+	}
+	if got := characters[1].ObservedActiveAwakeningLevels; !reflect.DeepEqual(got, []int32{1, 2, 3, 4, 5, 6}) {
+		t.Fatalf("expected all six observed levels, got %v", got)
+	}
+	if got := characters[2].ObservedActiveAwakeningLevels; len(got) != 0 {
+		t.Fatalf("unexpected upgrade observations for Zankou: %v", got)
+	}
+}
+
+func TestReadPassiveReferences(t *testing.T) {
+	w := &recordWriter{}
+	writeRef := func(name string, number uint64) {
+		w.put(uint64(len(name)+1), 32)
+		for _, ch := range name + "\x00" {
+			w.put(uint64(ch), 8)
+		}
+		w.put(number, 32)
+	}
+	w.put(1, 1)
+	writeRef("GA_Zankou_Passive1", 0)
+	writeRef("GA_Zankou_Passive1", 0)
+	writeRef("GA_Zankou_Passive2", 0)
+	writeRef("GA_Akane_Passive", 2)
+	writeRef("GA_Akane_Passive", 3)
+	if got := readPassiveReferences(w.data, 0, w.bits, "zankou"); !reflect.DeepEqual(got, []string{"GA_Zankou_Passive1", "GA_Zankou_Passive2"}) {
+		t.Fatalf("Zankou references = %v", got)
+	}
+	if got := readPassiveReferences(w.data, 0, w.bits, "Akane"); !reflect.DeepEqual(got, []string{"GA_Akane_Passive_1", "GA_Akane_Passive_2"}) {
+		t.Fatalf("distinct serialized Akane references = %v", got)
+	}
+	if got := readPassiveReferences(w.data, 0, w.bits, "Skia"); len(got) != 0 {
+		t.Fatalf("unexpected Skia references: %v", got)
+	}
+}
+
+func TestReadRecordedAwakeningLevels(t *testing.T) {
+	w := &recordWriter{}
+	w.put(5, 3) // The list need not be byte aligned.
+	w.put(0x40018000, 32)
+	for i, level := range []byte{'4', '1', '2', '3', '5', '6'} {
+		w.put(8, 32)
+		for _, ch := range "Effect" + string(level) + "\x00" {
+			w.put(uint64(ch), 8)
+		}
+		w.put(0, 32)
+		if i == 5 {
+			w.put(2, 2)
+		} else {
+			w.put(1, 2)
+		}
+	}
+	if got := readRecordedAwakeningLevels(w.data, 0, w.bits, 6); !reflect.DeepEqual(got, []int{1, 2, 3, 4, 5, 6}) {
+		t.Fatalf("recorded levels = %v", got)
+	}
+	if got := readRecordedAwakeningLevels(w.data, 0, w.bits-1, 6); got != nil {
+		t.Fatalf("accepted truncated list: %v", got)
+	}
+	if got := readRecordedAwakeningLevels(w.data, 0, w.bits, 5); got != nil {
+		t.Fatalf("accepted list with a mismatched count: %v", got)
+	}
+}
+
 func TestParseCharacterPanelStats(t *testing.T) {
 	data := make([]byte, 512)
 	putFloat := func(off int, value float32) {

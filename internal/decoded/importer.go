@@ -30,12 +30,14 @@ type characterExport struct {
 			NetID       NetID  `json:"netId"`
 		} `json:"identity"`
 		Progression struct {
-			Level             int              `json:"level"`
-			BreakthroughLevel int              `json:"breakthroughLevel"`
-			AwakenLevel       int              `json:"awakenLevel"`
-			BondLevel         *int             `json:"bondLevel,omitempty"`
-			BondStageFlags    []bool           `json:"bondStageFlags,omitempty"`
-			Skills            []CharacterSkill `json:"skills"`
+			Level                   int              `json:"level"`
+			BreakthroughLevel       int              `json:"breakthroughLevel"`
+			AwakenLevel             int              `json:"awakenLevel"`
+			RecordedAwakeningLevels []int            `json:"recordedAwakeningLevels,omitempty"`
+			PassiveReferences       []string         `json:"passiveReferences,omitempty"`
+			BondLevel               *int             `json:"bondLevel,omitempty"`
+			BondStageFlags          []bool           `json:"bondStageFlags,omitempty"`
+			Skills                  []CharacterSkill `json:"skills"`
 		} `json:"progression"`
 		Stats      CharacterStats      `json:"stats"`
 		SavedState CharacterSavedState `json:"savedState"`
@@ -196,19 +198,11 @@ func readCharacters(dir string) ([]Character, map[string]EquipmentPlacement, []W
 	placements := map[string]EquipmentPlacement{}
 	embeddedWeapons := make([]Weapon, 0, len(export.Characters))
 	for _, source := range export.Characters {
-		awakenLevel := source.Progression.AwakenLevel
-		if source.ObservedAtLogin.Loaded {
-			for _, observedLevel := range source.ObservedAtLogin.ActiveAwakeningLevels {
-				if observedLevel > awakenLevel {
-					awakenLevel = observedLevel
-				}
-			}
-		}
 		character := Character{
 			NetID: source.Identity.NetID, CharacterID: source.Identity.CharacterID,
 			Name: source.Identity.Name, Codename: source.Identity.Codename,
 			Level: source.Progression.Level, BreakthroughLevel: source.Progression.BreakthroughLevel,
-			AwakenLevel: awakenLevel, BondLevel: source.Progression.BondLevel, ReportedAwakenLevel: source.Progression.AwakenLevel, Skills: source.Progression.Skills,
+			AwakenLevel: source.Progression.AwakenLevel, RecordedAwakeningLevels: source.Progression.RecordedAwakeningLevels, PassiveReferences: source.Progression.PassiveReferences, BondLevel: source.Progression.BondLevel, ReportedAwakenLevel: source.Progression.AwakenLevel, Skills: source.Progression.Skills,
 			Stats: source.Stats, SavedState: source.SavedState, ObservedAtLogin: source.ObservedAtLogin,
 			BondStageFlags: source.Progression.BondStageFlags,
 		}

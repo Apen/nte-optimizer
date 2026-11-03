@@ -123,6 +123,12 @@ func decodeCharacterDomain(ctx context.Context, report *udpReport, rawPayloads [
 			if err := ctx.Err(); err != nil {
 				return err
 			}
+			if previous := decoded[character.NetID]; character.RecordedAwakeningLevels == nil && previous.AwakenLevel == character.AwakenLevel {
+				character.RecordedAwakeningLevels = previous.RecordedAwakeningLevels
+			}
+			if len(character.PassiveReferences) == 0 {
+				character.PassiveReferences = decoded[character.NetID].PassiveReferences
+			}
 			decoded[character.NetID] = character
 		}
 	}

@@ -28,6 +28,8 @@ type characterItem struct {
 	Level                         int32                   `json:"level"`
 	BreakthroughLevel             int32                   `json:"breakthroughLevel"`
 	AwakenLevel                   int32                   `json:"awakenLevel"`
+	RecordedAwakeningLevels       []int                   `json:"recordedAwakeningLevels,omitempty"`
+	PassiveReferences             []string                `json:"passiveReferences,omitempty"`
 	BondLevel                     *int                    `json:"bondLevel,omitempty"`
 	ForkNetID                     *itemNetID              `json:"forkNetId,omitempty"`
 	SkillLevels                   []characterSkillLevel   `json:"skillLevels"`
@@ -239,14 +241,13 @@ type observedWeaponBuff struct {
 	Star   int    `json:"star"`
 }
 
-var activeAwakeningExport = regexp.MustCompile(`/Ability_(\d{3})_[^/]+/Upgrade/Level([1-6])/`)
+var activeAwakeningExport = regexp.MustCompile(`/Ability_(\d{3})_[^/]+/Upgrade/(?:Level([1-6])/|Buff_[^/]+_Level([1-6])$)`)
 var loadedCharacterExport = regexp.MustCompile(`(?i)/Character/Player/player_(\d{3})_[^/]+$`)
 var activeEquipmentBuffExport = regexp.MustCompile(`/Equipment/Equipment_(\d+)/Buff_Equipment_([^/]+)$`)
 var activeWeaponBuffExport = regexp.MustCompile(`/Abilities/(?:Buff/)?Fork/(Fork_[^/]+)/(Buff_Fork_[^/]+_(?:Lv(\d+)|(\d+)_([0-9]+)))$`)
 
-// attachObservedActiveAwakenings associates instantiated awakening buff paths
-// with their character. This is capture-dependent: an absent path does not mean
-// that the character has no selected awakening effect.
+// attachObservedActiveAwakenings associates exported upgrade assets with their
+// character. Asset references alone do not establish runtime activation.
 func attachObservedActiveAwakenings(characters []characterItem, exportNames []string, catalog *equipmentCatalog) {
 	bySuffix := make(map[uint32]map[int32]bool)
 	awakeningBuffs := make(map[uint32][]string)
@@ -301,7 +302,7 @@ func attachObservedActiveAwakenings(characters []characterItem, exportNames []st
 		if err != nil {
 			continue
 		}
-		level, err := strconv.ParseInt(match[2], 10, 32)
+		level, err := strconv.ParseInt(match[2]+match[3], 10, 32)
 		if err != nil {
 			continue
 		}
@@ -579,12 +580,31 @@ func parseCharacterProbes(data []byte, bitLen int, c *characterCatalog) []charac
 }
 func parseCharacters(data []byte, bitLen int, c *characterCatalog) []characterItem {
 	m := map[itemNetID]characterItem{}
+	var previous characterItem
+	var previousEnd int
+	save := func(end int) {
+		if previousEnd == 0 {
+			return
+		}
+		previous.RecordedAwakeningLevels = readRecordedAwakeningLevels(data, previousEnd, end, previous.AwakenLevel)
+		if refs := readPassiveReferences(data, previousEnd, end, previous.Codename); len(refs) > 0 {
+			previous.PassiveReferences = refs
+		} else {
+			previous.PassiveReferences = m[previous.NetID].PassiveReferences
+		}
+		if older := m[previous.NetID]; older.AwakenLevel == previous.AwakenLevel && previous.RecordedAwakeningLevels == nil {
+			previous.RecordedAwakeningLevels = older.RecordedAwakeningLevels
+		}
+		m[previous.NetID] = previous
+	}
 	for off := 0; off < bitLen; off++ {
-		v, _, o := parseCharacterAt(data, bitLen, off, c)
+		v, end, o := parseCharacterAt(data, bitLen, off, c)
 		if o {
-			m[v.NetID] = v
+			save(off)
+			previous, previousEnd = v, end
 		}
 	}
+	save(bitLen)
 	out := make([]characterItem, 0, len(m))
 	for _, v := range m {
 		out = append(out, v)
@@ -596,4 +616,81 @@ func parseCharacters(data []byte, bitLen int, c *characterCatalog) []characterIt
 		return out[i].CharacterID < out[j].CharacterID
 	})
 	return out
+}
+
+var passiveAbilityName = regexp.MustCompile(`(?i)^GA_([a-z0-9]+)_Passive[0-9]*$`)
+
+// Passive references identify the selected passives in the inventory record.
+func readPassiveReferences(data []byte, start, end int, codename string) []string {
+	var refs []string
+	seen := map[string]bool{}
+	end = min(end, start+20000)
+	for off := start; off+32+8*12+32 <= end; off++ {
+		size, _ := likeabilityBitsAt(data, end, off, 32)
+		if size < 12 || size > 96 {
+			continue
+		}
+		r := invBits{data: data, bitLen: end, cursor: off}
+		name, ok := r.fstring(96)
+		if !ok {
+			continue
+		}
+		match := passiveAbilityName.FindStringSubmatch(name)
+		if match == nil || !strings.EqualFold(strings.TrimRight(match[1], "0123456789"), codename) {
+			continue
+		}
+		number, ok := r.u32()
+		if !ok {
+			continue
+		}
+		// Unreal stores an FName's displayed suffix plus one. Zero has no suffix.
+		if number != 0 {
+			name += "_" + strconv.FormatUint(uint64(number-1), 10)
+		}
+		if !seen[name] {
+			refs = append(refs, name)
+			seen[name] = true
+		}
+	}
+	return refs
+}
+
+func readRecordedAwakeningLevels(data []byte, start, end int, count int32) []int {
+	if count < 1 || count > 6 {
+		return nil
+	}
+	// The observed inventory tail places the Effect FNames after equipment
+	// data. Bound the search to this record and validate the list framing,
+	// distinct levels, and agreement with the separately serialized count.
+	const effectListPrefix = 0x40018000
+	end = min(end, start+20000)
+	for off := start; off+32+int(count)*130 <= end; off++ {
+		prefix, _ := likeabilityBitsAt(data, end, off, 32)
+		if prefix != effectListPrefix {
+			continue
+		}
+		r := invBits{data: data, bitLen: end, cursor: off + 32}
+		levels := make([]int, 0, count)
+		var seen [7]bool
+		for i := int32(0); i < count; i++ {
+			name, ok := r.fstring(8)
+			if !ok || len(name) != 7 || !strings.HasPrefix(name, "Effect") || name[6] < '1' || name[6] > '6' {
+				break
+			}
+			level := int(name[6] - '0')
+			suffix, suffixOK := r.u32()
+			marker, markerOK := r.bits(2)
+			if seen[level] || !suffixOK || suffix != 0 || !markerOK ||
+				(i+1 < count && marker != 1) || (i+1 == count && marker != 0 && marker != 2) {
+				break
+			}
+			seen[level] = true
+			levels = append(levels, level)
+		}
+		if len(levels) == int(count) {
+			sort.Ints(levels)
+			return levels
+		}
+	}
+	return nil
 }

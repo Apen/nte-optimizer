@@ -114,21 +114,23 @@ type ObservedLoginState struct {
 	ActiveWeaponBuffs     []ActiveWeaponBuff    `json:"activeWeaponBuffs,omitempty"`
 }
 type Character struct {
-	NetID               NetID               `json:"netId"`
-	CharacterID         int                 `json:"characterId"`
-	Name                string              `json:"name"`
-	Codename            string              `json:"codename"`
-	Level               int                 `json:"level"`
-	BreakthroughLevel   int                 `json:"breakthroughLevel"`
-	AwakenLevel         int                 `json:"awakenLevel"`
-	BondLevel           *int                `json:"bondLevel,omitempty"`
-	BondStageFlags      []bool              `json:"bondStageFlags,omitempty"`
-	ReportedAwakenLevel int                 `json:"reportedAwakenLevel,omitempty"`
-	ForkNetID           *NetID              `json:"forkNetId,omitempty"`
-	Skills              []CharacterSkill    `json:"skills,omitempty"`
-	Stats               CharacterStats      `json:"stats,omitempty"`
-	SavedState          CharacterSavedState `json:"savedState,omitempty"`
-	ObservedAtLogin     ObservedLoginState  `json:"observedAtLogin,omitempty"`
+	NetID                   NetID               `json:"netId"`
+	CharacterID             int                 `json:"characterId"`
+	Name                    string              `json:"name"`
+	Codename                string              `json:"codename"`
+	Level                   int                 `json:"level"`
+	BreakthroughLevel       int                 `json:"breakthroughLevel"`
+	AwakenLevel             int                 `json:"awakenLevel"`
+	RecordedAwakeningLevels []int               `json:"recordedAwakeningLevels,omitempty"`
+	PassiveReferences       []string            `json:"passiveReferences,omitempty"`
+	BondLevel               *int                `json:"bondLevel,omitempty"`
+	BondStageFlags          []bool              `json:"bondStageFlags,omitempty"`
+	ReportedAwakenLevel     int                 `json:"reportedAwakenLevel,omitempty"`
+	ForkNetID               *NetID              `json:"forkNetId,omitempty"`
+	Skills                  []CharacterSkill    `json:"skills,omitempty"`
+	Stats                   CharacterStats      `json:"stats,omitempty"`
+	SavedState              CharacterSavedState `json:"savedState,omitempty"`
+	ObservedAtLogin         ObservedLoginState  `json:"observedAtLogin,omitempty"`
 }
 type Account struct {
 	Game    string `json:"game"`
