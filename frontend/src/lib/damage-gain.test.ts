@@ -24,4 +24,13 @@ describe('averageDamageGain', () => {
     expect(averageDamageGain([missing, zero])).toBeUndefined()
     expect(averageDamageGain()).toBeUndefined()
   })
+
+  it('excludes unresolved exclusive scenarios and counts a selected scenario once', () => {
+    const condition = { exclusive_group: 'sub_ultimate', buff_id: 'enhanced' }
+    const base = { ...action, id: 'base', build_damage: 11000, action_condition: { ...condition, buff_active: false } }
+    const enhanced = { ...base, id: 'enhanced', build_damage: 12000, action_condition: { ...condition, buff_active: true } }
+    expect(averageDamageGain([action, base, enhanced])).toBeCloseTo(-0.05)
+    expect(averageDamageGain([base, enhanced])).toBeUndefined()
+    expect(averageDamageGain([action, enhanced])).toBeCloseTo(0.075)
+  })
 })
