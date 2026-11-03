@@ -23,7 +23,7 @@ describe('buildResultColumns', () => {
       { property_id: 'DamageUpChaosBase' },
       { property_id: 'DamageUpGeneralBase' },
     ], ['DamageUpGeneralBase'], ['CritBase', 'DamageUpChaosBase'])
-    expect(columns).toEqual(['BasicDamageIndex', 'AtkFinal', 'UnbalIntensityBase', 'DamageUpChaosBase', 'CritBase'])
+    expect(columns).toEqual(['BasicDamageIndex', 'AverageDamageGain', 'AtkFinal', 'UnbalIntensityBase', 'DamageUpChaosBase', 'CritBase'])
     expect(columns).not.toContain('DamageUpIncantationBase')
   })
 })

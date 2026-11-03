@@ -309,6 +309,8 @@
     "build_comparison": "Build comparison, horizontal scroll",
     "build_section": "BUILD",
     "basic_damage": "Basic DMG",
+    "average_damage_gain": "Avg. DMG gain",
+    "average_damage_gain_detail": "Mean percentage change versus equipped gear across comparable actions and reactions. Each action has equal weight. Uses average damage before optional buffs.",
     "build_crit": "Build CRIT",
     "build_details": "Build details",
     "build_number": "Show build {number}",

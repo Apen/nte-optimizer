@@ -309,6 +309,8 @@
     "build_comparison": "Comparaison des builds, défilement horizontal",
     "build_section": "BUILD",
     "basic_damage": "DGT de base",
+    "average_damage_gain": "Gain DGT moyen",
+    "average_damage_gain_detail": "Variation moyenne en pourcentage par rapport à l’équipement actuel. Chaque action et réaction comparable a le même poids. Le calcul utilise les dégâts moyens avant les buffs optionnels.",
     "build_crit": "Build si CRIT",
     "build_details": "Détails du build",
     "build_number": "Afficher le build {number}",

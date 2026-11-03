@@ -1,0 +1,27 @@
+import { describe, expect, it } from 'vitest'
+import type { DamageGroup } from '../types'
+import { averageDamageGain } from './damage-gain'
+
+const action: DamageGroup = {
+  id: 'action', name: '', description: '', category: 'direct',
+  build_damage: 9500, current_damage: 10000, build_non_crit: 0, build_crit: 0, instances: 10,
+}
+
+describe('averageDamageGain', () => {
+  it('weights a direct loss and a reaction gain equally and uses the displayed reaction tick', () => {
+    const scorch = {
+      ...action, id: 'scorch', category: 'reaction', build_damage: 100, current_damage: 100,
+      build_max_tick: 330, current_max_tick: 300,
+      buffed: { build: 1000, current: 300, build_crit: 0, current_crit: 0 },
+    }
+    expect(averageDamageGain([action, scorch])).toBeCloseTo(0.025)
+  })
+
+  it('skips actions without a positive equipped baseline', () => {
+    const missing = { ...action, current_damage: undefined }
+    const zero = { ...action, current_damage: 0 }
+    expect(averageDamageGain([missing, action, zero])).toBeCloseTo(-0.05)
+    expect(averageDamageGain([missing, zero])).toBeUndefined()
+    expect(averageDamageGain()).toBeUndefined()
+  })
+})

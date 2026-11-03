@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ArrowDown, ArrowUp, Eye } from 'lucide-react'
 
 import { currentIntlLocale, t } from '../i18n'
+import { averageDamageGain } from '../lib/damage-gain'
 import { formatRanking, formatStat } from '../lib/format'
 import { usePresentation } from '../presentation'
 import type { EquipmentScoreContribution, Result, TargetGoal } from '../types'
@@ -34,7 +35,7 @@ export function limitBuildResults<T>(builds: T[]) {
 
 export function buildResultColumns(goals: Pick<TargetGoal, 'property_id'>[], disabledGoals: string[], mainStats: string[]) {
   const seen = new Set<string>()
-  return ['BasicDamageIndex', ...goals.filter(goal => !disabledGoals.includes(goal.property_id)).map(goal => goal.property_id), ...mainStats].filter(property => {
+  return ['BasicDamageIndex', 'AverageDamageGain', ...goals.filter(goal => !disabledGoals.includes(goal.property_id)).map(goal => goal.property_id), ...mainStats].filter(property => {
     if (seen.has(property)) return false
     seen.add(property)
     return true
@@ -48,14 +49,19 @@ export function BuildRankingTable({ builds, active, onSelect, goals, disabledGoa
   const effectiveSort = ['build', 'ranking', 'set', ...columns].includes(sort.key) ? sort : { key: 'ranking', direction: -1 as const }
   const sortBy = (key: string) => setSort(current => current.key === key ? { key, direction: current.direction === 1 ? -1 : 1 } : { key, direction: key === 'set' || key === 'build' ? 1 : -1 })
   const sortValue = (build: Result, index: number, key: string): number | string => key === 'build' ? index : key === 'ranking' ? (build.solution.ranking?.score ?? -Infinity) : key === 'set' ? build.set.name : build.stats.derived[key] || 0
-  const rows = builds.map((build, index) => ({ build, index })).sort((left, right) => {
+  const rows = builds.map((build, index) => ({ build, index, damageGain: averageDamageGain(build.damage?.groups) })).sort((left, right) => {
+    if (effectiveSort.key === 'AverageDamageGain') {
+      if (left.damageGain === undefined) return right.damageGain === undefined ? left.index - right.index : 1
+      if (right.damageGain === undefined) return -1
+      return (left.damageGain - right.damageGain) * effectiveSort.direction || left.index - right.index
+    }
     const a = sortValue(left.build, left.index, effectiveSort.key)
     const b = sortValue(right.build, right.index, effectiveSort.key)
     const compared = typeof a === 'string' && typeof b === 'string' ? a.localeCompare(b, currentIntlLocale()) : Number(a) - Number(b)
     return compared * effectiveSort.direction || left.index - right.index
   })
-  const columnLabel = (key: string) => key === 'BasicDamageIndex' ? t('basic_damage') : labels[key] || key
-  return <Card className="ranking-card"><CardHeader><p className="eyebrow">{t('results_section')}</p></CardHeader><CardContent><div className="table-scroll" tabIndex={0} aria-label={t('build_comparison')}><table className="ranking-table ranking-table--interactive"><thead><tr><SortableHeader label={t('build')} column="build" sort={effectiveSort} onSort={sortBy} /><SortableHeader label={t('ranking')} column="ranking" sort={effectiveSort} onSort={sortBy} />{columns.map(key => <SortableHeader key={key} label={columnLabel(key)} column={key} sort={effectiveSort} onSort={sortBy} />)}<SortableHeader label={t('set')} column="set" sort={effectiveSort} onSort={sortBy} /></tr></thead><tbody>{rows.map(({ build, index }) => { const stats = build.stats.derived; const detail = build.solution.ranking; return <tr key={index} onClick={() => onSelect(index)} data-selected={active === index}><td><button aria-pressed={active === index} aria-label={t('build_number', { number: index + 1 })} className="rank-button" onClick={() => onSelect(index)}>#{String(index + 1).padStart(2, '0')}{active === index && <span aria-hidden="true">●</span>}</button></td><td className="ranking-score">{detail ? formatRanking(detail.score) : '—'}</td>{columns.map(key => <td key={key}>{formatStat(key, stats[key] || 0)}</td>)}<td className="ranking-set">{build.set.name || '—'}</td></tr> })}</tbody></table></div></CardContent></Card>
+  const columnLabel = (key: string) => key === 'BasicDamageIndex' ? t('basic_damage') : key === 'AverageDamageGain' ? t('average_damage_gain') : labels[key] || key
+  return <Card className="ranking-card"><CardHeader><p className="eyebrow">{t('results_section')}</p></CardHeader><CardContent><div className="table-scroll" tabIndex={0} aria-label={t('build_comparison')}><table className="ranking-table ranking-table--interactive"><thead><tr><SortableHeader label={t('build')} column="build" sort={effectiveSort} onSort={sortBy} /><SortableHeader label={t('ranking')} column="ranking" sort={effectiveSort} onSort={sortBy} />{columns.map(key => <SortableHeader key={key} label={columnLabel(key)} description={key === 'AverageDamageGain' ? t('average_damage_gain_detail') : undefined} column={key} sort={effectiveSort} onSort={sortBy} />)}<SortableHeader label={t('set')} column="set" sort={effectiveSort} onSort={sortBy} /></tr></thead><tbody>{rows.map(({ build, index, damageGain }) => { const stats = build.stats.derived; const detail = build.solution.ranking; return <tr key={index} onClick={() => onSelect(index)} data-selected={active === index}><td><button aria-pressed={active === index} aria-label={t('build_number', { number: index + 1 })} className="rank-button" onClick={() => onSelect(index)}>#{String(index + 1).padStart(2, '0')}{active === index && <span aria-hidden="true">●</span>}</button></td><td className="ranking-score">{detail ? formatRanking(detail.score) : '—'}</td>{columns.map(key => <td key={key}>{key === 'AverageDamageGain' ? formatDamageGain(damageGain) : formatStat(key, stats[key] || 0)}</td>)}<td className="ranking-set">{build.set.name || '—'}</td></tr> })}</tbody></table></div></CardContent></Card>
 }
 
 export function ScoreDetailsDialog({ build, buildNumber }: { build: Result; buildNumber: number }) {
@@ -77,7 +83,13 @@ function EquipmentScoreRow({label,detail,contributions,score,labels}:{label:stri
   return <tr><td><strong>{label}</strong>{detail&&<small className="block text-slate-400">{detail}</small>}</td><td colSpan={3}><div className="grid gap-1">{contributions?.length?contributions.map((item,index)=><small key={`${item.property_id}-${item.source}-${index}`} className="text-slate-400"><span className="text-slate-200">{labels[item.property_id]||item.property_id}</span> ({item.source==='main'?t('primary_stats'):t('secondary_stats')}): {formatStat(item.property_id,item.effective_value??item.value)} ÷ {formatStat(item.property_id,item.reference_value||1)} × {formatRanking(item.weight)} = <strong className="text-slate-200">{formatRanking(item.score)}</strong>{item.capped?` · ${t('capped_value')}`:''}</small>):<small className="text-slate-500">{t('no_weighted_contribution')}</small>}</div></td><td><strong>{formatRanking(score)}</strong></td></tr>
 }
 
-function SortableHeader({ label, column, sort, onSort }: { label: string; column: string; sort: Sort; onSort: (column: string) => void }) {
+function formatDamageGain(gain: number | undefined) {
+  return gain === undefined ? '—' : gain.toLocaleString(currentIntlLocale(), {
+    style: 'percent', signDisplay: 'exceptZero', maximumFractionDigits: 2,
+  })
+}
+
+function SortableHeader({ label, description, column, sort, onSort }: { label: string; description?: string; column: string; sort: Sort; onSort: (column: string) => void }) {
   const active = sort.key === column
-  return <th aria-sort={active ? (sort.direction === 1 ? 'ascending' : 'descending') : 'none'}><button className="inline-flex items-center gap-1.5 whitespace-nowrap" onClick={() => onSort(column)}>{label}{active && (sort.direction === 1 ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" />)}</button></th>
+  return <th aria-sort={active ? (sort.direction === 1 ? 'ascending' : 'descending') : 'none'}><button title={description} aria-description={description} className="inline-flex items-center gap-1.5 whitespace-nowrap" onClick={() => onSort(column)}>{label}{active && (sort.direction === 1 ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" />)}</button></th>
 }
