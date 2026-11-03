@@ -167,6 +167,32 @@ if ($SmokeTest) {
 }
 
 if ($Launch) {
+    # Keep the previous app available until the new package is ready.
+    $portableRoot = [System.IO.Path]::GetFullPath($releaseRoot)
+    $previousInstances = @(
+        Get-Process -Name $applicationProcessName -ErrorAction SilentlyContinue |
+            Where-Object {
+                if (-not $_.Path) { return $false }
+                $path = [System.IO.Path]::GetFullPath($_.Path)
+                $directory = [System.IO.Path]::GetDirectoryName($path)
+                $parent = [System.IO.Path]::GetDirectoryName($directory)
+                $folder = [System.IO.Path]::GetFileName($directory)
+                $parent -and $parent.Equals($portableRoot, [System.StringComparison]::OrdinalIgnoreCase) -and
+                    [System.IO.Path]::GetFileName($path).Equals($Name, [System.StringComparison]::OrdinalIgnoreCase) -and
+                    ($folder -eq "nte-optimizer" -or $folder -like "nte-optimizer-build-*")
+            }
+    )
+    foreach ($instance in $previousInstances) {
+        if ($instance.HasExited) { continue }
+        Write-Host "[RUN] Closing previous instance (PID $($instance.Id))" -ForegroundColor Cyan
+        if ($instance.CloseMainWindow() -and $instance.WaitForExit(5000)) { continue }
+        if (-not $instance.HasExited) {
+            Stop-Process -InputObject $instance -Force
+            if (-not $instance.WaitForExit(5000)) {
+                throw "Previous app instance did not exit (PID $($instance.Id))."
+            }
+        }
+    }
     Write-Host "[RUN] Starting $($artifact.Name)" -ForegroundColor Cyan
     $releaseExecutable = Join-Path $packageDir $Name
     $process = Start-Process -FilePath $releaseExecutable -WorkingDirectory $packageDir -PassThru
