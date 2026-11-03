@@ -7,8 +7,15 @@ The original evidence and CQ identifiers remain available in Git commit
 
 CQ-011 is implemented: runtime panels now require roster NetID and declared
 actor/subobject ownership. Tests and private scan verification are recorded in
-[engineering notes](docs/engineering-notes.md). The items below require measurement
-or an external test environment before further changes are justified.
+[engineering notes](docs/engineering-notes.md).
+
+## Team context feature
+
+- [x] Implement team selection, passive Arc evaluation, and conditional buff previews.
+- [ ] Certify native modifier targets, operations, and lifecycle against extracted assets.
+  The two supported Arc rules currently use explicit static snapshots.
+  See the [original roadmap](docs/team-context-roadmap.md) and
+  [upstream data request](docs/team-context-datamine-request.md).
 
 ## Measured follow-up before further changes
 
