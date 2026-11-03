@@ -576,7 +576,13 @@
             "source_id": "GE_Player_Sagiri_UltraSkill_Damage_LV2"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Sagiri_Appear": "GA_Sagiri_Melee",
+          "GA_Sagiri_PerfectEvade": "GA_Sagiri_Melee"
+        }
+      }
     },
     "1004": {
       "character_id": 1004,
@@ -1544,7 +1550,15 @@
             "source_id": "GE_Player_Lacrimosa_UltraSkillModB_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Lacrimosa_Appear": "GA_Lacrimosa_Melee",
+          "GA_Lacrimosa_MeleeModA": "GA_Lacrimosa_Melee",
+          "GA_Lacrimosa_SwitchSkillModB": "GA_Lacrimosa_Skill",
+          "GA_Lacrimosa_ExtremEvadeAtk": "GA_Lacrimosa_Melee"
+        }
+      }
     },
     "1008": {
       "character_id": 1008,
@@ -2212,7 +2226,14 @@
             "source_id": "GE_Player_Skia_UltraSkill2_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Skia_Evade": "GA_Skia_Melee",
+          "GA_Skia_Appear": "GA_Skia_Melee",
+          "GA_Skia_PerfectEvade": "GA_Skia_Melee"
+        }
+      }
     },
     "1051": {
       "character_id": 1051,
@@ -3056,7 +3077,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_Skill_Kill_Damage_lv1"
-          }
+          },
+          "omit_from_action_preview": true
         },
         {
           "id": "GE_Player_Female051_Skill_Kill_Damage_lv2",
@@ -3086,7 +3108,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_Skill_Kill_Damage_lv2"
-          }
+          },
+          "omit_from_action_preview": true
         },
         {
           "id": "GE_Player_Female051_UltraSkill1_Damage",
@@ -3508,7 +3531,17 @@
             "source_id": "GE_Player_Female051_unarmed_UltraSkill3_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Female_Melee": "GA_Female051_Melee",
+          "GA_Female_Skill": "GA_Female051_Skill",
+          "GA_Female051_Appear": "GA_Female051_Melee",
+          "GA_Female051_PerfectEvade": "GA_Female051_Melee",
+          "GA_Female051_Melee_UnArmed": "GA_Female051_Melee",
+          "GA_Female051_UltraSkill_UnArmed": "GA_Female051_UltraSkill"
+        }
+      }
     },
     "1010": {
       "character_id": 1010,
@@ -4624,7 +4657,13 @@
             "source_id": "GE_Player_Nanally_UltraSkill3_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Nanally_Appear": "GA_Nanally_Melee",
+          "GA_Nanally_PerfectEvade": "GA_Nanally_Melee"
+        }
+      }
     },
     "1019": {
       "character_id": 1019,
@@ -5320,7 +5359,14 @@
             "source_id": "GE_Player_Mint_UtraSkill7_Damage_New"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Mint019_Appear": "GA_Mint019_Melee",
+          "GA_MintActorWind_Skill": "GA_Mint019_Skill",
+          "GA_Mint019_PerfectEvade": "GA_Mint019_Melee"
+        }
+      }
     },
     "1020": {
       "character_id": 1020,
@@ -5746,7 +5792,12 @@
             "source_id": "GE_Player_Haniel_Ultraskill2_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Haniel_Appear": "GA_Haniel_Melee"
+        }
+      }
     },
     "1021": {
       "character_id": 1021,
@@ -6052,7 +6103,13 @@
             "source_id": "GE_Player_Edgar_UltraSkill_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Edgar_Appear": "GA_Edgar_Melee",
+          "GA_Edgar_PerfectEvade": "GA_Edgar_Melee"
+        }
+      }
     },
     "1023": {
       "character_id": 1023,
@@ -6808,7 +6865,14 @@
             "source_id": "GE_Player_Cang_WorldC_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Cang_Appear": "GA_Cang_Melee",
+          "GA_Cang_PerfectEvade": "GA_Cang_Melee",
+          "GA_Cang_SkillA": "GA_Cang_Skill"
+        }
+      }
     },
     "1025": {
       "character_id": 1025,
@@ -7716,7 +7780,14 @@
             "source_id": "GE_Player_Hathor_UltraSkill2_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Hathor_Appear": "GA_Hathor_Melee",
+          "GA_Hathor_PerfectEvade": "GA_Hathor_Melee",
+          "GA_Hathor_Skill2": "GA_Hathor_Skill"
+        }
+      }
     },
     "1033": {
       "character_id": 1033,
@@ -8051,8 +8122,161 @@
             "source": "datamine",
             "source_id": "GE_Player_Adler_QTE_Damage"
           }
+        },
+        {
+          "id": "GE_Player_Adler_Skill_Damage",
+          "ability_id": "GA_Adler_Skill",
+          "name": "GE_Player_Adler_Skill_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_INCANTATION",
+          "scaling": "defense",
+          "coefficients": [
+            0.2,
+            0.216,
+            0.233,
+            0.252,
+            0.272,
+            0.294,
+            0.317,
+            0.343,
+            0.37,
+            0.4,
+            0.432,
+            0.466,
+            0.504
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Adler_Skill_Damage"
+          },
+          "fixed_crit_rate": 0.5
+        },
+        {
+          "id": "GE_Player_Adler_Skill2_Damage",
+          "ability_id": "GA_Adler_Skill",
+          "name": "GE_Player_Adler_Skill2_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_INCANTATION",
+          "scaling": "defense",
+          "coefficients": [
+            0.7,
+            0.756,
+            0.816,
+            0.882,
+            0.952,
+            1.029,
+            1.111,
+            1.2,
+            1.296,
+            1.399,
+            1.511,
+            1.632,
+            1.763
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Adler_Skill2_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Adler_Skill3_Damage",
+          "ability_id": "GA_Adler_Skill",
+          "name": "GE_Player_Adler_Skill3_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_INCANTATION",
+          "scaling": "defense",
+          "coefficients": [
+            0.7,
+            0.756,
+            0.816,
+            0.882,
+            0.952,
+            1.029,
+            1.111,
+            1.2,
+            1.296,
+            1.399,
+            1.511,
+            1.632,
+            1.763
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Adler_Skill3_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Adler_UltraSkill_Damage",
+          "ability_id": "GA_Adler_UltraSkill",
+          "name": "GE_Player_Adler_UltraSkill_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_INCANTATION",
+          "scaling": "defense",
+          "coefficients": [
+            1.0,
+            1.08,
+            1.166,
+            1.26,
+            1.36,
+            1.469,
+            1.587,
+            1.714,
+            1.851,
+            1.999,
+            2.159,
+            2.332,
+            2.518
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Adler_UltraSkill_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Adler_UltraSkill_Damage1",
+          "ability_id": "GA_Adler_UltraSkill",
+          "name": "GE_Player_Adler_UltraSkill_Damage1",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_INCANTATION",
+          "scaling": "defense",
+          "coefficients": [
+            1.0,
+            1.08,
+            1.166,
+            1.26,
+            1.36,
+            1.469,
+            1.587,
+            1.714,
+            1.851,
+            1.999,
+            2.159,
+            2.332,
+            2.518
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Adler_UltraSkill_Damage1"
+          },
+          "omit_from_action_preview": true
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Adler_Appear": "GA_Adler_Melee",
+          "GA_Adler_PerfectEvade": "GA_Adler_Melee"
+        }
+      }
     },
     "1036": {
       "character_id": 1036,
@@ -8182,7 +8406,7 @@
           "id": "GE_Player_Zankou_DotDamage",
           "ability_id": "GA_Zankou_MeleeMagic",
           "name": "GE_Player_Zankou_DotDamage",
-          "category": "direct",
+          "category": "dot",
           "element": "DAMAGE_TYPE_INCANTATION",
           "scaling": "attack",
           "coefficients": [
@@ -8212,7 +8436,7 @@
           "id": "GE_Player_Zankou_DotUltraDamage",
           "ability_id": "GA_Zankou_UltraSkillMagic",
           "name": "GE_Player_Zankou_DotUltraDamage",
-          "category": "direct",
+          "category": "dot",
           "element": "DAMAGE_TYPE_INCANTATION",
           "scaling": "attack",
           "coefficients": [
@@ -9620,6 +9844,13 @@
         }
       ],
       "rules": {
+        "skill_level_sources": {
+          "GA_Zankou_Appear": "GA_Zankou_Melee",
+          "GA_Zankou_MeleeMagic": "GA_Zankou_Melee",
+          "GA_Zankou_PerfectEvade": "GA_Zankou_Melee",
+          "GA_Zankou_UltraSkillForce": "GA_Zankou_UltraSkill",
+          "GA_Zankou_UltraSkillMagic": "GA_Zankou_UltraSkill"
+        },
         "instance_modifiers": [
           {
             "min_awaken_level": 1,
@@ -9986,8 +10217,428 @@
             "source": "datamine",
             "source_id": "GE_Player_Fadia_QTE1_Damage"
           }
+        },
+        {
+          "id": "GE_Player_Fadia_Skill3_Damage",
+          "ability_id": "GA_Fadia_Skill",
+          "name": "GE_Player_Fadia_Skill3_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHE",
+          "scaling": "hp",
+          "coefficients": [
+            0.016,
+            0.017,
+            0.019,
+            0.02,
+            0.022,
+            0.024,
+            0.025,
+            0.027,
+            0.03,
+            0.032,
+            0.035,
+            0.037,
+            0.04
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_Skill3_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Fadia_Skill1_Damage",
+          "ability_id": "GA_Fadia_Skill",
+          "name": "GE_Player_Fadia_Skill1_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHE",
+          "scaling": "hp",
+          "coefficients": [
+            0.025,
+            0.027,
+            0.029,
+            0.031,
+            0.034,
+            0.037,
+            0.04,
+            0.043,
+            0.046,
+            0.05,
+            0.054,
+            0.058,
+            0.063
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_Skill1_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Fadia_Skill2_Damage",
+          "ability_id": "GA_Fadia_Skill",
+          "name": "GE_Player_Fadia_Skill2_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHE",
+          "scaling": "hp",
+          "coefficients": [
+            0.025,
+            0.027,
+            0.029,
+            0.031,
+            0.034,
+            0.037,
+            0.04,
+            0.043,
+            0.046,
+            0.05,
+            0.054,
+            0.058,
+            0.063
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_Skill2_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkill1_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkill1_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.039,
+            0.042,
+            0.045,
+            0.049,
+            0.053,
+            0.057,
+            0.062,
+            0.067,
+            0.072,
+            0.078,
+            0.084,
+            0.091,
+            0.098
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkill1_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkill2_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkill2_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.012,
+            0.013,
+            0.014,
+            0.015,
+            0.016,
+            0.018,
+            0.019,
+            0.021,
+            0.022,
+            0.024,
+            0.026,
+            0.028,
+            0.03
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkill2_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkill3_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkill3_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.063,
+            0.068,
+            0.073,
+            0.079,
+            0.086,
+            0.093,
+            0.1,
+            0.108,
+            0.117,
+            0.126,
+            0.136,
+            0.147,
+            0.159
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkill3_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkillMelee1_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkillMelee1_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.02,
+            0.022,
+            0.023,
+            0.025,
+            0.027,
+            0.029,
+            0.032,
+            0.034,
+            0.037,
+            0.04,
+            0.043,
+            0.047,
+            0.05
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkillMelee1_Damage"
+          },
+          "action_id": "GA_Fadia_Melee_Transformed"
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkillMelee2_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkillMelee2_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.032,
+            0.035,
+            0.037,
+            0.04,
+            0.044,
+            0.047,
+            0.051,
+            0.055,
+            0.059,
+            0.064,
+            0.069,
+            0.075,
+            0.081
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkillMelee2_Damage"
+          },
+          "action_id": "GA_Fadia_Melee_Transformed"
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkillMelee3_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkillMelee3_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.036,
+            0.039,
+            0.042,
+            0.045,
+            0.049,
+            0.053,
+            0.057,
+            0.062,
+            0.067,
+            0.072,
+            0.078,
+            0.084,
+            0.091
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkillMelee3_Damage"
+          },
+          "action_id": "GA_Fadia_Melee_Transformed"
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkillMelee4_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkillMelee4_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.009,
+            0.01,
+            0.01,
+            0.011,
+            0.012,
+            0.013,
+            0.014,
+            0.015,
+            0.017,
+            0.018,
+            0.019,
+            0.021,
+            0.023
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkillMelee4_Damage"
+          },
+          "action_id": "GA_Fadia_Melee_Transformed"
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkillMelee5_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkillMelee5_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.015,
+            0.016,
+            0.017,
+            0.019,
+            0.02,
+            0.022,
+            0.024,
+            0.026,
+            0.028,
+            0.03,
+            0.032,
+            0.035,
+            0.038
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkillMelee5_Damage"
+          },
+          "action_id": "GA_Fadia_Melee_Transformed"
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkillMelee6_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkillMelee6_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.023,
+            0.025,
+            0.027,
+            0.029,
+            0.031,
+            0.034,
+            0.036,
+            0.039,
+            0.043,
+            0.046,
+            0.05,
+            0.054,
+            0.058
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkillMelee6_Damage"
+          },
+          "action_id": "GA_Fadia_Melee_Transformed"
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkillMelee7_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkillMelee7_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.056,
+            0.06,
+            0.065,
+            0.071,
+            0.076,
+            0.082,
+            0.089,
+            0.096,
+            0.104,
+            0.112,
+            0.121,
+            0.131,
+            0.141
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkillMelee7_Damage"
+          },
+          "action_id": "GA_Fadia_Melee_Transformed"
+        },
+        {
+          "id": "GE_Player_Fadia_UltraSkillMelee8_Damage",
+          "ability_id": "GA_Fadia_UltraSkill",
+          "name": "GE_Player_Fadia_UltraSkillMelee8_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_PSYCHICALLY",
+          "scaling": "hp",
+          "coefficients": [
+            0.059,
+            0.064,
+            0.069,
+            0.074,
+            0.08,
+            0.087,
+            0.094,
+            0.101,
+            0.109,
+            0.118,
+            0.127,
+            0.138,
+            0.149
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Fadia_UltraSkillMelee8_Damage"
+          },
+          "action_id": "GA_Fadia_Melee_Transformed"
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Fadia_Appear": "GA_Fadia_Melee",
+          "GA_Fadia_PerfectEvade": "GA_Fadia_Melee"
+        }
+      }
     },
     "1042": {
       "character_id": 1042,
@@ -10021,7 +10672,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_AirAttack_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_AirAttack"
         },
         {
           "id": "GE_Player_BlackBird_Branch1_Damage",
@@ -10051,7 +10703,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Branch1_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Branch"
         },
         {
           "id": "GE_Player_BlackBird_Melee1_Damage",
@@ -10081,7 +10734,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Melee1_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Melee"
         },
         {
           "id": "GE_Player_BlackBird_Melee2_Damage",
@@ -10111,7 +10765,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Melee2_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Melee",
+          "hits": 2
         },
         {
           "id": "GE_Player_BlackBird_Melee3_Damage",
@@ -10141,7 +10797,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Melee3_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Melee",
+          "hits": 4
         },
         {
           "id": "GE_Player_BlackBird_Melee4_Damage",
@@ -10171,7 +10829,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Melee4_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Melee",
+          "hits": 5
         },
         {
           "id": "GE_Player_BlackBird_Melee5_Damage",
@@ -10201,7 +10861,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Melee5_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Melee",
+          "hits": 5
         },
         {
           "id": "GE_Player_BlackBird_PerfectEvade_Damage",
@@ -10231,7 +10893,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_PerfectEvade_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_PerfectEvade"
         },
         {
           "id": "GE_Player_BlackBird_QTE_Damage",
@@ -10291,7 +10954,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_SkillAssist_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_SkillAssist"
         },
         {
           "id": "GE_Player_BlackBird_Skill_Damage",
@@ -10321,7 +10985,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Skill_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Skill",
+          "hits": 4
         },
         {
           "id": "GE_Player_BlackBird_UltraSkill_Damage",
@@ -10351,7 +11017,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_UltraSkill_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_UltraSkill",
+          "hits": 9
         },
         {
           "id": "GE_Player_BlackBird_Evolve_AirAttack_Damage",
@@ -10381,7 +11049,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_AirAttack_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_AirAttack"
         },
         {
           "id": "GE_Player_BlackBird_Evolve_Branch1_Damage",
@@ -10411,7 +11080,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_Branch1_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_Branch1",
+          "hits": 5
         },
         {
           "id": "GE_Player_BlackBird_Evolve_Branch2_Damage",
@@ -10441,7 +11112,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_Branch2_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_Branch2",
+          "hits": 5
         },
         {
           "id": "GE_Player_BlackBird_Evolve_Melee1_Damage",
@@ -10471,7 +11144,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_Melee1_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_Melee",
+          "hits": 2
         },
         {
           "id": "GE_Player_BlackBird_Evolve_Melee2_Damage",
@@ -10501,7 +11176,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_Melee2_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_Melee",
+          "hits": 5
         },
         {
           "id": "GE_Player_BlackBird_Evolve_Melee3_Damage",
@@ -10531,7 +11208,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_Melee3_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_Melee",
+          "hits": 6
         },
         {
           "id": "GE_Player_BlackBird_Evolve_Melee4_Damage",
@@ -10561,7 +11240,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_Melee4_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_Melee"
         },
         {
           "id": "GE_Player_BlackBird_Evolve_Melee5_Damage",
@@ -10591,7 +11271,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_Melee5_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_Melee",
+          "hits": 6
         },
         {
           "id": "GE_Player_BlackBird_Evolve_PerfectEvade_Damage",
@@ -10621,7 +11303,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_PerfectEvade_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_PerfectEvade"
         },
         {
           "id": "GE_Player_BlackBird_Evolve_QTE_Damage",
@@ -10651,7 +11334,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_QTE_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_QTE"
         },
         {
           "id": "GE_Player_BlackBird_Evolve_Skill_Damage",
@@ -10681,7 +11365,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_Skill_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_Skill",
+          "hits": 4
         },
         {
           "id": "GE_Player_BlackBird_Evolve_UltraSkill_Damage",
@@ -10711,9 +11397,20 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_BlackBird_Evolve_UltraSkill_Damage"
-          }
+          },
+          "action_id": "GA_BlackBird_Evolve_UltraSkill",
+          "hits": 7
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_BlackBird_Appear": "GA_BlackBird_Melee",
+          "GA_BlackBird_PerfectEvade": "GA_BlackBird_Melee",
+          "GA_BlackBird_Evolve_Melee": "GA_BlackBird_Melee",
+          "GA_BlackBird_Evolve_Skill": "GA_BlackBird_Skill",
+          "GA_BlackBird_Evolve_UltraSkill": "GA_BlackBird_UltraSkill"
+        }
+      }
     },
     "1046": {
       "character_id": 1046,
@@ -11257,7 +11954,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female046_Skill_Kill_Damage_lv1"
-          }
+          },
+          "omit_from_action_preview": true
         },
         {
           "id": "GE_Player_Female046_Skill_Kill_Damage_lv2",
@@ -11287,7 +11985,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female046_Skill_Kill_Damage_lv2"
-          }
+          },
+          "omit_from_action_preview": true
         },
         {
           "id": "GE_Player_Female046_UltraSkill1_Damage",
@@ -11408,8 +12107,307 @@
             "source": "datamine",
             "source_id": "GE_Player_Female046_UltraSkill4_Damage"
           }
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_Melee1_Damage",
+          "ability_id": "GA_Female046_Melee_UnArmed",
+          "name": "GE_Player_Female046_unarmed_Melee1_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            0.226,
+            0.226,
+            0.226,
+            0.226,
+            0.226,
+            0.226,
+            0.226,
+            0.226,
+            0.226,
+            0.226,
+            0.226,
+            0.226,
+            0.226
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_Melee1_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_Melee2_Damage",
+          "ability_id": "GA_Female046_Melee_UnArmed",
+          "name": "GE_Player_Female046_unarmed_Melee2_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            0.272,
+            0.272,
+            0.272,
+            0.272,
+            0.272,
+            0.272,
+            0.272,
+            0.272,
+            0.272,
+            0.272,
+            0.272,
+            0.272,
+            0.272
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_Melee2_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_Melee3_Damage",
+          "ability_id": "GA_Female046_Melee_UnArmed",
+          "name": "GE_Player_Female046_unarmed_Melee3_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            0.323,
+            0.323,
+            0.323,
+            0.323,
+            0.323,
+            0.323,
+            0.323,
+            0.323,
+            0.323,
+            0.323,
+            0.323,
+            0.323,
+            0.323
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_Melee3_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_Melee4_Damage",
+          "ability_id": "GA_Female046_Melee_UnArmed",
+          "name": "GE_Player_Female046_unarmed_Melee4_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            0.159,
+            0.159,
+            0.159,
+            0.159,
+            0.159,
+            0.159,
+            0.159,
+            0.159,
+            0.159,
+            0.159,
+            0.159,
+            0.159,
+            0.159
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_Melee4_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_Melee4_1_Damage",
+          "ability_id": "GA_Female046_Melee_UnArmed",
+          "name": "GE_Player_Female046_unarmed_Melee4_1_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            0.133,
+            0.133,
+            0.133,
+            0.133,
+            0.133,
+            0.133,
+            0.133,
+            0.133,
+            0.133,
+            0.133,
+            0.133,
+            0.133,
+            0.133
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_Melee4_1_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_Melee4_2_Damage",
+          "ability_id": "GA_Female046_Melee_UnArmed",
+          "name": "GE_Player_Female046_unarmed_Melee4_2_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            0.591,
+            0.591,
+            0.591,
+            0.591,
+            0.591,
+            0.591,
+            0.591,
+            0.591,
+            0.591,
+            0.591,
+            0.591,
+            0.591,
+            0.591
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_Melee4_2_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_Melee5_Damage",
+          "ability_id": "GA_Female046_Melee_UnArmed",
+          "name": "GE_Player_Female046_unarmed_Melee5_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            1.174,
+            1.174,
+            1.174,
+            1.174,
+            1.174,
+            1.174,
+            1.174,
+            1.174,
+            1.174,
+            1.174,
+            1.174,
+            1.174,
+            1.174
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_Melee5_Damage"
+          },
+          "fixed_crit_rate": 1.0
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_UltraSkill1_Damage",
+          "ability_id": "GA_Female046_UltraSkill_UnArmed",
+          "name": "GE_Player_Female046_unarmed_UltraSkill1_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_UltraSkill1_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_UltraSkill2_Damage",
+          "ability_id": "GA_Female046_UltraSkill_UnArmed",
+          "name": "GE_Player_Female046_unarmed_UltraSkill2_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_UltraSkill2_Damage"
+          }
+        },
+        {
+          "id": "GE_Player_Female046_unarmed_UltraSkill3_Damage",
+          "ability_id": "GA_Female046_UltraSkill_UnArmed",
+          "name": "GE_Player_Female046_unarmed_UltraSkill3_Damage",
+          "category": "direct",
+          "element": "DAMAGE_TYPE_COSMOS",
+          "scaling": "attack",
+          "coefficients": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "classification_confidence": "inferred",
+          "provenance": {
+            "confidence": "inferred",
+            "source": "datamine",
+            "source_id": "GE_Player_Female046_unarmed_UltraSkill3_Damage"
+          }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Female046_Appear": "GA_Female046_Melee",
+          "GA_Female046_PerfectEvade": "GA_Female046_Melee",
+          "GA_Female046_Melee_UnArmed": "GA_Female046_Melee",
+          "GA_Female046_UltraSkill_UnArmed": "GA_Female046_UltraSkill"
+        }
+      }
     },
     "1052": {
       "character_id": 1052,
@@ -11953,7 +12951,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Jin_UltraAirAttack_Damage"
-          }
+          },
+          "action_id": "GA_Jin_UltraAirAttack"
         },
         {
           "id": "GE_Player_Jin_UltraSkill1_1_Damage",
@@ -12583,7 +13582,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Jin_UltraSkillMelee6Pas2_Damage"
-          }
+          },
+          "omit_from_action_preview": true
         },
         {
           "id": "GE_Player_Jin_UltraSkillMelee6_Damage",
@@ -12615,7 +13615,14 @@
             "source_id": "GE_Player_Jin_UltraSkillMelee6_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Jin_Appear": "GA_Jin_Melee",
+          "GA_Jin_PerfectEvade": "GA_Jin_Melee",
+          "GA_Jin_UltraSkill_Melee": "GA_Jin_UltraSkill"
+        }
+      }
     },
     "1054": {
       "character_id": 1054,
@@ -14031,7 +15038,13 @@
             "source_id": "GE_Player_Daffodill_UltraSkill6_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Daffodill_Appear": "GA_Daffodill_Melee",
+          "GA_Daffodill_PerfectEvade": "GA_Daffodill_Melee"
+        }
+      }
     },
     "1055": {
       "character_id": 1055,
@@ -14907,7 +15920,13 @@
             "source_id": "GE_Player_Kuhara_UltraSkill4_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Kuhara_Appear": "GA_Kuhara_Melee",
+          "GA_Kuhara_PerfectEvade": "GA_Kuhara_Melee"
+        }
+      }
     },
     "1057": {
       "character_id": 1057,
@@ -15333,7 +16352,15 @@
             "source_id": "GE_Player_Akane_UpgradeSkill_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Akane_Appear": "GA_Akane_Melee",
+          "GA_Akane_PerfectEvade": "GA_Akane_Melee",
+          "GA_Akane_UltraSkill_End": "GA_Akane_UltraSkill",
+          "GA_Akane_Skill_instead_PlayMontage": "GA_Akane_Skill"
+        }
+      }
     },
     "1070": {
       "character_id": 1070,
@@ -15789,7 +16816,15 @@
             "source_id": "GE_Player_Mitsuki_UltraSkill_Damage2"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Mitsuki_Evade": "GA_Mitsuki_Melee",
+          "GA_Mitsuki_PerfectEvadeAtkBullet": "GA_Mitsuki_Melee",
+          "GA_Mitsuki_PerfectEvadeAtkBullet_Power": "GA_Mitsuki_Melee",
+          "GA_Mitsuki_PerfectEvade": "GA_Mitsuki_Melee"
+        }
+      }
     },
     "1071": {
       "character_id": 1071,
@@ -16695,7 +17730,13 @@
             "source_id": "GE_Player_Chaos_UltraSkill2_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Chaos071_Appear": "GA_Chaos071_Melee",
+          "GA_Chaos071_PerfectEvade": "GA_Chaos071_Melee"
+        }
+      }
     },
     "1072": {
       "character_id": 1072,
@@ -17389,6 +18430,12 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Radio072_UltraSkill3_Damage"
+          },
+          "action_id": "linko_sub_ultimate_base",
+          "action_condition": {
+            "exclusive_group": "linko_sub_ultimate_level2",
+            "buff_id": "linko_sub_ultimate_level2",
+            "buff_active": false
           }
         },
         {
@@ -17419,6 +18466,12 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Radio072_UltraSkill3_Damage_level2"
+          },
+          "action_id": "linko_sub_ultimate_level2",
+          "action_condition": {
+            "exclusive_group": "linko_sub_ultimate_level2",
+            "buff_id": "linko_sub_ultimate_level2",
+            "buff_active": true
           }
         },
         {
@@ -17511,7 +18564,19 @@
             "source_id": "GE_Xiaozhen_Skill1_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Radio072_Appear": "GA_Radio072_Melee",
+          "GA_Radio072_QTE_BackToLTE": "GA_Radio072_QTE",
+          "GA_Radio072_QTE_FrontToLTE": "GA_Radio072_QTE",
+          "GA_Radio072_PerfectEvade": "GA_Radio072_Melee",
+          "GA_Radio072_Skill_Throw_XiaoZhen": "GA_Radio072_Skill",
+          "GA_Radio072_SubUltraSkill": "GA_Radio072_UltraSkill",
+          "GA_Radio072_UltraSkillLTE_AOE": "GA_Radio072_UltraSkill",
+          "GA_Radio072_UltraSkillLTE_AOE_Level4": "GA_Radio072_UltraSkill"
+        }
+      }
     },
     "1073": {
       "character_id": 1073,
@@ -18207,7 +19272,12 @@
             "source_id": "GE_Player_Chiichan073_UltraSkill3_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Chiichan073_PerfectEvade": "GA_Chiichan073_Melee"
+        }
+      }
     },
     "1075": {
       "character_id": 1075,
@@ -19203,7 +20273,13 @@
             "source_id": "GE_Player_Oneiroi_UltraSkill_Damage"
           }
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Oneiroi_Appear": "GA_Oneiroi_Melee",
+          "GA_Oneiroi_PerfectEvade": "GA_Oneiroi_Melee"
+        }
+      }
     },
     "1076": {
       "character_id": 1076,
@@ -19237,7 +20313,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_AirAttack1_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_AirAttack"
         },
         {
           "id": "GE_Player_Shinku_AirAttack_Rage_Damage",
@@ -19267,7 +20344,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_AirAttack_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_AirAttack_Rage"
         },
         {
           "id": "GE_Player_Shinku_Branch1_1_Damage",
@@ -19297,7 +20375,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Branch1_1_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Branch"
         },
         {
           "id": "GE_Player_Shinku_Branch1_2_Damage",
@@ -19327,7 +20406,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Branch1_2_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Branch"
         },
         {
           "id": "GE_Player_Shinku_Branch1_3_Damage",
@@ -19357,7 +20437,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Branch1_3_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Branch"
         },
         {
           "id": "GE_Player_Shinku_Branch1_4_Damage",
@@ -19387,7 +20468,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Branch1_4_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Branch"
         },
         {
           "id": "GE_Player_Shinku_Branch1_Rage_Damage",
@@ -19417,7 +20499,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Branch1_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Branch_Rage"
         },
         {
           "id": "GE_Player_Shinku_Branch2_Rage_Damage",
@@ -19447,7 +20530,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Branch2_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Branch_Rage"
         },
         {
           "id": "GE_Player_Shinku_Branch3_Rage_Damage",
@@ -19477,7 +20561,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Branch3_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Branch_Rage"
         },
         {
           "id": "GE_Player_Shinku_Branch4_Rage_Damage",
@@ -19507,7 +20592,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Branch4_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Branch_Rage"
         },
         {
           "id": "GE_Player_Shinku_Branch5_Rage_Damage",
@@ -19537,7 +20623,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Branch5_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Branch_Rage"
         },
         {
           "id": "GE_Player_Shinku_Melee1_1_Damage",
@@ -19567,7 +20654,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee1_1_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Melee"
         },
         {
           "id": "GE_Player_Shinku_Melee1_1_Rage_Damage",
@@ -19597,7 +20685,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee1_1_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Melee_Rage"
         },
         {
           "id": "GE_Player_Shinku_Melee1_2_1_Damage",
@@ -19897,7 +20986,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee1_5b_Damage"
-          }
+          },
+          "omit_from_action_preview": true
         },
         {
           "id": "GE_Player_Shinku_Melee1_Rage_Damage",
@@ -19927,7 +21017,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee1_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Melee_Rage"
         },
         {
           "id": "GE_Player_Shinku_Melee2_Rage_Damage",
@@ -19957,7 +21048,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee2_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Melee_Rage"
         },
         {
           "id": "GE_Player_Shinku_Melee3_1_Rage_Damage",
@@ -19987,7 +21079,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee3_1_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Melee_Rage",
+          "hits": 5
         },
         {
           "id": "GE_Player_Shinku_Melee3_Rage_Damage",
@@ -20017,7 +21111,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee3_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Melee_Rage"
         },
         {
           "id": "GE_Player_Shinku_Melee4_1_Rage_Damage",
@@ -20047,7 +21142,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee4_1_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Melee_Rage"
         },
         {
           "id": "GE_Player_Shinku_Melee4_Rage_Damage",
@@ -20077,7 +21173,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee4_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Melee_Rage"
         },
         {
           "id": "GE_Player_Shinku_Melee5_Rage_Damage",
@@ -20107,7 +21204,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Melee5_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Melee_Rage"
         },
         {
           "id": "GE_Player_Shinku_PerfectEvadeAttack_Damage",
@@ -20137,7 +21235,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_PerfectEvadeAttack_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_PerfectEvade"
         },
         {
           "id": "GE_Player_Shinku_PerfectEvadeAttack_Rage_Damage",
@@ -20167,7 +21266,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_PerfectEvadeAttack_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_PerfectEvade_Rage"
         },
         {
           "id": "GE_Player_Shinku_QTE_Damage",
@@ -20227,7 +21327,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_ReactionAOE_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_ReactionAOE"
         },
         {
           "id": "GE_Player_Shinku_Skill1_1_Damage",
@@ -20467,7 +21568,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_UltraSkill2_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_UltraSkill_Verdict"
         },
         {
           "id": "GE_Player_Shinku_UltraSkill3_Damage",
@@ -20497,7 +21599,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_UltraSkill3_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_UltraSkill",
+          "hits": 5
         },
         {
           "id": "GE_Player_Shinku_UltraSkill4_Damage",
@@ -20587,7 +21691,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_UltraSkill7_Damage"
-          }
+          },
+          "omit_from_action_preview": true
         },
         {
           "id": "GE_Player_Shinku_UltraSkillPre_Rage_Damage",
@@ -20617,7 +21722,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_UltraSkillPre_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_UltraSkill_Judgment",
+          "hits": 4
         },
         {
           "id": "GE_Player_Shinku_UltraSkill_Rage_Damage",
@@ -20647,7 +21754,9 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_UltraSkill_Rage_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_UltraSkill_Verdict",
+          "hits": 10
         },
         {
           "id": "GE_Player_Shinku_WatchEx_Damage",
@@ -20677,7 +21786,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_WatchEx_Damage"
-          }
+          },
+          "omit_from_action_preview": true
         },
         {
           "id": "GE_Player_Shinku_Watch_Damage",
@@ -20707,9 +21817,19 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Shinku_Watch_Damage"
-          }
+          },
+          "action_id": "GA_Shinku_Watch"
         }
-      ]
+      ],
+      "rules": {
+        "skill_level_sources": {
+          "GA_Shinku_Appear": "GA_Shinku_Melee",
+          "GA_Shinku_Melee_Rage": "GA_Shinku_Melee",
+          "GA_Shinku_PerfectEvade": "GA_Shinku_Melee",
+          "GA_Shinku_PerfectEvade_Rage": "GA_Shinku_Melee",
+          "GA_Shinku_Skill_Rage": "GA_Shinku_Skill"
+        }
+      }
     }
   }
 }

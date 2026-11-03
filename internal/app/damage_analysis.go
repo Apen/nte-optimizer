@@ -39,9 +39,9 @@ func (batch damageBatch) evaluate(build optimizer.StatSummary) *DamageAnalysis {
 	analysis := batch.calculate(build, false)
 	analysis.Current = batch.current
 	if analysis.Status == "atomic_preview" {
-		analysis.Groups = groupDamageResults(batch.character.CharacterID, analysis.Build, analysis.Current)
+		analysis.Groups = groupDamageResults(batch.character.CharacterID, analysis.Build, analysis.Current, nil)
 		buffed := batch.calculate(build, true)
-		groups := groupDamageResults(batch.character.CharacterID, buffed.Build, batch.currentBuffed)
+		groups := groupDamageResults(batch.character.CharacterID, buffed.Build, batch.currentBuffed, nil)
 		byID := make(map[string]DamageGroup, len(groups))
 		for _, group := range groups {
 			byID[group.ID] = group
@@ -68,11 +68,12 @@ func (batch damageBatch) evaluate(build optimizer.StatSummary) *DamageAnalysis {
 	catalog := batch.labels
 	for index := range analysis.Groups {
 		if localized, ok := catalog.Damage[analysis.Groups[index].ID]; ok {
-			if localized.Name != "" {
-				analysis.Groups[index].Name = localized.Name
-			}
 			if localized.Description != "" {
 				analysis.Groups[index].Description = localized.Description
+			}
+			if localized.Name != "" {
+				analysis.Groups[index].Name = localized.Name
+				continue
 			}
 		}
 		if localized := localizedAbilityLabel(catalog.Abilities, analysis.Groups[index].ID); localized != "" {
@@ -165,24 +166,25 @@ type DamageAnalysis struct {
 }
 
 type DamageGroup struct {
-	Buffed             *DamageBuffedValues `json:"buffed,omitempty"`
-	ID                 string              `json:"id"`
-	Name               string              `json:"name"`
-	Description        string              `json:"description"`
-	Category           string              `json:"category"`
-	ActionType         string              `json:"action_type"`
-	BuildDamage        float64             `json:"build_damage"`
-	CurrentDamage      float64             `json:"current_damage,omitempty"`
-	BuildNonCrit       float64             `json:"build_non_crit"`
-	CurrentNonCrit     float64             `json:"current_non_crit,omitempty"`
-	BuildCrit          float64             `json:"build_crit"`
-	CurrentCrit        float64             `json:"current_crit,omitempty"`
-	Instances          int                 `json:"instances"`
-	MaxStacks          int                 `json:"max_stacks,omitempty"`
-	BuildMaxTick       float64             `json:"build_max_tick,omitempty"`
-	CurrentMaxTick     float64             `json:"current_max_tick,omitempty"`
-	BuildMaxCritTick   float64             `json:"build_max_crit_tick,omitempty"`
-	CurrentMaxCritTick float64             `json:"current_max_crit_tick,omitempty"`
+	ActionCondition    *damage.ActionCondition `json:"action_condition,omitempty"`
+	Buffed             *DamageBuffedValues     `json:"buffed,omitempty"`
+	ID                 string                  `json:"id"`
+	Name               string                  `json:"name"`
+	Description        string                  `json:"description"`
+	Category           string                  `json:"category"`
+	ActionType         string                  `json:"action_type"`
+	BuildDamage        float64                 `json:"build_damage"`
+	CurrentDamage      float64                 `json:"current_damage,omitempty"`
+	BuildNonCrit       float64                 `json:"build_non_crit"`
+	CurrentNonCrit     float64                 `json:"current_non_crit,omitempty"`
+	BuildCrit          float64                 `json:"build_crit"`
+	CurrentCrit        float64                 `json:"current_crit,omitempty"`
+	Instances          int                     `json:"instances"`
+	MaxStacks          int                     `json:"max_stacks,omitempty"`
+	BuildMaxTick       float64                 `json:"build_max_tick,omitempty"`
+	CurrentMaxTick     float64                 `json:"current_max_tick,omitempty"`
+	BuildMaxCritTick   float64                 `json:"build_max_crit_tick,omitempty"`
+	CurrentMaxCritTick float64                 `json:"current_max_crit_tick,omitempty"`
 }
 
 type DamageBuffedValues struct {
@@ -232,6 +234,9 @@ func damageAnalysisFromCatalog(character *decoded.Character, build optimizer.Sta
 	for _, entry := range characterCatalog.Instances {
 		level, known := levels[entry.AbilityID]
 		if !known {
+			level, known = levels[characterCatalog.Rules.SkillLevelSources[entry.AbilityID]]
+		}
+		if !known {
 			continue
 		}
 		instance := entry.Resolve(strconv.Itoa(character.CharacterID), level)
@@ -259,7 +264,7 @@ func damageAnalysisFromCatalog(character *decoded.Character, build optimizer.Sta
 		return analysis
 	}
 	analysis.Status = "atomic_preview"
-	analysis.Groups = groupDamageResults(character.CharacterID, analysis.Build, analysis.Current)
+	analysis.Groups = groupDamageResults(character.CharacterID, analysis.Build, analysis.Current, nil)
 	analysis.MissingInputs = append(analysis.MissingInputs,
 		"missing_rotation",
 		"missing_enemy_profile",
@@ -313,6 +318,9 @@ type groupDescriptor struct {
 }
 
 func damageGroupDescriptor(characterID int, result damage.Result) (groupDescriptor, bool) {
+	if result.OmitFromActionPreview {
+		return groupDescriptor{}, false
+	}
 	id := result.InstanceID
 	if characterID != 1036 {
 		if result.SkillID == "" {
@@ -365,9 +373,13 @@ func damageGroupDescriptor(characterID int, result damage.Result) (groupDescript
 
 func genericDamageGroupDescriptor(result damage.Result) groupDescriptor {
 	actionType := "skill"
-	lowerID := strings.ToLower(result.SkillID)
+	actionID := result.ActionID
+	if actionID == "" {
+		actionID = result.SkillID
+	}
+	lowerID := strings.ToLower(actionID)
 	switch {
-	case strings.Contains(lowerID, "ultraskill"):
+	case strings.Contains(lowerID, "ultraskill") || strings.Contains(lowerID, "ultimate"):
 		actionType = "ultimate"
 	case strings.Contains(lowerID, "melee"):
 		actionType = "basic_attack"
@@ -385,24 +397,30 @@ func genericDamageGroupDescriptor(result damage.Result) groupDescriptor {
 		category = "direct"
 	}
 	return groupDescriptor{
-		id:         result.SkillID,
+		id:         actionID,
 		name:       result.Name,
 		category:   category,
 		actionType: actionType,
 	}
 }
 
-func groupDamageResults(characterID int, build, current []damage.Result) []DamageGroup {
+// Missing buff states keep each scenario as its own action row.
+func groupDamageResults(characterID int, build, current []damage.Result, buffs map[string]bool) []DamageGroup {
 	groups := map[string]*DamageGroup{}
 	add := func(results []damage.Result, currentValues bool) {
 		for _, result := range results {
+			if condition := result.ActionCondition; condition != nil {
+				if active, known := buffs[condition.BuffID]; known && active != condition.BuffActive {
+					continue
+				}
+			}
 			descriptor, ok := damageGroupDescriptor(characterID, result)
 			if !ok {
 				continue
 			}
 			group := groups[descriptor.id]
 			if group == nil {
-				group = &DamageGroup{ID: descriptor.id, Name: descriptor.name, Description: descriptor.description, Category: descriptor.category, ActionType: descriptor.actionType, MaxStacks: descriptor.maxStacks}
+				group = &DamageGroup{ID: descriptor.id, Name: descriptor.name, Description: descriptor.description, Category: descriptor.category, ActionType: descriptor.actionType, MaxStacks: descriptor.maxStacks, ActionCondition: result.ActionCondition}
 				groups[descriptor.id] = group
 			}
 			if currentValues {
@@ -413,7 +431,7 @@ func groupDamageResults(characterID int, build, current []damage.Result) []Damag
 				group.BuildDamage += result.Total
 				group.BuildNonCrit += result.NonCrit * float64(result.Hits)
 				group.BuildCrit += result.Crit * float64(result.Hits)
-				group.Instances++
+				group.Instances += result.Hits
 			}
 		}
 	}

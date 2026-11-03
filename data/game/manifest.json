@@ -41,18 +41,53 @@
       "warnings": []
     },
     {
+      "path": "combat/action_evidence.json",
+      "schema_version": 1,
+      "sha256": "7e51573980f778b2566f7ed6c7e15e1cf75567beecd4bd3441cadcfb262e7b55",
+      "sources": [
+        "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "datamine/data/abilities/DataTable/Skill/DT_GameplayEffectMappingData.json",
+        "datamine/data/abilities/Blueprints",
+        "config/combat-action-observations.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
       "path": "combat/damage.json",
       "schema_version": 1,
-      "sha256": "8690fb2db4face369a4839b60cd1e9cbaaa8da6c11b7ba1e8af4108821c8e44f",
+      "sha256": "2be2609b652419522b9a9d1ef25c2ec3af83f407f76bd55236af3466da587861",
       "sources": [
         "generated/combat_catalog_draft.json",
         "datamine/data/characters/manifest.json",
-        "overrides/combat-rules.json"
+        "overrides/combat-rules.json",
+        "overrides/combat-instances.json",
+        "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json"
       ],
       "status": "partial",
       "warnings": [
-        "Seuls les effets poss\u00E9dant des coefficients d\u0027attaque directs et v\u00E9rifiables sont publi\u00E9s."
+        "Supplemental effects retain their source scaling and provisional execution classification."
       ]
+    },
+    {
+      "path": "combat/rotations.json",
+      "schema_version": 1,
+      "sha256": "7b736e4e491a70820a9bf5f271448a4bb2942f7afa5220d23d0b65b5b1aef1c5",
+      "sources": [
+        "overrides/rotations.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "combat/team_effect_previews.json",
+      "schema_version": 1,
+      "sha256": "cba672cd6197bb0f38e86c8e77b205f8f3d2dae9c834440810d56572f0486cb9",
+      "sources": [
+        "overrides/team_effect_previews.json"
+      ],
+      "status": "generated",
+      "warnings": []
     },
     {
       "path": "equipment/arcs.json",
@@ -148,7 +183,7 @@
       "sources": [
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_SpecialFurnitureModifyData.json",
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
-        "config/special-furniture-progressions.json"
+        "datamine/data/config/special-furniture-progressions.json"
       ],
       "status": "generated",
       "warnings": []
@@ -156,7 +191,7 @@
     {
       "path": "locales/en.json",
       "schema_version": 1,
-      "sha256": "1d32db1e4496158d004126e821250dacd81d77be3a493b3bf0fc060b41db35f2",
+      "sha256": "e13ffc6f2753ba668c36fe81df18c1dd201818a898fc662a0e497142bde3e6b3",
       "sources": [
         "datamine/data/localization/en.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -176,7 +211,7 @@
     {
       "path": "locales/fr.json",
       "schema_version": 1,
-      "sha256": "4a72cbe83cc3b5728f81ca3656b14c34543cbbc4b45a8bb38ca8238a430d85e1",
+      "sha256": "4707e7aea7918913da83606a6faae148b5b6fcbbe84fbb3576dde736dddd7f47",
       "sources": [
         "datamine/data/localization/fr.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",

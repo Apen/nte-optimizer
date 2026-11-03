@@ -74,6 +74,191 @@ func BenchmarkDamageReportingBatch(b *testing.B) {
 	}
 }
 
+func TestZankouActionsUseSharedImportedSkillLevels(t *testing.T) {
+	s := NewOptimizerService(filepath.Join("..", "..", "data"))
+	character := &decoded.Character{CharacterID: 1036, Level: 80, AwakenLevel: 1, Skills: []decoded.CharacterSkill{
+		{AbilityID: "GA_Zankou_Melee", Level: 8},
+		{AbilityID: "GA_Zankou_UltraSkill", Level: 10},
+	}}
+	current := optimizer.StatSummary{Derived: map[string]float64{"AtkFinal": 1500}}
+	build := optimizer.StatSummary{Derived: map[string]float64{"AtkFinal": 1600}}
+	analysis := s.prepareDamageBatch(character, &current, "en").evaluate(build)
+	for _, id := range []string{
+		"nightmare-waltz", "moonfall", "bloodfeast", "heartwrench", "vile-ash",
+		"inferno-enhanced", "broken-twigs", "voidstep",
+	} {
+		var comparable bool
+		for _, group := range analysis.Groups {
+			if group.ID == id {
+				comparable = group.BuildDamage > group.CurrentDamage && group.CurrentDamage > 0
+			}
+		}
+		if !comparable {
+			t.Errorf("expected comparable build and equipped damage for %s", id)
+		}
+	}
+	factors := map[string]damage.Result{}
+	for _, result := range analysis.Build {
+		factors[result.InstanceID] = result
+	}
+	for _, id := range []string{
+		"GE_Player_Zankou_Melee1_Damage", "GE_Player_Zankou_Melee1_1_Damage",
+		"GE_Player_Zankou_ForceUltraSkill1_Damage", "GE_Player_Zankou_ForceUltraSkill2_Damage",
+	} {
+		if _, ok := factors[id]; !ok {
+			t.Errorf("expected damage impact %s", id)
+		}
+	}
+	if got := factors["GE_Player_Zankou_MagicMelee2_1_Damage"].Factors.Coefficient; got != .406 {
+		t.Errorf("expected level 8 Illusion basic coefficient, got %g", got)
+	}
+	if got := factors["GE_Player_Zankou_MagicUltraSkill1_Damage"].Factors.Coefficient; got != 1.205 {
+		t.Errorf("expected level 10 Illusion ultimate coefficient, got %g", got)
+	}
+	if got := factors["GE_Player_Zankou_DotDamage"]; got.Category != damage.CategoryDOT || got.Factors.CritDamage != .5 {
+		t.Errorf("expected Delusion bonus on the Illusion DoT, got %+v", got)
+	}
+}
+
+func TestShinkuAndBlackbirdActionHitCounts(t *testing.T) {
+	service := NewOptimizerService(filepath.Join("..", "..", "data"))
+	for _, tc := range []struct {
+		id     int
+		prefix string
+		hits   map[string]int
+	}{
+		{1076, "GA_Shinku_", map[string]int{
+			"Melee": 10, "Melee_Rage": 12, "Skill_Rage": 2,
+			"UltraSkill": 9, "UltraSkill_Judgment": 4, "UltraSkill_Verdict": 11,
+		}},
+		{1042, "GA_BlackBird_", map[string]int{
+			"Melee": 17, "Evolve_Melee": 20, "Skill": 4, "SkillAssist": 1,
+			"Evolve_Skill": 4, "Evolve_Branch1": 5, "Evolve_Branch2": 5,
+			"UltraSkill": 9, "Evolve_UltraSkill": 7,
+		}},
+	} {
+		t.Run(tc.prefix, func(t *testing.T) {
+			character := &decoded.Character{CharacterID: tc.id, Level: 80}
+			for _, skill := range []string{"Melee", "Skill", "UltraSkill", "QTE"} {
+				character.Skills = append(character.Skills, decoded.CharacterSkill{AbilityID: tc.prefix + skill, Level: 9})
+			}
+			current := optimizer.StatSummary{Derived: map[string]float64{"AtkFinal": 1000}}
+			build := optimizer.StatSummary{Derived: map[string]float64{"AtkFinal": 1500}}
+			analysis := service.prepareDamageBatch(character, &current, "en").evaluate(build)
+			groups := map[string]DamageGroup{}
+			for _, group := range analysis.Groups {
+				groups[group.ID] = group
+			}
+			for skill, hits := range tc.hits {
+				group := groups[tc.prefix+skill]
+				if group.Instances != hits || group.CurrentDamage <= 0 || group.BuildDamage <= group.CurrentDamage {
+					t.Errorf("%s: expected %d comparable hits, got %+v", skill, hits, group)
+				}
+			}
+			for id, name := range map[string]string{
+				"GA_Shinku_UltraSkill_Judgment": "Crimson Judgment",
+				"GA_Shinku_UltraSkill_Verdict":  "Dragonflame Verdict",
+				"GA_Shinku_Melee_Rage":          "Tidal Assault",
+				"GA_BlackBird_Evolve_Branch1":   "Bestowed Grace",
+			} {
+				if strings.HasPrefix(id, tc.prefix) && groups[id].Name != name {
+					t.Errorf("%s: expected action name %q, got %q", id, name, groups[id].Name)
+				}
+			}
+			for _, impact := range analysis.Build {
+				if impact.Hits > 1 && impact.Total != float64(impact.Hits)*impact.Expected {
+					t.Errorf("%s: repeated hits were not included in the action total", impact.InstanceID)
+				}
+			}
+		})
+	}
+}
+
+func TestZeroStandardSkillOmitsConditionalKillTiers(t *testing.T) {
+	service := NewOptimizerService(filepath.Join("..", "..", "data"))
+	for _, tc := range []struct {
+		id      int
+		variant string
+	}{
+		{1046, "Female046"},
+		{1051, "Female051"},
+	} {
+		t.Run(tc.variant, func(t *testing.T) {
+			ability := "GA_" + tc.variant + "_Skill"
+			character := &decoded.Character{CharacterID: tc.id, Level: 80, Skills: []decoded.CharacterSkill{
+				{AbilityID: ability, Level: 6},
+			}}
+			stats := optimizer.StatSummary{Derived: map[string]float64{"AtkFinal": 1000}}
+			analysis := service.prepareDamageBatch(character, &stats, "en").evaluate(stats)
+			var expected float64
+			var standard, conditional int
+			for _, impact := range analysis.Build {
+				if impact.SkillID != ability {
+					continue
+				}
+				if strings.Contains(impact.InstanceID, "_Skill_Kill_Damage_lv") {
+					conditional++
+					if !impact.OmitFromActionPreview {
+						t.Errorf("conditional effect %s entered the standard preview", impact.InstanceID)
+					}
+					continue
+				}
+				expected += impact.Total
+				standard += impact.Hits
+			}
+			if conditional != 2 || standard == 0 {
+				t.Fatalf("expected two diagnostic effects and a standard skill, got %d and %d", conditional, standard)
+			}
+			for _, group := range analysis.Groups {
+				if group.ID == ability && group.Instances == standard && group.BuildDamage == expected && group.CurrentDamage == expected {
+					return
+				}
+			}
+			t.Errorf("standard skill should include only %d hits totaling %g for each build", standard, expected)
+		})
+	}
+}
+
+func TestLinkoSubUltimateBuffScenarios(t *testing.T) {
+	service := NewOptimizerService(filepath.Join("..", "..", "data"))
+	character := &decoded.Character{CharacterID: 1072, Level: 80, Skills: []decoded.CharacterSkill{
+		{AbilityID: "GA_Radio072_UltraSkill", Level: 6},
+	}}
+	stats := optimizer.StatSummary{Derived: map[string]float64{"AtkFinal": 1000}}
+	analysis := service.prepareDamageBatch(character, &stats, "en").evaluate(stats)
+	const buff = "linko_sub_ultimate_level2"
+	for _, tc := range []struct {
+		name  string
+		buffs map[string]bool
+		want  []string
+	}{
+		{"unknown", nil, []string{"linko_sub_ultimate_base", buff}},
+		{"inactive", map[string]bool{buff: false}, []string{"linko_sub_ultimate_base"}},
+		{"active", map[string]bool{buff: true}, []string{buff}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			got := map[string]bool{}
+			for _, group := range groupDamageResults(character.CharacterID, analysis.Build, analysis.Current, tc.buffs) {
+				if group.ActionCondition == nil {
+					continue
+				}
+				if group.ActionCondition.ExclusiveGroup != buff || group.Instances != 1 || group.BuildDamage <= 0 || group.BuildDamage != group.CurrentDamage {
+					t.Fatalf("unexpected scenario: %+v", group)
+				}
+				got[group.ID] = true
+			}
+			if len(got) != len(tc.want) {
+				t.Fatalf("scenarios = %v, want %v", got, tc.want)
+			}
+			for _, id := range tc.want {
+				if !got[id] {
+					t.Errorf("missing scenario %s", id)
+				}
+			}
+		})
+	}
+}
+
 func TestDamageAnalysisUsesImportedSkillLevel(t *testing.T) {
 	dir := t.TempDir()
 	if err := os.MkdirAll(filepath.Join(dir, "game", "combat"), 0o755); err != nil {
@@ -112,7 +297,7 @@ func TestGroupDamageResultsAddsMultiHitActionsAndDOTStacks(t *testing.T) {
 		{InstanceID: "GE_Player_Zankou_UltraSkill2_Damage", Total: 200},
 		{InstanceID: "GE_Player_Zankou_DotDamage", Total: 400},
 	}
-	groups := groupDamageResults(1036, build, current)
+	groups := groupDamageResults(1036, build, current, nil)
 	byID := map[string]DamageGroup{}
 	for _, group := range groups {
 		byID[group.ID] = group
@@ -140,7 +325,7 @@ func TestGroupDamageResultsDoesNotApplyZankouLabelsToOtherCharacters(t *testing.
 			Category:   damage.CategoryDirect,
 			Total:      100,
 		},
-	}, nil)
+	}, nil, nil)
 	if len(groups) != 1 {
 		t.Fatalf("expected one Shinku group, got %+v", groups)
 	}

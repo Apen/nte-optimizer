@@ -74,19 +74,28 @@ type TimingRule struct {
 	MaxStacks       int     `json:"max_stacks,omitempty"`
 }
 
+type ActionCondition struct {
+	ExclusiveGroup string `json:"exclusive_group"`
+	BuffID         string `json:"buff_id"`
+	BuffActive     bool   `json:"buff_active"`
+}
+
 type Instance struct {
-	ID            string      `json:"id"`
-	CharacterID   string      `json:"character_id,omitempty"`
-	SkillID       string      `json:"skill_id,omitempty"`
-	Name          string      `json:"name"`
-	Category      Category    `json:"category"`
-	Element       string      `json:"element,omitempty"`
-	Scaling       ScalingStat `json:"scaling"`
-	Coefficient   float64     `json:"coefficient"`
-	Hits          int         `json:"hits,omitempty"`
-	FixedCritRate *float64    `json:"fixed_crit_rate,omitempty"`
-	Timing        TimingRule  `json:"timing,omitempty"`
-	Provenance    Provenance  `json:"provenance"`
+	ActionCondition       *ActionCondition `json:"action_condition,omitempty"`
+	ActionID              string           `json:"action_id,omitempty"`
+	OmitFromActionPreview bool             `json:"omit_from_action_preview,omitempty"`
+	ID                    string           `json:"id"`
+	CharacterID           string           `json:"character_id,omitempty"`
+	SkillID               string           `json:"skill_id,omitempty"`
+	Name                  string           `json:"name"`
+	Category              Category         `json:"category"`
+	Element               string           `json:"element,omitempty"`
+	Scaling               ScalingStat      `json:"scaling"`
+	Coefficient           float64          `json:"coefficient"`
+	Hits                  int              `json:"hits,omitempty"`
+	FixedCritRate         *float64         `json:"fixed_crit_rate,omitempty"`
+	Timing                TimingRule       `json:"timing,omitempty"`
+	Provenance            Provenance       `json:"provenance"`
 }
 
 type Multipliers struct {
@@ -103,18 +112,21 @@ type Multipliers struct {
 }
 
 type Result struct {
-	InstanceID string      `json:"instance_id"`
-	SkillID    string      `json:"skill_id,omitempty"`
-	Name       string      `json:"name"`
-	Category   Category    `json:"category"`
-	NonCrit    float64     `json:"non_crit"`
-	Crit       float64     `json:"crit"`
-	Expected   float64     `json:"expected"`
-	Hits       int         `json:"hits"`
-	Ticks      int         `json:"ticks,omitempty"`
-	Stacks     int         `json:"stacks,omitempty"`
-	Total      float64     `json:"total"`
-	Factors    Multipliers `json:"factors"`
-	Warnings   []string    `json:"warnings,omitempty"`
-	Provenance Provenance  `json:"provenance"`
+	ActionCondition       *ActionCondition `json:"action_condition,omitempty"`
+	ActionID              string           `json:"action_id,omitempty"`
+	OmitFromActionPreview bool             `json:"omit_from_action_preview,omitempty"`
+	InstanceID            string           `json:"instance_id"`
+	SkillID               string           `json:"skill_id,omitempty"`
+	Name                  string           `json:"name"`
+	Category              Category         `json:"category"`
+	NonCrit               float64          `json:"non_crit"`
+	Crit                  float64          `json:"crit"`
+	Expected              float64          `json:"expected"`
+	Hits                  int              `json:"hits"`
+	Ticks                 int              `json:"ticks,omitempty"`
+	Stacks                int              `json:"stacks,omitempty"`
+	Total                 float64          `json:"total"`
+	Factors               Multipliers      `json:"factors"`
+	Warnings              []string         `json:"warnings,omitempty"`
+	Provenance            Provenance       `json:"provenance"`
 }

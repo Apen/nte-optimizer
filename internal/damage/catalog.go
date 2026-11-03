@@ -22,6 +22,7 @@ type CharacterCatalog struct {
 }
 
 type CharacterRules struct {
+	SkillLevelSources map[string]string  `json:"skill_level_sources,omitempty"`
 	InstanceModifiers []InstanceModifier `json:"instance_modifiers,omitempty"`
 	DerivedInstances  []DerivedInstance  `json:"derived_instances,omitempty"`
 }
@@ -49,17 +50,21 @@ type AwakeningBonus struct {
 }
 
 type TieredInstance struct {
-	ID                       string      `json:"id"`
-	AbilityID                string      `json:"ability_id"`
-	Name                     string      `json:"name"`
-	Category                 Category    `json:"category"`
-	Element                  string      `json:"element"`
-	Scaling                  ScalingStat `json:"scaling"`
-	Coefficients             []float64   `json:"coefficients"`
-	FixedCritRate            *float64    `json:"fixed_crit_rate,omitempty"`
-	BreakValue               float64     `json:"break_value,omitempty"`
-	ClassificationConfidence Confidence  `json:"classification_confidence"`
-	Provenance               Provenance  `json:"provenance"`
+	ActionCondition          *ActionCondition `json:"action_condition,omitempty"`
+	ID                       string           `json:"id"`
+	AbilityID                string           `json:"ability_id"`
+	ActionID                 string           `json:"action_id,omitempty"`
+	Hits                     int              `json:"hits,omitempty"`
+	OmitFromActionPreview    bool             `json:"omit_from_action_preview,omitempty"`
+	Name                     string           `json:"name"`
+	Category                 Category         `json:"category"`
+	Element                  string           `json:"element"`
+	Scaling                  ScalingStat      `json:"scaling"`
+	Coefficients             []float64        `json:"coefficients"`
+	FixedCritRate            *float64         `json:"fixed_crit_rate,omitempty"`
+	BreakValue               float64          `json:"break_value,omitempty"`
+	ClassificationConfidence Confidence       `json:"classification_confidence"`
+	Provenance               Provenance       `json:"provenance"`
 }
 
 func ReadCatalog(path string) (Catalog, error) {
@@ -90,16 +95,20 @@ func (entry TieredInstance) Resolve(characterID string, level int) Instance {
 		coefficient = entry.Coefficients[index]
 	}
 	return Instance{
-		ID:            entry.ID,
-		CharacterID:   characterID,
-		SkillID:       entry.AbilityID,
-		Name:          entry.Name,
-		Category:      entry.Category,
-		Element:       entry.Element,
-		Scaling:       entry.Scaling,
-		Coefficient:   coefficient,
-		FixedCritRate: entry.FixedCritRate,
-		Provenance:    entry.Provenance,
+		ActionCondition:       entry.ActionCondition,
+		ID:                    entry.ID,
+		CharacterID:           characterID,
+		SkillID:               entry.AbilityID,
+		ActionID:              entry.ActionID,
+		Hits:                  entry.Hits,
+		OmitFromActionPreview: entry.OmitFromActionPreview,
+		Name:                  entry.Name,
+		Category:              entry.Category,
+		Element:               entry.Element,
+		Scaling:               entry.Scaling,
+		Coefficient:           coefficient,
+		FixedCritRate:         entry.FixedCritRate,
+		Provenance:            entry.Provenance,
 	}
 }
 

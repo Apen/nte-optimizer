@@ -99,17 +99,20 @@ func Calculate(characterLevel int, stats Stats, enemy Enemy, instance Instance) 
 	crit := math.Floor(base * (1 + stats.CritDamage))
 	expected := nonCrit*(1-critRate) + crit*critRate
 	result := Result{
-		InstanceID: instance.ID,
-		SkillID:    instance.SkillID,
-		Name:       instance.Name,
-		Category:   instance.Category,
-		NonCrit:    nonCrit,
-		Crit:       crit,
-		Expected:   expected,
-		Hits:       hits,
-		Total:      expected * float64(hits),
-		Factors:    factors,
-		Provenance: instance.Provenance,
+		ActionCondition:       instance.ActionCondition,
+		ActionID:              instance.ActionID,
+		OmitFromActionPreview: instance.OmitFromActionPreview,
+		InstanceID:            instance.ID,
+		SkillID:               instance.SkillID,
+		Name:                  instance.Name,
+		Category:              instance.Category,
+		NonCrit:               nonCrit,
+		Crit:                  crit,
+		Expected:              expected,
+		Hits:                  hits,
+		Total:                 expected * float64(hits),
+		Factors:               factors,
+		Provenance:            instance.Provenance,
 	}
 	if !exactDefense {
 		result.Warnings = append(result.Warnings, "enemy defense estimated from level")
