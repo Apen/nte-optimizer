@@ -1,10 +1,39 @@
 import { t } from '../i18n'
 import { planBurstSetup } from '../lib/burst-setup'
 import { usePresentation } from '../presentation'
-import type { Result } from '../types'
+import type { Result, WorkspaceCharacter } from '../types'
+import { suggestRotation } from '../lib/suggested-rotation'
 
-export function BuildRotation({ result }: { result: Result }) {
+export function BuildRotation({ result, characters }: { result: Result; characters: WorkspaceCharacter[] }) {
   const presentation = usePresentation()
+  const suggestion = suggestRotation(result)
+  if (suggestion) return <section className="grid gap-3 text-sm">
+    <div>
+      <h3 className="font-bold">{t('rotation_suggested_title')}</h3>
+      <p className="mt-1 text-slate-400">{t('rotation_suggested_note')}</p>
+      {suggestion.missingReaction && <p className="mt-1 text-amber-200">
+        {t('rotation_missing_reaction', { reaction: t(suggestion.missingReaction) })}
+      </p>}
+    </div>
+    <ol className="divide-y divide-slate-800 rounded-xl border border-slate-800">
+      {suggestion.steps.map((step, index) => {
+        const name = step.characterID === result.character?.characterId ? result.character.name
+          : characters.find(character => character.character_id === step.characterID)?.name ?? step.buff?.name
+        return <li key={step.id} className="flex items-start gap-3 p-3">
+          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-slate-800 font-semibold">{index + 1}</span>
+          <img className="size-9 shrink-0 rounded-lg object-cover" src={`/game_ui/characters/${step.characterID}.png`} alt="" />
+          <div>
+            <strong>{name}</strong>
+            <p className="text-slate-300">{t(step.buff ? `rotation_action_${step.buff.action}` : step.label ?? 'rotation_action_skill')}</p>
+            {step.buff && <p className="text-xs text-slate-400">{step.buff.effects.map(effect =>
+              effect.equipment_name || presentation.abilities?.[effect.id] || t(`team_source_${effect.kind}`),
+            ).join(' · ')}</p>}
+          </div>
+        </li>
+      })}
+    </ol>
+  </section>
+
   const steps = planBurstSetup(result.buff_effects ?? [])
   if (!steps.length) return <p className="text-sm text-slate-400">
     {t(result.team_allies?.length && !result.buff_effects ? 'build_buffs_old_result' : 'rotation_no_setup')}

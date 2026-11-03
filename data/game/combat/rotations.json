@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "game_version": "1.4",
+  "characters": {
+    "1004": {
+      "reaction": "rotation_reaction_discord",
+      "required_steps": ["incantation","psyche"],
+      "steps": [
+        {"id":"support","actor":"buffs"},
+        {"id":"incantation","actor":"CHARACTER_ELEMENT_TYPE_INCANTATION","label":"rotation_discord_incantation","requires_reaction":true},
+        {"id":"scorch","actor":"active","label":"rotation_scorch","requires_reaction":true},
+        {"id":"psyche","actor":"CHARACTER_ELEMENT_TYPE_PSYCHE","label":"rotation_discord_psyche","requires_reaction":true},
+        {"id":"burst","actor":"active","label":"rotation_lacrimosa_burst","consumes":["skill","ultimate"]}
+      ]
+    },
+    "1023": {
+      "reaction": "rotation_reaction_scorch",
+      "required_steps": ["scorch"],
+      "steps": [
+        {"id":"support","actor":"buffs"},
+        {"id":"open","actor":"active","label":"rotation_open_cycle","requires_reaction":true},
+        {"id":"scorch","actor":"CHARACTER_ELEMENT_TYPE_CHAOS","label":"rotation_scorch"},
+        {"id":"burst","actor":"active","label":"rotation_baicang_burst","consumes":["skill","ultimate"]}
+      ]
+    },
+    "1054": {
+      "reaction": "rotation_reaction_discord",
+      "required_steps": ["incantation","psyche"],
+      "steps": [
+        {"id":"support","actor":"buffs"},
+        {"id":"incantation","actor":"CHARACTER_ELEMENT_TYPE_INCANTATION","label":"rotation_discord_incantation","requires_reaction":true},
+        {"id":"scorch","actor":"active","label":"rotation_scorch","requires_reaction":true},
+        {"id":"psyche","actor":"CHARACTER_ELEMENT_TYPE_PSYCHE","label":"rotation_discord_psyche","requires_reaction":true},
+        {"id":"burst","actor":"active","label":"rotation_daffodill_break","consumes":["skill","ultimate"]}
+      ]
+    },
+    "1071": {
+      "reaction": "rotation_reaction_remora",
+      "required_steps": ["cosmos"],
+      "steps": [
+        {"id":"support","actor":"buffs"},
+        {"id":"cosmos","actor":"CHARACTER_ELEMENT_TYPE_COSMOS","label":"rotation_chaos_cosmos","prefer":[1046,1051,1052]},
+        {"id":"burst","actor":"active","label":"rotation_chaos_burst","consumes":["skill","ultimate"]}
+      ]
+    },
+    "1010": {
+      "reaction": "rotation_reaction_hexed",
+      "required_steps": ["hexed"],
+      "steps": [
+        {"id":"support","actor":"buffs"},
+        {"id":"hexed","actor":"CHARACTER_ELEMENT_TYPE_INCANTATION","prefer":[1003],"label":"rotation_nanally_incantation"},
+        {"id":"burst","actor":"active","label":"rotation_nanally_burst","consumes":["skill","ultimate"]}
+      ]
+    },
+    "1036": {
+      "reaction": "rotation_reaction_discord",
+      "required_steps": ["scorch", "nova", "discord"],
+      "steps": [
+        {"id": "open", "actor": "active", "label": "rotation_open_cycle"},
+        {"id": "scorch", "actor": "CHARACTER_ELEMENT_TYPE_CHAOS", "prefer": [1054], "label": "rotation_scorch"},
+        {"id": "nova", "actor": 1042, "label": "rotation_blackbird_combo", "consumes": ["skill", "ultimate"]},
+        {"id": "discord", "actor": "CHARACTER_ELEMENT_TYPE_CHAOS", "prefer": [1054], "label": "rotation_trigger_discord", "requires_reaction": true},
+        {"id": "break", "actor": 1054, "label": "rotation_daffodill_break", "consumes": ["skill", "ultimate"]},
+        {"id": "support", "actor": "buffs"},
+        {"id": "burst", "actor": "active", "label": "rotation_zankou_burst", "consumes": ["skill", "ultimate"]}
+      ]
+    },
+    "1042": {
+      "reaction": "rotation_reaction_nova",
+      "required_steps": ["nova"],
+      "steps": [
+        {"id": "support", "actor": "buffs"},
+        {"id": "psyche", "actor": "CHARACTER_ELEMENT_TYPE_PSYCHE", "prefer": [1039, 1020], "label": "rotation_prepare_psyche", "consumes": ["skill", "ultimate"], "requires": ["nova"]},
+        {"id": "cycle", "actor": "active", "label": "rotation_blackbird_combo", "consumes": ["skill", "ultimate"]},
+        {"id": "nova", "actor": "CHARACTER_ELEMENT_TYPE_CHAOS", "prefer": [1004, 1054], "label": "rotation_trigger_nova"},
+        {"id": "damage", "actor": 1004, "label": "rotation_lacrimosa_nova", "consumes": ["skill", "ultimate"]},
+        {"id": "repeat", "actor": "active", "label": "rotation_blackbird_repeat"}
+      ]
+    },
+    "1052": {
+      "reaction": "rotation_reaction_blossom",
+      "required_steps": ["cosmos","anima"],
+      "steps": [
+        {"id":"support","actor":"buffs"},
+        {"id":"record","actor":"active","label":"rotation_hotori_record","consumes":["skill"]},
+        {"id":"cosmos","actor":"CHARACTER_ELEMENT_TYPE_COSMOS","prefer":[1046,1051],"label":"rotation_hotori_cosmos","requires_reaction":true,"consumes":["skill"]},
+        {"id":"anima","actor":"CHARACTER_ELEMENT_TYPE_NATURE","prefer":[1075,1055,1010],"label":"rotation_hotori_anima","requires_reaction":true},
+        {"id":"nanally","actor":1010,"label":"rotation_nanally_burst","consumes":["skill","ultimate"]},
+        {"id":"burst","actor":"active","label":"rotation_hotori_burst","consumes":["ultimate"]}
+      ]
+    },
+    "1057": {
+      "required_steps": [],
+      "steps": [
+        {"id": "support", "actor": "buffs"},
+        {"id": "blackbird", "actor": 1042, "label": "rotation_blackbird_combo", "consumes": ["skill", "ultimate"]},
+        {"id": "burst", "actor": "active", "label": "rotation_akane_burst", "consumes": ["skill", "ultimate", "redirect_press"]},
+        {"id": "malice", "actor": 1042, "label": "rotation_akane_blackbird_finish"}
+      ]
+    },
+    "1076": {
+      "reaction": "rotation_reaction_charge",
+      "required_steps": ["lakshana", "cosmos", "anima"],
+      "steps": [
+        {"id": "stacks", "actor": "active", "label": "rotation_shinku_stacks"},
+        {"id": "lakshana", "actor": "CHARACTER_ELEMENT_TYPE_LAKSHANA", "prefer": [1025, 1008], "requires_reaction": true, "label": "rotation_shinku_lakshana", "consumes": ["skill", "ultimate"]},
+        {"id": "cosmos", "actor": "CHARACTER_ELEMENT_TYPE_COSMOS", "prefer": [1046, 1051, 1052], "requires_reaction": true, "label": "rotation_shinku_cosmos", "consumes": ["skill", "ultimate"]},
+        {"id": "support", "actor": "buffs"},
+        {"id": "anima", "actor": "CHARACTER_ELEMENT_TYPE_NATURE", "prefer": [1075, 1010], "requires_reaction": true, "label": "rotation_shinku_anima", "consumes": ["skill", "ultimate", "redirect_press"]},
+        {"id": "burst", "actor": "active", "label": "rotation_shinku_burst", "consumes": ["skill", "ultimate"]}
+      ]
+    }
+  }
+}
