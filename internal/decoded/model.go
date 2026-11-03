@@ -89,10 +89,6 @@ type CharacterPanelBase struct {
 type CharacterSavedState struct {
 	HealthRatio float64 `json:"healthRatio,omitempty"`
 }
-type ActiveAwakeningBuff struct {
-	Level int    `json:"level"`
-	Buff  string `json:"buff"`
-}
 type ActiveEquipmentBuff struct {
 	EquipmentID int    `json:"equipmentId"`
 	Buff        string `json:"buff"`
@@ -125,7 +121,6 @@ type Character struct {
 	PassiveReferences       []string            `json:"passiveReferences,omitempty"`
 	BondLevel               *int                `json:"bondLevel,omitempty"`
 	BondStageFlags          []bool              `json:"bondStageFlags,omitempty"`
-	ReportedAwakenLevel     int                 `json:"reportedAwakenLevel,omitempty"`
 	ForkNetID               *NetID              `json:"forkNetId,omitempty"`
 	Skills                  []CharacterSkill    `json:"skills,omitempty"`
 	Stats                   CharacterStats      `json:"stats,omitempty"`

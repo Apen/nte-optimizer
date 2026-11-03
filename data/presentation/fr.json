@@ -355,7 +355,6 @@
     "current_stats": "Statistiques actuelles",
     "current_stats_description": "Calculées à partir du personnage importé, de son Arc et de son équipement.",
     "observed_panel_stats_description": "Valeurs finales relevées dans le dernier panneau de personnage scanné.",
-    "housing_modifier_evidence": "Concordance sur {matching} des {observed} personnages chargés",
     "damage_description": "ATQ, bonus de dégâts, CRIT, intensité de cycle et éveils permanents sont inclus.",
     "damage_section": "DÉGÂTS FINAUX",
     "damage_title": "Actions complètes, DoT et réactions",

@@ -115,7 +115,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	if len(character.RecordedAwakeningLevels) != 1 || character.RecordedAwakeningLevels[0] != 5 {
 		t.Fatalf("recorded awakening levels were not preserved: %v", character.RecordedAwakeningLevels)
 	}
-	if character.AwakenLevel != 1 || len(character.ObservedAtLogin.ActiveAwakeningLevels) != 1 || character.ObservedAtLogin.ActiveAwakeningLevels[0] != 5 || character.ReportedAwakenLevel != 1 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.BondStageFlags) != 2 || !character.BondStageFlags[0] || character.BondStageFlags[1] || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
+	if character.AwakenLevel != 1 || len(character.ObservedAtLogin.ActiveAwakeningLevels) != 1 || character.ObservedAtLogin.ActiveAwakeningLevels[0] != 5 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.BondStageFlags) != 2 || !character.BondStageFlags[0] || character.BondStageFlags[1] || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
 		t.Fatalf("new character data was not preserved: %#v", character)
 	}
 	if character.Stats.Attack == nil || *character.Stats.Attack != attack || character.Stats.Defense == nil || *character.Stats.Defense != defense || character.Stats.CritDamage == nil || *character.Stats.CritDamage != critDamage || character.Stats.PanelBase == nil || character.Stats.PanelBase.Attack != 1230 || character.Stats.Source != "unreal_attribute_set_and_equipment" {

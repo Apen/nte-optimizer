@@ -28,8 +28,7 @@ November audit as separate scoped commits:
 - unresolved imported stat tiers and target data fail explicitly;
 - detailed builds are validated and saved in one atomic replacement;
 - bonus overviews use imported selection without reconstructing the roster;
-- character views retain source-agnostic residuals and no longer compute unused
-  cross-character furniture suggestions;
+- character views keep observed panel values separate from calculated stats;
 - one operation reads one account snapshot; immutable service catalogs are
   reused until a new service is created for a new installed data generation;
 - character reconstruction does not require a ranking strategy for that character;

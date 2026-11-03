@@ -355,7 +355,6 @@
     "current_stats": "Current stats",
     "current_stats_description": "Calculated from the imported character, Arc and equipped gear.",
     "observed_panel_stats_description": "Final values read from the latest in-game character panel.",
-    "housing_modifier_evidence": "Matched on {matching} of {observed} loaded characters",
     "damage_description": "ATK, damage bonuses, CRIT, cycle intensity and permanent awakenings are included.",
     "damage_section": "FINAL DAMAGE",
     "damage_title": "Full actions, DoT and reactions",

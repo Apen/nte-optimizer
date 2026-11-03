@@ -2,8 +2,6 @@ package app
 
 import (
 	"fmt"
-	"math"
-	"sort"
 
 	"nte-optimizer/internal/apperrors"
 	"nte-optimizer/internal/decoded"
@@ -14,23 +12,13 @@ import (
 // CharacterGameState is a read-only snapshot of what the latest account import
 // reported as equipped in game. It is deliberately separate from LocalBuild.
 type CharacterGameState struct {
-	Character            decoded.Character       `json:"character"`
-	ObservedPanelStats   *decoded.CharacterStats `json:"observed_panel_stats,omitempty"`
-	PossiblePanelBonuses []PanelBonus            `json:"possible_panel_bonuses,omitempty"`
-	Weapon               *EquipmentCatalogArc    `json:"weapon,omitempty"`
-	Cartridges           []nte.Cartridge         `json:"cartridges"`
-	Modules              []nte.Module            `json:"modules"`
-	Stats                *optimizer.StatSummary  `json:"stats,omitempty"`
-	ImportedAt           string                  `json:"imported_at,omitempty"`
-}
-
-// PanelBonus is a positive difference between the scanned panel and the
-// optimizer's current model. It is diagnostic only; the source is unknown.
-type PanelBonus struct {
-	PropertyID      string  `json:"property_id"`
-	ObservedValue   float64 `json:"observed_value"`
-	CalculatedValue float64 `json:"calculated_value"`
-	Difference      float64 `json:"difference"`
+	Character          decoded.Character       `json:"character"`
+	ObservedPanelStats *decoded.CharacterStats `json:"observed_panel_stats,omitempty"`
+	Weapon             *EquipmentCatalogArc    `json:"weapon,omitempty"`
+	Cartridges         []nte.Cartridge         `json:"cartridges"`
+	Modules            []nte.Module            `json:"modules"`
+	Stats              *optimizer.StatSummary  `json:"stats,omitempty"`
+	ImportedAt         string                  `json:"imported_at,omitempty"`
 }
 
 func LoadCharacterGameState(projectDir, dataDir string, characterID int, language string) (CharacterGameState, error) {
@@ -102,38 +90,7 @@ func LoadCharacterGameState(projectDir, dataDir string, characterID int, languag
 		return CharacterGameState{}, err
 	}
 	result.Stats = stats
-	result.PossiblePanelBonuses = inferPossiblePanelBonuses(result.ObservedPanelStats, stats)
 	return result, nil
-}
-
-func inferPossiblePanelBonuses(panel *decoded.CharacterStats, calculated *optimizer.StatSummary) []PanelBonus {
-	if panel == nil {
-		return nil
-	}
-	bonuses := []PanelBonus{}
-	for _, row := range compareObservedPanel(*panel, calculated) {
-		difference := row.Difference
-		switch row.PropertyID {
-		case "HPFinal", "AtkFinal", "DefFinal", "Endurance", "MagBase", "UnbalIntensityBase":
-			difference = math.Round(difference)
-		default:
-			difference = math.Round(difference*10000) / 10000
-			if difference <= .001 {
-				continue
-			}
-		}
-		if difference > 0 {
-			bonuses = append(bonuses, PanelBonus{PropertyID: row.PropertyID, ObservedValue: row.Observed, CalculatedValue: row.Calculated, Difference: difference})
-		}
-	}
-	sort.Slice(bonuses, func(i, j int) bool { return bonuses[i].PropertyID < bonuses[j].PropertyID })
-	return bonuses
-}
-func valueOrZero(value *float64) float64 {
-	if value == nil {
-		return 0
-	}
-	return *value
 }
 
 func hasObservedPanelStats(stats decoded.CharacterStats) bool {

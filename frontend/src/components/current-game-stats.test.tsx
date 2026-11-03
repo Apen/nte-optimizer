@@ -12,7 +12,6 @@ const catalog: LocalizationCatalog = {
     current_stats: 'Current stats',
     current_stats_description: 'Final calculated stats',
     observed_panel_stats_description: 'Final values read from the in-game panel',
-    housing_modifier_evidence: 'Matched on {matching} of {observed} loaded characters',
     max_effects_value: 'Max effects: {value}',
   },
   stats: {

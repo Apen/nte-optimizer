@@ -202,7 +202,7 @@ func readCharacters(dir string) ([]Character, map[string]EquipmentPlacement, []W
 			NetID: source.Identity.NetID, CharacterID: source.Identity.CharacterID,
 			Name: source.Identity.Name, Codename: source.Identity.Codename,
 			Level: source.Progression.Level, BreakthroughLevel: source.Progression.BreakthroughLevel,
-			AwakenLevel: source.Progression.AwakenLevel, RecordedAwakeningLevels: source.Progression.RecordedAwakeningLevels, PassiveReferences: source.Progression.PassiveReferences, BondLevel: source.Progression.BondLevel, ReportedAwakenLevel: source.Progression.AwakenLevel, Skills: source.Progression.Skills,
+			AwakenLevel: source.Progression.AwakenLevel, RecordedAwakeningLevels: source.Progression.RecordedAwakeningLevels, PassiveReferences: source.Progression.PassiveReferences, BondLevel: source.Progression.BondLevel, Skills: source.Progression.Skills,
 			Stats: source.Stats, SavedState: source.SavedState, ObservedAtLogin: source.ObservedAtLogin,
 			BondStageFlags: source.Progression.BondStageFlags,
 		}

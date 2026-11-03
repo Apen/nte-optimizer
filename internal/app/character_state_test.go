@@ -6,7 +6,6 @@ import (
 
 	"nte-optimizer/internal/decoded"
 	"nte-optimizer/internal/nte"
-	"nte-optimizer/internal/optimizer"
 )
 
 func TestLoadCurrentCharacterStatsIncludesCharacterPanel(t *testing.T) {
@@ -82,86 +81,5 @@ func TestLoadCharacterGameStateExposesObservedPanelSeparatelyFromCalculatedStats
 	}
 	if got.Stats.Sources["account_bond"]["CritBase"] != .04 {
 		t.Fatalf("scanned bond bonus was not applied exactly once: %#v", got.Stats.Sources["account_bond"])
-	}
-}
-
-func TestLoadCharacterGameStatePreservesSourceAgnosticResiduals(t *testing.T) {
-	projectDir := t.TempDir()
-	if err := ensureWorkspace(projectDir); err != nil {
-		t.Fatal(err)
-	}
-	dataDir := filepath.Join("..", "..", "data")
-	state := decoded.State{Characters: []decoded.Character{
-		{CharacterID: 1004, Level: 80, BreakthroughLevel: 6, ObservedAtLogin: decoded.ObservedLoginState{Loaded: true}},
-		{CharacterID: 1036, Level: 80, BreakthroughLevel: 6, ObservedAtLogin: decoded.ObservedLoginState{Loaded: true}},
-	}}
-	for index := range state.Characters {
-		character := state.Characters[index]
-		stats, err := loadCurrentCharacterStats(dataDir, &state, character, nil, nil, "en")
-		if err != nil {
-			t.Fatal(err)
-		}
-		attack := stats.Derived["AtkFinal"] + 4
-		defense := stats.Derived["DefFinal"] + 9
-		critDamage := stats.Derived["CritDamageBase"] + .024
-		state.Characters[index].Stats = decoded.CharacterStats{Attack: &attack, Defense: &defense, CritDamage: &critDamage, Source: "synthetic_panel"}
-	}
-	if err := writeAccountData(projectDir, nte.Inventory{}, state); err != nil {
-		t.Fatal(err)
-	}
-
-	got, err := LoadCharacterGameState(projectDir, dataDir, 1004, "en")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(got.PossiblePanelBonuses) != 3 {
-		t.Fatalf("possible panel bonuses = %#v, want three source-agnostic residuals", got.PossiblePanelBonuses)
-	}
-	wantBonuses := map[string]float64{"AtkFinal": 4, "DefFinal": 9, "CritDamageBase": .024}
-	for _, bonus := range got.PossiblePanelBonuses {
-		if want, ok := wantBonuses[bonus.PropertyID]; !ok || bonus.Difference != want {
-			t.Errorf("unexpected panel bonus %#v, want %s +%v", bonus, bonus.PropertyID, want)
-			continue
-		}
-		delete(wantBonuses, bonus.PropertyID)
-	}
-	if len(wantBonuses) != 0 {
-		t.Errorf("missing panel bonus residuals: %#v", wantBonuses)
-	}
-	if got.Stats == nil || got.Stats.Derived["AtkFinal"] == *state.Characters[0].Stats.Attack {
-		t.Fatalf("diagnostic candidate changed calculated stats: %#v", got.Stats)
-	}
-	if _, applied := got.Stats.Sources["housing"]; applied {
-		t.Fatalf("inferred furniture effects were applied to optimizer sources: %#v", got.Stats.Sources["housing"])
-	}
-}
-
-func TestInferPossiblePanelBonusesReportsPositiveResidualsWithoutRoundingNoise(t *testing.T) {
-	attack, defense, critRate, critDamage := 1748.125, 1005.0, .73, 2.304
-	charge, cycle, universal, elemental := 1.12, 172.0, .2, .1
-	panel := &decoded.CharacterStats{
-		MaxHP: 23471.475, Attack: &attack, Defense: &defense, CritRate: &critRate,
-		CritDamage: &critDamage, ChargeEfficiency: &charge, CycleIntensity: &cycle,
-		UniversalDMGBonus: &universal, ElementalDMGBonus: &elemental,
-	}
-	calculated := &optimizer.StatSummary{Derived: map[string]float64{
-		"HPFinal": 23471, "AtkFinal": 1744, "DefFinal": 996,
-		"CritBase": .73, "CritDamageBase": 2.28, "ChargeGetEfficiencyBase": 1.12,
-		"MagBase": 72, "DamageUpGeneralBase": .2, "ElementalDMGBonus": .1,
-	}}
-	got := inferPossiblePanelBonuses(panel, calculated)
-	want := map[string]float64{"AtkFinal": 4, "CritDamageBase": .024, "DefFinal": 9, "MagBase": 100}
-	if len(got) != len(want) {
-		t.Fatalf("panel bonuses = %#v, want %d residuals", got, len(want))
-	}
-	for _, bonus := range got {
-		if expected, ok := want[bonus.PropertyID]; !ok || bonus.Difference != expected {
-			t.Errorf("panel bonus = %#v, want %s +%v", bonus, bonus.PropertyID, expected)
-			continue
-		}
-		delete(want, bonus.PropertyID)
-	}
-	if len(want) != 0 {
-		t.Errorf("missing panel bonus differences: %#v", want)
 	}
 }
