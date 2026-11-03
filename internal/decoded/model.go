@@ -103,11 +103,9 @@ type ActiveWeaponBuff struct {
 	Star   int    `json:"star"`
 }
 type ObservedLoginState struct {
-	Loaded                bool                  `json:"loaded"`
-	ActiveAwakeningLevels []int                 `json:"activeAwakeningLevels,omitempty"`
-	ActiveAwakeningBuffs  []string              `json:"activeAwakeningBuffs,omitempty"`
-	ActiveEquipmentBuffs  []ActiveEquipmentBuff `json:"activeEquipmentBuffs,omitempty"`
-	ActiveWeaponBuffs     []ActiveWeaponBuff    `json:"activeWeaponBuffs,omitempty"`
+	Loaded               bool                  `json:"loaded"`
+	ActiveEquipmentBuffs []ActiveEquipmentBuff `json:"activeEquipmentBuffs,omitempty"`
+	ActiveWeaponBuffs    []ActiveWeaponBuff    `json:"activeWeaponBuffs,omitempty"`
 }
 type Character struct {
 	NetID                   NetID               `json:"netId"`

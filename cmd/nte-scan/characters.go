@@ -20,27 +20,25 @@ type characterCatalog struct {
 	Characters map[string]characterDefinition `json:"characters"`
 }
 type characterItem struct {
-	BondStageFlags                []bool                  `json:"bondStageFlags,omitempty"`
-	NetID                         itemNetID               `json:"netId"`
-	CharacterID                   uint32                  `json:"characterId"`
-	Name                          string                  `json:"name"`
-	Codename                      string                  `json:"codename"`
-	Level                         int32                   `json:"level"`
-	BreakthroughLevel             int32                   `json:"breakthroughLevel"`
-	AwakenLevel                   int32                   `json:"awakenLevel"`
-	RecordedAwakeningLevels       []int                   `json:"recordedAwakeningLevels,omitempty"`
-	PassiveReferences             []string                `json:"passiveReferences,omitempty"`
-	BondLevel                     *int                    `json:"bondLevel,omitempty"`
-	ForkNetID                     *itemNetID              `json:"forkNetId,omitempty"`
-	SkillLevels                   []characterSkillLevel   `json:"skillLevels"`
-	MaxHP                         float32                 `json:"maxHp"`
-	SavedHealthRatio              float32                 `json:"savedHealthRatio"`
-	PanelStats                    *characterPanelStats    `json:"panelStats,omitempty"`
-	ObservedLoadedAtLogin         bool                    `json:"observedLoadedAtLogin,omitempty"`
-	ObservedActiveAwakeningLevels []int32                 `json:"observedActiveAwakeningLevels,omitempty"`
-	ObservedActiveAwakeningBuffs  []string                `json:"observedActiveAwakeningBuffs,omitempty"`
-	ObservedActiveEquipmentBuffs  []observedEquipmentBuff `json:"observedActiveEquipmentBuffs,omitempty"`
-	ObservedActiveWeaponBuffs     []observedWeaponBuff    `json:"observedActiveWeaponBuffs,omitempty"`
+	BondStageFlags               []bool                  `json:"bondStageFlags,omitempty"`
+	NetID                        itemNetID               `json:"netId"`
+	CharacterID                  uint32                  `json:"characterId"`
+	Name                         string                  `json:"name"`
+	Codename                     string                  `json:"codename"`
+	Level                        int32                   `json:"level"`
+	BreakthroughLevel            int32                   `json:"breakthroughLevel"`
+	AwakenLevel                  int32                   `json:"awakenLevel"`
+	RecordedAwakeningLevels      []int                   `json:"recordedAwakeningLevels,omitempty"`
+	PassiveReferences            []string                `json:"passiveReferences,omitempty"`
+	BondLevel                    *int                    `json:"bondLevel,omitempty"`
+	ForkNetID                    *itemNetID              `json:"forkNetId,omitempty"`
+	SkillLevels                  []characterSkillLevel   `json:"skillLevels"`
+	MaxHP                        float32                 `json:"maxHp"`
+	SavedHealthRatio             float32                 `json:"savedHealthRatio"`
+	PanelStats                   *characterPanelStats    `json:"panelStats,omitempty"`
+	ObservedLoadedAtLogin        bool                    `json:"observedLoadedAtLogin,omitempty"`
+	ObservedActiveEquipmentBuffs []observedEquipmentBuff `json:"observedActiveEquipmentBuffs,omitempty"`
+	ObservedActiveWeaponBuffs    []observedWeaponBuff    `json:"observedActiveWeaponBuffs,omitempty"`
 }
 
 type characterPanelStats struct {
@@ -241,16 +239,11 @@ type observedWeaponBuff struct {
 	Star   int    `json:"star"`
 }
 
-var activeAwakeningExport = regexp.MustCompile(`/Ability_(\d{3})_[^/]+/Upgrade/(?:Level([1-6])/|Buff_[^/]+_Level([1-6])$)`)
 var loadedCharacterExport = regexp.MustCompile(`(?i)/Character/Player/player_(\d{3})_[^/]+$`)
 var activeEquipmentBuffExport = regexp.MustCompile(`/Equipment/Equipment_(\d+)/Buff_Equipment_([^/]+)$`)
 var activeWeaponBuffExport = regexp.MustCompile(`/Abilities/(?:Buff/)?Fork/(Fork_[^/]+)/(Buff_Fork_[^/]+_(?:Lv(\d+)|(\d+)_([0-9]+)))$`)
 
-// attachObservedActiveAwakenings associates exported upgrade assets with their
-// character. Asset references alone do not establish runtime activation.
-func attachObservedActiveAwakenings(characters []characterItem, exportNames []string, catalog *equipmentCatalog) {
-	bySuffix := make(map[uint32]map[int32]bool)
-	awakeningBuffs := make(map[uint32][]string)
+func attachObservedLoginState(characters []characterItem, exportNames []string, catalog *equipmentCatalog) {
 	loaded := make(map[uint32]bool)
 	equipmentBuffs := make(map[uint32][]observedEquipmentBuff)
 	weaponBuffs := make(map[uint32][]observedWeaponBuff)
@@ -294,46 +287,12 @@ func attachObservedActiveAwakenings(characters []characterItem, exportNames []st
 				}
 			}
 		}
-		match := activeAwakeningExport.FindStringSubmatch(name)
-		if match == nil {
-			continue
-		}
-		id, err := strconv.ParseUint(match[1], 10, 32)
-		if err != nil {
-			continue
-		}
-		level, err := strconv.ParseInt(match[2]+match[3], 10, 32)
-		if err != nil {
-			continue
-		}
-		if bySuffix[uint32(id)] == nil {
-			bySuffix[uint32(id)] = make(map[int32]bool)
-		}
-		suffix := uint32(id)
-		bySuffix[suffix][int32(level)] = true
-		buffName := name[strings.LastIndex(name, "/")+1:]
-		seenBuff := false
-		for _, existing := range awakeningBuffs[suffix] {
-			seenBuff = seenBuff || existing == buffName
-		}
-		if !seenBuff {
-			awakeningBuffs[suffix] = append(awakeningBuffs[suffix], buffName)
-		}
 	}
 	for i := range characters {
 		suffix := characters[i].CharacterID % 1000
 		characters[i].ObservedLoadedAtLogin = loaded[suffix]
-		characters[i].ObservedActiveAwakeningBuffs = awakeningBuffs[suffix]
-		sort.Strings(characters[i].ObservedActiveAwakeningBuffs)
 		characters[i].ObservedActiveEquipmentBuffs = equipmentBuffs[suffix]
 		characters[i].ObservedActiveWeaponBuffs = weaponBuffs[suffix]
-		levels := bySuffix[suffix]
-		for level := range levels {
-			characters[i].ObservedActiveAwakeningLevels = append(characters[i].ObservedActiveAwakeningLevels, level)
-		}
-		sort.Slice(characters[i].ObservedActiveAwakeningLevels, func(a, b int) bool {
-			return characters[i].ObservedActiveAwakeningLevels[a] < characters[i].ObservedActiveAwakeningLevels[b]
-		})
 	}
 }
 

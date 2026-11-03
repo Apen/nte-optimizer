@@ -81,11 +81,9 @@ type characterEquipment struct {
 	Modules []inventoryItem `json:"modules"`
 }
 type characterObservedAtLogin struct {
-	Loaded                bool                    `json:"loaded"`
-	ActiveAwakeningLevels []int32                 `json:"activeAwakeningLevels,omitempty"`
-	ActiveAwakeningBuffs  []string                `json:"activeAwakeningBuffs,omitempty"`
-	ActiveEquipmentBuffs  []observedEquipmentBuff `json:"activeEquipmentBuffs,omitempty"`
-	ActiveWeaponBuffs     []observedWeaponBuff    `json:"activeWeaponBuffs,omitempty"`
+	Loaded               bool                    `json:"loaded"`
+	ActiveEquipmentBuffs []observedEquipmentBuff `json:"activeEquipmentBuffs,omitempty"`
+	ActiveWeaponBuffs    []observedWeaponBuff    `json:"activeWeaponBuffs,omitempty"`
 }
 type activeCharacterEquipment struct {
 	CharacterID   uint32          `json:"characterId"`
@@ -132,7 +130,7 @@ func exportCharacters(characters []characterItem, equipmentByCharacter map[uint3
 			Stats:           stats,
 			SavedState:      characterSavedState{HealthRatio: character.SavedHealthRatio},
 			Equipment:       equipment,
-			ObservedAtLogin: characterObservedAtLogin{Loaded: character.ObservedLoadedAtLogin, ActiveAwakeningLevels: character.ObservedActiveAwakeningLevels, ActiveAwakeningBuffs: character.ObservedActiveAwakeningBuffs, ActiveEquipmentBuffs: character.ObservedActiveEquipmentBuffs, ActiveWeaponBuffs: character.ObservedActiveWeaponBuffs},
+			ObservedAtLogin: characterObservedAtLogin{Loaded: character.ObservedLoadedAtLogin, ActiveEquipmentBuffs: character.ObservedActiveEquipmentBuffs, ActiveWeaponBuffs: character.ObservedActiveWeaponBuffs},
 		})
 	}
 	return out

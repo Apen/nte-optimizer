@@ -47,6 +47,35 @@ func TestImportDirectoryBuildsInventoryAndLinksEquipment(t *testing.T) {
 	}
 }
 
+func TestReadCharactersAcceptsLegacyAwakeningObservations(t *testing.T) {
+	for _, version := range []int{2, 3} {
+		t.Run(fmt.Sprint(version), func(t *testing.T) {
+			dir := t.TempDir()
+			writeFixture(t, dir, "character.json", json.RawMessage(fmt.Sprintf(`{
+				"format": "nte-scan-characters",
+				"formatVersion": %d,
+				"characters": [{
+					"identity": {"characterId": 1036},
+					"progression": {"awakenLevel": 1},
+					"observedAtLogin": {
+						"loaded": true,
+						"activeAwakeningLevels": [5],
+						"activeAwakeningBuffs": ["Buff_Zankou_Level5"]
+					}
+				}]
+			}`, version)))
+			characters, _, _, err := readCharacters(dir)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if len(characters) != 1 || characters[0].AwakenLevel != 1 ||
+				len(characters[0].RecordedAwakeningLevels) != 0 || !characters[0].ObservedAtLogin.Loaded {
+				t.Fatalf("unexpected imported character state: %+v", characters)
+			}
+		})
+	}
+}
+
 func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	dir := t.TempDir()
 	characterNet := NetID{Slot: 10, Serial: 20}
@@ -98,7 +127,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	}
 	source.Equipment.Weapon = &Weapon{ID: weaponNet, ForkID: "fork_DemonBlade", Level: 80, Star: 1}
 	source.Equipment.Modules = []Equipment{{ID: moduleNet, EquippedPlacement: &EquipmentPlacement{Row: 2, Column: 3}}}
-	source.ObservedAtLogin = ObservedLoginState{Loaded: true, ActiveAwakeningLevels: []int{5}}
+	source.ObservedAtLogin = ObservedLoginState{Loaded: true}
 	writeFixture(t, dir, "character.json", export)
 	writeFixture(t, dir, "weapons.json", []Weapon{{ID: weaponNet, ForkID: "fork_DemonBlade", Level: 80, Star: 1}})
 	writeFixture(t, dir, "equipment.json", []Equipment{{ID: moduleNet, ItemID: "cell3_style6_1_Orange", Kind: "module", Level: 20, MainStats: []RawStat{{Property: "AtkAdd", Value: 16}}, CharacterNetID: &characterNet}})
@@ -115,7 +144,7 @@ func TestImportDirectorySupportsVersionThreeCharacterExport(t *testing.T) {
 	if len(character.RecordedAwakeningLevels) != 1 || character.RecordedAwakeningLevels[0] != 5 {
 		t.Fatalf("recorded awakening levels were not preserved: %v", character.RecordedAwakeningLevels)
 	}
-	if character.AwakenLevel != 1 || len(character.ObservedAtLogin.ActiveAwakeningLevels) != 1 || character.ObservedAtLogin.ActiveAwakeningLevels[0] != 5 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.BondStageFlags) != 2 || !character.BondStageFlags[0] || character.BondStageFlags[1] || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
+	if character.AwakenLevel != 1 || character.BondLevel == nil || *character.BondLevel != 10 || len(character.BondStageFlags) != 2 || !character.BondStageFlags[0] || character.BondStageFlags[1] || len(character.Skills) != 1 || !character.ObservedAtLogin.Loaded || len(got.State.Resources) != 1 {
 		t.Fatalf("new character data was not preserved: %#v", character)
 	}
 	if character.Stats.Attack == nil || *character.Stats.Attack != attack || character.Stats.Defense == nil || *character.Stats.Defense != defense || character.Stats.CritDamage == nil || *character.Stats.CritDamage != critDamage || character.Stats.PanelBase == nil || character.Stats.PanelBase.Attack != 1230 || character.Stats.Source != "unreal_attribute_set_and_equipment" {

@@ -175,7 +175,7 @@ func decodeCharacterDomain(ctx context.Context, report *udpReport, rawPayloads [
 	sort.Slice(report.Characters, func(i, j int) bool { return report.Characters[i].CharacterID < report.Characters[j].CharacterID })
 	attachBondLevels(report.Characters, completed)
 	equipmentCatalog, _ := loadEquipmentCatalog(equipmentCatalogPath)
-	attachObservedActiveAwakenings(report.Characters, report.ExportNames, equipmentCatalog)
+	attachObservedLoginState(report.Characters, report.ExportNames, equipmentCatalog)
 	if err := attachCharacterPanels(ctx, report.Characters, completed); err != nil {
 		return err
 	}

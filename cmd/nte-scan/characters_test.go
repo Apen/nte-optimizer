@@ -19,27 +19,15 @@ func TestAttachObservedCharacterState(t *testing.T) {
 		"/Game/Blueprints/Character/Player/player_036_zankou",
 		"/Game/Blueprints/Abilities/Buff/Equipment/Equipment_006/Buff_Equipment_Incantation_4",
 		"/Game/Blueprints/Abilities/Buff/Fork/Fork_DemonBlade/Buff_Fork_DemonBlade_Lv1",
-		"/Game/Blueprints/Abilities/Player/Ability_036_Zankou/Upgrade/Level5/Buff_Zankou_Level5",
-		"/Game/Blueprints/Abilities/Player/Ability_036_Zankou/Upgrade/Level5/Buff_Zankou_Lv5UnbalUp",
-		"/Game/Blueprints/Abilities/Player/Ability_003_Sagiri/Upgrade/Level4/Buff_Sagiri003_Level4",
 	}
 
-	attachObservedActiveAwakenings(characters, exports, nil)
+	attachObservedLoginState(characters, exports, nil)
 
 	if !characters[0].ObservedLoadedAtLogin || !characters[1].ObservedLoadedAtLogin {
 		t.Fatalf("expected Sagiri and Zankou to be observed as loaded: %#v", characters)
 	}
 	if characters[2].ObservedLoadedAtLogin {
 		t.Fatalf("Oneiroi must not be inferred without a player export")
-	}
-	if !reflect.DeepEqual(characters[0].ObservedActiveAwakeningLevels, []int32{4}) {
-		t.Fatalf("unexpected Sagiri awakening effects: %v", characters[0].ObservedActiveAwakeningLevels)
-	}
-	if !reflect.DeepEqual(characters[1].ObservedActiveAwakeningLevels, []int32{5}) {
-		t.Fatalf("duplicate exports must collapse to one effect: %v", characters[1].ObservedActiveAwakeningLevels)
-	}
-	if !reflect.DeepEqual(characters[1].ObservedActiveAwakeningBuffs, []string{"Buff_Zankou_Level5", "Buff_Zankou_Lv5UnbalUp"}) {
-		t.Fatalf("unexpected Zankou awakening buffs: %v", characters[1].ObservedActiveAwakeningBuffs)
 	}
 	if !reflect.DeepEqual(characters[0].ObservedActiveEquipmentBuffs, []observedEquipmentBuff{{EquipmentID: 15, Buff: "GetEfficiency2_4"}}) {
 		t.Fatalf("unexpected Sagiri equipment buffs: %v", characters[0].ObservedActiveEquipmentBuffs)
@@ -52,35 +40,6 @@ func TestAttachObservedCharacterState(t *testing.T) {
 	}
 	if !reflect.DeepEqual(characters[1].ObservedActiveWeaponBuffs, []observedWeaponBuff{{ForkID: "fork_demonblade", Buff: "Buff_Fork_DemonBlade_Lv1", Star: 1}}) {
 		t.Fatalf("unexpected Zankou weapon buffs: %v", characters[1].ObservedActiveWeaponBuffs)
-	}
-}
-
-func TestObserveMultipleAwakeningUpgradeAssets(t *testing.T) {
-	characters := []characterItem{{CharacterID: 1057, AwakenLevel: 1}, {CharacterID: 1051}, {CharacterID: 1036}}
-	exports := []string{
-		"/Game/Blueprints/Abilities/Player/Ability_057_Akane/Upgrade/Buff_Akane057_Level3",
-		"/Game/Blueprints/Abilities/Player/Ability_057_Akane/PassiveEffect/Buff_Akane057_Level2",
-		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level6/Buff_Female051_Level6",
-		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level5/Buff_Female051_Level5",
-		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level4/Buff_Female051_Level4",
-		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level3/Buff_Female051_Level3",
-		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level2/Buff_Female051_Level2",
-		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/Level1/Buff_Female051_Level1",
-		"/Game/Blueprints/Abilities/Player/Ability_051_Female/Upgrade/LevelExtra/Buff_Female051_LevelExtra",
-	}
-
-	attachObservedActiveAwakenings(characters, exports, nil)
-
-	akane := characters[0]
-	if akane.AwakenLevel != 1 || !reflect.DeepEqual(akane.ObservedActiveAwakeningLevels, []int32{3}) ||
-		!reflect.DeepEqual(akane.ObservedActiveAwakeningBuffs, []string{"Buff_Akane057_Level3"}) {
-		t.Fatalf("unexpected Akane progression or upgrade observation: %+v", akane)
-	}
-	if got := characters[1].ObservedActiveAwakeningLevels; !reflect.DeepEqual(got, []int32{1, 2, 3, 4, 5, 6}) {
-		t.Fatalf("expected all six observed levels, got %v", got)
-	}
-	if got := characters[2].ObservedActiveAwakeningLevels; len(got) != 0 {
-		t.Fatalf("unexpected upgrade observations for Zankou: %v", got)
 	}
 }
 
