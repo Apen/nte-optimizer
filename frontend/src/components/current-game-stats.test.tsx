@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import { applyLocalization } from '../i18n'
 import { PresentationProvider } from '../presentation'
-import type { LocalizationCatalog, PanelBonus, StatSummary } from '../types'
+import type { LocalizationCatalog, StatSummary } from '../types'
 import { CurrentGameStats } from './current-game-stats'
 
 const catalog: LocalizationCatalog = {
@@ -12,9 +12,6 @@ const catalog: LocalizationCatalog = {
     current_stats: 'Current stats',
     current_stats_description: 'Final calculated stats',
     observed_panel_stats_description: 'Final values read from the in-game panel',
-    possible_panel_bonuses: 'Possible additional in-game bonuses',
-    possible_panel_bonuses_note: 'Positive differences between the scanned panel and the optimizer model. Their source is unknown; these values are diagnostic only and are not added to optimizer calculations.',
-    panel_bonus_comparison: 'Panel: {panel} · Model: {calculated}',
     housing_modifier_evidence: 'Matched on {matching} of {observed} loaded characters',
     max_effects_value: 'Max effects: {value}',
   },
@@ -94,26 +91,5 @@ describe('CurrentGameStats', () => {
     expect(screen.queryByText('Base ATK')).not.toBeInTheDocument()
     expect(screen.queryByText('1,230')).not.toBeInTheDocument()
     expect(screen.queryByText('Stats are estimated: some account bonuses or temporary effects are not available in imported data.')).not.toBeInTheDocument()
-  })
-
-  it('shows positive panel residuals without requiring a source attribution', () => {
-    const bonuses: PanelBonus[] = [
-      { property_id: 'AtkFinal', observed_value: 1748.125, calculated_value: 1744, difference: 4 },
-      { property_id: 'CritDamageBase', observed_value: 2.304, calculated_value: 2.28, difference: .024 },
-      { property_id: 'MagBase', observed_value: 172, calculated_value: 72, difference: 100 },
-    ]
-    render(<PresentationProvider catalog={catalog}><CurrentGameStats
-      observedPanelStats={{ attack: 1748.125, critDamage: 2.304, cycleIntensity: 172 }}
-      calculatedStats={stats}
-      possiblePanelBonuses={bonuses}
-    /></PresentationProvider>)
-
-    expect(screen.getByText('Possible additional in-game bonuses')).toBeInTheDocument()
-    expect(screen.getByText('Positive differences between the scanned panel and the optimizer model. Their source is unknown; these values are diagnostic only and are not added to optimizer calculations.')).toBeInTheDocument()
-    expect(screen.getByText('+4')).toBeInTheDocument()
-    expect(screen.getByText('+2.4 %')).toBeInTheDocument()
-    expect(screen.getByText('+100')).toBeInTheDocument()
-    expect(screen.getByText('Panel: 1,748 · Model: 1,744')).toBeInTheDocument()
-    expect(screen.queryByText('Possible shared housing modifiers')).not.toBeInTheDocument()
   })
 })

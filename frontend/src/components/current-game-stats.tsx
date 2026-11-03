@@ -1,7 +1,7 @@
 import { currentIntlLocale, t } from '../i18n'
 import { formatStat } from '../lib/format'
 import { usePresentation } from '../presentation'
-import type { ObservedPanelStats, PanelBonus, StatSummary } from '../types'
+import type { ObservedPanelStats, StatSummary } from '../types'
 import { Card, CardContent, CardHeader } from './ui/card'
 
 // These inputs are already represented by the final panel values below.
@@ -16,11 +16,9 @@ const roundedPanelStats = new Set(['HPFinal', 'AtkFinal', 'DefFinal', 'Endurance
 export function CurrentGameStats({
   observedPanelStats,
   calculatedStats,
-  possiblePanelBonuses,
 }: {
   observedPanelStats?: ObservedPanelStats
   calculatedStats?: StatSummary
-  possiblePanelBonuses?: PanelBonus[]
 }) {
   const { stats: labels } = usePresentation()
   if (!observedPanelStats && !calculatedStats) {
@@ -50,9 +48,6 @@ export function CurrentGameStats({
     .filter(([property, value]) => Number.isFinite(value) && !panelStatComponents.has(property))
   const entries: [string, number][] = (observedPanelStats ? observedEntries : calculatedEntries)
     .sort(([left], [right]) => (labels[left] || left).localeCompare(labels[right] || right, currentIntlLocale()))
-  const formatPanelValue = (property: string, value: number) => roundedPanelStats.has(property)
-    ? Math.round(value).toLocaleString(currentIntlLocale())
-    : formatStat(property, value)
 
   return <Card>
     <CardHeader>
@@ -68,21 +63,6 @@ export function CurrentGameStats({
           <strong className="block text-lg tabular-nums text-slate-100">{roundedPanelStats.has(key) ? Math.round(value).toLocaleString(currentIntlLocale()) : formatStat(key, value)}</strong>
         </div>)}
       </div>
-      {possiblePanelBonuses && possiblePanelBonuses.length > 0 && <aside className="mt-4 rounded-lg border border-amber-900/60 bg-amber-950/20 p-3">
-        <h3 className="text-sm font-semibold text-amber-200">{t('possible_panel_bonuses')}</h3>
-        <p className="mt-1 text-xs text-amber-100/80">{t('possible_panel_bonuses_note')}</p>
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-          {possiblePanelBonuses.map(effect => <li className="rounded-md border border-amber-900/40 bg-slate-950/40 px-3 py-2 text-sm" key={effect.property_id}>
-            <strong>{labels[effect.property_id] || effect.property_id}</strong>
-            <span className="ml-2 tabular-nums">+{formatStat(effect.property_id, effect.difference)}</span>
-            <small className="mt-1 block text-xs text-slate-400">{t('panel_bonus_comparison', {
-              panel: formatPanelValue(effect.property_id, effect.observed_value),
-              calculated: formatPanelValue(effect.property_id, effect.calculated_value),
-            })}</small>
-          </li>)}
-        </ul>
-      </aside>}
-
     </CardContent>
   </Card>
 }
