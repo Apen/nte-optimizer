@@ -30,6 +30,14 @@ type cartridgePool struct {
 	excludedEquipped int
 }
 
+func (s OptimizerService) protectOtherCharactersGear() bool {
+	return s.WeightOverrides != nil && s.WeightOverrides.ExcludeEquipped
+}
+
+func (s OptimizerService) excludesEquipped(ownerID, characterID int, includeEquipped bool) bool {
+	return ownerID != 0 && ownerID != characterID && (s.protectOtherCharactersGear() || (!includeEquipped && characterID != 0))
+}
+
 func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile scoring.Character, refs scoring.References, additional map[string][]nte.Stat, objectives []optimizer.ObjectiveGoal, requiredGeometry map[string]bool, includeEquipped bool) moduleCandidatePool {
 	pool := moduleCandidatePool{
 		eligible: make([]optimizer.Candidate, 0, len(modules)),
@@ -51,7 +59,7 @@ func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile 
 			pool.excludedEquipped++
 			continue
 		}
-		if !includeEquipped && module.EquippedCharacterID != 0 && profile.CharacterID != 0 && module.EquippedCharacterID != profile.CharacterID {
+		if s.excludesEquipped(module.EquippedCharacterID, profile.CharacterID, includeEquipped) {
 			pool.excludedEquipped++
 			continue
 		}
@@ -259,7 +267,7 @@ func (s OptimizerService) prepareCartridges(cartridges []nte.Cartridge, profile 
 			pool.excludedEquipped++
 			continue
 		}
-		if !includeEquipped && cartridge.EquippedCharacterID != 0 && profile.CharacterID != 0 && cartridge.EquippedCharacterID != profile.CharacterID {
+		if s.excludesEquipped(cartridge.EquippedCharacterID, profile.CharacterID, includeEquipped) {
 			pool.excludedEquipped++
 			continue
 		}

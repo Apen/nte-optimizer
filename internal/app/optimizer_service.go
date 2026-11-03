@@ -19,6 +19,7 @@ import (
 // OptimizerService is the UI-agnostic boundary shared by the CLI and Wails.
 // It returns data structures and never writes files or logs by itself.
 type WeightOverrides struct {
+	ExcludeEquipped            bool                         `json:"exclude_equipped,omitempty"`
 	TeamAllies                 []TeamAlly                   `json:"team_allies,omitempty"`
 	SimulateCartridgeMainStats bool                         `json:"simulate_cartridge_main_stats,omitempty"`
 	MainStats                  []string                     `json:"main_stats"`
@@ -442,7 +443,7 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 		arcWeapons: arcs.weapons, arcNotes: arcs.notes, arcAdditional: arcs.additional, characterNames: characterNames, buildTarget: buildTarget,
 		objectives: objectives, candidates: candidates, selected: selected, solution: execution.solution,
 		grid: catalogs.grids.Definitions[profile.GridID], timeoutSeconds: setup.timeoutSeconds, excludedEquipped: excludedEquipped,
-		includeEquipped: includeEquipped,
+		includeEquipped: includeEquipped && !s.protectOtherCharactersGear(),
 		phaseMilliseconds: map[string]int64{
 			"load_and_context": selectionStarted.Sub(started).Milliseconds(), "selection": selectionFinished.Sub(selectionStarted).Milliseconds(),
 			"evaluator_and_seed": searchStarted.Sub(selectionFinished).Milliseconds(), "search": execution.searchMS,

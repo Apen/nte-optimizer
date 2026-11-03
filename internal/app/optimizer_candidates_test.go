@@ -233,3 +233,29 @@ func TestGeometryModuleSlotsUsesPlayableCellsAndShapeSize(t *testing.T) {
 		t.Fatalf("unexpected geometry capacity: %#v", limits)
 	}
 }
+
+func TestEquipmentProtectionKeepsCurrentCharactersGear(t *testing.T) {
+	service := OptimizerService{WeightOverrides: &WeightOverrides{ExcludeEquipped: true, MainStats: []string{"CritBase"}}}
+	profile := scoring.Character{CharacterID: 1036}
+	modules := []nte.Module{
+		{LocalID: "active", EquippedCharacterID: 1036},
+		{LocalID: "other", EquippedCharacterID: 1004},
+		{LocalID: "free"},
+	}
+	pool := service.prepareModuleCandidates(modules, profile, scoring.References{}, nil, nil, nil, true)
+	if len(pool.eligible) != 2 || pool.eligible[0].Module.LocalID != "active" || pool.eligible[1].Module.LocalID != "free" || len(pool.current) != 1 || pool.excludedEquipped != 1 {
+		t.Fatalf("unexpected module pool: %+v", pool)
+	}
+	cartridges := []nte.Cartridge{
+		{LocalID: "active", EquippedCharacterID: 1036},
+		{LocalID: "other", EquippedCharacterID: 1004},
+		{LocalID: "free"},
+	}
+	for i := range cartridges {
+		cartridges[i].MainStats = []nte.Stat{{PropertyID: "CritBase", Value: .1}}
+	}
+	available, err := service.prepareCartridges(cartridges, profile, optimizer.SetCatalog{}, true, searchPlan{}, 1)
+	if err != nil || len(available.available) != 2 || available.available[0].LocalID != "active" || available.available[1].LocalID != "free" || available.excludedEquipped != 1 {
+		t.Fatalf("unexpected cartridge pool: %+v, %v", available, err)
+	}
+}

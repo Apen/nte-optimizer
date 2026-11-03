@@ -330,6 +330,8 @@
     "component_many": "composantes",
     "component_one": "composante",
     "configuration": "Configuration",
+    "exclude_equipped": "Protéger l’équipement des autres personnages",
+    "exclude_equipped_description": "Utilise les cartouches et modules libres ou déjà équipés sur le personnage courant.",
     "advanced_constraints": "Contraintes avancées",
     "strict_limits_description": "Minimums et maximums stricts",
     "active_constraints_count": "{count} actives",

@@ -330,6 +330,8 @@
     "component_many": "components",
     "component_one": "component",
     "configuration": "Configuration",
+    "exclude_equipped": "Keep other characters’ equipment",
+    "exclude_equipped_description": "Use free cartridges and modules or reuse those on the current character.",
     "advanced_constraints": "Advanced constraints",
     "strict_limits_description": "Strict minimums and maximums",
     "active_constraints_count": "{count} active",

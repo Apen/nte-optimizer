@@ -84,3 +84,23 @@ func TestNoArcSelectionRemovesCurrentlyEquippedArcStats(t *testing.T) {
 		t.Fatalf("no-Arc selection lost unrelated profile stats: %#v", stats)
 	}
 }
+
+func TestUnequippedOnlyAllowsEquippedArc(t *testing.T) {
+	service := OptimizerService{
+		DataDir:         filepath.Join("..", "..", "data"),
+		WeightOverrides: &WeightOverrides{ExcludeEquipped: true},
+	}
+	state := &decoded.State{Weapons: []decoded.Weapon{
+		{ID: decoded.NetID{Slot: 4, Serial: 1}, ForkID: "fork_DemonBlade", Level: 50, Star: 1},
+		{ID: decoded.NetID{Slot: 4, Serial: 2}, ForkID: "fork_DemonBlade", Level: 80, Star: 5, EquippedCharacterID: 1036},
+	}}
+	profile := scoring.Character{CharacterID: 1036}
+	got, err := service.prepareArcSelection(state, profile, &state.Weapons[1], nil, "fork_DemonBlade", "en", 1, scoring.References{})
+	if err != nil || got.option == nil || got.option.ID != "4:2" {
+		t.Fatalf("expected equipped copy, got %+v, %v", got.option, err)
+	}
+	state.Weapons[0].EquippedCharacterID = 1004
+	if _, err := service.prepareArcSelection(state, profile, nil, nil, "fork_DemonBlade", "en", 1, scoring.References{}); err != nil {
+		t.Fatalf("rejected an Arc with only equipped copies: %v", err)
+	}
+}

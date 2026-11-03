@@ -49,6 +49,8 @@ export function SearchStatus({ progress }: { progress?: SearchProgress }) {
 }
 
 type StatsEditorProps = {
+  excludeEquipped?: boolean
+  onExcludeEquipped?: (checked: boolean) => void
   goalDefinitions: TargetGoal[]
   availableGoals: TargetGoal[]
   disabledGoals: string[]
@@ -69,12 +71,12 @@ type StatsEditorProps = {
   onSave: () => Promise<void>
 }
 
-export function StatsEditor({ goalDefinitions, availableGoals, disabledGoals, strictGoals, strictMinimums, goals, maximums, weights, availableMain, onGoal, onMaximum, onMinimum, onWeight, onMainStats, onRemove, onAddGoal, onReset, onSave }: StatsEditorProps) {
+export function StatsEditor({ excludeEquipped, onExcludeEquipped, goalDefinitions, availableGoals, disabledGoals, strictGoals, strictMinimums, goals, maximums, weights, availableMain, onGoal, onMaximum, onMinimum, onWeight, onMainStats, onRemove, onAddGoal, onReset, onSave }: StatsEditorProps) {
   const visibleGoals = goalDefinitions.filter(goal => !disabledGoals.includes(goal.property_id))
   const visibleGoalIDs = new Set(visibleGoals.map(goal => goal.property_id))
   const selectableGoals = availableGoals.filter(goal => !visibleGoalIDs.has(goal.property_id)).sort((a, b) => a.label.localeCompare(b.label, currentIntlLocale()))
   const [advancedOpen, setAdvancedOpen] = useState(false)
-  const activeConstraints = visibleGoals.reduce((count, goal) => count + Number(strictGoals.includes(goal.property_id)) + Number((maximums[goal.property_id] || 0) > 0), 0)
+  const activeConstraints = Number(Boolean(excludeEquipped)) + visibleGoals.reduce((count, goal) => count + Number(strictGoals.includes(goal.property_id)) + Number((maximums[goal.property_id] || 0) > 0), 0)
   return <section className="configuration-panel goals-panel" onBlur={event => { if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget as Node)) void onSave() }}>
     <div className="section-heading"><p className="eyebrow">{t('stats_section')}</p><button className="text-action" onClick={() => void onReset()}><RotateCcw className="size-3.5" />{t('reset')}</button></div>
     <MainStatSelector selected={weights.main_stats} available={availableMain} onChange={onMainStats} />
@@ -90,6 +92,10 @@ export function StatsEditor({ goalDefinitions, availableGoals, disabledGoals, st
       {activeConstraints > 0 ? <span className="advanced-constraints-count">{t('active_constraints_count', { count: activeConstraints })}</span> : <span className="advanced-constraints-description">{t('strict_limits_description')}</span>}
     </button>
     <div id="strict-constraints-panel" className="advanced-constraints-fields" aria-label={t('advanced_constraints')} hidden={!advancedOpen}>
+      {onExcludeEquipped && <label className="flex items-start gap-2 px-3 py-2 text-sm">
+        <input type="checkbox" className="mt-1" checked={excludeEquipped} onChange={event => onExcludeEquipped(event.target.checked)} />
+        <span>{t('exclude_equipped')}<small className="block text-slate-400">{t('exclude_equipped_description')}</small></span>
+      </label>}
       <div className="advanced-constraints-heading"><span>{t('statistic')}</span><span>{t('min_strict')}</span><span>{t('max_strict')}</span></div>
       {visibleGoals.map(goal => <StrictConstraintRow key={goal.property_id} goal={goal} minimumValue={strictGoals.includes(goal.property_id) ? strictMinimums[goal.property_id] || 0 : 0} maximumValue={maximums[goal.property_id] || 0} onMinimum={value => onMinimum(goal.property_id, value)} onMaximum={value => onMaximum(goal.property_id, value)} />)}
     </div>
