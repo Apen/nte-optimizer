@@ -1,5 +1,18 @@
 # Release process
 
+## v0.1.14 corrective release
+
+- Import recorded awakenings and passive references from character inventory,
+  including characters outside the deployed team.
+- Show localized combat skills and passives, equipped Arcs, and compact skill
+  levels in character views. Remove panel comparison diagnostics from the
+  in-game state view.
+- Add team-aware rotation suggestions and an option to protect cartridges and
+  modules equipped on other characters.
+
+Re-scan or re-decode a saved capture to refresh passive identifiers from older
+imports.
+
 ## v0.1.13 corrective release
 
 - Exclude inactive secondary attributes on level-zero modules from calculations
