@@ -126,7 +126,6 @@ For formulas, target utility, caps, set scoring, and search behavior, read
 - [Data and localization](docs/data-and-localization.md)
 - [Development guide](docs/development.md)
 - [Release process](docs/releases.md)
-- [Engineering history and remaining limitations](docs/engineering-notes.md)
 
 ## Platform and project status
 
