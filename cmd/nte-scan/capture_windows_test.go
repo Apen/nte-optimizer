@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -65,6 +66,12 @@ func TestCaptureLoginNominalLifecycle(t *testing.T) {
 		t.Fatalf("pcap = %q", pcap)
 	}
 	assertCommandNames(t, commands, "start", "stop", "etl2pcap")
+	// Preserve the start of the capture under unrelated download load by
+	// reducing per-component duplicates and declaring the circular-file budget.
+	wantStart := []string{"start", "--capture", "--comp", "nics", "--pkt-size", "0", "--file-size", "1024", "--log-mode", "circular", "--file-name", filepath.Join(filepath.Dir(pcap), "test.etl")}
+	if !reflect.DeepEqual(commands[0], wantStart) {
+		t.Fatalf("unexpected capture policy: %v", commands[0])
+	}
 }
 
 func TestCaptureLoginReportsConversionFailureWithoutRawError(t *testing.T) {

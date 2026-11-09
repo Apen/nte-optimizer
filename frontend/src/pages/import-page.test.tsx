@@ -20,6 +20,8 @@ const catalog: LocalizationCatalog = {
   locale: 'fr',
   ui: {
     scan_start: 'Lancer le scan',
+    scan_diagnostics_options: 'Options de diagnostic',
+    scan_retain_capture: 'Conserver la capture locale',
     scan_running: 'Scan en cours',
     scan_waiting: 'En attente',
     scan_finished: '{characters} personnages, {pieces} équipements, {arcs} arcs',
@@ -33,6 +35,10 @@ const catalog: LocalizationCatalog = {
     scan_log_status_requested: 'demandé par l’utilisateur',
     scan_log_status_skipped: 'ignoré après l’arrêt demandé de Pktmon',
     scan_log_count_equipment: 'équipement',
+    scan_log_stage_decode_furniture: 'Structure du mobilier',
+    scan_log_status_partial: 'partiel',
+    scan_log_code_furniture_rejected: 'Structure de mobilier rejetée',
+    scan_log_count_rejected_lz4: 'échecs LZ4',
     scan_error_generic: 'Le scan n’a pas abouti. Consulte et copie le journal de diagnostic pour connaître la cause.',
     scan_error_busy: 'Un scan est déjà en cours.',
     scan_recovery_title: 'Une capture Pktmon semble peut-être bloquée',
@@ -75,7 +81,7 @@ describe('ImportPage', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Lancer le scan' }))
 
-    expect(scanAndImport).toHaveBeenCalledWith('fr', 35)
+    expect(scanAndImport).toHaveBeenCalledWith('fr', 35, false)
     expect(onImported).toHaveBeenCalledWith(imported)
     expect(await screen.findByRole('status')).toHaveTextContent('4 personnages, 16 équipements, 3 arcs')
   })
@@ -90,6 +96,17 @@ describe('ImportPage', () => {
     expect(screen.getByRole('button', { name: 'Lancer le scan' })).toBeEnabled()
   })
 
+  it('retains raw capture only when the user selects the diagnostic option', async () => {
+    scanAndImport.mockResolvedValue(emptySummary)
+    render(<ImportPage summary={emptySummary} locale="fr" onImported={vi.fn()} />)
+    await userEvent.click(screen.getByText('Options de diagnostic'))
+    const checkbox = screen.getByRole('checkbox', { name: 'Conserver la capture locale' })
+    expect(checkbox).not.toBeChecked()
+    await userEvent.click(checkbox)
+    await userEvent.click(screen.getByRole('button', { name: 'Lancer le scan' }))
+    expect(scanAndImport).toHaveBeenCalledWith('fr', 35, true)
+  })
+
   it('shows privacy-safe scan steps after a failed attempt', async () => {
     scanAndImport.mockRejectedValue(new Error('incomplete capture'))
     lastScanLog.mockResolvedValue([{ time: '2026-09-23T10:00:00Z', stage: 'validation', status: 'incomplete', counts: { equipment: 0 } }])
@@ -97,6 +114,17 @@ describe('ImportPage', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Lancer le scan' }))
     expect(await screen.findByText('données requises manquantes')).toBeInTheDocument()
     expect(screen.getByText('équipement: 0')).toBeInTheDocument()
+  })
+
+  it('keeps optional structure failures visible after a successful import', async () => {
+    scanAndImport.mockResolvedValue(emptySummary)
+    lastScanLog.mockResolvedValue([{ time: '2026-09-23T10:00:00Z', stage: 'decode_furniture', status: 'partial', code: 'furniture_rejected', counts: { rejected_lz4: 2 } }])
+    render(<ImportPage summary={emptySummary} locale="fr" onImported={vi.fn()} />)
+    await userEvent.click(screen.getByRole('button', { name: 'Lancer le scan' }))
+    expect(await screen.findByText('Structure du mobilier')).toBeInTheDocument()
+    expect(screen.getByText('partiel')).toHaveClass('text-amber-300')
+    expect(screen.getByText('Structure de mobilier rejetée')).toBeInTheDocument()
+    expect(screen.getByText('échecs LZ4: 2')).toBeInTheDocument()
   })
 
   it('offers explicit Pktmon recovery after an uncertain capture status', async () => {
@@ -115,7 +143,7 @@ describe('ImportPage', () => {
     expect(await screen.findByText('Ce bouton arrête toute collecte Pktmon en cours sur Windows, y compris celles démarrées par un autre outil, puis lance un nouveau scan guidé.')).toBeInTheDocument()
     await userEvent.click(await screen.findByRole('button', { name: 'Arrêter Pktmon et relancer le scan' }))
 
-    expect(recoverAndScanAccount).toHaveBeenCalledWith('fr', 35)
+    expect(recoverAndScanAccount).toHaveBeenCalledWith('fr', 35, false)
     expect(onImported).toHaveBeenCalledWith(imported)
     expect(await screen.findByRole('status')).toHaveTextContent('4 personnages, 16 équipements, 3 arcs')
     expect(screen.queryByRole('region', { name: 'Une capture Pktmon semble peut-être bloquée' })).not.toBeInTheDocument()

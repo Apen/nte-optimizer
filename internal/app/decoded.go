@@ -19,17 +19,24 @@ type AccountImportSummary struct {
 }
 
 func ImportDecodedWithSummary(sourceDir, projectDir, dataDir string) (AccountImportSummary, error) {
+	summary, _, err := ImportDecodedWithDiagnostics(sourceDir, projectDir, dataDir)
+	return summary, err
+}
+
+func ImportDecodedWithDiagnostics(sourceDir, projectDir, dataDir string) (AccountImportSummary, []decoded.ImportDiagnostic, error) {
 	result, err := decoded.ImportDirectory(sourceDir, dataDir)
 	if err != nil {
-		return AccountImportSummary{}, err
+		return AccountImportSummary{}, result.Diagnostics, err
 	}
+	diagnostics := append(result.Diagnostics, decoded.ImportDiagnostic{Stage: "import_save", Status: "started"})
 	if err := ensureWorkspace(projectDir); err != nil {
-		return AccountImportSummary{}, err
+		return AccountImportSummary{}, append(diagnostics, decoded.ImportDiagnostic{Stage: "import_save", Status: "failed", Code: "snapshot_write_failed"}), err
 	}
 	if err := writeAccountData(projectDir, result.Inventory, result.State); err != nil {
-		return AccountImportSummary{}, err
+		return AccountImportSummary{}, append(diagnostics, decoded.ImportDiagnostic{Stage: "import_save", Status: "failed", Code: "snapshot_write_failed"}), err
 	}
-	return accountImportSummary(result.Inventory, result.State, result.Warnings), nil
+	diagnostics = append(diagnostics, decoded.ImportDiagnostic{Stage: "import_save", Status: "complete"})
+	return accountImportSummary(result.Inventory, result.State, result.Warnings), diagnostics, nil
 }
 
 func LoadAccountImportSummary(projectDir string) (AccountImportSummary, error) {

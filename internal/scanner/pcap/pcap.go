@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"io"
 	"net"
@@ -16,6 +17,8 @@ type Packet struct {
 	Timestamp float64
 	Data      []byte
 }
+
+var ErrCaptureBudgetExceeded = errors.New("capture exceeds decoding budget")
 
 type Flow struct {
 	SourceAddress      string
@@ -44,14 +47,14 @@ func ReadFile(path string) ([]Packet, error) {
 		return nil, err
 	}
 	if info.Size() > maxCaptureBytes {
-		return nil, fmt.Errorf("capture exceeds %d byte decoding budget", maxCaptureBytes)
+		return nil, fmt.Errorf("%w (%d byte limit)", ErrCaptureBudgetExceeded, maxCaptureBytes)
 	}
 	contents, err := io.ReadAll(io.LimitReader(file, maxCaptureBytes+1))
 	if err != nil {
 		return nil, err
 	}
 	if len(contents) > maxCaptureBytes {
-		return nil, fmt.Errorf("capture exceeds %d byte decoding budget", maxCaptureBytes)
+		return nil, fmt.Errorf("%w (%d byte limit)", ErrCaptureBudgetExceeded, maxCaptureBytes)
 	}
 	return Parse(contents)
 }
@@ -60,7 +63,7 @@ const maxCaptureBytes = 256 << 20
 
 func Parse(contents []byte) ([]Packet, error) {
 	if len(contents) > maxCaptureBytes {
-		return nil, fmt.Errorf("capture exceeds decoding budget")
+		return nil, ErrCaptureBudgetExceeded
 	}
 	var packets []Packet
 	littleEndian := true

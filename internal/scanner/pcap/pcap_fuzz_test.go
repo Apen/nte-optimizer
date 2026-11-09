@@ -1,6 +1,7 @@
 package pcap
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"testing"
@@ -29,7 +30,7 @@ func TestOversizedCaptureRejectedBeforeReading(t *testing.T) {
 	if err := file.Close(); err != nil {
 		t.Fatal(err)
 	}
-	if _, err := ReadFile(path); err == nil {
-		t.Fatal("accepted oversized capture")
+	if _, err := ReadFile(path); !errors.Is(err, ErrCaptureBudgetExceeded) {
+		t.Fatalf("oversized capture not identified: %v", err)
 	}
 }

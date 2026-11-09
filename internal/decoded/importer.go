@@ -13,6 +13,7 @@ import (
 )
 
 type ImportResult struct {
+	Diagnostics       []ImportDiagnostic
 	Inventory         nte.Inventory
 	State             State
 	AssignedEquipment int
@@ -53,7 +54,13 @@ type resourceExport struct {
 	Data []Resource `json:"data"`
 }
 
-func ImportDirectory(dir, dataDir string) (ImportResult, error) {
+func ImportDirectory(dir, dataDir string) (result ImportResult, err error) {
+	diagnostics := &importDiagnostics{}
+	defer func() {
+		diagnostics.finish(err)
+		result.Diagnostics = diagnostics.events
+	}()
+	diagnostics.step("import_catalog")
 	definitions, err := equipment.Load(dataDir)
 	if err != nil {
 		return ImportResult{}, err
@@ -62,16 +69,28 @@ func ImportDirectory(dir, dataDir string) (ImportResult, error) {
 	var weapons []Weapon
 	var account Account
 	var manifest Manifest
-	for path, dst := range map[string]any{"equipment.json": &equipment, "weapons.json": &weapons, "manifest.json": &manifest} {
-		if err := read(filepath.Join(dir, path), dst); err != nil {
+	// Read in a stable order so diagnostics identify the first rejected domain.
+	for _, input := range []struct {
+		name, stage string
+		dst         any
+	}{
+		{"equipment.json", "import_equipment_file", &equipment},
+		{"weapons.json", "import_arcs_file", &weapons},
+		{"manifest.json", "import_manifest", &manifest},
+	} {
+		diagnostics.step(input.stage)
+		if err := read(filepath.Join(dir, input.name), input.dst); err != nil {
 			return ImportResult{}, err
 		}
 	}
+	diagnostics.step("import_characters")
 	characters, placements, embeddedWeapons, err := readCharacters(dir)
 	if err != nil {
 		return ImportResult{}, err
 	}
 	weapons = mergeWeapons(weapons, embeddedWeapons)
+	diagnostics.counts = map[string]int{"characters": len(characters), "arcs": len(weapons)}
+	diagnostics.step("import_resources")
 	var resources resourceExport
 	if _, err := os.Stat(filepath.Join(dir, "resources.json")); err == nil {
 		if err := read(filepath.Join(dir, "resources.json"), &resources); err != nil {
@@ -80,6 +99,8 @@ func ImportDirectory(dir, dataDir string) (ImportResult, error) {
 	} else if !os.IsNotExist(err) {
 		return ImportResult{}, err
 	}
+	diagnostics.counts = map[string]int{"resources": len(resources.Data)}
+	diagnostics.step("import_account")
 	accountPath := filepath.Join(dir, "account.json")
 	if _, err := os.Stat(accountPath); err == nil {
 		if err := read(accountPath, &account); err != nil {
@@ -88,28 +109,39 @@ func ImportDirectory(dir, dataDir string) (ImportResult, error) {
 	} else if !os.IsNotExist(err) {
 		return ImportResult{}, err
 	}
+	diagnostics.step("import_contract")
 	if manifest.Format != "nte-scan-output" || manifest.FormatVersion < 1 || manifest.FormatVersion > 3 {
+		diagnostics.code = "manifest_unsupported"
 		return ImportResult{}, fmt.Errorf("unsupported decoded manifest %q version %d", manifest.Format, manifest.FormatVersion)
 	}
+	diagnostics.step("import_character_ids")
 	characterByNet := map[string]int{}
 	characterIDs := map[int]bool{}
+	diagnostics.counts = map[string]int{"characters": len(characters)}
 	for _, character := range characters {
+		diagnostics.counts["checked_records"]++
 		if character.CharacterID <= 0 || characterIDs[character.CharacterID] {
+			diagnostics.code = "character_id_invalid"
 			return ImportResult{}, fmt.Errorf("missing or duplicate character id %d", character.CharacterID)
 		}
 		characterIDs[character.CharacterID] = true
 		characterByNet[character.NetID.Key()] = character.CharacterID
 	}
 	seen := map[string]bool{}
+	diagnostics.step("import_equipment_validation")
+	diagnostics.counts = map[string]int{"equipment": len(equipment)}
 	modules := make([]nte.Module, 0)
 	cartridges := make([]nte.Cartridge, 0)
 	assigned := 0
 	for _, item := range equipment {
+		diagnostics.counts["checked_records"]++
 		if item.Level < 0 {
+			diagnostics.code = "equipment_level_invalid"
 			return ImportResult{}, fmt.Errorf("equipment %q has a negative level", item.ItemID)
 		}
 		localID := fmt.Sprintf("game_%d_%d", item.ID.Slot, item.ID.Serial)
 		if seen[localID] {
+			diagnostics.code = "equipment_duplicate"
 			return ImportResult{}, fmt.Errorf("duplicate equipment id %s", localID)
 		}
 		seen[localID] = true
@@ -118,23 +150,28 @@ func ImportDirectory(dir, dataDir string) (ImportResult, error) {
 			var ok bool
 			equipped, ok = characterByNet[item.CharacterNetID.Key()]
 			if !ok {
+				diagnostics.code = "equipment_owner_unknown"
 				return ImportResult{}, fmt.Errorf("equipment %s references an unknown character", localID)
 			}
 			assigned++
 		}
 		main, err := convertStats(item.MainStats)
 		if err != nil {
+			diagnostics.code = "equipment_main_stats_invalid"
 			return ImportResult{}, fmt.Errorf("equipment %s: %w", localID, err)
 		}
 		sub, err := convertStats(item.SubStats)
 		if err != nil {
+			diagnostics.code = "equipment_sub_stats_invalid"
 			return ImportResult{}, fmt.Errorf("equipment %s: %w", localID, err)
 		}
 		definition, ok := definitions[item.ItemID]
 		if !ok || definition.Kind != item.Kind {
+			diagnostics.code = "equipment_catalog_mismatch"
 			return ImportResult{}, fmt.Errorf("equipment/decode.json: missing or incompatible items[%q]", item.ItemID)
 		}
 		if item.Level > definition.MaxLevel {
+			diagnostics.code = "equipment_level_invalid"
 			return ImportResult{}, fmt.Errorf("equipment %q level exceeds catalog max_level %d", item.ItemID, definition.MaxLevel)
 		}
 		if item.Kind == "core" {
@@ -149,9 +186,14 @@ func ImportDirectory(dir, dataDir string) (ImportResult, error) {
 	}
 	inv := nte.Inventory{SchemaVersion: 1, Modules: modules, Cartridges: cartridges}
 	if errs := validateInventory(inv, definitions); len(errs) > 0 {
+		diagnostics.code = "equipment_invalid"
 		return ImportResult{}, fmt.Errorf("decoded inventory validation: %v", errs)
 	}
+	diagnostics.counts = map[string]int{"modules": len(modules), "cartridges": len(cartridges), "equipped_records": assigned}
+	diagnostics.step("import_links")
 	warnings := validateWeaponLinks(characters, weapons)
+	diagnostics.counts = map[string]int{"unresolved_links": len(warnings)}
+	diagnostics.step("import_furniture")
 	state := State{SchemaVersion: 2, ImportedAt: time.Now().UTC(), SourceGeneratedAt: manifest.GeneratedAt.UTC(), Account: account, Characters: characters, Weapons: weapons, Resources: resources.Data}
 	var observations struct {
 		FurnitureLevels []nte.FurnitureLevel `json:"furnitureLevels"`
@@ -163,6 +205,7 @@ func ImportDirectory(dir, dataDir string) (ImportResult, error) {
 		seen := map[string]bool{}
 		for _, level := range observations.FurnitureLevels {
 			if level.ProgressionID == "" || level.Level < 1 || level.Level > 100 || seen[level.ProgressionID] {
+				diagnostics.code = "furniture_invalid"
 				return ImportResult{}, fmt.Errorf("invalid or duplicate furniture level observation")
 			}
 			seen[level.ProgressionID] = true
@@ -171,6 +214,7 @@ func ImportDirectory(dir, dataDir string) (ImportResult, error) {
 	} else if !os.IsNotExist(err) {
 		return ImportResult{}, err
 	}
+	diagnostics.counts = map[string]int{"furniture": len(state.FurnitureLevels)}
 	return ImportResult{Inventory: inv, State: state, AssignedEquipment: assigned, Warnings: warnings}, nil
 }
 

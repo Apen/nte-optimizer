@@ -193,19 +193,19 @@ func (a *DesktopApp) OpenDownloadURL(url string) {
 // ScanAndImportAccount runs only the packet-capture helper as administrator.
 // Once its validated JSON export is complete, the normal desktop process reads
 // and imports it without retaining elevated privileges.
-func (a *DesktopApp) ScanAndImportAccount(language string, seconds int) (appservice.AccountImportSummary, error) {
-	value, err := a.scanAndImportAccount(language, seconds, false)
+func (a *DesktopApp) ScanAndImportAccount(language string, seconds int, retainCapture bool) (appservice.AccountImportSummary, error) {
+	value, err := a.scanAndImportAccount(language, seconds, false, retainCapture)
 	return value, scanClientError(err)
 }
 
 // RecoverAndScanAccount explicitly stops all Pktmon collection before starting
 // a new guided scan. The UI warns that this can stop another tool's capture.
-func (a *DesktopApp) RecoverAndScanAccount(language string, seconds int) (appservice.AccountImportSummary, error) {
-	value, err := a.scanAndImportAccount(language, seconds, true)
+func (a *DesktopApp) RecoverAndScanAccount(language string, seconds int, retainCapture bool) (appservice.AccountImportSummary, error) {
+	value, err := a.scanAndImportAccount(language, seconds, true, retainCapture)
 	return value, scanClientError(err)
 }
 
-func (a *DesktopApp) scanAndImportAccount(language string, seconds int, stopPktmonFirst bool) (appservice.AccountImportSummary, error) {
+func (a *DesktopApp) scanAndImportAccount(language string, seconds int, stopPktmonFirst, retainCapture bool) (appservice.AccountImportSummary, error) {
 	if _, err := ntelocale.Load(a.service.DataDir, language); err != nil {
 		return appservice.AccountImportSummary{}, err
 	}
@@ -253,12 +253,7 @@ func (a *DesktopApp) scanAndImportAccount(language string, seconds int, stopPktm
 			return appservice.AccountImportSummary{}, fmt.Errorf("record Pktmon recovery request: %w", err)
 		}
 	}
-	var scanErr error
-	if stopPktmonFirst {
-		scanErr = scannerlauncher.RunContextAfterPktmonRecovery(scanContext, a.projectDir, a.stateDir, seconds)
-	} else {
-		scanErr = scannerlauncher.RunContext(scanContext, a.projectDir, a.stateDir, seconds)
-	}
+	scanErr := scannerlauncher.RunContextWithOptions(scanContext, a.projectDir, a.stateDir, scannerlauncher.Options{Seconds: seconds, StopPktmonFirst: stopPktmonFirst, RetainCapture: retainCapture})
 	if scanErr != nil {
 		events, readErr := scanlog.Read(logPath)
 		if readErr != nil || !hasScanFailure(events) {
@@ -269,12 +264,21 @@ func (a *DesktopApp) scanAndImportAccount(language string, seconds int, stopPktm
 	_ = scanlog.Append(logPath, "import", "started", nil)
 	a.buildMu.Lock()
 	defer a.buildMu.Unlock()
-	summary, err := appservice.ImportDecodedWithSummary(scannerlauncher.OutputDir(a.stateDir), a.stateDir, a.service.DataDir)
+	summary, diagnostics, err := appservice.ImportDecodedWithDiagnostics(scannerlauncher.OutputDir(a.stateDir), a.stateDir, a.service.DataDir)
+	var diagnosticErr error
+	for _, event := range diagnostics {
+		if logErr := scanlog.AppendWithCode(logPath, event.Stage, event.Status, event.Code, event.Counts); logErr != nil && diagnosticErr == nil {
+			diagnosticErr = logErr
+		}
+	}
 	if err != nil {
 		_ = scanlog.AppendWithCode(logPath, "import", "failed", "import_failed", nil)
 		return summary, err
 	}
 	_ = scanlog.Append(logPath, "import", "complete", map[string]int{"characters": summary.Characters, "modules": summary.Modules, "cartridges": summary.Cartridges, "arcs": summary.Weapons})
+	if diagnosticErr != nil {
+		return summary, diagnosticErr
+	}
 	return summary, nil
 }
 

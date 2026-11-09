@@ -13,7 +13,7 @@ func FuzzSparsePanel(f *testing.F) {
 			t.Skip()
 		}
 		parseCharacterPanelStats(data, bits, 16000)
-		namedBytePayloads(data, bits, "FurnitureActivateStates")
+		namedBytePayloads(data, bits, "FurnitureActivateStates", nil)
 	})
 }
 

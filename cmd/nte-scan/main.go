@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"net"
@@ -50,6 +51,9 @@ type report struct {
 }
 
 type udpReport struct {
+	writeDiagnostic      func(scanlog.Event) error
+	diagnosticErr        error
+	Diagnostics          []scanlog.Event      `json:"-"`
 	FurnitureLevels      []nte.FurnitureLevel `json:"furnitureLevels,omitempty"`
 	Flow                 string               `json:"flow"`
 	Packets              int                  `json:"packets"`
@@ -114,6 +118,7 @@ func main() {
 	resourceCatalogPath := flag.String("resource-catalog", "resources.json", "NTE resources.json catalog")
 	outputDir := flag.String("output-dir", "", "write all domain JSON files to this directory")
 	loginCapture := flag.Bool("login-capture", false, "capture login traffic and export all JSON files")
+	retainCapture := flag.Bool("retain-capture", false, "keep a private PCAPNG copy outside temporary input for offline diagnosis")
 	stopPktmonFirst := flag.Bool("stop-pktmon-first", false, "stop all Pktmon collection before a user-requested recovery scan")
 	loginSeconds := flag.Int("login-seconds", 30, "maximum guided capture duration")
 	cancelFile := flag.String("cancel-file", "", "file used to signal capture cancellation")
@@ -128,6 +133,9 @@ func main() {
 	}
 	if *stopPktmonFirst && !*loginCapture {
 		must(fmt.Errorf("-stop-pktmon-first requires -login-capture"))
+	}
+	if *retainCapture && !*loginCapture {
+		must(fmt.Errorf("-retain-capture requires -login-capture"))
 	}
 	*catalog = resolveDataFile(*catalog, "equipment.json")
 	*characterCatalogPath = resolveDataFile(*characterCatalogPath, "characters.json")
@@ -158,20 +166,44 @@ func main() {
 		if *outputDir == "" {
 			*outputDir = filepath.Join(filepath.Dir(filepath.Dir(pcap)), "workspace", "scan-output")
 		}
+		if *retainCapture {
+			must(scanlog.Append(*scanLog, "capture_retention", "started", nil))
+			_, size, err := retainDiagnosticCapture(pcap, *outputDir)
+			if err != nil {
+				_ = scanlog.AppendWithCode(*scanLog, "capture_retention", "failed", captureRetentionFailureCode(err), map[string]int{"capture_bytes": int(size), "retention_limit_bytes": maxRetainedCaptureBytes})
+				must(err)
+			}
+			must(scanlog.AppendWithCode(*scanLog, "capture_retention", "complete", "capture_retained", map[string]int{"retained_bytes": int(size)}))
+		}
 	}
 
 	_ = scanlog.Append(*scanLog, "packet_read", "started", nil)
-	packets, err := readPCAPNG(*input)
+	packets, selection, err := readSelectedPCAPNG(*input)
 	if err != nil {
-		_ = scanlog.AppendWithCode(*scanLog, "packet_read", "failed", "capture_file_read_failed", nil)
+		code := "capture_file_read_failed"
+		if errors.Is(err, scannerpcap.ErrCaptureBudgetExceeded) {
+			code = "capture_file_budget_exceeded"
+		}
+		if errors.Is(err, scannerpcap.ErrCaptureSourceBudgetExceeded) {
+			code = "capture_source_budget_exceeded"
+		}
+		_ = scanlog.AppendWithCode(*scanLog, "packet_read", "failed", code, nil)
 	}
 	must(err)
 	mustScanContext(ctx)
 	unique := dedupe(packets)
 	_ = scanlog.Append(*scanLog, "packet_read", "complete", map[string]int{"raw_packets": len(packets), "unique_packets": len(unique)})
+	must(scanlog.AppendWithCode(*scanLog, "packet_selection", "complete", "capture_protocol_selection", map[string]int{"source_packets": selection.SourcePackets, "selected_packets": selection.SelectedPackets, "filtered_packets": selection.SourcePackets - selection.SelectedPackets}))
+	coverage := captureCoverage(selection, *loginCapture, *loginSeconds)
+	must(scanlog.AppendEvent(*scanLog, coverage))
 	r := report{Input: *input, RawPackets: len(packets), UniquePackets: len(unique), DuplicateAppearances: len(packets) - len(unique)}
 	_ = scanlog.Append(*scanLog, "decode", "started", nil)
-	r.UDP, err = analyzeUDP(ctx, unique, 0, *dumpUDP, *catalog, *characterCatalogPath, *forkCatalogPath, *resourceCatalogPath, *characterProbeOut != "")
+	r.UDP, err = analyzeUDP(ctx, unique, 0, *dumpUDP, *catalog, *characterCatalogPath, *forkCatalogPath, *resourceCatalogPath, *characterProbeOut != "", func(event scanlog.Event) error {
+		return scanlog.AppendEvent(*scanLog, event)
+	})
+	if err != nil {
+		_ = scanlog.AppendWithCode(*scanLog, "decode", "failed", "decode_failed", nil)
+	}
 	must(err)
 	_ = scanlog.Append(*scanLog, "decode", "complete", map[string]int{"udp_packets": r.UDP.Packets, "equipment": r.UDP.DecodedItems, "characters": len(r.UDP.Characters), "arcs": len(r.UDP.Weapons), "resources": len(r.UDP.Resources)})
 	mustScanContext(ctx)
@@ -343,27 +375,36 @@ func recordNames(b []byte) []string {
 	return out
 }
 
-func analyzeUDP(ctx context.Context, ps []packet, port uint16, dumpDir, catalogPath, characterCatalogPath, forkCatalogPath, resourceCatalogPath string, probeCharacters bool) (udpReport, error) {
+func analyzeUDP(ctx context.Context, ps []packet, port uint16, dumpDir, catalogPath, characterCatalogPath, forkCatalogPath, resourceCatalogPath string, probeCharacters bool, writeDiagnostic func(scanlog.Event) error) (udpReport, error) {
 	if err := ctx.Err(); err != nil {
 		return udpReport{}, err
 	}
 	key, packets, best := selectPrimaryUDPFlow(ps, port)
-	r := udpReport{Flow: fmt.Sprintf("%s:%d -> %s:%d", key.src, key.sport, key.dst, key.dport), Packets: len(packets), PayloadBytes: best}
+	r := udpReport{Flow: fmt.Sprintf("%s:%d -> %s:%d", key.src, key.sport, key.dst, key.dport), Packets: len(packets), PayloadBytes: best, writeDiagnostic: writeDiagnostic}
+	r.diagnostic("decode_transport", "started", "", map[string]int{"udp_packets": len(packets)})
+	if r.diagnosticErr != nil {
+		return r, r.diagnosticErr
+	}
 	if len(packets) == 0 {
-		return r, nil
+		r.diagnostic("decode_transport", "incomplete", "no_udp_flow", nil)
+		return r, r.diagnosticErr
 	}
 	r.LargestPacket, r.PeakBurstBytes, r.PeakAtSeconds = measureUDPFlow(packets)
 	completed, inventoryGUIDs, dumpDir, err := assembleUnrealMessages(ctx, &r, packets, dumpDir)
 	if err != nil {
 		return r, err
 	}
+	r.diagnostic("decode_transport", "complete", "", map[string]int{
+		"unreal_packets": r.UnrealPackets, "unreal_bunches": r.UnrealBunches,
+		"partial_bunches": r.PartialBunches, "completed_messages": len(completed),
+	})
 	if err := inspectCompletedMessages(ctx, &r, completed, inventoryGUIDs, dumpDir); err != nil {
 		return r, err
 	}
 	if err := decodeDomains(ctx, &r, packets, completed, catalogPath, characterCatalogPath, forkCatalogPath, resourceCatalogPath, probeCharacters); err != nil {
 		return r, err
 	}
-	return r, ctx.Err()
+	return r, errors.Join(ctx.Err(), r.diagnosticErr)
 }
 
 func isPrivateIPv4(s string) bool {
@@ -403,16 +444,16 @@ func must(err error) {
 	}
 }
 
-func readPCAPNG(path string) ([]packet, error) {
-	packets, err := scannerpcap.ReadFile(path)
+func readSelectedPCAPNG(path string) ([]packet, scannerpcap.SelectionSummary, error) {
+	packets, summary, err := scannerpcap.ReadFileSelected(path, scannerPacket)
 	if err != nil {
-		return nil, err
+		return nil, summary, err
 	}
 	out := make([]packet, len(packets))
 	for index, capturedPacket := range packets {
 		out[index] = packet{ts: capturedPacket.Timestamp, data: capturedPacket.Data}
 	}
-	return out, nil
+	return out, summary, nil
 }
 
 func dedupe(in []packet) []packet {

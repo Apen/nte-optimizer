@@ -10,7 +10,7 @@ import (
 
 // namedBytePayloads recognizes bounded FName + byte-array property envelopes
 // independently of the PlayerState function table, which varies by version.
-func namedBytePayloads(data []byte, bitLen int, name string) [][]byte {
+func namedBytePayloads(data []byte, bitLen int, name string, diagnostics *recordDiagnostics) [][]byte {
 	if bitLen < 0 || bitLen > len(data)*8 {
 		return nil
 	}
@@ -28,34 +28,45 @@ func namedBytePayloads(data []byte, bitLen int, name string) [][]byte {
 			}
 			index += pos
 			pos = index + len(needle)
+			diagnostics.add("property_matches", 1)
 			offset := shift + index*8
 			length, ok := likeabilityBitsAt(data, bitLen, offset-32, 32)
 			if !ok || length != uint64(len(name)+1) {
+				diagnostics.add("rejected_property_name", 1)
 				continue
 			}
 			r := invBits{data: data, bitLen: bitLen, cursor: offset + len(needle)*8}
 			number, ok := r.u32()
 			if !ok || number != 0 {
+				diagnostics.add("rejected_property_number", 1)
 				continue
 			}
 			size, ok := r.u32()
 			if !ok || size == 0 || size > 8192 {
+				diagnostics.add("rejected_property_size", 1)
 				continue
 			}
 			payload, ok := r.bytes(int(size))
 			if ok {
 				result = append(result, payload)
+				diagnostics.maximum("largest_payload_bytes", len(payload))
+			} else {
+				diagnostics.add("rejected_property_truncated", 1)
 			}
 		}
 	}
 	return result
 }
 
-func parseFurnitureLevels(payload []byte) ([]nte.FurnitureLevel, bool) {
+func parseFurnitureLevels(payload []byte, diagnostics *recordDiagnostics) (_ []nte.FurnitureLevel, accepted bool) {
+	phase := "lz4"
+	defer func() { diagnostics.record(phase, accepted) }()
 	data, ok := scannerunreal.DecodeLZ4BlockLimited(payload, 65536)
 	if !ok {
 		return nil, false
 	}
+	diagnostics.maximum("largest_decoded_bytes", len(data))
+	phase = "furniture_count"
 	r := invBits{data: data, bitLen: len(data) * 8}
 	count, ok := r.u16()
 	if !ok || count == 0 || count > 256 {
@@ -64,11 +75,13 @@ func parseFurnitureLevels(payload []byte) ([]nte.FurnitureLevel, bool) {
 	levels := make([]nte.FurnitureLevel, 0, count)
 	seen := map[string]bool{}
 	for index := uint16(0); index < count; index++ {
+		phase = "furniture_id"
 		id, ok := r.fstring(80)
 		if !ok || !strings.HasPrefix(id, "SF_") || seen[id] {
 			return nil, false
 		}
 		seen[id] = true
+		phase = "furniture_fields"
 		// Only the level is interpreted. Neither observed byte flag has a
 		// verified activation meaning, so it must not become confirmation.
 		flag0, ok0 := r.bits(8)
@@ -82,6 +95,7 @@ func parseFurnitureLevels(payload []byte) ([]nte.FurnitureLevel, bool) {
 		}
 		levels = append(levels, nte.FurnitureLevel{ProgressionID: id, Level: int(level)})
 	}
+	phase = "furniture_trailer"
 	if _, ok := r.u32(); !ok || r.cursor != r.bitLen {
 		return nil, false
 	}
@@ -89,16 +103,29 @@ func parseFurnitureLevels(payload []byte) ([]nte.FurnitureLevel, bool) {
 }
 
 func decodeAccountObservations(report *udpReport, messages []completedMessage) {
+	report.diagnostic("decode_furniture", "started", "", nil)
+	diagnostics := &recordDiagnostics{counts: map[string]int{}}
 	for _, message := range messages {
 		if message.channel != 4 {
 			continue
 		}
-		for _, payload := range namedBytePayloads(message.data, message.bits, "FurnitureActivateStates") {
-			if levels, ok := parseFurnitureLevels(payload); ok {
+		diagnostics.add("channel4_messages", 1)
+		for _, payload := range namedBytePayloads(message.data, message.bits, "FurnitureActivateStates", diagnostics) {
+			if levels, ok := parseFurnitureLevels(payload, diagnostics); ok {
 				report.FurnitureLevels = levels
 			}
 		}
 	}
+	diagnostics.counts["furniture"] = len(report.FurnitureLevels)
+	status, code := "complete", "furniture_decoded"
+	if diagnostics.counts["channel4_messages"] == 0 {
+		status, code = "partial", "channel4_absent"
+	} else if diagnostics.counts["property_matches"] == 0 {
+		status, code = "partial", "furniture_property_absent"
+	} else if len(report.FurnitureLevels) == 0 {
+		status, code = "partial", "furniture_rejected"
+	}
+	report.diagnostic("decode_furniture", status, code, diagnostics.counts)
 }
 
 func readBondStageFlags(reader *invBits) ([]bool, bool) {

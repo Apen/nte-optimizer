@@ -26,17 +26,28 @@ func runElevatedWithRunner(helper, projectDir, outputDir, cancelFile string, sec
 }
 
 func runElevatedWithRecoveryWithRunner(helper, projectDir, outputDir, cancelFile string, seconds int, stopPktmonFirst bool, run func(string) ([]byte, error)) error {
+	return runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile, Options{Seconds: seconds, StopPktmonFirst: stopPktmonFirst}, run)
+}
+
+func runElevatedWithOptions(helper, projectDir, outputDir, cancelFile string, options Options) error {
+	return runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile, options, runPowerShell)
+}
+
+func runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile string, options Options, run func(string) ([]byte, error)) error {
 	quote := func(value string) string { return "'" + strings.ReplaceAll(value, "'", "''") + "'" }
 	commandLineQuote := func(value string) string { return `"` + strings.ReplaceAll(value, `"`, `\"`) + `"` }
 	argumentList := []string{
 		"-login-capture",
-		"-login-seconds", strconv.Itoa(seconds),
+		"-login-seconds", strconv.Itoa(options.Seconds),
 		"-output-dir", commandLineQuote(outputDir),
 		"-cancel-file", commandLineQuote(cancelFile),
 		"-scan-log", commandLineQuote(scanlog.Path(filepath.Dir(filepath.Dir(outputDir)))),
 	}
-	if stopPktmonFirst {
+	if options.StopPktmonFirst {
 		argumentList = append(argumentList, "-stop-pktmon-first")
+	}
+	if options.RetainCapture {
+		argumentList = append(argumentList, "-retain-capture")
 	}
 	arguments := strings.Join(argumentList, " ")
 	script := fmt.Sprintf(

@@ -38,10 +38,13 @@ func Append(path, stage, status string, counts map[string]int) error {
 }
 
 func AppendWithCode(path, stage, status, code string, counts map[string]int) error {
+	return AppendEvent(path, Event{Time: time.Now().UTC().Format(time.RFC3339), Stage: stage, Status: status, Code: code, Counts: counts})
+}
+
+func AppendEvent(path string, event Event) error {
 	if path == "" {
 		return nil
 	}
-	event := Event{Time: time.Now().UTC().Format(time.RFC3339), Stage: stage, Status: status, Code: code, Counts: counts}
 	data, err := json.Marshal(event)
 	if err != nil {
 		return err

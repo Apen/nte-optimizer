@@ -34,12 +34,12 @@ func furniturePayload(level uint32) []byte {
 }
 func TestFurnitureLevelsAndUnalignedProperty(t *testing.T) {
 	payload := furniturePayload(3)
-	levels, ok := parseFurnitureLevels(payload)
+	levels, ok := parseFurnitureLevels(payload, nil)
 	if !ok || len(levels) != 1 || levels[0].Level != 3 || levels[0].ProgressionID != "SF_test" {
 		t.Fatalf("unexpected levels: %v %v", levels, ok)
 	}
 	for _, invalid := range [][]byte{furniturePayload(0), furniturePayload(101), payload[:len(payload)-1]} {
-		if _, ok := parseFurnitureLevels(invalid); ok {
+		if _, ok := parseFurnitureLevels(invalid, nil); ok {
 			t.Fatal("accepted invalid furniture payload")
 		}
 	}
@@ -54,11 +54,11 @@ func TestFurnitureLevelsAndUnalignedProperty(t *testing.T) {
 		for _, v := range b.Bytes() {
 			w.put(uint64(v), 8)
 		}
-		got := namedBytePayloads(w.data, w.bits, "FurnitureActivateStates")
+		got := namedBytePayloads(w.data, w.bits, "FurnitureActivateStates", nil)
 		if len(got) != 1 || !bytes.Equal(got[0], payload) {
 			t.Fatalf("property not decoded at shift %d", shift)
 		}
-		if got := namedBytePayloads(w.data, w.bits-8, "FurnitureActivateStates"); len(got) != 0 {
+		if got := namedBytePayloads(w.data, w.bits-8, "FurnitureActivateStates", nil); len(got) != 0 {
 			t.Fatal("accepted truncated property")
 		}
 	}

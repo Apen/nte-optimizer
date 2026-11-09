@@ -71,3 +71,18 @@ func TestRunElevatedWithRecoveryOmitsStopFlagByDefault(t *testing.T) {
 		t.Fatalf("normal scan unexpectedly stops Pktmon: %s", script)
 	}
 }
+
+func TestCaptureRetentionRequiresExplicitOptionAndSupportsRecovery(t *testing.T) {
+	for _, retain := range []bool{false, true} {
+		for _, recovery := range []bool{false, true} {
+			var script string
+			err := runElevatedOptionsWithRunner("scanner", "project", "output", "cancel", Options{Seconds: 45, RetainCapture: retain, StopPktmonFirst: recovery}, func(got string) ([]byte, error) { script = got; return nil, nil })
+			if err != nil {
+				t.Fatal(err)
+			}
+			if strings.Contains(script, "-retain-capture") != retain || strings.Contains(script, "-stop-pktmon-first") != recovery || !strings.Contains(script, "-login-seconds 45") {
+				t.Fatalf("options lost: retain=%v recovery=%v script=%s", retain, recovery, script)
+			}
+		}
+	}
+}

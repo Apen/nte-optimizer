@@ -35,7 +35,7 @@ func loadForkCatalog(path string) (*forkCatalog, error) {
 	e = json.Unmarshal(b, &c)
 	return &c, e
 }
-func parseWeaponAt(data []byte, bitLen, off int, c *forkCatalog) (weaponItem, int, bool) {
+func parseWeaponAt(data []byte, bitLen, off int, c *forkCatalog, diagnostics *recordDiagnostics) (_ weaponItem, _ int, accepted bool) {
 	r := invBits{data: data, bitLen: bitLen, cursor: off}
 	forkID, o := r.dynamicName()
 	if !o {
@@ -45,6 +45,8 @@ func parseWeaponAt(data []byte, bitLen, off int, c *forkCatalog) (weaponItem, in
 	if !o {
 		return weaponItem{}, 0, false
 	}
+	phase := "record_header"
+	defer func() { diagnostics.record(phase, accepted) }()
 	id, o := r.netID()
 	if !o || !validNetID(id) {
 		return weaponItem{}, 0, false
@@ -72,6 +74,7 @@ func parseWeaponAt(data []byte, bitLen, off int, c *forkCatalog) (weaponItem, in
 	if !o || one16 != 1 {
 		return weaponItem{}, 0, false
 	}
+	phase = "progression"
 	level, o := r.i32()
 	if !o || level < 1 || level > 80 {
 		return weaponItem{}, 0, false
@@ -97,10 +100,10 @@ func lookupFork(c *forkCatalog, id string) (forkDefinition, string, bool) {
 	}
 	return forkDefinition{}, "", false
 }
-func parseWeapons(data []byte, bitLen int, c *forkCatalog) []weaponItem {
+func parseWeapons(data []byte, bitLen int, c *forkCatalog, diagnostics *recordDiagnostics) []weaponItem {
 	m := map[itemNetID]weaponItem{}
 	for off := 0; off < bitLen; off++ {
-		v, _, o := parseWeaponAt(data, bitLen, off, c)
+		v, _, o := parseWeaponAt(data, bitLen, off, c, diagnostics)
 		if o {
 			m[v.ID] = v
 		}

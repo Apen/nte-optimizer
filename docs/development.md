@@ -109,6 +109,9 @@ not part of the local gate.
 All documentation and source-code comments must be written in English. Runtime
 translations belong in the locale files and may use their target language.
 
+See [scan diagnostics](scan-diagnostics.md) for decoding/import stages,
+privacy guarantees, counter interpretation and synthetic reproduction tests.
+
 ## CI
 
 The Windows workflow installs locked npm dependencies, checks Go module files,

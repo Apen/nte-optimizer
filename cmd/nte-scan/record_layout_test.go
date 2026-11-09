@@ -89,9 +89,20 @@ func TestParseRecordLayoutWithAdditionalHeaderField(t *testing.T) {
 	item.put(0, 1)   // unknown flag
 	item.put(0, 32)  // tail
 	item.put(0, 32)  // trailing raw fstring (empty)
-	decoded := parseInventoryItems(item.data, item.bits, catalog)
+	itemDiagnostics := &recordDiagnostics{}
+	decoded := parseInventoryItems(item.data, item.bits, catalog, itemDiagnostics)
 	if len(decoded) != 1 {
 		t.Fatalf("expected the appended 64-bit header field to keep equipment decodable, got %d items", len(decoded))
+	}
+	if itemDiagnostics.counts["accepted_sightings"] != 1 {
+		t.Fatalf("missing accepted item diagnostic: %v", itemDiagnostics.counts)
+	}
+	{
+		rejected := &recordDiagnostics{}
+		parseInventoryItems(item.data, item.bits-1, catalog, rejected)
+		if rejected.counts["rejected_record_tail"] != 1 {
+			t.Fatalf("unexpected truncated item diagnostic: %v", rejected.counts)
+		}
 	}
 	want := inventoryStat{Property: "AtkAdd", Value: 42}
 	if !reflect.DeepEqual(decoded[0].MainStats, []inventoryStat{want}) {
@@ -116,7 +127,18 @@ func TestParseRecordLayoutWithAdditionalHeaderField(t *testing.T) {
 	forkCatalog := &forkCatalog{Forks: map[string]forkDefinition{
 		"fork_test": {Quality: "orange", MaxBreakthrough: 5, MaxStar: 6},
 	}}
-	weapons := parseWeapons(weapon.data, weapon.bits, forkCatalog)
+	weaponDiagnostics := &recordDiagnostics{}
+	weapons := parseWeapons(weapon.data, weapon.bits, forkCatalog, weaponDiagnostics)
+	if weaponDiagnostics.counts["accepted_sightings"] != 1 {
+		t.Fatalf("missing accepted weapon diagnostic: %v", weaponDiagnostics.counts)
+	}
+	{
+		rejected := &recordDiagnostics{}
+		parseWeapons(weapon.data, weapon.bits-1, forkCatalog, rejected)
+		if rejected.counts["rejected_progression"] != 1 {
+			t.Fatalf("unexpected truncated weapon diagnostic: %v", rejected.counts)
+		}
+	}
 	if len(weapons) != 1 {
 		t.Fatalf("expected the appended 64-bit header field to keep Arcs decodable, got %d weapons", len(weapons))
 	}
@@ -148,7 +170,18 @@ func TestParseRecordLayoutWithAdditionalHeaderField(t *testing.T) {
 	characterCatalog := &characterCatalog{Characters: map[string]characterDefinition{
 		"1003": {Codename: "Sagiri"},
 	}}
-	characters := parseCharacters(character.data, character.bits, characterCatalog)
+	characterDiagnostics := &recordDiagnostics{}
+	characters := parseCharacters(character.data, character.bits, characterCatalog, characterDiagnostics)
+	if characterDiagnostics.counts["accepted_sightings"] != 1 {
+		t.Fatalf("missing accepted character diagnostic: %v", characterDiagnostics.counts)
+	}
+	{
+		rejected := &recordDiagnostics{}
+		parseCharacters(character.data, character.bits-1, characterCatalog, rejected)
+		if rejected.counts["rejected_skills"] != 1 {
+			t.Fatalf("unexpected truncated character diagnostic: %v", rejected.counts)
+		}
+	}
 	if len(characters) != 1 {
 		t.Fatalf("expected the appended 64-bit header field to keep characters decodable, got %d characters", len(characters))
 	}

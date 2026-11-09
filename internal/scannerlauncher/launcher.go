@@ -32,6 +32,19 @@ func ErrorCode(err error) string {
 type elevatedRunner func(helper, projectDir, outputDir, cancelFile string, seconds int) error
 type elevatedRecoveryRunner func(helper, projectDir, outputDir, cancelFile string, seconds int, stopPktmonFirst bool) error
 
+type Options struct {
+	Seconds         int
+	StopPktmonFirst bool
+	RetainCapture   bool
+}
+
+func RunContextWithOptions(ctx context.Context, installDir, stateDir string, options Options) error {
+	return runWithRecovery(ctx, installDir, stateDir, options.Seconds, options.StopPktmonFirst, func(helper, projectDir, outputDir, cancelFile string, seconds int, stopPktmonFirst bool) error {
+		options.Seconds, options.StopPktmonFirst = seconds, stopPktmonFirst
+		return runElevatedWithOptions(helper, projectDir, outputDir, cancelFile, options)
+	})
+}
+
 // Run locates the separately built scanner helper and starts it with elevated
 // privileges. The desktop optimizer itself deliberately stays non-elevated.
 func Run(installDir, stateDir string, seconds int) error {

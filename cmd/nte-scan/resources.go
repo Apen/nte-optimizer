@@ -24,7 +24,7 @@ func loadResourceCatalog(path string) (*resourceCatalog, error) {
 	e = json.Unmarshal(b, &c)
 	return &c, e
 }
-func parseResourceAt(data []byte, bitLen, off int, c *resourceCatalog) (resourceItem, bool) {
+func parseResourceAt(data []byte, bitLen, off int, c *resourceCatalog, diagnostics *recordDiagnostics) (_ resourceItem, accepted bool) {
 	r := invBits{data: data, bitLen: bitLen, cursor: off}
 	itemID, o := r.dynamicName()
 	if !o {
@@ -34,14 +34,18 @@ func parseResourceAt(data []byte, bitLen, off int, c *resourceCatalog) (resource
 	if !o {
 		return resourceItem{}, false
 	}
+	phase := "record_header"
+	defer func() { diagnostics.record(phase, accepted) }()
 	id, o := r.netID()
 	if !o || !validNetID(id) {
 		return resourceItem{}, false
 	}
+	phase = "quantity"
 	qty, o := r.i64()
 	if !o || qty <= 0 || qty > 1_000_000_000_000 {
 		return resourceItem{}, false
 	}
+	phase = "record_tail"
 	if _, o = r.i32(); !o {
 		return resourceItem{}, false
 	}
@@ -51,10 +55,10 @@ func parseResourceAt(data []byte, bitLen, off int, c *resourceCatalog) (resource
 	}
 	return resourceItem{ID: id, ItemID: itemID, Quantity: qty}, true
 }
-func parseResources(data []byte, bitLen int, c *resourceCatalog) []resourceItem {
+func parseResources(data []byte, bitLen int, c *resourceCatalog, diagnostics *recordDiagnostics) []resourceItem {
 	m := map[itemNetID]resourceItem{}
 	for off := 0; off < bitLen; off++ {
-		v, o := parseResourceAt(data, bitLen, off, c)
+		v, o := parseResourceAt(data, bitLen, off, c, diagnostics)
 		if o {
 			m[v.ID] = v
 		}

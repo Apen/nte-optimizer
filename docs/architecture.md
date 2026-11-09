@@ -61,8 +61,9 @@ scripts/                   quality, build, packaging, and smoke tests
 8. the desktop importer creates one atomic account snapshot.
 
 An incomplete scan never replaces the last valid account import.
-Decoding rejects captures above 256 MiB and fragmented messages or decoded LZ4
-blocks above 16 MiB before allocating their output. These are conservative local
+The scanner streams captures up to 1 GiB, retaining at most 256 MiB of selected
+packet bytes and one million packets. It rejects PCAPNG blocks above 16 MiB;
+fragmented messages and decoded LZ4 blocks also have 16 MiB bounds. These are conservative local
 resource budgets, not assertions about game protocol maxima. Oversized capture
 and reassembly failures abort publication. Cancellation is checked between domain
 records and during panel bit scans; malformed optional fields remain unavailable.

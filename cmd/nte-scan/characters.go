@@ -401,13 +401,13 @@ func loadCharacterCatalog(path string) (*characterCatalog, error) {
 	e = json.Unmarshal(b, &c)
 	return &c, e
 }
-func parseCharacterAt(data []byte, bitLen, off int, c *characterCatalog) (characterItem, int, bool) {
-	p, item, end, ok := parseCharacterProbeAt(data, bitLen, off, c)
+func parseCharacterAt(data []byte, bitLen, off int, c *characterCatalog, diagnostics *recordDiagnostics) (characterItem, int, bool) {
+	p, item, end, ok := parseCharacterProbeAt(data, bitLen, off, c, diagnostics)
 	_ = p
 	return item, end, ok
 }
 
-func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog) (characterProbe, characterItem, int, bool) {
+func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog, diagnostics *recordDiagnostics) (_ characterProbe, _ characterItem, _ int, accepted bool) {
 	r := invBits{data: data, bitLen: bitLen, cursor: off}
 	s, o := r.dynamicName()
 	if !o {
@@ -421,6 +421,8 @@ func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog) (c
 	if !o {
 		return characterProbe{}, characterItem{}, 0, false
 	}
+	phase := "record_header"
+	defer func() { diagnostics.record(phase, accepted) }()
 	net, o := r.netID()
 	if !o || !validNetID(net) {
 		return characterProbe{}, characterItem{}, 0, false
@@ -444,6 +446,7 @@ func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog) (c
 	if !o || arr != 1 {
 		return characterProbe{}, characterItem{}, 0, false
 	}
+	phase = "progression"
 	level, o := r.i32()
 	if !o || level < 1 || level > 100 {
 		return characterProbe{}, characterItem{}, 0, false
@@ -452,15 +455,18 @@ func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog) (c
 	if !o || br < 0 || br > 100 {
 		return characterProbe{}, characterItem{}, 0, false
 	}
+	phase = "links"
 	fork, o := r.netID()
 	if !o || ((fork.Solt != 0 || fork.Serial != 0) && !validNetID(fork)) {
 		return characterProbe{}, characterItem{}, 0, false
 	}
+	phase = "progression"
 	aw, o := r.i32()
 	if !o || aw < 0 || aw > 100 {
 		return characterProbe{}, characterItem{}, 0, false
 	}
 	afterAwaken := r.cursor
+	phase = "panel_fields"
 	unknownFloats := make([]float32, 0, 7)
 	for i := 0; i < 7; i++ {
 		v, o := r.f32()
@@ -477,6 +483,7 @@ func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog) (c
 	if !o || n < 0 {
 		return characterProbe{}, characterItem{}, 0, false
 	}
+	phase = "skills"
 	n16, o := r.u16()
 	if !o || n16 > 64 {
 		return characterProbe{}, characterItem{}, 0, false
@@ -520,7 +527,7 @@ func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog) (c
 func parseCharacterProbes(data []byte, bitLen int, c *characterCatalog) []characterProbe {
 	m := map[itemNetID]characterProbe{}
 	for off := 0; off < bitLen; off++ {
-		p, _, _, ok := parseCharacterProbeAt(data, bitLen, off, c)
+		p, _, _, ok := parseCharacterProbeAt(data, bitLen, off, c, nil)
 		if ok {
 			m[p.NetID] = p
 		}
@@ -532,7 +539,7 @@ func parseCharacterProbes(data []byte, bitLen int, c *characterCatalog) []charac
 	sort.Slice(out, func(i, j int) bool { return out[i].CharacterID < out[j].CharacterID })
 	return out
 }
-func parseCharacters(data []byte, bitLen int, c *characterCatalog) []characterItem {
+func parseCharacters(data []byte, bitLen int, c *characterCatalog, diagnostics *recordDiagnostics) []characterItem {
 	m := map[itemNetID]characterItem{}
 	var previous characterItem
 	var previousEnd int
@@ -552,7 +559,7 @@ func parseCharacters(data []byte, bitLen int, c *characterCatalog) []characterIt
 		m[previous.NetID] = previous
 	}
 	for off := 0; off < bitLen; off++ {
-		v, end, o := parseCharacterAt(data, bitLen, off, c)
+		v, end, o := parseCharacterAt(data, bitLen, off, c, diagnostics)
 		if o {
 			save(off)
 			previous, previousEnd = v, end

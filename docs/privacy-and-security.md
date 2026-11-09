@@ -54,11 +54,22 @@ It can contain:
 - `strategy_overrides.json`: user-edited strategy settings;
 - `account_overrides.json`: optional manual account corrections;
 - `scan-output/`: the latest validated scanner export.
+- `scan-diagnostic.jsonl`: the latest local scan/import stages, fixed rejection
+  codes and aggregate counts. It excludes raw payloads, imported values, paths
+  and account identifiers. See [scan diagnostics](scan-diagnostics.md).
+- `diagnostic-captures/`: private PCAPNG copies only when the user explicitly
+  enables capture retention. They persist until manually deleted and are
+  excluded from the shareable diagnostic log.
 
 During capture, ETL and PCAPNG files are created in the scanner working
 directory's `input` folder. That folder is cleared at the start of a new scan,
 and successful guided scans remove their current raw capture files after the
 validated JSON export is published.
+
+Explicitly retained diagnostic copies live outside temporary `input`, survive
+later scans and can contain sensitive raw traffic. They are copied before
+decoding, allowing offline investigation even when decoding fails. Capture
+retention does not extend the capture window or transmit the file anywhere.
 
 ## Failure behavior
 

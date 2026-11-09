@@ -26,6 +26,26 @@ func TestMeasureUDPFlow(t *testing.T) {
 	}
 }
 
+func TestScannerPacketSelectionPreservesSupportedTransports(t *testing.T) {
+	udp := udpFrame(t, "10.0.0.2", "20.1.1.1", 51000, 30031, []byte("synthetic"))
+	if !scannerPacket(udp) {
+		t.Fatal("game UDP filtered out")
+	}
+	tcp := append([]byte(nil), udp...)
+	tcp[23] = 6
+	if !scannerPacket(tcp) {
+		t.Fatal("game TCP filtered out")
+	}
+	binary.BigEndian.PutUint16(tcp[34:36], 443)
+	binary.BigEndian.PutUint16(tcp[36:38], 51000)
+	if scannerPacket(tcp) {
+		t.Fatal("unrelated HTTPS retained")
+	}
+	if scannerPacket([]byte{1, 2, 3}) {
+		t.Fatal("truncated frame retained")
+	}
+}
+
 func udpFrame(t *testing.T, source, destination string, sourcePort, destinationPort uint16, payload []byte) []byte {
 	t.Helper()
 	frame := make([]byte, 14+20+8+len(payload))

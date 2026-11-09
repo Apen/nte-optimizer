@@ -189,7 +189,7 @@ func mainStatValue(c *equipmentCatalog, d equipmentDefinition, p string, level u
 	return a[len(a)-1][1], true
 }
 
-func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog) (inventoryItem, int, bool) {
+func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog, diagnostics *recordDiagnostics) (_ inventoryItem, _ int, accepted bool) {
 	r := invBits{data, bitLen, off}
 	itemID, o := r.dynamicName()
 	if !o {
@@ -199,6 +199,8 @@ func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog) (in
 	if !o {
 		return inventoryItem{}, 0, false
 	}
+	phase := "record_header"
+	defer func() { diagnostics.record(phase, accepted) }()
 	id, o := r.netID()
 	if !o || !validNetID(id) {
 		return inventoryItem{}, 0, false
@@ -224,10 +226,12 @@ func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog) (in
 			return inventoryItem{}, 0, false
 		}
 	}
+	phase = "progression"
 	lv, o := r.i32()
 	if !o || lv < 0 || uint32(lv) > def.MaxLevel {
 		return inventoryItem{}, 0, false
 	}
+	phase = "links"
 	ch, o := r.netID()
 	if !o {
 		return inventoryItem{}, 0, false
@@ -240,6 +244,7 @@ func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog) (in
 		z := ch
 		chp = &z
 	}
+	phase = "record_header"
 	dur, o := r.i32()
 	if !o || dur < 0 {
 		return inventoryItem{}, 0, false
@@ -256,6 +261,7 @@ func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog) (in
 	if !o || z != 0 {
 		return inventoryItem{}, 0, false
 	}
+	phase = "main_stats"
 	cnt, o := r.u16()
 	if !o || int(cnt) != def.MainCount {
 		return inventoryItem{}, 0, false
@@ -275,6 +281,7 @@ func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog) (in
 		}
 		it.MainStats = append(it.MainStats, inventoryStat{p, v})
 	}
+	phase = "sub_stats"
 	cnt, o = r.u16()
 	if !o || int(cnt) != def.SubCount {
 		return inventoryItem{}, 0, false
@@ -293,6 +300,7 @@ func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog) (in
 		}
 		it.SubStats = append(it.SubStats, inventoryStat{p, v})
 	}
+	phase = "record_tail"
 	timer, o := r.f32()
 	if !o || timer < 0 || math.IsNaN(float64(timer)) {
 		return inventoryItem{}, 0, false
@@ -309,13 +317,13 @@ func parseInventoryItemAt(data []byte, bitLen, off int, c *equipmentCatalog) (in
 	}
 	return it, r.cursor, true
 }
-func parseInventoryItems(data []byte, bitLen int, c *equipmentCatalog) []inventoryItem {
+func parseInventoryItems(data []byte, bitLen int, c *equipmentCatalog, diagnostics *recordDiagnostics) []inventoryItem {
 	if bitLen > len(data)*8 {
 		return nil
 	}
 	m := map[itemNetID]inventoryItem{}
 	for off := 0; off < bitLen; {
-		it, next, ok := parseInventoryItemAt(data, bitLen, off, c)
+		it, next, ok := parseInventoryItemAt(data, bitLen, off, c, diagnostics)
 		if ok {
 			m[it.ID] = it
 			if len(m) >= 4096 {
@@ -338,108 +346,6 @@ func parseInventoryItems(data []byte, bitLen int, c *equipmentCatalog) []invento
 		}
 		return out[i].ID.Solt < out[j].ID.Solt
 	})
-	return out
-}
-
-type placementCandidate struct {
-	itemID  string
-	cells   map[equipmentGridCell]bool
-	first   *equipmentGridCell
-	invalid bool
-}
-
-func parseCompactPlacements(data []byte, bitLen int, known map[itemNetID]inventoryItem, c *equipmentCatalog) map[itemNetID]equipmentGridCell {
-	groups := map[itemNetID]*placementCandidate{}
-	for off := 0; off < bitLen; {
-		r := invBits{data: data, bitLen: bitLen, cursor: off}
-		one, o := r.i32()
-		if !o || one != 1 {
-			off++
-			continue
-		}
-		itemID, o := r.dynamicName()
-		if !o {
-			off++
-			continue
-		}
-		def, o := c.Items[itemID]
-		if !o || def.Kind != "module" {
-			off++
-			continue
-		}
-		id, o := r.netID()
-		if !o || !validNetID(id) {
-			off++
-			continue
-		}
-		first, o := r.boolean()
-		if !o {
-			off++
-			continue
-		}
-		row, o := r.i32()
-		if !o {
-			off++
-			continue
-		}
-		col, o := r.i32()
-		if !o {
-			off++
-			continue
-		}
-		nf, o := r.i32()
-		if !o || row < 0 || row >= 7 || col < 0 || col >= 7 || nf != 0 {
-			off++
-			continue
-		}
-		if it, o := known[id]; o && it.ItemID != itemID {
-			off++
-			continue
-		}
-		g := groups[id]
-		if g == nil {
-			g = &placementCandidate{itemID: itemID, cells: map[equipmentGridCell]bool{}}
-			groups[id] = g
-		}
-		cell := equipmentGridCell{row, col}
-		if g.itemID != itemID || g.cells[cell] {
-			g.invalid = true
-		}
-		g.cells[cell] = true
-		if first {
-			if g.first != nil {
-				g.invalid = true
-			}
-			x := cell
-			g.first = &x
-		}
-		if r.cursor > off {
-			off = r.cursor
-		} else {
-			off++
-		}
-	}
-	out := map[itemNetID]equipmentGridCell{}
-	for id, g := range groups {
-		if g.invalid || g.first == nil {
-			continue
-		}
-		def := c.Items[g.itemID]
-		shape, o := c.Shapes[def.Geometry]
-		if !o || def.Grid == nil || len(g.cells) != int(*def.Grid) || len(shape.Cells) != len(g.cells) {
-			continue
-		}
-		valid := true
-		for _, rel := range shape.Cells {
-			if !g.cells[equipmentGridCell{g.first.Row + rel.Row, g.first.Column + rel.Column}] {
-				valid = false
-				break
-			}
-		}
-		if valid {
-			out[id] = *g.first
-		}
-	}
 	return out
 }
 

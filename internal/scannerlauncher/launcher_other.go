@@ -11,3 +11,7 @@ func runElevated(_, _, _, _ string, _ int) error {
 func runElevatedWithRecovery(_, _, _, _ string, _ int, _ bool) error {
 	return fmt.Errorf("administrator elevation is not supported on this platform")
 }
+
+func runElevatedWithOptions(_, _, _, _ string, _ Options) error {
+	return fmt.Errorf("administrator elevation is not supported on this platform")
+}

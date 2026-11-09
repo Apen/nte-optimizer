@@ -68,8 +68,8 @@ export function OpenDownloadURL(url) {
   return window['go']['main']['DesktopApp']['OpenDownloadURL'](url)
 }
 
-export function ScanAndImportAccount(language, seconds) {
-  return window['go']['main']['DesktopApp']['ScanAndImportAccount'](language, seconds)
+export function ScanAndImportAccount(language, seconds, retainCapture) {
+  return window['go']['main']['DesktopApp']['ScanAndImportAccount'](language, seconds, retainCapture)
 }
 
 export function LastScanLog() {
@@ -88,8 +88,8 @@ export function LastOptimizationLog() {
   return window['go']['main']['DesktopApp']['LastOptimizationLog']()
 }
 
-export function RecoverAndScanAccount(language, seconds) {
-  return window['go']['main']['DesktopApp']['RecoverAndScanAccount'](language, seconds)
+export function RecoverAndScanAccount(language, seconds, retainCapture) {
+  return window['go']['main']['DesktopApp']['RecoverAndScanAccount'](language, seconds, retainCapture)
 }
 export function PreviewTeam(profileID, language, arcForkID, allies) {
   return window['go']['main']['DesktopApp']['PreviewTeam'](profileID, language, arcForkID, allies);

@@ -275,7 +275,10 @@ func captureLoginAutoWithStatusAndRecovery(ctx context.Context, name string, max
 		return "", &captureDiagnosticError{code: "capture_file_exists", err: fmt.Errorf("capture file already exists: %s", filepath.Base(pcap))}
 	}
 	report("preflight", "complete")
-	if err := run("start", "--capture", "--pkt-size", "0", "--file-name", etl); err != nil {
+	// Capturing every processing component multiplies each network packet and
+	// can overwrite the beginning of the circular log during a busy download.
+	// Keep full packets at NICs and make the finite journal budget explicit.
+	if err := run("start", "--capture", "--comp", "nics", "--pkt-size", "0", "--file-size", "1024", "--log-mode", "circular", "--file-name", etl); err != nil {
 		report("pktmon_start", "failed")
 		return "", &captureDiagnosticError{code: pktmonStartFailureCode(err), err: fmt.Errorf("pktmon failed to start: %w", err)}
 	}

@@ -16,7 +16,7 @@ func TestParseResourcesAcceptsEveryCatalogItemWithoutGroupFiltering(t *testing.T
 		"Annulith":            {},
 		"SyntheticEventToken": {},
 	}}
-	got := parseResources(writer.data, writer.bitLen, catalog)
+	got := parseResources(writer.data, writer.bitLen, catalog, nil)
 	want := []resourceItem{
 		{ID: itemNetID{Solt: 11, Serial: 101}, ItemID: "Annulith", Quantity: 7},
 		{ID: itemNetID{Solt: 12, Serial: 102}, ItemID: "SyntheticEventToken", Quantity: 23},
@@ -46,7 +46,7 @@ func TestProductionResourceCatalogDecodesNewAndUnusualResourceIDs(t *testing.T) 
 		writer.add(itemID, itemNetID{Solt: uint32(21 + index), Serial: uint32(31 + index)}, int64(index+1))
 	}
 
-	got := parseResources(writer.data, writer.bitLen, catalog)
+	got := parseResources(writer.data, writer.bitLen, catalog, nil)
 	if len(got) != len(wantIDs) {
 		t.Fatalf("decoded %d production resources, want %d: %#v", len(got), len(wantIDs), got)
 	}

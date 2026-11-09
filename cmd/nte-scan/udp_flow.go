@@ -5,6 +5,22 @@ import (
 	"net"
 )
 
+// Match the transports consumed below and by the TCP frame decoder. This
+// predicate filters memory use after capture; it does not change network traffic.
+func scannerPacket(data []byte) bool {
+	if len(data) < 42 || binary.BigEndian.Uint16(data[12:14]) != 0x0800 {
+		return false
+	}
+	offset := 14 + int(data[14]&15)*4
+	if offset < 34 || offset+8 > len(data) {
+		return false
+	}
+	if data[23] == 17 {
+		return true
+	}
+	return data[23] == 6 && (binary.BigEndian.Uint16(data[offset:offset+2]) == 30031 || binary.BigEndian.Uint16(data[offset+2:offset+4]) == 30031)
+}
+
 type flowKey struct {
 	src   string
 	sport uint16
