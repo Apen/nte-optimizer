@@ -332,11 +332,16 @@ func attachModulePlacements(ctx context.Context, report *udpReport, rawPayloads 
 	}
 	known := map[itemNetID]inventoryItem{}
 	index := map[itemNetID]int{}
+	roster := map[itemNetID]uint32{}
+	for _, character := range report.Characters {
+		roster[character.NetID] = character.CharacterID
+	}
 	for itemIndex, item := range report.Items {
 		known[item.ID] = item
 		index[item.ID] = itemIndex
 	}
 	diagnostics := newPlacementDiagnostics()
+	observations := newPlacementObservations()
 	counts := map[string]int{"raw_payloads": len(rawPayloads), "inventory_streams": len(streams), "completed_messages": len(completed)}
 	for _, stream := range streams {
 		if err := ctx.Err(); err != nil {
@@ -350,18 +355,33 @@ func attachModulePlacements(ctx context.Context, report *udpReport, rawPayloads 
 		if len(characters) > 1 {
 			counts["placement_streams_multiple_characters"]++
 		}
-		if len(characters) != 1 {
+		if len(characters) == 0 {
 			counts["placement_groups_in_skipped_streams"] += len(positions)
 			continue
 		}
-		counts["placement_eligible_streams"]++
-		counts["placement_groups_in_eligible_streams"] += len(positions)
-		for id, position := range positions {
-			if itemIndex, ok := index[id]; ok {
-				placement := position
-				report.Items[itemIndex].EquippedPlacement = &placement
+		streamOwners := map[itemNetID]bool{}
+		for _, character := range characters {
+			if roster[character.NetID] == character.CharacterID {
+				streamOwners[character.NetID] = true
 			}
 		}
+		if len(streamOwners) > 0 {
+			counts["placement_eligible_streams"]++
+		}
+		for id, position := range positions {
+			item, exists := known[id]
+			if !exists || item.Kind != "module" || item.CharacterNetID == nil || !streamOwners[*item.CharacterNetID] {
+				counts["placement_groups_owner_mismatch"]++
+				continue
+			}
+			counts["placement_groups_in_eligible_streams"]++
+			observations.add(id, position)
+		}
+	}
+	positions, overlaps := observations.nonOverlapping(known, equipmentCatalog)
+	for id, position := range positions {
+		placement := position
+		report.Items[index[id]].EquippedPlacement = &placement
 	}
 	// Other sources are diagnostic only. Do not infer a character association
 	// or merge cell groups across unrelated packets or messages.
@@ -380,7 +400,7 @@ func attachModulePlacements(ctx context.Context, report *udpReport, rawPayloads 
 	for key, value := range diagnostics.records.counts {
 		counts[key] = value
 	}
-	for _, key := range []string{"equipped_modules", "modules_with_placement", "modules_valid_outside_scope", "modules_rejected_groups", "modules_rejected_cells", "modules_no_recognized_candidate"} {
+	for _, key := range []string{"equipped_modules", "modules_with_placement", "modules_conflicting_positions", "modules_overlapping_positions", "modules_valid_outside_scope", "modules_rejected_groups", "modules_rejected_cells", "modules_no_recognized_candidate"} {
 		counts[key] = 0
 	}
 	for _, item := range report.Items {
@@ -391,6 +411,10 @@ func attachModulePlacements(ctx context.Context, report *udpReport, rawPayloads 
 		switch {
 		case item.EquippedPlacement != nil:
 			counts["modules_with_placement"]++
+		case observations.conflicting[item.ID]:
+			counts["modules_conflicting_positions"]++
+		case overlaps[item.ID]:
+			counts["modules_overlapping_positions"]++
 		case diagnostics.valid[item.ID]:
 			counts["modules_valid_outside_scope"]++
 		case diagnostics.groups[item.ID]:

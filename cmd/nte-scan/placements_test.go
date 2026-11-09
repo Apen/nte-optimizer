@@ -171,3 +171,116 @@ func TestPlacementEvidenceSeparatesMissingRejectedAndExcludedSources(t *testing.
 	}
 	t.Fatal("missing placement evidence diagnostic")
 }
+
+func TestPlacementImportAssociatesMultipleCharactersByInventoryOwner(t *testing.T) {
+	equipmentPath, characterPath := placementAssociationCatalogs(t)
+	firstOwner, secondOwner := itemNetID{Solt: 100, Serial: 200}, itemNetID{Solt: 101, Serial: 201}
+	r := udpReport{Characters: []characterItem{{NetID: firstOwner, CharacterID: 1003}, {NetID: secondOwner, CharacterID: 1004}}}
+	for i, owner := range []itemNetID{firstOwner, secondOwner} {
+		ownerCopy := owner
+		r.Items = append(r.Items, inventoryItem{ID: itemNetID{Solt: uint32(i + 1), Serial: 10}, ItemID: "cell_single", Kind: "module", CharacterNetID: &ownerCopy})
+	}
+	w := recordWriter{}
+	putPlacementTestCharacter(&w, firstOwner, "1003")
+	putPlacementTestCharacter(&w, secondOwner, "1004")
+	// Equal coordinates are valid on different characters' grids.
+	for _, item := range r.Items {
+		putPlacementCell(&w, item.ItemID, item.ID, true, 2, 3)
+	}
+	streams := []invStream{{data: w.data, bits: w.bits}, {data: w.data, bits: w.bits}}
+	if err := attachModulePlacements(context.Background(), &r, nil, streams, nil, equipmentPath, characterPath); err != nil {
+		t.Fatal(err)
+	}
+	for _, item := range r.Items {
+		if item.EquippedPlacement == nil || *item.EquippedPlacement != (equipmentGridCell{2, 3}) {
+			t.Fatalf("multi-character stream lost placement: %+v", item)
+		}
+	}
+	counts := placementAssociationCounts(t, r)
+	if counts["modules_with_placement"] != 2 || counts["modules_conflicting_positions"] != 0 || counts["modules_valid_outside_scope"] != 0 {
+		t.Fatalf("unexpected association counters: %v", counts)
+	}
+}
+
+func TestPlacementImportRejectsOwnerMismatchConflictsAndOverlaps(t *testing.T) {
+	for _, scenario := range []string{"wrong owner", "wrong roster identity", "unknown item", "conflicting snapshots", "conflicting snapshots reversed", "overlapping modules"} {
+		t.Run(scenario, func(t *testing.T) {
+			equipmentPath, characterPath := placementAssociationCatalogs(t)
+			owner, otherOwner := itemNetID{Solt: 100, Serial: 200}, itemNetID{Solt: 101, Serial: 201}
+			id := itemNetID{Solt: 1, Serial: 10}
+			r := udpReport{Characters: []characterItem{{NetID: owner, CharacterID: 1003}, {NetID: otherOwner, CharacterID: 1004}}, Items: []inventoryItem{{ID: id, ItemID: "cell_single", Kind: "module", CharacterNetID: &owner}}}
+			w := recordWriter{}
+			switch scenario {
+			case "wrong owner":
+				putPlacementTestCharacter(&w, otherOwner, "1004")
+			case "wrong roster identity":
+				putPlacementTestCharacter(&w, owner, "1004")
+			default:
+				putPlacementTestCharacter(&w, owner, "1003")
+			}
+			seenID := id
+			if scenario == "unknown item" {
+				seenID = itemNetID{Solt: 50, Serial: 60}
+			}
+			putPlacementCell(&w, "cell_single", seenID, true, 2, 3)
+			streams := []invStream{{data: w.data, bits: w.bits}}
+			want := "placement_groups_owner_mismatch"
+			if strings.HasPrefix(scenario, "conflicting snapshots") {
+				second := recordWriter{}
+				putPlacementTestCharacter(&second, owner, "1003")
+				putPlacementCell(&second, "cell_single", id, true, 3, 3)
+				streams = append(streams, invStream{data: second.data, bits: second.bits})
+				if scenario == "conflicting snapshots reversed" {
+					streams[0], streams[1] = streams[1], streams[0]
+				}
+				want = "modules_conflicting_positions"
+			}
+			if scenario == "overlapping modules" {
+				secondID := itemNetID{Solt: 2, Serial: 10}
+				r.Items = append(r.Items, inventoryItem{ID: secondID, ItemID: "cell_single", Kind: "module", CharacterNetID: &owner})
+				putPlacementCell(&w, "cell_single", secondID, true, 2, 3)
+				streams[0] = invStream{data: w.data, bits: w.bits}
+				want = "modules_overlapping_positions"
+			}
+			if err := attachModulePlacements(context.Background(), &r, nil, streams, nil, equipmentPath, characterPath); err != nil {
+				t.Fatal(err)
+			}
+			for _, item := range r.Items {
+				if item.EquippedPlacement != nil {
+					t.Fatalf("unsafe placement imported in %s: %+v", scenario, item)
+				}
+			}
+			if counts := placementAssociationCounts(t, r); counts[want] == 0 {
+				t.Fatalf("rejection cause not logged: %v", counts)
+			}
+		})
+	}
+}
+
+func placementAssociationCatalogs(t *testing.T) (string, string) {
+	t.Helper()
+	dir := t.TempDir()
+	equipmentPath, characterPath := filepath.Join(dir, "equipment.json"), filepath.Join(dir, "characters.json")
+	data, err := json.Marshal(placementTestCatalog())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(equipmentPath, data, 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(characterPath, []byte(`{"characters":{"1003":{"codename":"SyntheticA"},"1004":{"codename":"SyntheticB"}}}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	return equipmentPath, characterPath
+}
+
+func placementAssociationCounts(t *testing.T, r udpReport) map[string]int {
+	t.Helper()
+	for _, event := range r.Diagnostics {
+		if event.Stage == "decode_placements" && event.Status != "started" {
+			return event.Counts
+		}
+	}
+	t.Fatal("missing placement diagnostic")
+	return nil
+}

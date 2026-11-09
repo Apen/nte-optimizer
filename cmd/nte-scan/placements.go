@@ -21,6 +21,55 @@ func newPlacementDiagnostics() *placementDiagnostics {
 	return &placementDiagnostics{candidates: map[itemNetID]bool{}, groups: map[itemNetID]bool{}, valid: map[itemNetID]bool{}}
 }
 
+// Repeated snapshots may repeat a placement, but conflicting coordinates must
+// not be resolved by stream iteration order. Ownership comes from the decoded
+// inventory and must also be present in the stream's character records.
+type placementObservations struct {
+	positions   map[itemNetID]equipmentGridCell
+	conflicting map[itemNetID]bool
+}
+
+func newPlacementObservations() *placementObservations {
+	return &placementObservations{positions: map[itemNetID]equipmentGridCell{}, conflicting: map[itemNetID]bool{}}
+}
+
+func (o *placementObservations) add(id itemNetID, position equipmentGridCell) {
+	if previous, exists := o.positions[id]; exists && previous != position {
+		o.conflicting[id] = true
+	}
+	o.positions[id] = position
+}
+
+func (o *placementObservations) nonOverlapping(known map[itemNetID]inventoryItem, catalog *equipmentCatalog) (map[itemNetID]equipmentGridCell, map[itemNetID]bool) {
+	cells := map[itemNetID]map[equipmentGridCell]itemNetID{}
+	overlaps := map[itemNetID]bool{}
+	for id, position := range o.positions {
+		item, exists := known[id]
+		if !exists || item.Kind != "module" || item.CharacterNetID == nil || o.conflicting[id] {
+			continue
+		}
+		owner := *item.CharacterNetID
+		if cells[owner] == nil {
+			cells[owner] = map[equipmentGridCell]itemNetID{}
+		}
+		for _, relative := range catalog.Shapes[catalog.Items[item.ItemID].Geometry].Cells {
+			cell := equipmentGridCell{Row: position.Row + relative.Row, Column: position.Column + relative.Column}
+			if other, exists := cells[owner][cell]; exists && other != id {
+				overlaps[id], overlaps[other] = true, true
+			}
+			cells[owner][cell] = id
+		}
+	}
+	positions := map[itemNetID]equipmentGridCell{}
+	for id, position := range o.positions {
+		item, exists := known[id]
+		if exists && item.Kind == "module" && item.CharacterNetID != nil && !o.conflicting[id] && !overlaps[id] {
+			positions[id] = position
+		}
+	}
+	return positions, overlaps
+}
+
 type placementCellRecord struct {
 	id     itemNetID
 	itemID string

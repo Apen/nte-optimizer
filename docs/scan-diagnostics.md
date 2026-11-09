@@ -78,19 +78,32 @@ they are not a complete semantic validator for every optional game field.
 
 ## Module placement failure localization
 
-Placement import currently accepts cell groups only from reconstructed inventory
-streams containing exactly one recognized character. Diagnostics also examine
-excluded inventory streams, raw payloads and completed Unreal messages. These
-additional sources do not change imported placements or infer ownership.
+Placement import accepts validated cell groups from reconstructed inventory
+streams containing the module's character owner, including streams with several
+characters. Each module must match the decoded inventory by its exact network
+identity, and its inventory owner must match a character identity in both that
+stream and the decoded roster. Counting characters in the stream is not an
+ownership rule.
+
+Repeated observations must agree on coordinates. Conflicting coordinates are
+rejected rather than resolved by stream iteration order. Modules occupying the
+same cells on one character's grid are also rejected. Equal coordinates on
+different characters' grids are valid.
+
+Diagnostics also examine streams without character records, raw payloads and
+completed Unreal messages. Those additional sources do not change imported
+placements or infer ownership. Cell groups are never combined across messages.
 
 Each equipped module belongs to exactly one summary category, in this order:
 
 1. An imported placement exists.
-2. A complete valid group was found only outside the current import scope.
-3. Cell records were recovered, but no complete group passed validation.
-4. A candidate matching the known module was recognized, but its cell fields
+2. Eligible inventory streams contain contradictory coordinates for the module.
+3. Proposed module cells overlap on the same character's grid.
+4. A complete valid group was found only outside the permitted owner association.
+5. Cell records were recovered, but no complete group passed validation.
+6. A candidate matching the known module was recognized, but its cell fields
    did not pass validation.
-5. No candidate matching the supported format was recognized.
+7. No candidate matching the supported format was recognized.
 
 The final category cannot distinguish a different wire format from data that
 was never captured. The other categories provide positive evidence that the
