@@ -124,6 +124,7 @@ For formulas, target utility, caps, set scoring, and search behavior, read
 - [Optimization model](docs/optimization.md)
 - [Architecture](docs/architecture.md)
 - [Data and localization](docs/data-and-localization.md)
+- [Damage catalog validation](docs/builder-numerical-data.md)
 - [Development guide](docs/development.md)
 - [Release process](docs/releases.md)
 
