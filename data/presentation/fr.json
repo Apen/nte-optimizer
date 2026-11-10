@@ -172,7 +172,10 @@
     "MagBase": "Intensité de cycle",
     "ResistanceIgnoreChaosBase": "Ignore RÉS Chaos",
     "ShieldEfficiency": "Efficacité des boucliers",
-    "UnbalIntensityBase": "Intensité de rupture"
+    "UnbalIntensityBase": "Intensité de rupture",
+    "CritAdd": "Bonus de taux CRIT",
+    "DefIgnore": "Ignore DÉF",
+    "UnbalDamageUp": "DÉG de rupture"
   },
   "ui": {
     "error_operation_failed": "L’opération a échoué. Consultez le diagnostic pour plus de détails.",
@@ -872,6 +875,31 @@
     "why_score": "Pourquoi ce score ?",
     "with_build": "Avec ce build",
     "without_atk": "sans ATQ",
-    "workers_candidates": "{workers} workers · {candidates} pièces candidates · {rate} combinaisons/s · {pruned} branches écartées"
+    "workers_candidates": "{workers} workers · {candidates} pièces candidates · {rate} combinaisons/s · {pruned} branches écartées",
+    "ally_buffs_title": "Buffs des coéquipiers",
+    "ally_buffs_none": "Aucun bonus d’équipe modélisé pour ces coéquipiers.",
+    "ally_buff_value_unavailable": "Valeur indisponible",
+    "ally_buff_per_stack": "par cumul",
+    "ally_buff_included": "Dans l’aperçu avec buffs",
+    "ally_buff_not_included": "Non pris en compte",
+    "ally_buff_awakening": "Éveil {level}",
+    "ally_buff_filtered_damage": "Dégâts admissibles uniquement",
+    "ally_buff_replaces_base": "Remplace la version de base",
+    "ally_buff_condition_manual": "Selon les conditions du passif",
+    "ally_buff_condition_ultimate": "Après avoir lancé l’ultime",
+    "ally_buff_condition_redirect_press": "Sur un appui court de la compétence de redirection",
+    "ally_buff_condition_skill": "Après avoir lancé la compétence",
+    "ally_buff_condition_caster_on_team": "Tant que ce personnage est dans l’équipe",
+    "ally_buff_condition_haniel_paranormal_ace": "Pendant son état de soutien spécial",
+    "ally_buff_condition_recipient_protected_by_blessing": "Tant que le bénéficiaire est protégé",
+    "ally_buff_condition_zero_cosmos_esper_cycle": "Après un cycle Esper Cosmos",
+    "ally_buff_condition_caster_on_team_and_alive": "Tant que ce coéquipier est en vie",
+    "ally_buff_condition_cadenza_enter_or_extend": "À l’entrée ou à la prolongation de son état spécial",
+    "ally_buff_condition_linko_resonance_field_active": "Pendant le champ de résonance",
+    "ally_buff_condition_ultimate_cast_with_unlock_effect": "Après avoir lancé l’ultime",
+    "ally_buff_condition_healing": "Après un soin",
+    "ally_buff_condition_remora": "Contre une cible sous Remora",
+    "ally_buff_condition_eligible_followup": "Sur les attaques de suivi admissibles",
+    "ally_buff_condition_break_damage": "Pour les dégâts de rupture"
   }
 }

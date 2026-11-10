@@ -1,4 +1,4 @@
-import { t } from '../i18n'
+import { currentIntlLocale, t } from '../i18n'
 import { formatStat } from '../lib/format'
 import { usePresentation } from '../presentation'
 import type { Result, TeamPreview } from '../types'
@@ -8,7 +8,11 @@ type Effect = TeamPreview['conditional'][number]
 
 export function BuildBuffs({ result }: { result: Result }) {
   const presentation = usePresentation()
-  const effects = result.buff_effects ?? []
+  const allyBuffs = result.ally_buffs ?? []
+  const effects = (result.buff_effects ?? []).filter(effect => !allyBuffs.some(buff =>
+    effect.kind === 'skill' && buff.legacy_effect_id === effect.id &&
+    (buff.character_id === effect.character_id || effect.source_ids?.includes(buff.character_id)),
+  ))
   const personal = Object.entries(result.stats.sources).filter(([source, stats]) =>
     source.endsWith('_conditional') && Object.values(stats).some(value => value !== 0),
   )
@@ -41,8 +45,23 @@ export function BuildBuffs({ result }: { result: Result }) {
   }
 
   return <div className="grid gap-4 text-sm">
-    {!result.buff_effects && !!result.team_allies?.length && <p className="text-slate-400">{t('build_buffs_old_result')}</p>}
-    <section>
+    {result.ally_buffs == null && !!result.team_allies?.length && <p className="text-slate-400">{t('build_buffs_old_result')}</p>}
+    {result.ally_buffs && <section>
+      <h3 className="font-bold">{t('ally_buffs_title')}</h3>
+      {!allyBuffs.length && <p className="mt-1 text-slate-400">{t('ally_buffs_none')}</p>}
+      <ul className="divide-y divide-slate-800">{allyBuffs.map(buff => <li key={`${buff.character_id}:${buff.id}`} className="grid gap-1 py-3">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><b>{buff.character_name}</b>
+          <span className={buff.value === undefined ? 'text-slate-400' : 'font-semibold text-emerald-200'}>
+            {buff.value === undefined ? t('ally_buff_value_unavailable') : buff.value.toLocaleString(currentIntlLocale(),buff.percent ? {style:'percent',maximumFractionDigits:1,signDisplay:'always'} : {maximumFractionDigits:1,signDisplay:'always'})}
+            {` ${presentation.stats[buff.property_id]?.replace(/\s*%$/, '') || t('other_bonus_fallback')}`}
+            {buff.per_stack && ` · ${t('ally_buff_per_stack')}`}
+          </span>
+          <span className={`ml-auto rounded px-2 py-1 text-xs ${buff.included ? 'bg-emerald-950 text-emerald-200' : 'bg-slate-800 text-slate-400'}`}>{t(buff.included ? 'ally_buff_included' : 'ally_buff_not_included')}</span>
+        </div>
+        <p className="text-xs text-slate-400">{[buff.ability_name,buff.condition,buff.duration_seconds !== undefined ? t('buff_duration_seconds',{seconds:buff.duration_seconds}) : undefined].filter(Boolean).join(' · ')}</p>
+      </li>)}</ul>
+    </section>}
+    {(personal.length > 0 || included.length > 0 || !allyBuffs.some(buff => buff.included)) && <section>
       <h3 className="font-bold">{t('build_buffs_included')}</h3>
       {!personal.length && !included.length && <p className="mt-1 text-slate-400">{t('build_buffs_none')}</p>}
       <ul className="divide-y divide-slate-800">
@@ -55,7 +74,7 @@ export function BuildBuffs({ result }: { result: Result }) {
         </li>)}
         {included.map(row)}
       </ul>
-    </section>
+    </section>}
     {informational.length > 0 && <section>
       <h3 className="font-bold">{t('build_buffs_informational')}</h3>
       <ul className="divide-y divide-slate-800">{informational.map(row)}</ul>

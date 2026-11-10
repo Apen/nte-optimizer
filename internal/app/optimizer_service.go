@@ -98,6 +98,7 @@ type ProfileSummary struct {
 }
 
 type OptimizationResult struct {
+	AllyBuffs                      []AllyBuffSummary         `json:"ally_buffs"`
 	BuffEffects                    []TeamPreviewEffect       `json:"buff_effects"`
 	TeamAllies                     []TeamAlly                `json:"team_allies,omitempty"`
 	TeamWarnings                   []string                  `json:"team_warnings,omitempty"`
@@ -137,6 +138,7 @@ type OptimizationResult struct {
 }
 
 type OptimizationAlternative struct {
+	AllyBuffs             []AllyBuffSummary     `json:"ally_buffs"`
 	BuffEffects           []TeamPreviewEffect   `json:"buff_effects"`
 	Solution              optimizer.Solution    `json:"solution"`
 	Modules               []OptimizationModule  `json:"modules"`
@@ -452,6 +454,14 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 	if scenario != nil {
 		result.TeamAllies = scenario.allies
 		result.TeamWarnings = teamWarnings
+		summaries, err := s.allyBuffSummaries(state, scenario, displayCatalog)
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		result.AllyBuffs = matchAllyBuffProjections(summaries, result.BuffEffects)
+		for i := range result.Alternatives {
+			result.Alternatives[i].AllyBuffs = matchAllyBuffProjections(summaries, result.Alternatives[i].BuffEffects)
+		}
 	}
 	result.PhaseMS["reporting"] = time.Since(searchFinished).Milliseconds()
 	result.SearchLimits = SearchLimits{TopPerGeometry: cfg.Optimize.TopPerGeometry, TopPerSet: cfg.Optimize.TopPerSet, TimeoutSeconds: cfg.Optimize.TimeoutSeconds}

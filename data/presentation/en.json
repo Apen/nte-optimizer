@@ -172,7 +172,10 @@
     "MagBase": "Cycle Intensity",
     "ResistanceIgnoreChaosBase": "Chaos RES Ignore",
     "ShieldEfficiency": "Shield Efficiency",
-    "UnbalIntensityBase": "Break Intensity"
+    "UnbalIntensityBase": "Break Intensity",
+    "CritAdd": "CRIT Rate bonus",
+    "DefIgnore": "DEF Ignore",
+    "UnbalDamageUp": "Break DMG"
   },
   "ui": {
     "error_operation_failed": "The operation could not be completed. See diagnostics for details.",
@@ -872,6 +875,31 @@
     "why_score": "Why this score?",
     "with_build": "With this build",
     "without_atk": "without ATK",
-    "workers_candidates": "{workers} workers · {candidates} candidate pieces · {rate} combinations/s · {pruned} branches pruned"
+    "workers_candidates": "{workers} workers · {candidates} candidate pieces · {rate} combinations/s · {pruned} branches pruned",
+    "ally_buffs_title": "Teammate buffs",
+    "ally_buffs_none": "No team bonus is modeled for these teammates.",
+    "ally_buff_value_unavailable": "Value unavailable",
+    "ally_buff_per_stack": "per stack",
+    "ally_buff_included": "In buffed preview",
+    "ally_buff_not_included": "Not included",
+    "ally_buff_awakening": "Awakening {level}",
+    "ally_buff_filtered_damage": "Eligible damage only",
+    "ally_buff_replaces_base": "Replaces the base version",
+    "ally_buff_condition_manual": "Under the passive’s specific conditions",
+    "ally_buff_condition_ultimate": "After casting the Ultimate",
+    "ally_buff_condition_redirect_press": "On a short Redirect Skill press",
+    "ally_buff_condition_skill": "After casting the Skill",
+    "ally_buff_condition_caster_on_team": "While this character is on the team",
+    "ally_buff_condition_haniel_paranormal_ace": "While the special support state is active",
+    "ally_buff_condition_recipient_protected_by_blessing": "While the recipient has the protection effect",
+    "ally_buff_condition_zero_cosmos_esper_cycle": "After a Cosmos Esper Cycle",
+    "ally_buff_condition_caster_on_team_and_alive": "While this teammate is alive",
+    "ally_buff_condition_cadenza_enter_or_extend": "When entering or extending the special state",
+    "ally_buff_condition_linko_resonance_field_active": "While the resonance field is active",
+    "ally_buff_condition_ultimate_cast_with_unlock_effect": "After casting the Ultimate",
+    "ally_buff_condition_healing": "After healing",
+    "ally_buff_condition_remora": "Against a target affected by Remora",
+    "ally_buff_condition_eligible_followup": "On eligible follow-up attacks",
+    "ally_buff_condition_break_damage": "For Break damage"
   }
 }

@@ -20,6 +20,7 @@ export type DamageAnalysis = { status:string; enemy:{level:number;resistance:num
 export type GoalProgress = TargetGoal & { current: number; missing: number; progress: number; reached: boolean }
 export type TeamAlly = { character_id: number; arc_id?: string }
 export type Result = {
+  ally_buffs?: AllyBuffSummary[] | null
   buff_effects?: TeamPreview['conditional'] | null
   team_allies?: TeamAlly[]
   team_warnings?: string[]
@@ -49,7 +50,8 @@ export type Result = {
   solution: OptimizationSolution
 }
 export type OptimizationSolution = { ranking?: { score:number; equipment:number; tie_break?:number; objectives:number; structure:number; contributions?: {property_id:string; source?:string; input_property_id?:string; value:number; target:number; importance:number; points:number; score_scale?:number}[] }; score: number; module_score: number; set_bonus_score: number; cartridge_score: number; weapon_score?:number; selected_weapon_id?:string; selected_set_id?: string; set_matched_count?: number; complete: boolean; visited_states: number; placements: Placement[] }
-export type OptimizationAlternative = { buff_effects?: Result['buff_effects']; solution:OptimizationSolution; modules:OptimizedModule[]; weapon?:Result['weapon']; weapon_conditional_note?:string; cartridge?:Result['cartridge']; cartridge_breakdown?:Result['cartridge_breakdown']; stats:StatSummary; set:Result['set']; goals?:GoalProgress[]; conditional_goals?:GoalProgress[]; damage?:DamageAnalysis }
+export type OptimizationAlternative = { ally_buffs?: Result['ally_buffs']; buff_effects?: Result['buff_effects']; solution:OptimizationSolution; modules:OptimizedModule[]; weapon?:Result['weapon']; weapon_conditional_note?:string; cartridge?:Result['cartridge']; cartridge_breakdown?:Result['cartridge_breakdown']; stats:StatSummary; set:Result['set']; goals?:GoalProgress[]; conditional_goals?:GoalProgress[]; damage?:DamageAnalysis }
+export type AllyBuffSummary = {id:string;character_id:number;character_name:string;ability_name?:string;property_id:string;percent:boolean;value?:number;duration_seconds?:number;condition:string;per_stack?:boolean;included:boolean;legacy_effect_id?:string}
 export type SearchProgress = { visited: number; total?: number; elapsed_ms: number; candidates: number; workers?:number; pruned_branches?:number; finished?:boolean }
 export type OptimizationLog = { started_at:string; finished_at?:string; status:string; entries:{level:string;stage:string;message:string}[] }
 export type ScanLogEvent = { time:string; stage:string; status:string; code?:string; counts?:Record<string,number> }
