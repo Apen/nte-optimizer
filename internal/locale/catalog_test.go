@@ -152,8 +152,8 @@ func TestProductionCatalogLoadsSpecialFurnitureProgressions(t *testing.T) {
 		"fr": {
 			"SF_0011_lv10_desc":   "Augmente l’ATQ des personnages déployés de <Grey>20</>.",
 			"SF_0011_up_des_lv2":  "Bonus d’ATQ des personnages déployés : 2 <img id=\"Image_up\"/> <Green>4</>",
-			"SF_0012_lv10_desc":   "Augmente les DÉG critiques des personnages déployés de <Grey>4 %</>.",
-			"SF_0012_up_des_lv10": "Bonus de DÉG critiques des personnages déployés : 3,6 % <img id=\"Image_up\"/> <Green>4 %</>",
+			"SF_0012_lv10_desc":   "Augmente les DÉG CRIT des personnages déployés de <Grey>4\u00a0%</>.",
+			"SF_0012_up_des_lv10": "Bonus de DÉG CRIT des personnages déployés\u00a0: 3,6\u00a0% <img id=\"Image_up\"/> <Green>4\u00a0%</>",
 			"SF_0013_lv10_desc":   "Augmente la DÉF des personnages déployés de <Grey>30</>.",
 			"SF_0013_up_des_lv10": "Bonus de DÉF des personnages déployés : 27 <img id=\"Image_up\"/> <Green>30</>",
 		},

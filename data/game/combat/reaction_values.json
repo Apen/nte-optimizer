@@ -1,0 +1,4020 @@
+{
+  "schema_version": 1,
+  "scope": "Reaction parameters and exact passive/effect bindings, not automatically active buffs or combat timelines.",
+  "source_build": {
+    "origin": "local_game_client",
+    "region": "Global",
+    "exact_version": null
+  },
+  "character_extensions": [
+    {
+      "id": "reaction_extension_1003_GA_Sagiri_Passive_1_0",
+      "character_id": 1003,
+      "ability_id": "GA_Sagiri_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1003/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/SourceGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_ZhouAn8_1003_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_ZhouAn8_1003.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Sagiri003_Passive2_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_003_Sagiri/PassiveEffect/Buff_Sagiri003_Passive2.0"
+        }
+      ],
+      "source_fields": {
+        "SourceGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_ZhouAn8_1003_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_ZhouAn8_1003.1"
+        },
+        "ReactionAbilityID": "GA_Sagiri_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Sagiri003_Passive2_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_003_Sagiri/PassiveEffect/Buff_Sagiri003_Passive2.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1004_GA_Lacrimosa_Passive_1_0",
+      "character_id": 1004,
+      "ability_id": "GA_Lacrimosa_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1004/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/TargetGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Player_Lacrimosa_AnHunZhouTwo_Damage_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_004_Lacrimosa/Damage/GE_Player_Lacrimosa_AnHunZhouTwo_Damage.1"
+        }
+      ],
+      "source_fields": {
+        "TargetGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Player_Lacrimosa_AnHunZhouTwo_Damage_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_004_Lacrimosa/Damage/GE_Player_Lacrimosa_AnHunZhouTwo_Damage.1"
+        },
+        "ReactionAbilityID": "GA_Lacrimosa_Passive_1",
+        "ConditionArray": []
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1008_GA_Skia_Passive_1_0",
+      "character_id": 1008,
+      "ability_id": "GA_Skia_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1008/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Skia_Passivity1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_008_Skia/Passivity/Buff_Skia_Passivity1.0"
+        }
+      ],
+      "source_fields": {
+        "ReactionAbilityID": "GA_Skia_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Skia_Passivity1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_008_Skia/Passivity/Buff_Skia_Passivity1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1010_GA_Nanally_Passive_1_0",
+      "character_id": 1010,
+      "ability_id": "GA_Nanally_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1010/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/AdditionalBulletCount": 5,
+        "/FixFireCountDown": -1
+      },
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Nanally010_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_010_Nanally/PassiveEffect/Buff_Nanally010_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "AdditionalBulletCount": 5,
+        "FixFireCountDown": -1.0,
+        "ReactionAbilityID": "GA_Nanally_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Nanally010_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_010_Nanally/PassiveEffect/Buff_Nanally010_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1019_GA_Mint_Passive_1_0",
+      "character_id": 1019,
+      "ability_id": "GA_Mint_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1019/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/AdditionalDamageRange": 400
+      },
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Mint019_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_019_Mint/PassiveEffect/Buff_Mint019_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "AdditionalDamageRange": 400.0,
+        "NewDamageGE": null,
+        "ReactionAbilityID": "GA_Mint_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Mint019_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_019_Mint/PassiveEffect/Buff_Mint019_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1020_GA_Haniel_Passive_1_0",
+      "character_id": 1020,
+      "ability_id": "GA_Haniel_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1020/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/AnHunReactionData/TargetGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_4_new_1020_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new_1020_Passive1.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Haniel020_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_020_haniel/PassiveEffect/Buff_Haniel020_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "AnHunReactionData": {
+          "SourceGEClass": null,
+          "TargetGEClass": {
+            "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_4_new_1020_Passive1_C\u0027",
+            "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new_1020_Passive1.1"
+          }
+        },
+        "ReactionAbilityID": "GA_Haniel_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Haniel020_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_020_haniel/PassiveEffect/Buff_Haniel020_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1021_GA_Edgar_Passive_1_0",
+      "character_id": 1021,
+      "ability_id": "GA_Edgar_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1021/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/SourceGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_Charge_1021_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_Charge_1021.1"
+        },
+        {
+          "pointer": "/TargetGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_LimitCharge_1021_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_LimitCharge_1021.0"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Edgar021_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_021_Edgar/PassiveEffect/Buff_Edgar021_Passive1.1"
+        }
+      ],
+      "source_fields": {
+        "SourceGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_Charge_1021_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_Charge_1021.1"
+        },
+        "TargetGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_LimitCharge_1021_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_LimitCharge_1021.0"
+        },
+        "ReactionAbilityID": "GA_Edgar_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Edgar021_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_021_Edgar/PassiveEffect/Buff_Edgar021_Passive1.1"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1023_GA_Cang_Passive_1_0",
+      "character_id": 1023,
+      "ability_id": "GA_Cang_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1023/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Cang023_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_023_Cang/PassiveEffect/Buff_Cang023_Passive1.1"
+        }
+      ],
+      "source_fields": {
+        "TargetGEClass": null,
+        "ReactionAbilityID": "GA_Cang_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Cang023_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_023_Cang/PassiveEffect/Buff_Cang023_Passive1.1"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1025_GA_Hathor_Passive_1_0",
+      "character_id": 1025,
+      "ability_id": "GA_Hathor_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1025/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/DamageTargetGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_3_new_1025_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/Buff_Reaction_3_new_1025.0"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Hathor025_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_025_Hathor/PassiveEffect/Buff_Hathor025_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "DamageTargetGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_3_new_1025_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/Buff_Reaction_3_new_1025.0"
+        },
+        "ReactionAbilityID": "GA_Hathor_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Hathor025_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_025_Hathor/PassiveEffect/Buff_Hathor025_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1033_GA_Adler_Passive_1_0",
+      "character_id": 1033,
+      "ability_id": "GA_Adler_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1033/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/RandomTargetGEClassArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_5_new_1033_1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_5_new_1033_1.1"
+        },
+        {
+          "pointer": "/RandomTargetGEClassArray/1",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_5_new_1033_2_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_5_new_1033_2.1"
+        },
+        {
+          "pointer": "/RandomTargetGEClassArray/2",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_5_new_1033_3_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_5_new_1033_3.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Adler033_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_033_Adler/PassiveEffect/Buff_Adler033_Passive1.1"
+        }
+      ],
+      "source_fields": {
+        "RandomTargetGEClassArray": [
+          {
+            "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_5_new_1033_1_C\u0027",
+            "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_5_new_1033_1.1"
+          },
+          {
+            "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_5_new_1033_2_C\u0027",
+            "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_5_new_1033_2.1"
+          },
+          {
+            "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_5_new_1033_3_C\u0027",
+            "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_5_new_1033_3.1"
+          }
+        ],
+        "ReactionAbilityID": "GA_Adler_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Adler033_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_033_Adler/PassiveEffect/Buff_Adler033_Passive1.1"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1036_GA_Zankou_Passive1_0",
+      "character_id": 1036,
+      "ability_id": "GA_Zankou_Passive1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1036/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/TargetGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_5_new_1036_Add_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_5_new_1036_Add.0"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Zankou_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_036_Zankou/PassiveEffect/Buff_Zankou_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "TargetGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_5_new_1036_Add_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction5/New/Buff_Reaction_5_new_1036_Add.0"
+        },
+        "ReactionAbilityID": "GA_Zankou_Passive1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Zankou_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_036_Zankou/PassiveEffect/Buff_Zankou_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1039_GA_Fadia_Passive_1_0",
+      "character_id": 1039,
+      "ability_id": "GA_Fadia_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1039/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/AnHunReactionData/TargetGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_4_new_1039_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new_1039_Passive1.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Fadia039_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_039_Fadia/PassiveEffect/Buff_Fadia039_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "AnHunReactionData": {
+          "SourceGEClass": null,
+          "TargetGEClass": {
+            "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_4_new_1039_Passive1_C\u0027",
+            "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new_1039_Passive1.1"
+          }
+        },
+        "ReactionAbilityID": "GA_Fadia_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Fadia039_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_039_Fadia/PassiveEffect/Buff_Fadia039_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1042_GA_BlackBird_Passive_1_0",
+      "character_id": 1042,
+      "ability_id": "GA_BlackBird_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1042/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/DamageUpRatio": 0.1
+      },
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_BlackBird042_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_042_BlackBird/PassiveEffect/Buff_BlackBird042_Passive1.1"
+        }
+      ],
+      "source_fields": {
+        "DamageUpRatio": 0.1,
+        "ReactionAbilityID": "GA_BlackBird_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_BlackBird042_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_042_BlackBird/PassiveEffect/Buff_BlackBird042_Passive1.1"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1042_GA_BlackBird_Passive_1_1",
+      "character_id": 1042,
+      "ability_id": "GA_BlackBird_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1042/ReactionDataArray/1"
+      },
+      "numeric_parameters": {
+        "/CumulativeDamageRatio": 0.2,
+        "/BaseAtkCapRatio": 1000
+      },
+      "asset_references": [
+        {
+          "pointer": "/PsycheDamageGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Reaction_4_new_1042_Damage_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/GE_Reaction_4_new_1042_Damage.1"
+        },
+        {
+          "pointer": "/ReapplyDarkStarGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_4_new_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_BlackBird042_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_042_BlackBird/PassiveEffect/Buff_BlackBird042_Passive1.1"
+        }
+      ],
+      "source_fields": {
+        "CumulativeDamageRatio": 0.2,
+        "BaseAtkCapRatio": 1000.0,
+        "PsycheDamageGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Reaction_4_new_1042_Damage_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/GE_Reaction_4_new_1042_Damage.1"
+        },
+        "ReapplyDarkStarGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_4_new_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new.1"
+        },
+        "ReactionAbilityID": "GA_BlackBird_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_BlackBird042_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_042_BlackBird/PassiveEffect/Buff_BlackBird042_Passive1.1"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1046_GA_Female_Passive_1_0",
+      "character_id": 1046,
+      "ability_id": "GA_Female_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1046/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/SourceGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_1009_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_1009.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Female051_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_051_Female/PassiveEffect/Buff_Female051_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "SourceGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_1009_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_1009.1"
+        },
+        "ReactionAbilityID": "GA_Female_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Female051_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_051_Female/PassiveEffect/Buff_Female051_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1051_GA_Female_Passive_1_0",
+      "character_id": 1051,
+      "ability_id": "GA_Female_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1051/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/SourceGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_1009_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_1009.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Female051_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_051_Female/PassiveEffect/Buff_Female051_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "SourceGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_1009_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_1009.1"
+        },
+        "ReactionAbilityID": "GA_Female_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Female051_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_051_Female/PassiveEffect/Buff_Female051_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1052_GA_Jin_Passive_1_0",
+      "character_id": 1052,
+      "ability_id": "GA_Jin_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1052/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Jin052_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_052_Jin/PassiveEffect/Buff_Jin052_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "ReactionAbilityID": "GA_Jin_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Jin052_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_052_Jin/PassiveEffect/Buff_Jin052_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1054_GA_Daffodill_Passive_1_0",
+      "character_id": 1054,
+      "ability_id": "GA_Daffodill_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1054/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/TargetGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Reaction_AnHunZhou_1054_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction8/GE_Reaction_AnHunZhou_1054.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Daffodill054_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_054_daffodill/PassiveEffect/Buff_Daffodill054_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "TargetGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Reaction_AnHunZhou_1054_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction8/GE_Reaction_AnHunZhou_1054.1"
+        },
+        "ReactionAbilityID": "GA_Daffodill_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Daffodill054_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_054_daffodill/PassiveEffect/Buff_Daffodill054_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1055_GA_Kuhara_Passive_1_0",
+      "character_id": 1055,
+      "ability_id": "GA_Kuhara_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1055/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/AdditionalManagerCanExistNum": 3
+      },
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Kuhara055_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/PassiveEffect/Buff_Kuhara055_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "AdditionalManagerCanExistNum": 3,
+        "ReactionAbilityID": "GA_Kuhara_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Kuhara055_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/PassiveEffect/Buff_Kuhara055_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1055_GA_Kuhara_Passive_2_1",
+      "character_id": 1055,
+      "ability_id": "GA_Kuhara_Passive_2",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1055/ReactionDataArray/1"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/NewDamageGE",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Kuhara_GuangLingReaction_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/Buff/Buff_Kuhara_GuangLingReaction.0"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Kuhara055_Passive2_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/PassiveEffect/Buff_Kuhara055_Passive2.0"
+        }
+      ],
+      "source_fields": {
+        "NewDamageGE": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Kuhara_GuangLingReaction_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/Buff/Buff_Kuhara_GuangLingReaction.0"
+        },
+        "ReactionAbilityID": "GA_Kuhara_Passive_2",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Kuhara055_Passive2_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/PassiveEffect/Buff_Kuhara055_Passive2.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1057_GA_Akane_Passive_1_0",
+      "character_id": 1057,
+      "ability_id": "GA_Akane_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1057/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/AutoApplyPeriod": 3,
+        "/BaseDamageRatio": 1,
+        "/DamageIncPerSecond": 0.2,
+        "/DamageRatioCap": 1.6,
+        "/DamageCooldownPerTarget": 1,
+        "/SlomoDurationExtend": 7
+      },
+      "asset_references": [
+        {
+          "pointer": "/SlomoGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_3_new_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/Buff_Reaction_3_new.1"
+        },
+        {
+          "pointer": "/ReapplyDamageGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Reaction_3_new_1057_Damage_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/GE_Reaction_3_new_1057_Damage.1"
+        },
+        {
+          "pointer": "/AutoApplyPresentationGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Akane_Skill_Passive1_display_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_057_Akane/Buff/Buff_Akane_Skill_Passive1_display.0"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Akane057_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_057_Akane/PassiveEffect/Buff_Akane057_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "AutoApplyPeriod": 3.0,
+        "SlomoGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_3_new_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/Buff_Reaction_3_new.1"
+        },
+        "ReapplyDamageGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Reaction_3_new_1057_Damage_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/GE_Reaction_3_new_1057_Damage.1"
+        },
+        "BaseDamageRatio": 1.0,
+        "DamageIncPerSecond": 0.2,
+        "DamageRatioCap": 1.6,
+        "DamageCooldownPerTarget": 1.0,
+        "SlomoDurationExtend": 7.0,
+        "AutoApplyPresentationGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Akane_Skill_Passive1_display_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_057_Akane/Buff/Buff_Akane_Skill_Passive1_display.0"
+        },
+        "ReactionAbilityID": "GA_Akane_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Akane057_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_057_Akane/PassiveEffect/Buff_Akane057_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1070_GA_Mitsuki_Passive1_0",
+      "character_id": 1070,
+      "ability_id": "GA_Mitsuki_Passive1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1070/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/TargetGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_4_new_1070_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new_1070.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Mitsuki070_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_070_Mitsuki/Passivity/Buff_Mitsuki070_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "TargetGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_4_new_1070_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new_1070.1"
+        },
+        "ReactionAbilityID": "GA_Mitsuki_Passive1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Mitsuki070_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_070_Mitsuki/Passivity/Buff_Mitsuki070_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1071_GA_Chaos_Passive_1_0",
+      "character_id": 1071,
+      "ability_id": "GA_Chaos_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1071/ReactionDataArray/0"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/DamageTargetGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Reaction_3_new_1071_Damage_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/GE_Reaction_3_new_1071_Damage.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Chaos071_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_071_Chaos/PassiveEffect/Buff_Chaos071_Passive1.1"
+        }
+      ],
+      "source_fields": {
+        "DamageTargetGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Reaction_3_new_1071_Damage_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/GE_Reaction_3_new_1071_Damage.1"
+        },
+        "ReactionAbilityID": "GA_Chaos_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Chaos071_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_071_Chaos/PassiveEffect/Buff_Chaos071_Passive1.1"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1072_GA_Radio072_Passive_1_0",
+      "character_id": 1072,
+      "ability_id": "GA_Radio072_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1072/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/ExtraDamageRatio": 0.13,
+        "/ExtraFuWenDamageRatio": 0
+      },
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Radio072_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_072_Radio/PassiveEffect/Buff_Radio072_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "ExtraDamageRatio": 0.13,
+        "SouceGEClass": null,
+        "ExtraFuWenDamageRatio": 0.0,
+        "ReactionAbilityID": "GA_Radio072_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Radio072_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_072_Radio/PassiveEffect/Buff_Radio072_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1073_GA_Chiichan073_Passive_1_0",
+      "character_id": 1073,
+      "ability_id": "GA_Chiichan073_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1073/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/AddChargeValue": 4
+      },
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Chiichan073_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_073_Chiichan/PassiveEffect/Buff_Chiichan073_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "AddChargeValue": 4.0,
+        "ReactionAbilityID": "GA_Chiichan073_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Chiichan073_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_073_Chiichan/PassiveEffect/Buff_Chiichan073_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1075_GA_Oneiroi_Passive_1_0",
+      "character_id": 1075,
+      "ability_id": "GA_Oneiroi_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1075/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/AdditionalManagerCanExistNum": 3
+      },
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Oneiroi075_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_075_Oneiroi/PassiveEffect/Buff_Oneiroi075_Passive1.1"
+        }
+      ],
+      "source_fields": {
+        "AdditionalManagerCanExistNum": 3,
+        "ReactionAbilityID": "GA_Oneiroi_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Oneiroi075_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_075_Oneiroi/PassiveEffect/Buff_Oneiroi075_Passive1.1"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1075_GA_Oneiroi_Passive_1_1",
+      "character_id": 1075,
+      "ability_id": "GA_Oneiroi_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1075/ReactionDataArray/1"
+      },
+      "numeric_parameters": {
+        "/AdditionalManagerCanExistNum": 3
+      },
+      "asset_references": [
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Oneiroi075_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_075_Oneiroi/PassiveEffect/Buff_Oneiroi075_Passive1.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/1",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Kuhara055_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/PassiveEffect/Buff_Kuhara055_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "AdditionalManagerCanExistNum": 3,
+        "ReactionAbilityID": "GA_Oneiroi_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Oneiroi075_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_075_Oneiroi/PassiveEffect/Buff_Oneiroi075_Passive1.1"
+              },
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Kuhara055_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/PassiveEffect/Buff_Kuhara055_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1076_GA_Shinku_Passive_1_0",
+      "character_id": 1076,
+      "ability_id": "GA_Shinku_Passive_1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "pointer": "/Rows/1076/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/BackChargeMul": 1
+      },
+      "asset_references": [
+        {
+          "pointer": "/RangeDamageGE",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Shinku_ReactionAOE_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_076_Shinku/Buff/Buff_Shinku_ReactionAOE.0"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Shinku076_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_076_Shinku/PassiveEffect/Buff_Shinku076_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "BackChargeMul": 1.0,
+        "RangeDamageGE": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Shinku_ReactionAOE_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_076_Shinku/Buff/Buff_Shinku_ReactionAOE.0"
+        },
+        "PlayerCharacterID": "1076",
+        "ReactionAbilityID": "GA_Shinku_Passive_1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Shinku076_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_076_Shinku/PassiveEffect/Buff_Shinku076_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    }
+  ],
+  "outside_roster_character_ids": [
+    "1009"
+  ],
+  "base_reactions": {
+    "REACTION_RESULT_TYPE_1": {
+      "source_fields": {
+        "ReactionResult": "EReactionResultType::REACTION_RESULT_TYPE_1",
+        "CharacterElementType1": "CHARACTER_ELEMENT_TYPE_COSMOS",
+        "CharacterElementType2": "CHARACTER_ELEMENT_TYPE_NATURE",
+        "DefaultDamageGE": "GE_ActorReaction_1_Damage",
+        "DamageGEConditionArray": []
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionData.json",
+        "sha256": "4b23ff0cea09826ef096af8492aed080e73e830bbc50f67de4c10b9d80f4bdbb",
+        "pointer": "/Rows/REACTION_RESULT_TYPE_1"
+      }
+    },
+    "REACTION_RESULT_TYPE_2": {
+      "source_fields": {
+        "ReactionResult": "EReactionResultType::REACTION_RESULT_TYPE_2",
+        "CharacterElementType1": "CHARACTER_ELEMENT_TYPE_NATURE",
+        "CharacterElementType2": "CHARACTER_ELEMENT_TYPE_INCANTATION",
+        "DefaultDamageGE": "None",
+        "DamageGEConditionArray": []
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionData.json",
+        "sha256": "4b23ff0cea09826ef096af8492aed080e73e830bbc50f67de4c10b9d80f4bdbb",
+        "pointer": "/Rows/REACTION_RESULT_TYPE_2"
+      }
+    },
+    "REACTION_RESULT_TYPE_3": {
+      "source_fields": {
+        "ReactionResult": "EReactionResultType::REACTION_RESULT_TYPE_3",
+        "CharacterElementType1": "CHARACTER_ELEMENT_TYPE_INCANTATION",
+        "CharacterElementType2": "CHARACTER_ELEMENT_TYPE_CHAOS",
+        "DefaultDamageGE": "Buff_Reaction_5_new",
+        "DamageGEConditionArray": []
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionData.json",
+        "sha256": "4b23ff0cea09826ef096af8492aed080e73e830bbc50f67de4c10b9d80f4bdbb",
+        "pointer": "/Rows/REACTION_RESULT_TYPE_3"
+      }
+    },
+    "REACTION_RESULT_TYPE_4": {
+      "source_fields": {
+        "ReactionResult": "EReactionResultType::REACTION_RESULT_TYPE_4",
+        "CharacterElementType1": "CHARACTER_ELEMENT_TYPE_CHAOS",
+        "CharacterElementType2": "CHARACTER_ELEMENT_TYPE_PSYCHE",
+        "DefaultDamageGE": "Buff_Reaction_4_new",
+        "DamageGEConditionArray": []
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionData.json",
+        "sha256": "4b23ff0cea09826ef096af8492aed080e73e830bbc50f67de4c10b9d80f4bdbb",
+        "pointer": "/Rows/REACTION_RESULT_TYPE_4"
+      }
+    },
+    "REACTION_RESULT_TYPE_5": {
+      "source_fields": {
+        "ReactionResult": "EReactionResultType::REACTION_RESULT_TYPE_5",
+        "CharacterElementType1": "CHARACTER_ELEMENT_TYPE_PSYCHE",
+        "CharacterElementType2": "CHARACTER_ELEMENT_TYPE_LAKSHANA",
+        "DefaultDamageGE": "None",
+        "DamageGEConditionArray": []
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionData.json",
+        "sha256": "4b23ff0cea09826ef096af8492aed080e73e830bbc50f67de4c10b9d80f4bdbb",
+        "pointer": "/Rows/REACTION_RESULT_TYPE_5"
+      }
+    },
+    "REACTION_RESULT_TYPE_6": {
+      "source_fields": {
+        "ReactionResult": "EReactionResultType::REACTION_RESULT_TYPE_6",
+        "CharacterElementType1": "CHARACTER_ELEMENT_TYPE_LAKSHANA",
+        "CharacterElementType2": "CHARACTER_ELEMENT_TYPE_COSMOS",
+        "DefaultDamageGE": "None",
+        "DamageGEConditionArray": []
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionData.json",
+        "sha256": "4b23ff0cea09826ef096af8492aed080e73e830bbc50f67de4c10b9d80f4bdbb",
+        "pointer": "/Rows/REACTION_RESULT_TYPE_6"
+      }
+    }
+  },
+  "effect_curves": {
+    "LingZhouCopyCoef": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.2
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/LingZhouCopyCoef"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun3_AddMaxHPPer_1039": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.1
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun3_AddMaxHPPer_1039"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun3_AddMaxHPVale_1039": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun3_AddMaxHPVale_1039"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun3_LimitMaxHPPer_1039": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.5
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun3_LimitMaxHPPer_1039"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun3_LoseMaxHPPer_1039": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 20.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun3_LoseMaxHPPer_1039"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun3_PeriodTime_1039": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 5.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun3_PeriodTime_1039"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun4_AddAtkPer_1020": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.08
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun4_AddAtkPer_1020"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun4_AddAtkVale_1020": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun4_AddAtkVale_1020"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun4_LimitAtk_1020": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.16
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun4_LimitAtk_1020"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun4_LimitTargetAtk_1020": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.2
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun4_LimitTargetAtk_1020"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun4_LoseAtkPer_1020": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.5
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun4_LoseAtkPer_1020"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun4_MMOLimitTargetAtk_1020": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.2
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun4_MMOLimitTargetAtk_1020"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun4_PeriodTime_1020": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 5.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun4_PeriodTime_1020"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHunZhou1_UnbalMaxReduce_1054": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": -0.1
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHunZhou1_UnbalMaxReduce_1054"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHunZhou1_UnbalMaxReduce_BuffTime_1054": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 30.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHunZhou1_UnbalMaxReduce_BuffTime_1054"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun_BuffTime": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 5.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun_BuffTime"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun_BuffTime_1004": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.3
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun_BuffTime_1004"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_AnHun_Period_1004": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.1
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_AnHun_Period_1004"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangLingXiang1_Recover_1051": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.5
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_GuangLingXiang1_Recover_1051"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangLingXiang2_Charge_1021": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 120.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_GuangLingXiang2_Charge_1021"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangLingXiang2_LimitChargeTime_1021": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 30.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_GuangLingXiang2_LimitChargeTime_1021"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangLingXiang_Charge": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 10.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_GuangLingXiang_Charge"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangLingXiang_ChargeCD": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.8
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_GuangLingXiang_ChargeCD"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangXiang5_CritAdd_1025": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.1
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_GuangXiang5_CritAdd_1025"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangXiang5_TimeAdd_1025": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 7.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_GuangXiang5_TimeAdd_1025"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangXiang7_DamageUP_1071": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 3.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_GuangXiang7_DamageUP_1071"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangXiang_BuffTime": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 5.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_GuangXiang_BuffTime"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_HunXiang1_Time_1042": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 8.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_HunXiang1_Time_1042"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_HunXiang_BuffTime": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 12.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_HunXiang_BuffTime"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_HunXiang_DamageUP": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.2
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_HunXiang_DamageUP"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_LingZhou_BuffTime": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 12.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_LingZhou_BuffTime"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_ZhouAn5_AtkDown_1033": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": -0.2
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_ZhouAn5_AtkDown_1033"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_ZhouAn5_DamageResistDown_1033": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": -0.1
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_ZhouAn5_DamageResistDown_1033"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_ZhouAn5_UnbalAccrueEfficiency_1033": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.1
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_ZhouAn5_UnbalAccrueEfficiency_1033"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_ZhouAn8_DotDamageUP_1003": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.25
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_ZhouAn8_DotDamageUP_1003"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_ZhouAn8_LimitDotDamageUP_1003": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 1.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_ZhouAn8_LimitDotDamageUP_1003"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_ZhouAn_BuffTime": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 15.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_ZhouAn_BuffTime"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_ZhouAn_CutPeriodTime_1033": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.5
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_ZhouAn_CutPeriodTime_1033"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_ZhouAn_FixedCritRate_1033": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.3
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_ZhouAn_FixedCritRate_1033"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_ZhouAn_Period": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 1.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "pointer": "/Rows/Reaction_ZhouAn_Period"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    }
+  },
+  "damage_arrays": {
+    "Buff_Reaction_4_new": {
+      "reaction_type": "EReactionResultType::REACTION_RESULT_TYPE_4",
+      "values": [
+        400.0,
+        600.0,
+        1000.0,
+        1500.0,
+        2000.0,
+        3000.0,
+        4000.0,
+        5000.0,
+        8500.0,
+        11000.0,
+        18000.0,
+        25000.0,
+        30000.0,
+        35000.0,
+        40000.0,
+        45000.0
+      ],
+      "input_axis": "source_array_index_level_mapping_not_certified",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionDamageData.json",
+        "sha256": "a36da1f13c87d65d733d04d3612ce8a0a1d0d1d9c40981de53883943cb38097d",
+        "pointer": "/Rows/Buff_Reaction_4_new"
+      }
+    },
+    "Buff_Reaction_5_new": {
+      "reaction_type": "EReactionResultType::REACTION_RESULT_TYPE_3",
+      "values": [
+        20.0,
+        35.0,
+        60.0,
+        90.0,
+        120.0,
+        180.0,
+        240.0,
+        300.0,
+        510.0,
+        660.0,
+        1080.0,
+        1500.0,
+        1800.0,
+        2100.0,
+        2400.0,
+        2700.0
+      ],
+      "input_axis": "source_array_index_level_mapping_not_certified",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionDamageData.json",
+        "sha256": "a36da1f13c87d65d733d04d3612ce8a0a1d0d1d9c40981de53883943cb38097d",
+        "pointer": "/Rows/Buff_Reaction_5_new"
+      }
+    },
+    "Buff_Reaction_5_new_1036": {
+      "reaction_type": "EReactionResultType::REACTION_RESULT_TYPE_3",
+      "values": [
+        20.0,
+        35.0,
+        60.0,
+        90.0,
+        120.0,
+        180.0,
+        240.0,
+        300.0,
+        510.0,
+        660.0,
+        1080.0,
+        1500.0,
+        1800.0,
+        2100.0,
+        2400.0,
+        2700.0
+      ],
+      "input_axis": "source_array_index_level_mapping_not_certified",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionDamageData.json",
+        "sha256": "a36da1f13c87d65d733d04d3612ce8a0a1d0d1d9c40981de53883943cb38097d",
+        "pointer": "/Rows/Buff_Reaction_5_new_1036"
+      }
+    },
+    "GE_ActorReaction_1_1019_Damage": {
+      "reaction_type": "EReactionResultType::REACTION_RESULT_TYPE_1",
+      "values": [
+        30.0,
+        45.0,
+        75.0,
+        112.5,
+        150.0,
+        225.0,
+        300.0,
+        375.0,
+        637.5,
+        825.0,
+        1350.0,
+        1875.0,
+        2250.0,
+        2625.0,
+        3000.0,
+        3375.0
+      ],
+      "input_axis": "source_array_index_level_mapping_not_certified",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionDamageData.json",
+        "sha256": "a36da1f13c87d65d733d04d3612ce8a0a1d0d1d9c40981de53883943cb38097d",
+        "pointer": "/Rows/GE_ActorReaction_1_1019_Damage"
+      }
+    },
+    "GE_ActorReaction_1_Damage": {
+      "reaction_type": "EReactionResultType::REACTION_RESULT_TYPE_1",
+      "values": [
+        80.0,
+        120.0,
+        200.0,
+        300.0,
+        400.0,
+        600.0,
+        800.0,
+        1000.0,
+        1700.0,
+        2200.0,
+        3600.0,
+        5000.0,
+        6000.0,
+        7000.0,
+        8000.0,
+        9000.0
+      ],
+      "input_axis": "source_array_index_level_mapping_not_certified",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionDamageData.json",
+        "sha256": "a36da1f13c87d65d733d04d3612ce8a0a1d0d1d9c40981de53883943cb38097d",
+        "pointer": "/Rows/GE_ActorReaction_1_Damage"
+      }
+    }
+  },
+  "damage_scenarios": [
+    {
+      "id": "blackbird_nova_settlement",
+      "character_id": 1042,
+      "ability_id": "GA_BlackBird_Passive_1",
+      "damage_effect_id": "GE_Reaction_4_new_1042_Damage",
+      "result_stage": "pending_settlement_before_FixedDamageExecution",
+      "parameters": {
+        "settlement_ratio": {
+          "source_kind": "source_number",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+            "pointer": "/Rows/1042/ReactionDataArray/1/CumulativeDamageRatio"
+          },
+          "value": 0.2,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "base_attack_cap": {
+          "source_kind": "source_number",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+            "pointer": "/Rows/1042/ReactionDataArray/1/BaseAtkCapRatio"
+          },
+          "value": 1000,
+          "source_status": "extracted_numeric_parameter"
+        }
+      },
+      "inputs": {
+        "eligible_actual_damage": {
+          "kind": "number",
+          "minimum": 0,
+          "selection": "manual",
+          "semantics": "Actual target damage during the selected Nova window, excluding the triggering Support Skill and Nova itself."
+        },
+        "caster_base_attack": {
+          "kind": "number",
+          "minimum": 0,
+          "stat_id": "AtkBase",
+          "selection": "builder_stat"
+        }
+      },
+      "calculation": {
+        "op": "minimum",
+        "args": [
+          {
+            "op": "multiply",
+            "args": [
+              {
+                "op": "parameter",
+                "id": "settlement_ratio"
+              },
+              {
+                "op": "input",
+                "id": "eligible_actual_damage"
+              }
+            ]
+          },
+          {
+            "op": "multiply",
+            "args": [
+              {
+                "op": "parameter",
+                "id": "base_attack_cap"
+              },
+              {
+                "op": "input",
+                "id": "caster_base_attack"
+              }
+            ]
+          }
+        ]
+      },
+      "conditions": {
+        "trigger": "nova_ends",
+        "automatic_activation_supported": false,
+        "requires_passive_unlocked": true
+      },
+      "assumptions": [
+        "eligible_damage_is_an_explicit_input_not_reconstructed_from_a_rotation",
+        "exclude_the_triggering_support_skill_and_nova_damage_from_that_input",
+        "do_not_apply_additional_damage_buffs_or_debuffs_per_reviewed_description",
+        "native_pending_accumulator_and_final_fixed_damage_execution_are_not_fully_certified",
+        "nova_reapplication_is_metadata_not_an_extra_guaranteed_damage_hit"
+      ],
+      "status": "provisional_reviewed_manual_numeric_scenario",
+      "native_execution_supported": false,
+      "automatic_activation_supported": false,
+      "kind": "damage",
+      "reviewed_evidence": [
+        {
+          "kind": "reviewed_description",
+          "file": "localization/en.json",
+          "pointer": "/BlackBird_SkillDes/GA_BlackBird_Passive_1_des",
+          "sha256": "bf3094f2c3309a25f7224c9d057e2aa8c0bc90385398a1d141259abd4471bd04"
+        },
+        {
+          "kind": "reviewed_description",
+          "file": "localization/fr.json",
+          "pointer": "/BlackBird_SkillDes/GA_BlackBird_Passive_1_des",
+          "sha256": "32aa6fb1a66ed853f3d5022d95c8c8c48c2bc7b3f3e08397d472e22d24665c06"
+        },
+        {
+          "kind": "reviewed_blueprint",
+          "file": "abilities/Blueprints/Abilities/Calculation/Reaction/Cau_Reaction4_1042/HTCustomCalculateBaseMagnitude.json",
+          "sha256": "ef215e644628919d75979e3d98b83509631c634c0df321474356e755377c56bf"
+        }
+      ]
+    },
+    {
+      "id": "chaos_remora_expiry_damage",
+      "character_id": 1071,
+      "ability_id": "GA_Chaos_Passive_1",
+      "damage_effect_id": "GE_Reaction_3_new_1071_Damage",
+      "result_stage": "attack_scaled_before_critical_defense_resistance_and_other_damage_modifiers",
+      "parameters": {
+        "attack_coefficient": {
+          "source_kind": "coefficient_array",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+            "pointer": "/Rows/GE_Reaction_3_new_1071_Damage/AtkRateBaseArray"
+          },
+          "values_by_source_level": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "level_independent": true,
+          "value": 8.0,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "base_duration": {
+          "source_kind": "curve_constant",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+            "pointer": "/Rows/Reaction_GuangXiang_BuffTime"
+          },
+          "value": 5,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "growth_per_second": {
+          "source_kind": "reviewed_literal",
+          "value": 0.45,
+          "source_status": "fingerprinted_FR_EN_description_not_located_in_numeric_asset",
+          "source": {
+            "root": "repository",
+            "file": "config/reaction-scenarios.json",
+            "scenario_id": "chaos_remora_expiry_damage",
+            "parameter_id": "growth_per_second"
+          }
+        },
+        "maximum_bonus": {
+          "source_kind": "curve_constant",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+            "pointer": "/Rows/Reaction_GuangXiang7_DamageUP_1071"
+          },
+          "value": 3,
+          "source_status": "extracted_numeric_parameter"
+        }
+      },
+      "inputs": {
+        "attack": {
+          "kind": "number",
+          "minimum": 0,
+          "selection": "builder_final_attack"
+        },
+        "selected_remora_duration": {
+          "kind": "number",
+          "minimum": 0,
+          "selection": "manual",
+          "unit": "seconds"
+        }
+      },
+      "calculation": {
+        "op": "multiply",
+        "args": [
+          {
+            "op": "input",
+            "id": "attack"
+          },
+          {
+            "op": "parameter",
+            "id": "attack_coefficient"
+          },
+          {
+            "op": "add",
+            "args": [
+              1,
+              {
+                "op": "minimum",
+                "args": [
+                  {
+                    "op": "parameter",
+                    "id": "maximum_bonus"
+                  },
+                  {
+                    "op": "multiply",
+                    "args": [
+                      {
+                        "op": "parameter",
+                        "id": "growth_per_second"
+                      },
+                      {
+                        "op": "maximum",
+                        "args": [
+                          0,
+                          {
+                            "op": "subtract",
+                            "args": [
+                              {
+                                "op": "input",
+                                "id": "selected_remora_duration"
+                              },
+                              {
+                                "op": "parameter",
+                                "id": "base_duration"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "conditions": {
+        "trigger": "remora_ends",
+        "automatic_activation_supported": false,
+        "requires_passive_unlocked": true
+      },
+      "assumptions": [
+        "duration_and_eligibility_selected_manually",
+        "growth_rate_comes_from_reviewed_tooltips_not_a_certified_native_formula",
+        "300_percent_cap_interpreted_as_additional_bonus_so_maximum_multiplier_is_four",
+        "source_parent_UltraSkill_does_not_require_a_level_for_constant_coefficient_arrays",
+        "do_not_apply_the_same_duration_bonus_again_from_modifier_values",
+        "Hathor_buff_branch_in_Cau_Reaction3_1071_DamUp_is_separate_incomplete_evidence_not_a_complete_duration_formula"
+      ],
+      "status": "provisional_reviewed_manual_numeric_scenario",
+      "native_execution_supported": false,
+      "automatic_activation_supported": false,
+      "kind": "damage",
+      "reviewed_evidence": [
+        {
+          "kind": "reviewed_description",
+          "file": "localization/en.json",
+          "pointer": "/Chaos_SkillDes/GA_Chaos_Passive_1_des",
+          "sha256": "c52a07f9f52e807d6670396f0eda573c0d123681f077248ba37e5f7de5b62ca6"
+        },
+        {
+          "kind": "reviewed_description",
+          "file": "localization/fr.json",
+          "pointer": "/Chaos_SkillDes/GA_Chaos_Passive_1_des",
+          "sha256": "5aee2d9c7a5a7a05bed97bee149cea52ab080d116dee6454d0cc3fe882b18230"
+        }
+      ]
+    },
+    {
+      "id": "lacrimosa_discord_broken_extra_damage",
+      "character_id": 1004,
+      "ability_id": "GA_Lacrimosa_Passive_1",
+      "damage_effect_id": "GE_Player_Lacrimosa_AnHunZhouTwo_Damage",
+      "result_stage": "attack_scaled_before_critical_defense_resistance_and_other_damage_modifiers",
+      "parameters": {
+        "attack_coefficient": {
+          "source_kind": "coefficient_array",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+            "pointer": "/Rows/GE_Player_Lacrimosa_AnHunZhouTwo_Damage/AtkRateBaseArray"
+          },
+          "values_by_source_level": [
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0
+          ],
+          "level_independent": true,
+          "value": 4.0,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "selected_hits": {
+          "source_kind": "reviewed_literal",
+          "value": 1,
+          "source_status": "fingerprinted_FR_EN_description_not_execution_cadence_certificate",
+          "source": {
+            "root": "repository",
+            "file": "config/reaction-scenarios.json",
+            "scenario_id": "lacrimosa_discord_broken_extra_damage",
+            "parameter_id": "selected_hits"
+          }
+        }
+      },
+      "inputs": {
+        "attack": {
+          "kind": "number",
+          "minimum": 0,
+          "selection": "builder_final_attack"
+        }
+      },
+      "calculation": {
+        "op": "multiply",
+        "args": [
+          {
+            "op": "input",
+            "id": "attack"
+          },
+          {
+            "op": "parameter",
+            "id": "attack_coefficient"
+          },
+          {
+            "op": "parameter",
+            "id": "selected_hits"
+          }
+        ]
+      },
+      "conditions": {
+        "trigger": "discord_triggered_on_already_broken_target",
+        "requires_broken_target": true,
+        "automatic_activation_supported": false,
+        "requires_passive_unlocked": true
+      },
+      "assumptions": [
+        "one_selected_description_backed_passive_trigger",
+        "hit_count_is_a_reviewed_scenario_not_a_native_execution_certificate",
+        "constant_coefficients_do_not_require_a_fabricated_imported_skill_level",
+        "do_not_duplicate_existing_damage_catalog_effects_when_using_this_scenario"
+      ],
+      "status": "provisional_reviewed_manual_numeric_scenario",
+      "native_execution_supported": false,
+      "automatic_activation_supported": false,
+      "kind": "damage",
+      "reviewed_evidence": [
+        {
+          "kind": "reviewed_description",
+          "file": "localization/en.json",
+          "pointer": "/Lacrimosa_SkillDes/GA_Lacrimosa_Passive_1_des",
+          "sha256": "6005e39a1cb2e74ae310c31ce78b36140bfbde2ece4008d983bc7a04b8acb208"
+        },
+        {
+          "kind": "reviewed_description",
+          "file": "localization/fr.json",
+          "pointer": "/Lacrimosa_SkillDes/GA_Lacrimosa_Passive_1_des",
+          "sha256": "2d206be78b1d55eac5ed3cd1b457e2f3d83cf3afa066f51ff9af9fb2e505946c"
+        }
+      ]
+    },
+    {
+      "id": "aurelia_nova_extra_damage",
+      "character_id": 1070,
+      "ability_id": "GA_Mitsuki_Passive1",
+      "damage_effect_id": "GE_Reaction_4_new_1070_Damage",
+      "result_stage": "attack_scaled_before_critical_defense_resistance_and_other_damage_modifiers",
+      "parameters": {
+        "attack_coefficient": {
+          "source_kind": "coefficient_array",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+            "pointer": "/Rows/GE_Reaction_4_new_1070_Damage/AtkRateBaseArray"
+          },
+          "values_by_source_level": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "level_independent": true,
+          "value": 0.5,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "selected_hits": {
+          "source_kind": "reviewed_literal",
+          "value": 3,
+          "source_status": "fingerprinted_FR_EN_description_not_execution_cadence_certificate",
+          "source": {
+            "root": "repository",
+            "file": "config/reaction-scenarios.json",
+            "scenario_id": "aurelia_nova_extra_damage",
+            "parameter_id": "selected_hits"
+          }
+        }
+      },
+      "inputs": {
+        "attack": {
+          "kind": "number",
+          "minimum": 0,
+          "selection": "builder_final_attack"
+        }
+      },
+      "calculation": {
+        "op": "multiply",
+        "args": [
+          {
+            "op": "input",
+            "id": "attack"
+          },
+          {
+            "op": "parameter",
+            "id": "attack_coefficient"
+          },
+          {
+            "op": "parameter",
+            "id": "selected_hits"
+          }
+        ]
+      },
+      "conditions": {
+        "trigger": "nova_ends",
+        "requires_broken_target": false,
+        "automatic_activation_supported": false,
+        "requires_passive_unlocked": true
+      },
+      "assumptions": [
+        "one_selected_description_backed_passive_trigger",
+        "hit_count_is_a_reviewed_scenario_not_a_native_execution_certificate",
+        "constant_coefficients_do_not_require_a_fabricated_imported_skill_level",
+        "do_not_duplicate_existing_damage_catalog_effects_when_using_this_scenario"
+      ],
+      "status": "provisional_reviewed_manual_numeric_scenario",
+      "native_execution_supported": false,
+      "automatic_activation_supported": false,
+      "kind": "damage",
+      "reviewed_evidence": [
+        {
+          "kind": "reviewed_description",
+          "file": "localization/en.json",
+          "pointer": "/Mitsuki_SkillDes/GA_Mitsuki_Passive_1_des",
+          "sha256": "017a97927cf5de60806e79433e8a8de0bc93d58113ec644770afde34cdcfd543"
+        },
+        {
+          "kind": "reviewed_description",
+          "file": "localization/fr.json",
+          "pointer": "/Mitsuki_SkillDes/GA_Mitsuki_Passive_1_des",
+          "sha256": "066e4051153eedf19a835e320e8dced26d35734cbb5c819d5f8c2368203fc26e"
+        }
+      ]
+    },
+    {
+      "status": "provisional_reviewed_manual_numeric_scenario",
+      "native_execution_supported": false,
+      "automatic_activation_supported": false,
+      "kind": "damage",
+      "id": "nanally_passive_follow_up_damage",
+      "character_id": 1010,
+      "ability_id": "GA_Nanally_Passive_2",
+      "damage_effect_id": null,
+      "candidate_damage_effect_id": "GE_Player_Nanally_Cat_Melee7_Damage",
+      "result_stage": "attack_scaled_before_critical_defense_resistance_and_other_damage_modifiers",
+      "parameters": {
+        "attack_coefficient": {
+          "source_kind": "coefficient_array",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+            "pointer": "/Rows/GE_Player_Nanally_Cat_Melee7_Damage/AtkRateBaseArray"
+          },
+          "values_by_source_level": [
+            0.6,
+            0.648,
+            0.7,
+            0.756,
+            0.816,
+            0.882,
+            0.952,
+            1.028,
+            1.111,
+            1.199,
+            1.295,
+            1.399,
+            1.511
+          ],
+          "level_independent": false,
+          "level_binding": {
+            "source": "imported_skill",
+            "ability_id": "GA_Nanally_Melee",
+            "status": "assumed_description_based_curve_reuse",
+            "minimum": 1,
+            "maximum": 13
+          },
+          "source_status": "extracted_numeric_parameter"
+        },
+        "recorded_damage_parent": {
+          "source_kind": "source_text",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+            "pointer": "/Rows/GE_Player_Nanally_Cat_Melee7_Damage/GAName"
+          },
+          "value": "GA_Nanally_UltraSkill",
+          "source_status": "extracted_source_identity"
+        },
+        "source_cooldown_seconds": {
+          "source_kind": "curve_constant",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Skill/GlobalCharacterData/DT_NanallyEffectFigure.json",
+            "pointer": "/Rows/Nanally_Pas2CD"
+          },
+          "value": 1,
+          "source_status": "extracted_numeric_parameter"
+        }
+      },
+      "inputs": {
+        "attack": {
+          "kind": "number",
+          "minimum": 0,
+          "selection": "builder_final_attack"
+        }
+      },
+      "calculation": {
+        "op": "multiply",
+        "args": [
+          {
+            "op": "input",
+            "id": "attack"
+          },
+          {
+            "op": "parameter",
+            "id": "attack_coefficient"
+          }
+        ]
+      },
+      "conditions": {
+        "trigger": "ally_esper_cycle_damage_while_in_authority_state",
+        "requires_passive_unlocked": true,
+        "automatic_activation_supported": false
+      },
+      "assumptions": [
+        "one_selected_single_target_follow_up_not_an_extra_ultimate_combo_hit",
+        "damage_effect_identity_and_reuse_of_its_full_curve_are_not_certified",
+        "basic_attack_level_source_is_reviewed_from_description_not_native_application",
+        "do_not_change_the_existing_Cat_Melee7_Ultimate_entry_or_add_both_scenarios",
+        "source_cooldown_curve_is_one_second_but_descriptions_say_two_seconds_so_automatic_cadence_is_unsupported"
+      ],
+      "reviewed_evidence": [
+        {
+          "kind": "reviewed_description",
+          "file": "localization/en.json",
+          "pointer": "/Nanally_SkillDes/GA_Nanally_Passive_2_des",
+          "sha256": "17db0d86f17c3713a3375bf9188d5b70f0bab80d6bdc1dae2d041be70d8ad38c"
+        },
+        {
+          "kind": "reviewed_description",
+          "file": "localization/fr.json",
+          "pointer": "/Nanally_SkillDes/GA_Nanally_Passive_2_des",
+          "sha256": "c901a67013a72cc930d0b9bf558d8efb152485ffdc6cb8ed69f262bc9821eeb7"
+        },
+        {
+          "kind": "reviewed_source_mapping",
+          "file": "abilities/Blueprints/Character/Player/player_010_nanally/NanallyLogicObj_0.json",
+          "sha256": "b63d34c60d2445d8c22abca18d63513da407e458047827076b82eda90e823f0c"
+        }
+      ]
+    },
+    {
+      "status": "provisional_reviewed_manual_numeric_scenario",
+      "native_execution_supported": false,
+      "automatic_activation_supported": false,
+      "kind": "damage",
+      "id": "akane_remora_reapplication_damage",
+      "character_id": 1057,
+      "ability_id": "GA_Akane_Passive_1",
+      "damage_effect_id": "GE_Reaction_3_new_1057_Damage",
+      "result_stage": "attack_scaled_before_critical_defense_resistance_and_other_damage_modifiers",
+      "parameters": {
+        "attack_coefficient": {
+          "source_kind": "coefficient_array",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+            "pointer": "/Rows/GE_Reaction_3_new_1057_Damage/AtkRateBaseArray"
+          },
+          "values_by_source_level": [
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "level_independent": true,
+          "value": 1.5,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "growth_per_second": {
+          "source_kind": "source_number",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+            "pointer": "/Rows/1057/ReactionDataArray/0/DamageIncPerSecond"
+          },
+          "value": 0.2,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "maximum_bonus": {
+          "source_kind": "source_number",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+            "pointer": "/Rows/1057/ReactionDataArray/0/DamageRatioCap"
+          },
+          "value": 1.6,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "extension_base_ratio": {
+          "source_kind": "source_number",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+            "pointer": "/Rows/1057/ReactionDataArray/0/BaseDamageRatio"
+          },
+          "value": 1,
+          "source_status": "extracted_numeric_parameter"
+        }
+      },
+      "inputs": {
+        "attack": {
+          "kind": "number",
+          "minimum": 0,
+          "selection": "builder_final_attack"
+        },
+        "selected_effect_total_duration": {
+          "kind": "number",
+          "minimum": 0,
+          "unit": "seconds",
+          "selection": "manual",
+          "source_query": "GetActiveEffectTimeRemainingAndDuration",
+          "source_parameter": "CooldownDuration",
+          "effect_id": "Buff_Akane_Reaction_Time_C",
+          "actor": "hit_actor"
+        }
+      },
+      "calculation": {
+        "op": "multiply",
+        "args": [
+          {
+            "op": "input",
+            "id": "attack"
+          },
+          {
+            "op": "parameter",
+            "id": "attack_coefficient"
+          },
+          {
+            "op": "add",
+            "args": [
+              1,
+              {
+                "op": "minimum",
+                "args": [
+                  {
+                    "op": "parameter",
+                    "id": "maximum_bonus"
+                  },
+                  {
+                    "op": "multiply",
+                    "args": [
+                      {
+                        "op": "parameter",
+                        "id": "growth_per_second"
+                      },
+                      {
+                        "op": "input",
+                        "id": "selected_effect_total_duration"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "conditions": {
+        "trigger": "remora_reapplied_to_selected_affected_target",
+        "requires_passive_unlocked": true,
+        "automatic_activation_supported": false
+      },
+      "assumptions": [
+        "numeric_growth_formula_is_reviewed_from_extension_fields_and_descriptions_not_certified_native_helper_code",
+        "native_Blueprint_passes_CooldownDuration_not_TimeRemaining",
+        "relationship_between_technical_effect_total_duration_and_remora_snapshot_is_not_certified",
+        "cap_interpreted_as_additional_bonus_not_total_multiplier",
+        "extension_BaseDamageRatio_is_not_an_extra_ATK_coefficient_to_add_to_the_source_1_5",
+        "do_not_apply_the_same_magnitude_again_from_modifier_values"
+      ],
+      "reviewed_evidence": [
+        {
+          "kind": "reviewed_description",
+          "file": "localization/en.json",
+          "pointer": "/Akane_SkillDes/GA_Akane_Passive_1_des",
+          "sha256": "e6e1f8d98afcafaf73f02ab617bc10ddc11bc06b8dba22dd1e6ce059c9d9e35e"
+        },
+        {
+          "kind": "reviewed_description",
+          "file": "localization/fr.json",
+          "pointer": "/Akane_SkillDes/GA_Akane_Passive_1_des",
+          "sha256": "8f77a894d3ff8298374ef30df9be735c637bded6bee91154ab1ef299eb5dbd3f"
+        },
+        {
+          "kind": "reviewed_blueprint",
+          "file": "abilities/Blueprints/Abilities/Calculation/Reaction/Cau_Reaction3_1057/HTCustomCalculateBaseMagnitude.json",
+          "sha256": "10fee30c0a1bfa55e808573156f5f0525f385e90dadc4f5d55a266a5f2629f21"
+        }
+      ]
+    }
+  ],
+  "support_scenarios": [
+    {
+      "status": "provisional_reviewed_manual_numeric_scenario",
+      "native_execution_supported": false,
+      "automatic_activation_supported": false,
+      "kind": "healing",
+      "id": "zero_1046_charge_heal",
+      "character_id": 1046,
+      "ability_id": "GA_Female_Passive_1",
+      "effect_id": "GE_Reaction_GuangLingXiang_1009",
+      "result_stage": "input_to_CustomReplyHealthExecution",
+      "parameters": {
+        "base_attack_ratio": {
+          "source_kind": "curve_constant",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+            "pointer": "/Rows/Reaction_GuangLingXiang1_Recover_1051"
+          },
+          "value": 0.5,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "preferred_character_id": {
+          "source_kind": "source_text",
+          "source": {
+            "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Reaction/Cau_GuangLingXiang1_Female/Default__Cau_GuangLingXiang1_Female_C.json",
+            "pointer": "/Properties/Female"
+          },
+          "value": "1051",
+          "source_status": "extracted_source_identity"
+        },
+        "fallback_character_id": {
+          "source_kind": "source_text",
+          "source": {
+            "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Reaction/Cau_GuangLingXiang1_Female/Default__Cau_GuangLingXiang1_Female_C.json",
+            "pointer": "/Properties/male"
+          },
+          "value": "1046",
+          "source_status": "extracted_source_identity"
+        }
+      },
+      "source_actor_selection": {
+        "kind": "first_available_character",
+        "selection_context_actor": "owner_actor",
+        "character_id_parameters": [
+          "preferred_character_id",
+          "fallback_character_id"
+        ],
+        "source_status": "extracted_blueprint_lookup_order"
+      },
+      "inputs": {
+        "selected_zero_base_attack": {
+          "kind": "number",
+          "minimum": 0,
+          "stat_id": "AtkBase",
+          "selection": "source_actor_selection"
+        }
+      },
+      "calculation": {
+        "op": "multiply",
+        "args": [
+          {
+            "op": "parameter",
+            "id": "base_attack_ratio"
+          },
+          {
+            "op": "input",
+            "id": "selected_zero_base_attack"
+          }
+        ]
+      },
+      "recipients": {
+        "scope": "active_character",
+        "include_source_if_active": true
+      },
+      "conditions": {
+        "trigger": "active_character_gains_ultimate_energy",
+        "requires_passive_unlocked": true,
+        "automatic_activation_supported": false
+      },
+      "shared_application_group": "zero_charge_healing",
+      "duplicate_policy": "select_one_shared_source_scenario_do_not_sum_gender_variants",
+      "assumptions": [
+        "use_the_first_available_source_character_from_the_extracted_lookup_order",
+        "owner_actor_player_state_lookup_is_the_selected_builder_team_context",
+        "heal_recipient_is_the_selected_active_character_from_reviewed_descriptions",
+        "application_cadence_and_final_native_healing_execution_not_certified"
+      ],
+      "reviewed_evidence": [
+        {
+          "kind": "reviewed_description",
+          "file": "localization/en.json",
+          "pointer": "/Female_SkillDes/GA_Female_Passive_1_des",
+          "sha256": "4cd53bd691e90ae078aa80335c81b3be50cc6298f54a982b2131569ce8191251"
+        },
+        {
+          "kind": "reviewed_description",
+          "file": "localization/fr.json",
+          "pointer": "/Female_SkillDes/GA_Female_Passive_1_des",
+          "sha256": "24ef59954a3522d7188abedb5cb8e11217b782cbc881ddbf0ac7cbd8ea698ef7"
+        },
+        {
+          "kind": "reviewed_blueprint",
+          "file": "abilities/Blueprints/Abilities/Calculation/Reaction/Cau_GuangLingXiang1_Female/HTCustomCalculateBaseMagnitude.json",
+          "sha256": "4138de720bd26946c6fa9eb907cf108366bcc0bcca0098706f85d65375d1a07f"
+        }
+      ]
+    },
+    {
+      "status": "provisional_reviewed_manual_numeric_scenario",
+      "native_execution_supported": false,
+      "automatic_activation_supported": false,
+      "kind": "healing",
+      "id": "zero_1051_charge_heal",
+      "character_id": 1051,
+      "ability_id": "GA_Female_Passive_1",
+      "effect_id": "GE_Reaction_GuangLingXiang_1009",
+      "result_stage": "input_to_CustomReplyHealthExecution",
+      "parameters": {
+        "base_attack_ratio": {
+          "source_kind": "curve_constant",
+          "source": {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+            "pointer": "/Rows/Reaction_GuangLingXiang1_Recover_1051"
+          },
+          "value": 0.5,
+          "source_status": "extracted_numeric_parameter"
+        },
+        "preferred_character_id": {
+          "source_kind": "source_text",
+          "source": {
+            "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Reaction/Cau_GuangLingXiang1_Female/Default__Cau_GuangLingXiang1_Female_C.json",
+            "pointer": "/Properties/Female"
+          },
+          "value": "1051",
+          "source_status": "extracted_source_identity"
+        },
+        "fallback_character_id": {
+          "source_kind": "source_text",
+          "source": {
+            "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Reaction/Cau_GuangLingXiang1_Female/Default__Cau_GuangLingXiang1_Female_C.json",
+            "pointer": "/Properties/male"
+          },
+          "value": "1046",
+          "source_status": "extracted_source_identity"
+        }
+      },
+      "source_actor_selection": {
+        "kind": "first_available_character",
+        "selection_context_actor": "owner_actor",
+        "character_id_parameters": [
+          "preferred_character_id",
+          "fallback_character_id"
+        ],
+        "source_status": "extracted_blueprint_lookup_order"
+      },
+      "inputs": {
+        "selected_zero_base_attack": {
+          "kind": "number",
+          "minimum": 0,
+          "stat_id": "AtkBase",
+          "selection": "source_actor_selection"
+        }
+      },
+      "calculation": {
+        "op": "multiply",
+        "args": [
+          {
+            "op": "parameter",
+            "id": "base_attack_ratio"
+          },
+          {
+            "op": "input",
+            "id": "selected_zero_base_attack"
+          }
+        ]
+      },
+      "recipients": {
+        "scope": "active_character",
+        "include_source_if_active": true
+      },
+      "conditions": {
+        "trigger": "active_character_gains_ultimate_energy",
+        "requires_passive_unlocked": true,
+        "automatic_activation_supported": false
+      },
+      "shared_application_group": "zero_charge_healing",
+      "duplicate_policy": "select_one_shared_source_scenario_do_not_sum_gender_variants",
+      "assumptions": [
+        "use_the_first_available_source_character_from_the_extracted_lookup_order",
+        "owner_actor_player_state_lookup_is_the_selected_builder_team_context",
+        "heal_recipient_is_the_selected_active_character_from_reviewed_descriptions",
+        "application_cadence_and_final_native_healing_execution_not_certified"
+      ],
+      "reviewed_evidence": [
+        {
+          "kind": "reviewed_description",
+          "file": "localization/en.json",
+          "pointer": "/Female_SkillDes/GA_Female_Passive_1_des",
+          "sha256": "4cd53bd691e90ae078aa80335c81b3be50cc6298f54a982b2131569ce8191251"
+        },
+        {
+          "kind": "reviewed_description",
+          "file": "localization/fr.json",
+          "pointer": "/Female_SkillDes/GA_Female_Passive_1_des",
+          "sha256": "24ef59954a3522d7188abedb5cb8e11217b782cbc881ddbf0ac7cbd8ea698ef7"
+        },
+        {
+          "kind": "reviewed_blueprint",
+          "file": "abilities/Blueprints/Abilities/Calculation/Reaction/Cau_GuangLingXiang1_Female/HTCustomCalculateBaseMagnitude.json",
+          "sha256": "4138de720bd26946c6fa9eb907cf108366bcc0bcca0098706f85d65375d1a07f"
+        }
+      ]
+    }
+  ],
+  "damage_coefficients": {
+    "Buff_Reaction_4_new": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/Buff_Reaction_4_new/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "None",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_PSYCHICALLY",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/Buff_Reaction_4_new",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "referenced_by_reaction_table",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    },
+    "Buff_Reaction_4_new_1004": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/Buff_Reaction_4_new_1004/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "None",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_PSYCHICALLY",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/Buff_Reaction_4_new_1004",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "reaction_name_family_numeric_evidence_only",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    },
+    "Buff_Reaction_5_new": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/Buff_Reaction_5_new/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "None",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_NORMAL",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/Buff_Reaction_5_new",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "referenced_by_reaction_table",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    },
+    "Buff_Reaction_5_new_1036": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/Buff_Reaction_5_new_1036/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "None",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_INCANTATION",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/Buff_Reaction_5_new_1036",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "reaction_name_family_numeric_evidence_only",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    },
+    "GE_ActorReaction_1_1019_Damage": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0,
+            2.0
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/GE_ActorReaction_1_1019_Damage/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "None",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_NORMAL",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/GE_ActorReaction_1_1019_Damage",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "reaction_name_family_numeric_evidence_only",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    },
+    "GE_ActorReaction_1_Damage": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/GE_ActorReaction_1_Damage/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "None",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_NORMAL",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/GE_ActorReaction_1_Damage",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "referenced_by_reaction_table",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    },
+    "GE_Player_Lacrimosa_AnHunZhouTwo_Damage": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0,
+            4.0
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/GE_Player_Lacrimosa_AnHunZhouTwo_Damage/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "None",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_CHAOS",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/GE_Player_Lacrimosa_AnHunZhouTwo_Damage",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "referenced_by_reaction_table",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    },
+    "GE_Reaction_3_new_1057_Damage": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/GE_Reaction_3_new_1057_Damage/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "None",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_LAKSHANA",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/GE_Reaction_3_new_1057_Damage",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "referenced_by_reaction_table",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    },
+    "GE_Reaction_3_new_1071_Damage": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/GE_Reaction_3_new_1071_Damage/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "GA_Chaos071_UltraSkill",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_LAKSHANA",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/GE_Reaction_3_new_1071_Damage",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "referenced_by_reaction_table",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    },
+    "GE_Reaction_4_new_1070_Damage": {
+      "components": [
+        {
+          "scaling": "attack",
+          "coefficients": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "level_independent": true,
+          "source_pointer": "/Rows/GE_Reaction_4_new_1070_Damage/AtkRateBaseArray"
+        }
+      ],
+      "source_parent_ability_id": "None",
+      "damage_type": "EExecutionDamageTypeEX::DAMAGE_TYPE_PSYCHE",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "pointer": "/Rows/GE_Reaction_4_new_1070_Damage",
+        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+      },
+      "selection_basis": "reaction_name_family_numeric_evidence_only",
+      "level_binding_status": "not_required_constant",
+      "automatic_application_supported": false,
+      "hit_count": null,
+      "duplicate_policy": "reuse_matching_damage_json_effect_do_not_add_another_hit"
+    }
+  },
+  "summons": {
+    "profiles": {
+      "blossom_base_emitter": {
+        "class_id": "ActorReaction_1_Manager_C",
+        "parameters": {
+          "ReadyToFireDelay": {
+            "value": 0.2,
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager/Default__ActorReaction_1_Manager_C.json",
+              "pointer": "/Properties/ReadyToFireDelay",
+              "sha256": "ae2bef4c51fa476e6288af1c096fc15f78adc4a8c8aa98b8a882208d1ba5999b"
+            }
+          },
+          "FireProjectileCoolDown": {
+            "value": 2,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/FireProjectileCoolDown"
+            }
+          },
+          "MinFireProjectileCoolDown": {
+            "value": 0.49,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/MinFireProjectileCoolDown"
+            }
+          },
+          "FireBulletCount": {
+            "value": 1,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/FireBulletCount"
+            }
+          },
+          "FireBulletSpiltCount": {
+            "value": 1,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/FireBulletSpiltCount"
+            }
+          },
+          "TotalFireCount": {
+            "value": 5,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/TotalFireCount"
+            }
+          },
+          "MaxTotalFireCount": {
+            "value": 20,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/MaxTotalFireCount"
+            }
+          },
+          "bIgnoredCount": {
+            "value": false,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/bIgnoredCount"
+            }
+          },
+          "bDestroyWhenAllFired": {
+            "value": true,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/bDestroyWhenAllFired"
+            }
+          },
+          "TotalManagerAllowedNumBase": {
+            "value": 3,
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager/Default__ActorReaction_1_Manager_C.json",
+              "pointer": "/Properties/TotalManagerAllowedNumBase",
+              "sha256": "ae2bef4c51fa476e6288af1c096fc15f78adc4a8c8aa98b8a882208d1ba5999b"
+            }
+          },
+          "InitialLifeSpan": {
+            "value": 23.0,
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager/Default__ActorReaction_1_Manager_C.json",
+              "pointer": "/Properties/InitialLifeSpan",
+              "sha256": "ae2bef4c51fa476e6288af1c096fc15f78adc4a8c8aa98b8a882208d1ba5999b"
+            }
+          }
+        },
+        "damage_effect": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_ActorReaction_1_Damage_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/GE_ActorReaction_1_Damage.1"
+        },
+        "source": {
+          "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager/Default__ActorReaction_1_Manager_C.json",
+          "pointer": "/Properties",
+          "sha256": "ae2bef4c51fa476e6288af1c096fc15f78adc4a8c8aa98b8a882208d1ba5999b"
+        },
+        "parent_source": {
+          "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager/ActorReaction_1_Manager_C.json",
+          "pointer": "/SuperStruct",
+          "sha256": "1cf96b8c31ecf2b4072bfc28811ff8e17dbc7243873cc20c811187e88e2fc489"
+        },
+        "native_execution_supported": false,
+        "application_policy": "configured_emitter_limits_not_guaranteed_hits_or_dps"
+      },
+      "blossom_iroi_copy_emitter": {
+        "class_id": "ActorReaction_1_Manager_1075_C",
+        "parameters": {
+          "ReadyToFireDelay": {
+            "value": 3.2,
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager_1075/Default__ActorReaction_1_Manager_1075_C.json",
+              "pointer": "/Properties/ReadyToFireDelay",
+              "sha256": "4e7ff54054e03a82ac385973f26710745b7c83173dbbed0ff35b1b1f92e308b5"
+            }
+          },
+          "FireProjectileCoolDown": {
+            "value": 0.49,
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager_1075/Default__ActorReaction_1_Manager_1075_C.json",
+              "pointer": "/Properties/FireProjectileCoolDown",
+              "sha256": "4e7ff54054e03a82ac385973f26710745b7c83173dbbed0ff35b1b1f92e308b5"
+            }
+          },
+          "MinFireProjectileCoolDown": {
+            "value": 0.49,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/MinFireProjectileCoolDown"
+            }
+          },
+          "FireBulletCount": {
+            "value": 1,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/FireBulletCount"
+            }
+          },
+          "FireBulletSpiltCount": {
+            "value": 1,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/FireBulletSpiltCount"
+            }
+          },
+          "TotalFireCount": {
+            "value": 20,
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager_1075/Default__ActorReaction_1_Manager_1075_C.json",
+              "pointer": "/Properties/TotalFireCount",
+              "sha256": "4e7ff54054e03a82ac385973f26710745b7c83173dbbed0ff35b1b1f92e308b5"
+            }
+          },
+          "MaxTotalFireCount": {
+            "value": 20,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/MaxTotalFireCount"
+            }
+          },
+          "bIgnoredCount": {
+            "value": false,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/bIgnoredCount"
+            }
+          },
+          "bDestroyWhenAllFired": {
+            "value": true,
+            "source": {
+              "root": "repository",
+              "file": "config/reaction-summons.json",
+              "pointer": "/native_review/defaults/bDestroyWhenAllFired"
+            }
+          },
+          "TotalManagerAllowedNumBase": {
+            "value": 3,
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager_1075/Default__ActorReaction_1_Manager_1075_C.json",
+              "pointer": "/Properties/TotalManagerAllowedNumBase",
+              "sha256": "4e7ff54054e03a82ac385973f26710745b7c83173dbbed0ff35b1b1f92e308b5"
+            }
+          },
+          "InitialLifeSpan": {
+            "value": 15.5,
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager_1075/Default__ActorReaction_1_Manager_1075_C.json",
+              "pointer": "/Properties/InitialLifeSpan",
+              "sha256": "4e7ff54054e03a82ac385973f26710745b7c83173dbbed0ff35b1b1f92e308b5"
+            }
+          }
+        },
+        "damage_effect": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_ActorReaction_1_1019_Damage_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/GE_ActorReaction_1_1019_Damage.1"
+        },
+        "source": {
+          "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager_1075/Default__ActorReaction_1_Manager_1075_C.json",
+          "pointer": "/Properties",
+          "sha256": "4e7ff54054e03a82ac385973f26710745b7c83173dbbed0ff35b1b1f92e308b5"
+        },
+        "parent_source": {
+          "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager_1075/ActorReaction_1_Manager_1075_C.json",
+          "pointer": "/SuperStruct",
+          "sha256": "407ef32639ebfc8d32d75cdc6b3b07aa77afb9eb481e22df68a89bca58f25c7b"
+        },
+        "native_execution_supported": false,
+        "application_policy": "configured_emitter_limits_not_guaranteed_hits_or_dps"
+      }
+    },
+    "spawn_paths": [
+      {
+        "source": {
+          "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/GA_Reaction_1_New/HTAbilitySpawnHTActor_0.json",
+          "pointer": "/Properties/SpawnActorsInfo/SpawnArray/0",
+          "sha256": "65dfceaed45a1fe9fa5785999ecea11328ee8323b6e08d96bbc0bf6a7840b3d5"
+        },
+        "spawn_class": {
+          "ObjectName": "BlueprintGeneratedClass\u0027ActorReaction_1_Manager_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager.1"
+        },
+        "conditions": [],
+        "execution_order_status": "array_reference_not_execution_order_certificate"
+      },
+      {
+        "source": {
+          "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/GA_Reaction_1_New/HTAbilitySpawnHTActor_0.json",
+          "pointer": "/Properties/SpawnActorsInfo/SpawnArray/1",
+          "sha256": "65dfceaed45a1fe9fa5785999ecea11328ee8323b6e08d96bbc0bf6a7840b3d5"
+        },
+        "spawn_class": {
+          "ObjectName": "BlueprintGeneratedClass\u0027ActorReaction_1_Manager_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager.1"
+        },
+        "conditions": [
+          {
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/GA_Reaction_1_New/HTAbilitySpawnHTActor_0/FindSpawnConditionObj_ExtraCosmosNatureManager_1.json",
+              "pointer": "/Properties",
+              "sha256": "147eb88b614241208ed743cf5afeebec15531ce595ffab450781d16281103df6"
+            },
+            "source_fields": {
+              "ConditionArray": [
+                {
+                  "GEConditionArray": [
+                    {
+                      "ObjectName": "BlueprintGeneratedClass\u0027Buff_Kuhara055_Passive1_C\u0027",
+                      "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/PassiveEffect/Buff_Kuhara055_Passive1.0"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "execution_order_status": "array_reference_not_execution_order_certificate"
+      },
+      {
+        "source": {
+          "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/GA_Reaction_1_New/HTAbilitySpawnHTActor_0.json",
+          "pointer": "/Properties/SpawnActorsInfo/SpawnArray/2",
+          "sha256": "65dfceaed45a1fe9fa5785999ecea11328ee8323b6e08d96bbc0bf6a7840b3d5"
+        },
+        "spawn_class": {
+          "ObjectName": "BlueprintGeneratedClass\u0027ActorReaction_1_Manager_1075_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager_1075.1"
+        },
+        "conditions": [
+          {
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/GA_Reaction_1_New/HTAbilitySpawnHTActor_0/FindSpawnConditionObj_ExtraCosmosNatureManager_2.json",
+              "pointer": "/Properties",
+              "sha256": "bc5d4ee38e1d4a31cdb2612be53207dd3eb51442c64bf0d6670f0cf549548aee"
+            },
+            "source_fields": {
+              "ConditionArray": [
+                {
+                  "GEConditionArray": [
+                    {
+                      "ObjectName": "BlueprintGeneratedClass\u0027Buff_Oneiroi075_Passive1_C\u0027",
+                      "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_075_Oneiroi/PassiveEffect/Buff_Oneiroi075_Passive1.1"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "execution_order_status": "array_reference_not_execution_order_certificate"
+      },
+      {
+        "source": {
+          "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/GA_Reaction_1_New/HTAbilitySpawnHTActor_0.json",
+          "pointer": "/Properties/SpawnActorsInfo/SpawnArray/3",
+          "sha256": "65dfceaed45a1fe9fa5785999ecea11328ee8323b6e08d96bbc0bf6a7840b3d5"
+        },
+        "spawn_class": {
+          "ObjectName": "BlueprintGeneratedClass\u0027ActorReaction_1_Manager_1075_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/ActorReaction_1_Manager_1075.1"
+        },
+        "conditions": [
+          {
+            "source": {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction1/New/GA_Reaction_1_New/HTAbilitySpawnHTActor_0/FindSpawnConditionObj_ExtraCosmosNatureManager_0.json",
+              "pointer": "/Properties",
+              "sha256": "d89162e64c0fb3ebada31c1dd0c831f1beca4fdbb9eb0c6050dc64d98da67a86"
+            },
+            "source_fields": {
+              "ConditionArray": [
+                {
+                  "GEConditionArray": [
+                    {
+                      "ObjectName": "BlueprintGeneratedClass\u0027Buff_Oneiroi075_Passive1_C\u0027",
+                      "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_075_Oneiroi/PassiveEffect/Buff_Oneiroi075_Passive1.1"
+                    },
+                    {
+                      "ObjectName": "BlueprintGeneratedClass\u0027Buff_Kuhara055_Passive1_C\u0027",
+                      "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_055_Kuhara/PassiveEffect/Buff_Kuhara055_Passive1.0"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "execution_order_status": "array_reference_not_execution_order_certificate"
+      }
+    ],
+    "selected_variants": [
+      {
+        "id": "nanally_blossom_selected_emitter",
+        "character_id": 1010,
+        "ability_id": "GA_Nanally_Passive_1",
+        "configured_max_projectiles": 10,
+        "configured_projectile_interval_seconds": 1,
+        "source": {
+          "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+          "pointer": "/Rows/1010/ReactionDataArray/0",
+          "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4"
+        },
+        "native_execution_supported": false,
+        "assumptions": [
+          "AdditionalBulletCount_is_selected_total_count_delta_not_per_fire_bullet_multiplier",
+          "FixFireCountDown_is_selected_additive_interval_adjustment",
+          "profile_limits_are_not_a_single_target_hit_guarantee"
+        ],
+        "automatic_activation_supported": false,
+        "status": "reviewed_manual_source_parameter_projection"
+      },
+      {
+        "id": "kuhara_blossom_selected_manager_limit",
+        "character_id": 1055,
+        "ability_id": "GA_Kuhara_Passive_1",
+        "configured_manager_limit": 6,
+        "source": {
+          "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+          "pointer": "/Rows/1055/ReactionDataArray/0",
+          "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4"
+        },
+        "native_execution_supported": false,
+        "assumptions": [
+          "selected_extension_added_to_asset_base_limit",
+          "pool_limit_is_not_number_of_hits_or_managers_spawned_by_one_trigger"
+        ],
+        "automatic_activation_supported": false,
+        "status": "reviewed_manual_source_parameter_projection"
+      },
+      {
+        "id": "iroi_blossom_copy_source_profile",
+        "character_id": 1075,
+        "ability_id": "GA_Oneiroi_Passive_1",
+        "profile_id": "blossom_iroi_copy_emitter",
+        "raw_damage_array_ratios": [
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375,
+          0.375
+        ],
+        "ratio_scope": "DT_ReactionDamageData_ReactionDamageArray_only_not_total_final_hit_damage",
+        "ratio_sources": [
+          {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionDamageData.json",
+            "pointer": "/Rows/GE_ActorReaction_1_Damage/ReactionDamageArray",
+            "sha256": "a36da1f13c87d65d733d04d3612ce8a0a1d0d1d9c40981de53883943cb38097d"
+          },
+          {
+            "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionDamageData.json",
+            "pointer": "/Rows/GE_ActorReaction_1_1019_Damage/ReactionDamageArray",
+            "sha256": "a36da1f13c87d65d733d04d3612ce8a0a1d0d1d9c40981de53883943cb38097d"
+          }
+        ],
+        "native_execution_supported": false,
+        "unresolved": [
+          "full_reaction_formula_and_character_level_array_mapping",
+          "copy_ignore_pool_limit_runtime_behavior",
+          "source_0_49_interval_vs_description_0_5",
+          "raw_attack_coefficients_are_not_the_same_0_375_ratio"
+        ],
+        "automatic_activation_supported": false,
+        "status": "reviewed_manual_source_parameter_projection"
+      }
+    ],
+    "native_default_review": {
+      "root": "repository",
+      "file": "config/reaction-summons.json",
+      "pointer": "/native_review"
+    }
+  }
+}

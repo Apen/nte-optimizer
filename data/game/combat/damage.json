@@ -574,13 +574,18 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Sagiri_UltraSkill_Damage_LV2"
-          }
+          },
+          "coefficient_level_independent": true
         }
       ],
       "rules": {
         "skill_level_sources": {
           "GA_Sagiri_Appear": "GA_Sagiri_Melee",
           "GA_Sagiri_PerfectEvade": "GA_Sagiri_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Sagiri_Appear": "assumed",
+          "GA_Sagiri_PerfectEvade": "assumed"
         }
       }
     },
@@ -648,7 +653,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Lacrimosa_AnHunZhouTwo_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Lacrimosa_B_Melee1_Damage",
@@ -1554,9 +1560,15 @@
       "rules": {
         "skill_level_sources": {
           "GA_Lacrimosa_Appear": "GA_Lacrimosa_Melee",
+          "GA_Lacrimosa_ExtremEvadeAtk": "GA_Lacrimosa_Melee",
           "GA_Lacrimosa_MeleeModA": "GA_Lacrimosa_Melee",
-          "GA_Lacrimosa_SwitchSkillModB": "GA_Lacrimosa_Skill",
-          "GA_Lacrimosa_ExtremEvadeAtk": "GA_Lacrimosa_Melee"
+          "GA_Lacrimosa_SwitchSkillModB": "GA_Lacrimosa_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Lacrimosa_Appear": "assumed",
+          "GA_Lacrimosa_ExtremEvadeAtk": "assumed",
+          "GA_Lacrimosa_MeleeModA": "supported",
+          "GA_Lacrimosa_SwitchSkillModB": "supported"
         }
       }
     },
@@ -1654,7 +1666,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Skia_GuangXiangFive_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Skia_Melee1_Damage",
@@ -2232,6 +2245,11 @@
           "GA_Skia_Evade": "GA_Skia_Melee",
           "GA_Skia_Appear": "GA_Skia_Melee",
           "GA_Skia_PerfectEvade": "GA_Skia_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Skia_Evade": "assumed",
+          "GA_Skia_Appear": "assumed",
+          "GA_Skia_PerfectEvade": "assumed"
         }
       }
     },
@@ -3078,7 +3096,8 @@
             "source": "datamine",
             "source_id": "GE_Player_Female051_Skill_Kill_Damage_lv1"
           },
-          "omit_from_action_preview": true
+          "omit_from_action_preview": true,
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_Skill_Kill_Damage_lv2",
@@ -3109,7 +3128,8 @@
             "source": "datamine",
             "source_id": "GE_Player_Female051_Skill_Kill_Damage_lv2"
           },
-          "omit_from_action_preview": true
+          "omit_from_action_preview": true,
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_UltraSkill1_Damage",
@@ -3259,7 +3279,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_Melee1_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_unarmed_Melee2_Damage",
@@ -3289,7 +3310,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_Melee2_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_unarmed_Melee3_Damage",
@@ -3319,7 +3341,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_Melee3_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_unarmed_Melee4_1_Damage",
@@ -3349,7 +3372,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_Melee4_1_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_unarmed_Melee4_2_Damage",
@@ -3379,7 +3403,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_Melee4_2_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_unarmed_Melee4_Damage",
@@ -3409,7 +3434,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_Melee4_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_unarmed_Melee5_Damage",
@@ -3439,7 +3465,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_Melee5_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_unarmed_UltraSkill1_Damage",
@@ -3469,7 +3496,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_UltraSkill1_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_unarmed_UltraSkill2_Damage",
@@ -3499,7 +3527,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_UltraSkill2_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female051_unarmed_UltraSkill3_Damage",
@@ -3529,7 +3558,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Female051_unarmed_UltraSkill3_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         }
       ],
       "rules": {
@@ -3540,6 +3570,14 @@
           "GA_Female051_PerfectEvade": "GA_Female051_Melee",
           "GA_Female051_Melee_UnArmed": "GA_Female051_Melee",
           "GA_Female051_UltraSkill_UnArmed": "GA_Female051_UltraSkill"
+        },
+        "skill_level_source_statuses": {
+          "GA_Female_Melee": "assumed",
+          "GA_Female_Skill": "assumed",
+          "GA_Female051_Appear": "assumed",
+          "GA_Female051_PerfectEvade": "assumed",
+          "GA_Female051_Melee_UnArmed": "assumed",
+          "GA_Female051_UltraSkill_UnArmed": "assumed"
         }
       }
     },
@@ -4662,6 +4700,10 @@
         "skill_level_sources": {
           "GA_Nanally_Appear": "GA_Nanally_Melee",
           "GA_Nanally_PerfectEvade": "GA_Nanally_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Nanally_Appear": "assumed",
+          "GA_Nanally_PerfectEvade": "assumed"
         }
       }
     },
@@ -5365,6 +5407,11 @@
           "GA_Mint019_Appear": "GA_Mint019_Melee",
           "GA_MintActorWind_Skill": "GA_Mint019_Skill",
           "GA_Mint019_PerfectEvade": "GA_Mint019_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Mint019_Appear": "assumed",
+          "GA_MintActorWind_Skill": "assumed",
+          "GA_Mint019_PerfectEvade": "assumed"
         }
       }
     },
@@ -5796,6 +5843,9 @@
       "rules": {
         "skill_level_sources": {
           "GA_Haniel_Appear": "GA_Haniel_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Haniel_Appear": "assumed"
         }
       }
     },
@@ -6108,6 +6158,10 @@
         "skill_level_sources": {
           "GA_Edgar_Appear": "GA_Edgar_Melee",
           "GA_Edgar_PerfectEvade": "GA_Edgar_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Edgar_Appear": "assumed",
+          "GA_Edgar_PerfectEvade": "assumed"
         }
       }
     },
@@ -6871,6 +6925,11 @@
           "GA_Cang_Appear": "GA_Cang_Melee",
           "GA_Cang_PerfectEvade": "GA_Cang_Melee",
           "GA_Cang_SkillA": "GA_Cang_Skill"
+        },
+        "skill_level_source_statuses": {
+          "GA_Cang_Appear": "assumed",
+          "GA_Cang_PerfectEvade": "assumed",
+          "GA_Cang_SkillA": "supported"
         }
       }
     },
@@ -6968,7 +7027,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Hathor_GuangXiangFive_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Hathor_Melee1_Damage",
@@ -7786,6 +7846,11 @@
           "GA_Hathor_Appear": "GA_Hathor_Melee",
           "GA_Hathor_PerfectEvade": "GA_Hathor_Melee",
           "GA_Hathor_Skill2": "GA_Hathor_Skill"
+        },
+        "skill_level_source_statuses": {
+          "GA_Hathor_Appear": "assumed",
+          "GA_Hathor_PerfectEvade": "assumed",
+          "GA_Hathor_Skill2": "assumed"
         }
       }
     },
@@ -8275,6 +8340,10 @@
         "skill_level_sources": {
           "GA_Adler_Appear": "GA_Adler_Melee",
           "GA_Adler_PerfectEvade": "GA_Adler_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Adler_Appear": "assumed",
+          "GA_Adler_PerfectEvade": "assumed"
         }
       }
     },
@@ -9780,7 +9849,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Zankou_SkillForce_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Zankou_UltraSkill1_Damage",
@@ -9881,7 +9951,14 @@
               "value": 0.5
             }
           }
-        ]
+        ],
+        "skill_level_source_statuses": {
+          "GA_Zankou_Appear": "assumed",
+          "GA_Zankou_MeleeMagic": "assumed",
+          "GA_Zankou_PerfectEvade": "assumed",
+          "GA_Zankou_UltraSkillForce": "assumed",
+          "GA_Zankou_UltraSkillMagic": "assumed"
+        }
       }
     },
     "1039": {
@@ -10637,6 +10714,10 @@
         "skill_level_sources": {
           "GA_Fadia_Appear": "GA_Fadia_Melee",
           "GA_Fadia_PerfectEvade": "GA_Fadia_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Fadia_Appear": "assumed",
+          "GA_Fadia_PerfectEvade": "assumed"
         }
       }
     },
@@ -11409,6 +11490,13 @@
           "GA_BlackBird_Evolve_Melee": "GA_BlackBird_Melee",
           "GA_BlackBird_Evolve_Skill": "GA_BlackBird_Skill",
           "GA_BlackBird_Evolve_UltraSkill": "GA_BlackBird_UltraSkill"
+        },
+        "skill_level_source_statuses": {
+          "GA_BlackBird_Appear": "assumed",
+          "GA_BlackBird_PerfectEvade": "assumed",
+          "GA_BlackBird_Evolve_Melee": "assumed",
+          "GA_BlackBird_Evolve_Skill": "assumed",
+          "GA_BlackBird_Evolve_UltraSkill": "assumed"
         }
       }
     },
@@ -11955,7 +12043,8 @@
             "source": "datamine",
             "source_id": "GE_Player_Female046_Skill_Kill_Damage_lv1"
           },
-          "omit_from_action_preview": true
+          "omit_from_action_preview": true,
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_Skill_Kill_Damage_lv2",
@@ -11986,7 +12075,8 @@
             "source": "datamine",
             "source_id": "GE_Player_Female046_Skill_Kill_Damage_lv2"
           },
-          "omit_from_action_preview": true
+          "omit_from_action_preview": true,
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_UltraSkill1_Damage",
@@ -12135,7 +12225,8 @@
             "confidence": "inferred",
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_Melee1_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_unarmed_Melee2_Damage",
@@ -12164,7 +12255,8 @@
             "confidence": "inferred",
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_Melee2_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_unarmed_Melee3_Damage",
@@ -12193,7 +12285,8 @@
             "confidence": "inferred",
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_Melee3_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_unarmed_Melee4_Damage",
@@ -12222,7 +12315,8 @@
             "confidence": "inferred",
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_Melee4_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_unarmed_Melee4_1_Damage",
@@ -12251,7 +12345,8 @@
             "confidence": "inferred",
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_Melee4_1_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_unarmed_Melee4_2_Damage",
@@ -12280,7 +12375,8 @@
             "confidence": "inferred",
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_Melee4_2_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_unarmed_Melee5_Damage",
@@ -12310,7 +12406,8 @@
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_Melee5_Damage"
           },
-          "fixed_crit_rate": 1.0
+          "fixed_crit_rate": 1.0,
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_unarmed_UltraSkill1_Damage",
@@ -12339,7 +12436,8 @@
             "confidence": "inferred",
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_UltraSkill1_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_unarmed_UltraSkill2_Damage",
@@ -12368,7 +12466,8 @@
             "confidence": "inferred",
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_UltraSkill2_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Female046_unarmed_UltraSkill3_Damage",
@@ -12397,7 +12496,8 @@
             "confidence": "inferred",
             "source": "datamine",
             "source_id": "GE_Player_Female046_unarmed_UltraSkill3_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         }
       ],
       "rules": {
@@ -12406,6 +12506,12 @@
           "GA_Female046_PerfectEvade": "GA_Female046_Melee",
           "GA_Female046_Melee_UnArmed": "GA_Female046_Melee",
           "GA_Female046_UltraSkill_UnArmed": "GA_Female046_UltraSkill"
+        },
+        "skill_level_source_statuses": {
+          "GA_Female046_Appear": "assumed",
+          "GA_Female046_PerfectEvade": "assumed",
+          "GA_Female046_Melee_UnArmed": "assumed",
+          "GA_Female046_UltraSkill_UnArmed": "assumed"
         }
       }
     },
@@ -13621,6 +13727,11 @@
           "GA_Jin_Appear": "GA_Jin_Melee",
           "GA_Jin_PerfectEvade": "GA_Jin_Melee",
           "GA_Jin_UltraSkill_Melee": "GA_Jin_UltraSkill"
+        },
+        "skill_level_source_statuses": {
+          "GA_Jin_Appear": "assumed",
+          "GA_Jin_PerfectEvade": "assumed",
+          "GA_Jin_UltraSkill_Melee": "supported"
         }
       }
     },
@@ -14136,7 +14247,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Daffodill_ExtraUnbalance_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Daffodill_Melee1_Damage",
@@ -15041,8 +15153,12 @@
       ],
       "rules": {
         "skill_level_sources": {
-          "GA_Daffodill_Appear": "GA_Daffodill_Melee",
-          "GA_Daffodill_PerfectEvade": "GA_Daffodill_Melee"
+          "GA_Daffodill_PerfectEvade": "GA_Daffodill_Melee",
+          "GA_Daffodill_Appear": "GA_Daffodill_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Daffodill_PerfectEvade": "assumed",
+          "GA_Daffodill_Appear": "supported"
         }
       }
     },
@@ -15648,7 +15764,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Kuhara_SeedReaction_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Kuhara_Seed_Damage",
@@ -15798,7 +15915,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Kuhara_TargetActivateSkill_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Kuhara_UltraSkill1_Damage",
@@ -15925,6 +16043,10 @@
         "skill_level_sources": {
           "GA_Kuhara_Appear": "GA_Kuhara_Melee",
           "GA_Kuhara_PerfectEvade": "GA_Kuhara_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Kuhara_Appear": "assumed",
+          "GA_Kuhara_PerfectEvade": "assumed"
         }
       }
     },
@@ -16000,19 +16122,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
+            0.149,
+            0.161,
+            0.174,
+            0.188,
+            0.203,
+            0.219,
+            0.236,
+            0.255,
             0.276,
             0.298,
             0.322,
-            0.348,
-            0.375,
-            0.406,
-            0.438,
-            0.473,
-            0.511,
-            0.552,
-            0.596,
-            0.644,
-            0.695
+            0.347,
+            0.375
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16030,19 +16152,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
+            0.219,
+            0.237,
+            0.255,
+            0.276,
+            0.298,
+            0.322,
+            0.348,
+            0.375,
             0.405,
-            0.437,
-            0.472,
-            0.51,
-            0.551,
-            0.595,
-            0.643,
-            0.694,
-            0.75,
-            0.81,
-            0.874,
-            0.944,
-            1.02
+            0.438,
+            0.473,
+            0.511,
+            0.551
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16060,19 +16182,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
+            0.135,
+            0.146,
+            0.157,
+            0.17,
+            0.184,
+            0.198,
             0.214,
             0.231,
             0.25,
             0.27,
             0.291,
-            0.314,
-            0.34,
-            0.367,
-            0.396,
-            0.428,
-            0.462,
-            0.499,
-            0.539
+            0.315,
+            0.34
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16090,19 +16212,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
-            0.165,
-            0.178,
-            0.192,
-            0.208,
-            0.224,
-            0.242,
-            0.262,
-            0.283,
-            0.305,
-            0.33,
-            0.356,
-            0.385,
-            0.415
+            0.103,
+            0.111,
+            0.12,
+            0.13,
+            0.14,
+            0.151,
+            0.163,
+            0.177,
+            0.191,
+            0.206,
+            0.222,
+            0.24,
+            0.259
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16120,19 +16242,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
-            3.814,
-            4.119,
-            4.449,
-            4.805,
-            5.189,
-            5.604,
-            6.052,
-            6.537,
-            7.059,
-            7.624,
-            8.234,
-            8.893,
-            9.604
+            4.247,
+            4.587,
+            4.954,
+            5.35,
+            5.778,
+            6.24,
+            6.739,
+            7.279,
+            7.861,
+            8.49,
+            9.169,
+            9.902,
+            10.695
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16150,19 +16272,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
-            0.25,
-            0.27,
-            0.292,
-            0.315,
-            0.34,
-            0.367,
-            0.397,
-            0.428,
-            0.463,
-            0.5,
-            0.54,
-            0.583,
-            0.63
+            1.375,
+            1.485,
+            1.604,
+            1.732,
+            1.871,
+            2.02,
+            2.182,
+            2.357,
+            2.545,
+            2.749,
+            2.969,
+            3.206,
+            3.462
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16210,19 +16332,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
-            2.25,
-            2.43,
-            2.624,
-            2.834,
-            3.061,
-            3.306,
-            3.57,
-            3.856,
-            4.165,
-            4.498,
-            4.858,
-            5.246,
-            5.666
+            1.62,
+            1.75,
+            1.89,
+            2.041,
+            2.204,
+            2.38,
+            2.571,
+            2.776,
+            2.999,
+            3.238,
+            3.497,
+            3.777,
+            4.079
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16240,19 +16362,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
-            5.0,
-            5.4,
-            5.832,
-            6.299,
-            6.802,
-            7.347,
-            7.934,
-            8.569,
-            9.255,
-            9.995,
-            10.795,
-            11.658,
-            12.591
+            3.6,
+            3.888,
+            4.199,
+            4.535,
+            4.898,
+            5.29,
+            5.713,
+            6.17,
+            6.663,
+            7.196,
+            7.772,
+            8.394,
+            9.065
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16270,19 +16392,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
-            0.9,
-            0.972,
-            1.05,
-            1.134,
-            1.224,
-            1.322,
-            1.428,
-            1.542,
-            1.666,
-            1.799,
-            1.943,
-            2.098,
-            2.266
+            0.648,
+            0.7,
+            0.756,
+            0.816,
+            0.882,
+            0.952,
+            1.028,
+            1.111,
+            1.199,
+            1.295,
+            1.399,
+            1.511,
+            1.632
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16300,19 +16422,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
-            12.0,
-            12.96,
-            13.997,
-            15.117,
-            16.326,
-            17.632,
-            19.042,
-            20.566,
-            22.211,
-            23.988,
-            25.907,
-            27.98,
-            30.218
+            9.18,
+            9.914,
+            10.708,
+            11.564,
+            12.489,
+            13.488,
+            14.568,
+            15.733,
+            16.992,
+            18.351,
+            19.819,
+            21.404,
+            23.117
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16330,19 +16452,19 @@
           "element": "DAMAGE_TYPE_LAKSHANA",
           "scaling": "attack",
           "coefficients": [
-            11.25,
-            12.15,
-            13.122,
-            14.172,
-            15.306,
-            16.53,
-            17.852,
-            19.281,
-            20.823,
-            22.489,
-            24.288,
-            26.231,
-            28.329
+            10.125,
+            10.935,
+            11.81,
+            12.755,
+            13.775,
+            14.877,
+            16.067,
+            17.352,
+            18.741,
+            20.24,
+            21.859,
+            23.608,
+            25.496
           ],
           "break_value": null,
           "classification_confidence": "game_data",
@@ -16359,6 +16481,12 @@
           "GA_Akane_PerfectEvade": "GA_Akane_Melee",
           "GA_Akane_UltraSkill_End": "GA_Akane_UltraSkill",
           "GA_Akane_Skill_instead_PlayMontage": "GA_Akane_Skill"
+        },
+        "skill_level_source_statuses": {
+          "GA_Akane_Appear": "assumed",
+          "GA_Akane_PerfectEvade": "assumed",
+          "GA_Akane_UltraSkill_End": "assumed",
+          "GA_Akane_Skill_instead_PlayMontage": "assumed"
         }
       }
     },
@@ -16819,10 +16947,16 @@
       ],
       "rules": {
         "skill_level_sources": {
+          "GA_Mitsuki_PerfectEvade": "GA_Mitsuki_Melee",
           "GA_Mitsuki_Evade": "GA_Mitsuki_Melee",
           "GA_Mitsuki_PerfectEvadeAtkBullet": "GA_Mitsuki_Melee",
-          "GA_Mitsuki_PerfectEvadeAtkBullet_Power": "GA_Mitsuki_Melee",
-          "GA_Mitsuki_PerfectEvade": "GA_Mitsuki_Melee"
+          "GA_Mitsuki_PerfectEvadeAtkBullet_Power": "GA_Mitsuki_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Mitsuki_PerfectEvade": "assumed",
+          "GA_Mitsuki_Evade": "supported",
+          "GA_Mitsuki_PerfectEvadeAtkBullet": "supported",
+          "GA_Mitsuki_PerfectEvadeAtkBullet_Power": "supported"
         }
       }
     },
@@ -17735,6 +17869,10 @@
         "skill_level_sources": {
           "GA_Chaos071_Appear": "GA_Chaos071_Melee",
           "GA_Chaos071_PerfectEvade": "GA_Chaos071_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Chaos071_Appear": "assumed",
+          "GA_Chaos071_PerfectEvade": "assumed"
         }
       }
     },
@@ -18568,13 +18706,23 @@
       "rules": {
         "skill_level_sources": {
           "GA_Radio072_Appear": "GA_Radio072_Melee",
+          "GA_Radio072_PerfectEvade": "GA_Radio072_Melee",
           "GA_Radio072_QTE_BackToLTE": "GA_Radio072_QTE",
           "GA_Radio072_QTE_FrontToLTE": "GA_Radio072_QTE",
-          "GA_Radio072_PerfectEvade": "GA_Radio072_Melee",
-          "GA_Radio072_Skill_Throw_XiaoZhen": "GA_Radio072_Skill",
+          "GA_Radio072_Skill_Throw_XiaoZhen": "GA_Radio072_QTE",
           "GA_Radio072_SubUltraSkill": "GA_Radio072_UltraSkill",
           "GA_Radio072_UltraSkillLTE_AOE": "GA_Radio072_UltraSkill",
           "GA_Radio072_UltraSkillLTE_AOE_Level4": "GA_Radio072_UltraSkill"
+        },
+        "skill_level_source_statuses": {
+          "GA_Radio072_Appear": "assumed",
+          "GA_Radio072_PerfectEvade": "assumed",
+          "GA_Radio072_QTE_BackToLTE": "supported",
+          "GA_Radio072_QTE_FrontToLTE": "supported",
+          "GA_Radio072_Skill_Throw_XiaoZhen": "supported",
+          "GA_Radio072_SubUltraSkill": "supported",
+          "GA_Radio072_UltraSkillLTE_AOE": "supported",
+          "GA_Radio072_UltraSkillLTE_AOE_Level4": "supported"
         }
       }
     },
@@ -19276,6 +19424,9 @@
       "rules": {
         "skill_level_sources": {
           "GA_Chiichan073_PerfectEvade": "GA_Chiichan073_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Chiichan073_PerfectEvade": "assumed"
         }
       }
     },
@@ -19311,7 +19462,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Damage_sheep_gun_awaken2"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Damage_sheep_syringe_awaken2",
@@ -19341,7 +19493,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Damage_sheep_syringe_awaken2"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Damage_sheep_trumpet_awaken2",
@@ -19371,7 +19524,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Damage_sheep_trumpet_awaken2"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Oneiroi_AirAttack_Damage",
@@ -19881,7 +20035,8 @@
             "confidence": "game_data",
             "source": "datamine",
             "source_id": "GE_Player_Oneiroi_Skill_Damage"
-          }
+          },
+          "coefficient_level_independent": true
         },
         {
           "id": "GE_Player_Oneiroi_Skill_Gun_Damage",
@@ -20278,6 +20433,10 @@
         "skill_level_sources": {
           "GA_Oneiroi_Appear": "GA_Oneiroi_Melee",
           "GA_Oneiroi_PerfectEvade": "GA_Oneiroi_Melee"
+        },
+        "skill_level_source_statuses": {
+          "GA_Oneiroi_Appear": "assumed",
+          "GA_Oneiroi_PerfectEvade": "assumed"
         }
       }
     },
@@ -21824,10 +21983,17 @@
       "rules": {
         "skill_level_sources": {
           "GA_Shinku_Appear": "GA_Shinku_Melee",
-          "GA_Shinku_Melee_Rage": "GA_Shinku_Melee",
           "GA_Shinku_PerfectEvade": "GA_Shinku_Melee",
           "GA_Shinku_PerfectEvade_Rage": "GA_Shinku_Melee",
+          "GA_Shinku_Melee_Rage": "GA_Shinku_Melee",
           "GA_Shinku_Skill_Rage": "GA_Shinku_Skill"
+        },
+        "skill_level_source_statuses": {
+          "GA_Shinku_Appear": "assumed",
+          "GA_Shinku_PerfectEvade": "assumed",
+          "GA_Shinku_PerfectEvade_Rage": "assumed",
+          "GA_Shinku_Melee_Rage": "supported",
+          "GA_Shinku_Skill_Rage": "supported"
         }
       }
     }

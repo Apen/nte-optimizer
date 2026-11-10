@@ -17,6 +17,7 @@ type Item struct {
 }
 
 type Catalog struct {
+	GameTables          map[string]map[string]string  `json:"-"`
 	Schema              string                        `json:"schema"`
 	SchemaVersion       int                           `json:"schema_version"`
 	Locale              string                        `json:"locale"`
@@ -100,6 +101,7 @@ func Load(dataDir, language string) (Catalog, error) {
 		return Catalog{}, err
 	}
 	catalog.Items = game.itemLabels()
+	catalog.GameTables = game.Tables
 	catalog.Abilities = game.skillLabels()
 	catalog.Resources = game.Tables["resources"]
 	catalog.Sets = game.Tables["sets"]
@@ -108,6 +110,15 @@ func Load(dataDir, language string) (Catalog, error) {
 	catalog.ConsoleTraitEffects = game.Tables["console_trait_effects"]
 	catalog.Furniture = game.Tables["ST_furniture"]
 	return catalog, nil
+}
+
+// GameLabel resolves an explicit numerical-catalog locale reference.
+func (c Catalog) GameLabel(table, key string) (string, error) {
+	value, ok := c.GameTables[table][key]
+	if !ok || strings.TrimSpace(value) == "" {
+		return "", fmt.Errorf("missing game locale reference %s/%s", table, key)
+	}
+	return value, nil
 }
 
 type gameLocale struct {

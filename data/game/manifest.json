@@ -7,7 +7,10 @@
       "sha256": "db987c98db1734bb40a3d1d3469060cf109b38f674d268ff50acc2f0764462ec",
       "sources": [
         "generated/base_stats.json",
-        "config/legacy-character-fallback.json"
+        "datamine/data/datatables/DataTable/Character/DT_Character.json",
+        "datamine/data/datatables/DataTable/Character/DT_CharacterBreakthroughDataTable.json",
+        "datamine/data/catalogs/DataTable/PackData/DT_PlayerPackData.json",
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_PlayerModifyPackData.json"
       ],
       "status": "generated",
       "warnings": []
@@ -19,8 +22,7 @@
       "sources": [
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_LikeabilityModifyData.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
-        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
-        "config/legacy-character-fallback.json"
+        "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json"
       ],
       "status": "generated",
       "warnings": []
@@ -33,9 +35,7 @@
         "datamine/data/characters/manifest.json",
         "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
-        "config/character-esper-types.json",
-        "overrides/game-data.json",
-        "config/legacy-character-fallback.json"
+        "overrides/game-data.json"
       ],
       "status": "generated",
       "warnings": []
@@ -43,12 +43,15 @@
     {
       "path": "combat/action_evidence.json",
       "schema_version": 1,
-      "sha256": "7e51573980f778b2566f7ed6c7e15e1cf75567beecd4bd3441cadcfb262e7b55",
+      "sha256": "a2bd67b72950ea2c7b67e686008b5e0bda4cd9052bd278095a80a92315831293",
       "sources": [
         "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "datamine/data/abilities/DataTable/Skill/DT_GameplayEffectMappingData.json",
         "datamine/data/abilities/Blueprints",
-        "config/combat-action-observations.json"
+        "datamine/data/abilities/Characters/Player",
+        "config/combat-action-observations.json",
+        "config/skill-level-mechanism.json",
+        "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json"
       ],
       "status": "generated",
       "warnings": []
@@ -56,18 +59,52 @@
     {
       "path": "combat/damage.json",
       "schema_version": 1,
-      "sha256": "2be2609b652419522b9a9d1ef25c2ec3af83f407f76bd55236af3466da587861",
+      "sha256": "103109ebdbc15b9820eecd685d272ebd951b4994ae4aac59c8be501b9935c7a7",
       "sources": [
         "generated/combat_catalog_draft.json",
         "datamine/data/characters/manifest.json",
         "overrides/combat-rules.json",
         "overrides/combat-instances.json",
-        "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json"
+        "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "datamine/data/abilities/Blueprints",
+        "datamine/data/abilities/Characters/Player",
+        "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
+        "config/skill-level-mechanism.json"
       ],
       "status": "partial",
       "warnings": [
         "Supplemental effects retain their source scaling and provisional execution classification."
       ]
+    },
+    {
+      "path": "combat/modifier_values.json",
+      "schema_version": 1,
+      "sha256": "bf67ccef1c38589a2832ec995b3b3b4e87cdf8be53a220a90c26f3cb4f3911b0",
+      "sources": [
+        "datamine/data/abilities/manifest.json",
+        "config/skill-support-buffs.json",
+        "BlueprintMagnitudeExpressions.cs",
+        "GameplayEffectInheritance.cs",
+        "config/blueprint-native-queries.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "combat/reaction_values.json",
+      "schema_version": 1,
+      "sha256": "e770a279f4717a1cc231cc6cb1b8e2f06633a20aa2b1244758b891c962831380",
+      "sources": [
+        "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "datamine/data/abilities/DataTable/Reaction/DT_ReactionDamageData.json",
+        "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "datamine/data/abilities/DataTable/Reaction/DT_ReactionData.json",
+        "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "config/reaction-scenarios.json",
+        "config/reaction-summons.json"
+      ],
+      "status": "generated",
+      "warnings": []
     },
     {
       "path": "combat/rotations.json",
@@ -80,11 +117,58 @@
       "warnings": []
     },
     {
+      "path": "combat/skill_buffs.json",
+      "schema_version": 1,
+      "sha256": "f19a8991801580377ff713d31ee8918d7fcb4549489b1d9ff917badb1fcbdb1f",
+      "sources": [
+        "config/skill-support-buffs.json",
+        "overrides/team_effect_previews.json",
+        "datamine/data/abilities/Blueprints/Abilities/Player",
+        "datamine/data/abilities/Blueprints/Share/Buff",
+        "datamine/data/abilities/Blueprints/Abilities/Buff/Common/Property",
+        "datamine/data/abilities/Blueprints/Abilities/Condition/Player",
+        "datamine/data/abilities/DataTable/Skill/GlobalCharacterData",
+        "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
+        "datamine/data/localization/en.json",
+        "datamine/data/localization/fr.json",
+        "config/reaction-support-buffs.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
+      "path": "combat/skill_values.json",
+      "schema_version": 1,
+      "sha256": "87418e3189450d5455476a001d69040abac04ddc13a7d8fe88269cc2db22feb9",
+      "sources": [
+        "config/skill-values.json",
+        "datamine/data/abilities/DataTable/Skill/DT_GameplayAbilityTipsData.json",
+        "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
+        "datamine/data/abilities/DataTable/Skill/DT_GameplayEffectMappingData.json",
+        "datamine/data/abilities/DataTable/Skill/DT_GameplayAbilityCostData.json",
+        "datamine/data/abilities/DataTable/Skill/GlobalCharacterData",
+        "datamine/data/abilities/Blueprints/Abilities/CoolDown",
+        "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
+        "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityEffectConfig.json"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
       "path": "combat/team_effect_previews.json",
       "schema_version": 1,
-      "sha256": "cba672cd6197bb0f38e86c8e77b205f8f3d2dae9c834440810d56572f0486cb9",
+      "sha256": "83b5479a45ef78b46450d54c83c76cb0083866fb3525e0aff852c6ce6265e7d5",
       "sources": [
-        "overrides/team_effect_previews.json"
+        "config/skill-support-buffs.json",
+        "overrides/team_effect_previews.json",
+        "datamine/data/abilities/Blueprints/Abilities/Player",
+        "datamine/data/abilities/Blueprints/Share/Buff",
+        "datamine/data/abilities/Blueprints/Abilities/Buff/Common/Property",
+        "datamine/data/abilities/Blueprints/Abilities/Condition/Player",
+        "datamine/data/abilities/DataTable/Skill/GlobalCharacterData",
+        "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
+        "datamine/data/localization/en.json",
+        "datamine/data/localization/fr.json"
       ],
       "status": "generated",
       "warnings": []
@@ -191,7 +275,7 @@
     {
       "path": "locales/en.json",
       "schema_version": 1,
-      "sha256": "e13ffc6f2753ba668c36fe81df18c1dd201818a898fc662a0e497142bde3e6b3",
+      "sha256": "3ba9aee3bf6d8e508282ddc45947aefd38e79d1a7e733b545d0f2f7f82939b74",
       "sources": [
         "datamine/data/localization/en.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -203,7 +287,8 @@
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
         "config/locales.json",
         "overrides/locales.json",
-        "config/legacy-character-fallback.json"
+        "config/skill-values.json",
+        "datamine/data/abilities/DataTable/Skill/DT_GameplayAbilityTipsData.json"
       ],
       "status": "generated",
       "warnings": []
@@ -211,7 +296,7 @@
     {
       "path": "locales/fr.json",
       "schema_version": 1,
-      "sha256": "4707e7aea7918913da83606a6faae148b5b6fcbbe84fbb3576dde736dddd7f47",
+      "sha256": "1e74cdebe294b021988c2a9bbf62c16fe745749e3297d2d62a0aaa7bd2c97060",
       "sources": [
         "datamine/data/localization/fr.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -223,7 +308,8 @@
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
         "config/locales.json",
         "overrides/locales.json",
-        "config/legacy-character-fallback.json"
+        "config/skill-values.json",
+        "datamine/data/abilities/DataTable/Skill/DT_GameplayAbilityTipsData.json"
       ],
       "status": "generated",
       "warnings": []
