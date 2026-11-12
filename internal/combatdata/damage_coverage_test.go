@@ -1,10 +1,15 @@
 package combatdata
 
 import (
+	"crypto/sha256"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"math"
 	"path/filepath"
 	"reflect"
+	"slices"
+	"strings"
 	"testing"
 
 	"nte-optimizer/internal/damage"
@@ -41,6 +46,7 @@ func TestPublishedSheetCoefficientsAgreeWithDamageCatalog(t *testing.T) {
 		t.Fatal(err)
 	}
 	unmatched := map[string]bool{}
+	foreign := []string{}
 	checked := 0
 	displayOnly := 0
 	for id, character := range c.Skills.Characters {
@@ -64,9 +70,20 @@ func TestPublishedSheetCoefficientsAgreeWithDamageCatalog(t *testing.T) {
 					if p.SourceKind != "damage_effect" || p.Status == "unused_source_slot" {
 						continue
 					}
-					entry, ok := effects[p.SourceID]
-					if !ok {
+					entry, err := p.ResolveDamageEffect(id, d)
+					if errors.Is(err, ErrForeignDamageEffect) {
+						if entry.ID != "" {
+							t.Fatal("foreign association returned an executable effect")
+						}
+						if id != "1074" {
+							t.Fatalf("new cross-character sheet association: %s/%s: %v", id, line.ID, err)
+						}
+						foreign = append(foreign, fmt.Sprintf("%s:%d:%s", line.ID, p.Index, p.SourceID))
+						continue
+					}
+					if err != nil {
 						unmatched[p.SourceID] = true
+						t.Errorf("%s/%s: %v", id, line.ID, err)
 						continue
 					}
 					checked++
@@ -80,13 +97,19 @@ func TestPublishedSheetCoefficientsAgreeWithDamageCatalog(t *testing.T) {
 	if len(unmatched) != 0 {
 		t.Fatalf("unexpected sheet effects without damage entries: %v", unmatched)
 	}
+	// Pin all 45 known raw-source associations by line, parameter and source ID.
+	// Any added, removed or retargeted association requires another source review.
+	slices.Sort(foreign)
+	if len(foreign) != 45 || fmt.Sprintf("%x", sha256.Sum256([]byte(strings.Join(foreign, "\n")))) != "8ee7adc30302a7e71709968ad0f1c8aa3fa3d1c08fd0121b99445f4f36c11c93" {
+		t.Fatalf("review cross-character association coverage: %v", foreign)
+	}
 	if displayOnly != 1 {
 		t.Fatalf("display-only coefficient coverage changed: %d", displayOnly)
 	}
 	if checked == 0 {
 		t.Fatal("no sheet coefficients checked")
 	}
-	t.Logf("%d sheet parameters agree with damage coefficients and scaling; %d explicitly display-only coefficient excluded", checked, displayOnly)
+	t.Logf("%d matching parameters; %d display-only coefficient and %d foreign effect bindings excluded", checked, displayOnly, len(foreign))
 }
 
 func TestAkaneDisplayCoefficientRemainsResolvedAndNonExecutable(t *testing.T) {

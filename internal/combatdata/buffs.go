@@ -78,6 +78,9 @@ func (b Buff) Evaluate(selection BuffSelection, caster Actor, recipientID, activ
 			return out, fmt.Errorf("select eligible damage effects explicitly")
 		}
 		for _, id := range selection.DamageEffectIDs {
+			if required := b.Conditions.RequiredDamageEffectID; required != "" && id != required {
+				return out, fmt.Errorf("damage effect does not match required effect %s", required)
+			}
 			if len(b.DamageEffectIDs) > 0 && !slices.Contains(b.DamageEffectIDs, id) {
 				return out, fmt.Errorf("damage effect does not match catalog filter")
 			}

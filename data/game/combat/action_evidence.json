@@ -1439,6 +1439,18 @@
         {
           "numeric_id": 6590,
           "name": "GE_Player_Elyms_Branch3_Damage"
+        },
+        {
+          "numeric_id": 6719,
+          "name": "GE_Player_Elyms_MeleeB1_1_Damage"
+        },
+        {
+          "numeric_id": 6718,
+          "name": "GE_Player_Elyms_MeleeB2_1_Damage"
+        },
+        {
+          "numeric_id": 6717,
+          "name": "GE_Player_Elyms_MeleeB3_1_Damage"
         }
       ]
     },
@@ -1485,11 +1497,23 @@
         {
           "numeric_id": 6580,
           "name": "GE_Player_Elyms_Skill2_1_Damage"
+        },
+        {
+          "numeric_id": 6605,
+          "name": "GE_Player_Elyms_Skill3_Damage"
+        },
+        {
+          "numeric_id": 6606,
+          "name": "GE_Player_Elyms_Skill3_1_Damage"
+        },
+        {
+          "numeric_id": 6607,
+          "name": "GE_Player_Elyms_Skill3Extra_Damage"
         }
       ]
     },
     {
-      "id": "GA_Elyms_UltraSkillA",
+      "id": "GA_Elyms_UltraSkill",
       "status": "execution_unverified",
       "effects": [
         {
@@ -1497,30 +1521,28 @@
           "name": "GE_Player_Elyms_UltraSkillA1_Damage"
         },
         {
-          "numeric_id": null,
+          "numeric_id": 6720,
           "name": "GE_Player_Elyms_UltraSkillA2_Damage"
         },
-        {
-          "numeric_id": 6558,
-          "name": "GE_Player_Elyms_XieTongSkillA1_Damage"
-        }
-      ]
-    },
-    {
-      "id": "GA_Elyms_UltraSkillB",
-      "status": "execution_unverified",
-      "effects": [
         {
           "numeric_id": 6539,
           "name": "GE_Player_Elyms_UltraSkillB1_Damage"
         },
         {
-          "numeric_id": null,
+          "numeric_id": 6721,
           "name": "GE_Player_Elyms_UltraSkillB2_Damage"
+        },
+        {
+          "numeric_id": 6558,
+          "name": "GE_Player_Elyms_XieTongSkillA1_Damage"
         },
         {
           "numeric_id": 6557,
           "name": "GE_Player_Elyms_XieTongSkillB1_Damage"
+        },
+        {
+          "numeric_id": 6850,
+          "name": "GE_Player_Elyms_UltraSkillB3_Damage"
         }
       ]
     },
@@ -1537,6 +1559,10 @@
           "name": "GE_Player_Eri044_Melee2_Damage"
         },
         {
+          "numeric_id": 6608,
+          "name": "GE_Player_Eri044_Melee2_1_Damage"
+        },
+        {
           "numeric_id": 6593,
           "name": "GE_Player_Eri044_Melee3_Damage"
         },
@@ -1547,6 +1573,48 @@
         {
           "numeric_id": 6595,
           "name": "GE_Player_Eri044_Melee5_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Eri044_QTE",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6610,
+          "name": "GE_Player_Eri044_QTE1_Damage"
+        },
+        {
+          "numeric_id": 6609,
+          "name": "GE_Player_Eri044_QTE2_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Eri044_Skill",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6613,
+          "name": "GE_Player_Eri044_Skill1_Damage"
+        },
+        {
+          "numeric_id": 6614,
+          "name": "GE_Player_Eri044_Skill2_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Eri044_UltraSkill",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6611,
+          "name": "GE_Player_Eri044_UltraSkill1_Damage"
+        },
+        {
+          "numeric_id": 6612,
+          "name": "GE_Player_Eri044_UltraSkill2_Damage"
         }
       ]
     },
@@ -1593,6 +1661,10 @@
         {
           "numeric_id": 6236,
           "name": "GE_Player_Exe_CloneAtk_Damage"
+        },
+        {
+          "numeric_id": 6553,
+          "name": "GE_Player_Exe_CloneBoom_Damage"
         }
       ]
     },
@@ -3349,6 +3421,168 @@
       ]
     },
     {
+      "id": "GA_Nimo_Melee",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6808,
+          "name": "GE_Player_Nimo_Melee1_Damage"
+        },
+        {
+          "numeric_id": 6807,
+          "name": "GE_Player_Nimo_Melee2_Damage"
+        },
+        {
+          "numeric_id": 6806,
+          "name": "GE_Player_Nimo_Melee3_Damage"
+        },
+        {
+          "numeric_id": 6805,
+          "name": "GE_Player_Nimo_Melee4_Damage"
+        },
+        {
+          "numeric_id": 6804,
+          "name": "GE_Player_Nimo_Melee5_Damage"
+        },
+        {
+          "numeric_id": 6810,
+          "name": "GE_Player_Nimo_AirAttack_Damage"
+        },
+        {
+          "numeric_id": 6809,
+          "name": "GE_Player_Nimo_Branch1_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Nimo_PerfectEvade",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6803,
+          "name": "GE_Player_Nimo_PerfectEvadeAttack_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Nimo_QTE",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6802,
+          "name": "GE_Player_Nimo_QTE_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Nimo_Skill",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6801,
+          "name": "GE_Player_Nimo_Skill_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Nimo_UltraSkill",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6800,
+          "name": "GE_Player_Nimo_UltraSkill_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Nitsa_Melee",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6842,
+          "name": "GE_Player_Nitsa_Melee1_1_Damage"
+        },
+        {
+          "numeric_id": 6843,
+          "name": "GE_Player_Nitsa_Melee2_1_Damage"
+        },
+        {
+          "numeric_id": 6672,
+          "name": "GE_Player_Nitsa_Melee3_1_Damage"
+        },
+        {
+          "numeric_id": 6844,
+          "name": "GE_Player_Nitsa_Melee3_2_Damage"
+        },
+        {
+          "numeric_id": 6671,
+          "name": "GE_Player_Nitsa_Melee4_1_Damage"
+        },
+        {
+          "numeric_id": 6845,
+          "name": "GE_Player_Nitsa_Melee4_2_Damage"
+        },
+        {
+          "numeric_id": 6858,
+          "name": "GE_Player_Nitsa_Melee4_3_Damage"
+        },
+        {
+          "numeric_id": 6670,
+          "name": "GE_Player_Nitsa_Melee5_1_Damage"
+        },
+        {
+          "numeric_id": 6846,
+          "name": "GE_Player_Nitsa_Melee5_2_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Nitsa_QTE",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6627,
+          "name": "GE_Player_Nitsa_QTE_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Nitsa_Super_Skill",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6795,
+          "name": "GE_Player_Nitsa_Sup_Skill1_1_Damage"
+        },
+        {
+          "numeric_id": 6847,
+          "name": "GE_Player_Nitsa_Sup_Skill1_2_Damage"
+        },
+        {
+          "numeric_id": 6794,
+          "name": "GE_Player_Nitsa_Sup_Skill2_1_Damage"
+        },
+        {
+          "numeric_id": 6793,
+          "name": "GE_Player_Nitsa_Sup_Skill3_1_Damage"
+        },
+        {
+          "numeric_id": 6848,
+          "name": "GE_Player_Nitsa_Sup_Skill3_2_Damage"
+        }
+      ]
+    },
+    {
+      "id": "GA_Nitsa_Super_Skill_Into",
+      "status": "execution_unverified",
+      "effects": [
+        {
+          "numeric_id": 6792,
+          "name": "GE_Player_Nitsa_Sup_Skill_1_Damage"
+        }
+      ]
+    },
+    {
       "id": "GA_Oneiroi_Melee",
       "status": "execution_unverified",
       "effects": [
@@ -4487,6 +4721,18 @@
         {
           "numeric_id": null,
           "name": "GE_Player_Akane_UpgradeSkill_DisplayGE"
+        },
+        {
+          "numeric_id": 6797,
+          "name": "GE_Player_Nitsa_Blur_1_Damage"
+        },
+        {
+          "numeric_id": 6798,
+          "name": "GE_Player_Nitsa_BlurWhite_1_Damage"
+        },
+        {
+          "numeric_id": 6796,
+          "name": "GE_Player_Nitsa_EX_Houtai_1_Damage"
         }
       ]
     }

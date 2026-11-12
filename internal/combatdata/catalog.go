@@ -126,6 +126,9 @@ type Conditions struct {
 	RequiredDamageTags       []string `json:"required_damage_tags,omitempty"`
 	RequiredSpawnAbilityTags []string `json:"required_spawn_ability_tags,omitempty"`
 	RequiresSourceTags       bool     `json:"requires_source_tag_filters,omitempty"`
+	RequiredDamageEffectID   string   `json:"required_damage_effect_id,omitempty"`
+	SourceCounterLimit       int      `json:"source_counter_limit,omitempty"`
+	RemoveOnLeaveBattle      bool     `json:"remove_on_leave_battle,omitempty"`
 }
 type BuffCalculation struct {
 	Kind             string    `json:"kind"`
@@ -233,10 +236,21 @@ type Scenario struct {
 	SharedGroup                  string                       `json:"shared_application_group,omitempty"`
 }
 type ReactionCatalog struct {
-	SchemaVersion    int           `json:"schema_version"`
-	DamageScenarios  []Scenario    `json:"damage_scenarios"`
-	SupportScenarios []Scenario    `json:"support_scenarios"`
-	Summons          SummonCatalog `json:"summons"`
+	SchemaVersion       int                 `json:"schema_version"`
+	CharacterExtensions []ReactionExtension `json:"character_extensions"`
+	DamageScenarios     []Scenario          `json:"damage_scenarios"`
+	SupportScenarios    []Scenario          `json:"support_scenarios"`
+	Summons             SummonCatalog       `json:"summons"`
+}
+
+// Extensions remain diagnostic inputs, not automatically active reaction bonuses.
+type ReactionExtension struct {
+	ID                           string             `json:"id"`
+	CharacterID                  int                `json:"character_id"`
+	AbilityID                    string             `json:"ability_id"`
+	NumericParameters            map[string]float64 `json:"numeric_parameters"`
+	AutomaticActivationSupported bool               `json:"automatic_activation_supported"`
+	Status                       string             `json:"status"`
 }
 type SummonCatalog struct {
 	Profiles         map[string]json.RawMessage `json:"profiles"`

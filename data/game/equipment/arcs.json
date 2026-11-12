@@ -23730,6 +23730,2057 @@
       },
       "team_effects": []
     },
+    "fork_elyms": {
+      "panel_by_level_stage": {
+        "80:6": [
+          {
+            "property_id": "AtkBase",
+            "value": 570,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.24,
+            "percent": true
+          }
+        ]
+      },
+      "level_stats": {
+        "1": [
+          {
+            "property_id": "AtkBase",
+            "value": 37,
+            "percent": false
+          }
+        ],
+        "2": [
+          {
+            "property_id": "AtkBase",
+            "value": 42,
+            "percent": false
+          }
+        ],
+        "3": [
+          {
+            "property_id": "AtkBase",
+            "value": 46,
+            "percent": false
+          }
+        ],
+        "4": [
+          {
+            "property_id": "AtkBase",
+            "value": 51,
+            "percent": false
+          }
+        ],
+        "5": [
+          {
+            "property_id": "AtkBase",
+            "value": 56,
+            "percent": false
+          }
+        ],
+        "6": [
+          {
+            "property_id": "AtkBase",
+            "value": 61,
+            "percent": false
+          }
+        ],
+        "7": [
+          {
+            "property_id": "AtkBase",
+            "value": 66,
+            "percent": false
+          }
+        ],
+        "8": [
+          {
+            "property_id": "AtkBase",
+            "value": 70,
+            "percent": false
+          }
+        ],
+        "9": [
+          {
+            "property_id": "AtkBase",
+            "value": 75,
+            "percent": false
+          }
+        ],
+        "10": [
+          {
+            "property_id": "AtkBase",
+            "value": 80,
+            "percent": false
+          }
+        ],
+        "11": [
+          {
+            "property_id": "AtkBase",
+            "value": 85,
+            "percent": false
+          }
+        ],
+        "12": [
+          {
+            "property_id": "AtkBase",
+            "value": 90,
+            "percent": false
+          }
+        ],
+        "13": [
+          {
+            "property_id": "AtkBase",
+            "value": 94,
+            "percent": false
+          }
+        ],
+        "14": [
+          {
+            "property_id": "AtkBase",
+            "value": 99,
+            "percent": false
+          }
+        ],
+        "15": [
+          {
+            "property_id": "AtkBase",
+            "value": 104,
+            "percent": false
+          }
+        ],
+        "16": [
+          {
+            "property_id": "AtkBase",
+            "value": 109,
+            "percent": false
+          }
+        ],
+        "17": [
+          {
+            "property_id": "AtkBase",
+            "value": 114,
+            "percent": false
+          }
+        ],
+        "18": [
+          {
+            "property_id": "AtkBase",
+            "value": 118,
+            "percent": false
+          }
+        ],
+        "19": [
+          {
+            "property_id": "AtkBase",
+            "value": 123,
+            "percent": false
+          }
+        ],
+        "20": [
+          {
+            "property_id": "AtkBase",
+            "value": 128,
+            "percent": false
+          }
+        ],
+        "21": [
+          {
+            "property_id": "AtkBase",
+            "value": 133,
+            "percent": false
+          }
+        ],
+        "22": [
+          {
+            "property_id": "AtkBase",
+            "value": 138,
+            "percent": false
+          }
+        ],
+        "23": [
+          {
+            "property_id": "AtkBase",
+            "value": 142,
+            "percent": false
+          }
+        ],
+        "24": [
+          {
+            "property_id": "AtkBase",
+            "value": 147,
+            "percent": false
+          }
+        ],
+        "25": [
+          {
+            "property_id": "AtkBase",
+            "value": 152,
+            "percent": false
+          }
+        ],
+        "26": [
+          {
+            "property_id": "AtkBase",
+            "value": 157,
+            "percent": false
+          }
+        ],
+        "27": [
+          {
+            "property_id": "AtkBase",
+            "value": 162,
+            "percent": false
+          }
+        ],
+        "28": [
+          {
+            "property_id": "AtkBase",
+            "value": 166,
+            "percent": false
+          }
+        ],
+        "29": [
+          {
+            "property_id": "AtkBase",
+            "value": 171,
+            "percent": false
+          }
+        ],
+        "30": [
+          {
+            "property_id": "AtkBase",
+            "value": 176,
+            "percent": false
+          }
+        ],
+        "31": [
+          {
+            "property_id": "AtkBase",
+            "value": 181,
+            "percent": false
+          }
+        ],
+        "32": [
+          {
+            "property_id": "AtkBase",
+            "value": 186,
+            "percent": false
+          }
+        ],
+        "33": [
+          {
+            "property_id": "AtkBase",
+            "value": 190,
+            "percent": false
+          }
+        ],
+        "34": [
+          {
+            "property_id": "AtkBase",
+            "value": 195,
+            "percent": false
+          }
+        ],
+        "35": [
+          {
+            "property_id": "AtkBase",
+            "value": 200,
+            "percent": false
+          }
+        ],
+        "36": [
+          {
+            "property_id": "AtkBase",
+            "value": 205,
+            "percent": false
+          }
+        ],
+        "37": [
+          {
+            "property_id": "AtkBase",
+            "value": 210,
+            "percent": false
+          }
+        ],
+        "38": [
+          {
+            "property_id": "AtkBase",
+            "value": 214,
+            "percent": false
+          }
+        ],
+        "39": [
+          {
+            "property_id": "AtkBase",
+            "value": 219,
+            "percent": false
+          }
+        ],
+        "40": [
+          {
+            "property_id": "AtkBase",
+            "value": 224,
+            "percent": false
+          }
+        ],
+        "41": [
+          {
+            "property_id": "AtkBase",
+            "value": 229,
+            "percent": false
+          }
+        ],
+        "42": [
+          {
+            "property_id": "AtkBase",
+            "value": 234,
+            "percent": false
+          }
+        ],
+        "43": [
+          {
+            "property_id": "AtkBase",
+            "value": 238,
+            "percent": false
+          }
+        ],
+        "44": [
+          {
+            "property_id": "AtkBase",
+            "value": 243,
+            "percent": false
+          }
+        ],
+        "45": [
+          {
+            "property_id": "AtkBase",
+            "value": 248,
+            "percent": false
+          }
+        ],
+        "46": [
+          {
+            "property_id": "AtkBase",
+            "value": 253,
+            "percent": false
+          }
+        ],
+        "47": [
+          {
+            "property_id": "AtkBase",
+            "value": 258,
+            "percent": false
+          }
+        ],
+        "48": [
+          {
+            "property_id": "AtkBase",
+            "value": 262,
+            "percent": false
+          }
+        ],
+        "49": [
+          {
+            "property_id": "AtkBase",
+            "value": 267,
+            "percent": false
+          }
+        ],
+        "50": [
+          {
+            "property_id": "AtkBase",
+            "value": 272,
+            "percent": false
+          }
+        ],
+        "51": [
+          {
+            "property_id": "AtkBase",
+            "value": 277,
+            "percent": false
+          }
+        ],
+        "52": [
+          {
+            "property_id": "AtkBase",
+            "value": 282,
+            "percent": false
+          }
+        ],
+        "53": [
+          {
+            "property_id": "AtkBase",
+            "value": 286,
+            "percent": false
+          }
+        ],
+        "54": [
+          {
+            "property_id": "AtkBase",
+            "value": 291,
+            "percent": false
+          }
+        ],
+        "55": [
+          {
+            "property_id": "AtkBase",
+            "value": 296,
+            "percent": false
+          }
+        ],
+        "56": [
+          {
+            "property_id": "AtkBase",
+            "value": 301,
+            "percent": false
+          }
+        ],
+        "57": [
+          {
+            "property_id": "AtkBase",
+            "value": 306,
+            "percent": false
+          }
+        ],
+        "58": [
+          {
+            "property_id": "AtkBase",
+            "value": 310,
+            "percent": false
+          }
+        ],
+        "59": [
+          {
+            "property_id": "AtkBase",
+            "value": 315,
+            "percent": false
+          }
+        ],
+        "60": [
+          {
+            "property_id": "AtkBase",
+            "value": 320,
+            "percent": false
+          }
+        ],
+        "61": [
+          {
+            "property_id": "AtkBase",
+            "value": 325,
+            "percent": false
+          }
+        ],
+        "62": [
+          {
+            "property_id": "AtkBase",
+            "value": 330,
+            "percent": false
+          }
+        ],
+        "63": [
+          {
+            "property_id": "AtkBase",
+            "value": 334,
+            "percent": false
+          }
+        ],
+        "64": [
+          {
+            "property_id": "AtkBase",
+            "value": 339,
+            "percent": false
+          }
+        ],
+        "65": [
+          {
+            "property_id": "AtkBase",
+            "value": 344,
+            "percent": false
+          }
+        ],
+        "66": [
+          {
+            "property_id": "AtkBase",
+            "value": 349,
+            "percent": false
+          }
+        ],
+        "67": [
+          {
+            "property_id": "AtkBase",
+            "value": 354,
+            "percent": false
+          }
+        ],
+        "68": [
+          {
+            "property_id": "AtkBase",
+            "value": 358,
+            "percent": false
+          }
+        ],
+        "69": [
+          {
+            "property_id": "AtkBase",
+            "value": 363,
+            "percent": false
+          }
+        ],
+        "70": [
+          {
+            "property_id": "AtkBase",
+            "value": 368,
+            "percent": false
+          }
+        ],
+        "71": [
+          {
+            "property_id": "AtkBase",
+            "value": 373,
+            "percent": false
+          }
+        ],
+        "72": [
+          {
+            "property_id": "AtkBase",
+            "value": 378,
+            "percent": false
+          }
+        ],
+        "73": [
+          {
+            "property_id": "AtkBase",
+            "value": 382,
+            "percent": false
+          }
+        ],
+        "74": [
+          {
+            "property_id": "AtkBase",
+            "value": 387,
+            "percent": false
+          }
+        ],
+        "75": [
+          {
+            "property_id": "AtkBase",
+            "value": 392,
+            "percent": false
+          }
+        ],
+        "76": [
+          {
+            "property_id": "AtkBase",
+            "value": 397,
+            "percent": false
+          }
+        ],
+        "77": [
+          {
+            "property_id": "AtkBase",
+            "value": 402,
+            "percent": false
+          }
+        ],
+        "78": [
+          {
+            "property_id": "AtkBase",
+            "value": 406,
+            "percent": false
+          }
+        ],
+        "79": [
+          {
+            "property_id": "AtkBase",
+            "value": 411,
+            "percent": false
+          }
+        ],
+        "80": [
+          {
+            "property_id": "AtkBase",
+            "value": 416,
+            "percent": false
+          }
+        ]
+      },
+      "breakthrough_stats": {
+        "0": [
+          {
+            "property_id": "AtkBase",
+            "value": 0,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.096,
+            "percent": true
+          }
+        ],
+        "1": [
+          {
+            "property_id": "AtkBase",
+            "value": 26,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.12,
+            "percent": true
+          }
+        ],
+        "2": [
+          {
+            "property_id": "AtkBase",
+            "value": 51,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.144,
+            "percent": true
+          }
+        ],
+        "3": [
+          {
+            "property_id": "AtkBase",
+            "value": 77,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.168,
+            "percent": true
+          }
+        ],
+        "4": [
+          {
+            "property_id": "AtkBase",
+            "value": 102,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.192,
+            "percent": true
+          }
+        ],
+        "5": [
+          {
+            "property_id": "AtkBase",
+            "value": 128,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.216,
+            "percent": true
+          }
+        ],
+        "6": [
+          {
+            "property_id": "AtkBase",
+            "value": 154,
+            "percent": false
+          },
+          {
+            "property_id": "CritBase",
+            "value": 0.24,
+            "percent": true
+          }
+        ]
+      },
+      "apply_group_type": "CHARACTER_GROUP_TYPE_ONE",
+      "permanent_by_star": {
+        "1": [
+          {
+            "property_id": "AtkUp",
+            "value": 0.15,
+            "percent": true
+          }
+        ],
+        "2": [
+          {
+            "property_id": "AtkUp",
+            "value": 0.1875,
+            "percent": true
+          }
+        ],
+        "3": [
+          {
+            "property_id": "AtkUp",
+            "value": 0.225,
+            "percent": true
+          }
+        ],
+        "4": [
+          {
+            "property_id": "AtkUp",
+            "value": 0.2625,
+            "percent": true
+          }
+        ],
+        "5": [
+          {
+            "property_id": "AtkUp",
+            "value": 0.3,
+            "percent": true
+          }
+        ]
+      },
+      "conditional_by_star": {
+        "1": [
+          {
+            "property_id": "DefIgnore",
+            "value": 0.1,
+            "percent": true
+          }
+        ],
+        "2": [
+          {
+            "property_id": "DefIgnore",
+            "value": 0.125,
+            "percent": true
+          }
+        ],
+        "3": [
+          {
+            "property_id": "DefIgnore",
+            "value": 0.15,
+            "percent": true
+          }
+        ],
+        "4": [
+          {
+            "property_id": "DefIgnore",
+            "value": 0.175,
+            "percent": true
+          }
+        ],
+        "5": [
+          {
+            "property_id": "DefIgnore",
+            "value": 0.2,
+            "percent": true
+          }
+        ]
+      },
+      "conditional_note": "Select conditional_effects explicitly. Team/summon modifiers are not unconditional wearer panel stats. Do not count a rule twice through legacy and structured views.",
+      "effects_by_star": {
+        "1": {
+          "parameters": [
+            {
+              "name_id": "buff_Elyms_AtkUp",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore",
+              "value": 0.12,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore2",
+              "value": 0.1,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Up_Dur",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate",
+              "value": 0.08,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        },
+        "2": {
+          "parameters": [
+            {
+              "name_id": "buff_Elyms_AtkUp",
+              "value": 0.1875,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore2",
+              "value": 0.125,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Up_Dur",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate",
+              "value": 0.11,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        },
+        "3": {
+          "parameters": [
+            {
+              "name_id": "buff_Elyms_AtkUp",
+              "value": 0.225,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore",
+              "value": 0.16,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore2",
+              "value": 0.15,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Up_Dur",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate",
+              "value": 0.14,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        },
+        "4": {
+          "parameters": [
+            {
+              "name_id": "buff_Elyms_AtkUp",
+              "value": 0.2625,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore",
+              "value": 0.18,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore2",
+              "value": 0.175,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Up_Dur",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate",
+              "value": 0.17,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        },
+        "5": {
+          "parameters": [
+            {
+              "name_id": "buff_Elyms_AtkUp",
+              "value": 0.3,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_DefIgnore2",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Up_Dur",
+              "value": 20,
+              "is_percent": false
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate",
+              "value": 0.2,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Elyms_Penetrate_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        }
+      },
+      "conditional_effects": [
+        {
+          "id": "echoes_on_hold_team_defense_ignore",
+          "scope": "team_including_wearer",
+          "trigger": "three_followup_hits_after_ultimate_or_enter_combat",
+          "duration_parameter": "buff_Elyms_Up_Dur",
+          "mixed_source_policy": "unsupported",
+          "parameter": {
+            "name_id": "buff_Elyms_DefIgnore",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "DefIgnore",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection",
+          "provenance": [
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Elyms/Buff_Fork_Elyms_Effect_DefIgnore/Default__Buff_Fork_Elyms_Effect_DefIgnore_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "e6d24c1bd088344ced3d8edeb5e8a05b2042ac5c479c9a7c01a3026be472fa68"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Fork/Fork_Elyms/Cau_Fork_Elyms_DefIgnore/HTCustomCalculateBaseMagnitude.json",
+              "pointer": "/ScriptBytecode",
+              "sha256": "a82271cff8eaf636928a06755dceb5ec1ac5e240116faae4aa9884dbf173905c"
+            },
+            {
+              "file": "datamine/data/catalogs/DataTable/Fork/CT_ForkBuff.json",
+              "pointer": "/Rows/buff_Elyms_DefIgnore",
+              "sha256": "9ba59a3ca782d20aff3182f5ca0141a6e1b758bbc8a5275e37a2f03bd5b5ee07"
+            }
+          ],
+          "legacy_conditional_projection": false
+        },
+        {
+          "id": "echoes_on_hold_wearer_extra_defense_ignore",
+          "scope": "wearer",
+          "trigger": "three_followup_hits_after_ultimate_or_enter_combat",
+          "duration_parameter": "buff_Elyms_Up_Dur",
+          "legacy_conditional_projection": true,
+          "parameter": {
+            "name_id": "buff_Elyms_DefIgnore2",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "DefIgnore",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection",
+          "provenance": [
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Elyms/Buff_Fork_Elyms_Effect_DefIgnore2/Default__Buff_Fork_Elyms_Effect_DefIgnore2_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "476ae24a383f2a887ec1f6abf0223266e1fe33ea55832364d9c79004951ae62d"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Fork/Fork_Elyms/Cau_Fork_Elyms_DefIgnore2/HTCustomCalculateBaseMagnitude.json",
+              "pointer": "/ScriptBytecode",
+              "sha256": "9116adae022efd6d81758516cae004ff7850b1f2e2c2e9cec8424c0f2df7ceb6"
+            },
+            {
+              "file": "datamine/data/catalogs/DataTable/Fork/CT_ForkBuff.json",
+              "pointer": "/Rows/buff_Elyms_DefIgnore2",
+              "sha256": "9ba59a3ca782d20aff3182f5ca0141a6e1b758bbc8a5275e37a2f03bd5b5ee07"
+            }
+          ]
+        },
+        {
+          "id": "echoes_on_hold_team_cosmos_penetration",
+          "scope": "team_including_wearer",
+          "trigger": "redirect_skill_or_enter_combat",
+          "duration_parameter": "buff_Elyms_Penetrate_Dur",
+          "mixed_source_policy": "unsupported",
+          "parameter": {
+            "name_id": "buff_Elyms_Penetrate",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "DamagePenetrateCosmos",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection",
+          "provenance": [
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Elyms/Buff_Fork_Elyms_Effect_Penetrate/Default__Buff_Fork_Elyms_Effect_Penetrate_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "cf639678314486cf7ec2f858e7c554473c92d736ccffd0eb09f334f40604b87e"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Fork/Fork_Elyms/Cau_Fork_Elyms_Penetrate/HTCustomCalculateBaseMagnitude.json",
+              "pointer": "/ScriptBytecode",
+              "sha256": "656073ad3edad05f900035930280ce6a86ebe317d941f637e380234d7e43bac3"
+            },
+            {
+              "file": "datamine/data/catalogs/DataTable/Fork/CT_ForkBuff.json",
+              "pointer": "/Rows/buff_Elyms_Penetrate",
+              "sha256": "9ba59a3ca782d20aff3182f5ca0141a6e1b758bbc8a5275e37a2f03bd5b5ee07"
+            }
+          ],
+          "legacy_conditional_projection": false
+        }
+      ],
+      "projection_provenance": {
+        "configuration": "config/source-arc-projections.json",
+        "game_version_label": "1.5",
+        "permanent_sources": [
+          [
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Elyms/Buff_Fork_Elyms_Lv1/Default__Buff_Fork_Elyms_Lv1_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "d9b975b6a986069ad7c40e8ac5d03c163fc4dbfde217df3b1638b24610336cb5"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Elyms/Buff_Fork_Elyms_Lv2/Default__Buff_Fork_Elyms_Lv2_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "f051414d7d78cc48b3cf0c31482678c40eaacde921cd605e4d3a1d32d9f77cbc"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Elyms/Buff_Fork_Elyms_Lv3/Default__Buff_Fork_Elyms_Lv3_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "559729a9d4780cd0569a51550ed0db1be536da765ddffbfce6b0f4f82132aeb5"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Elyms/Buff_Fork_Elyms_Lv4/Default__Buff_Fork_Elyms_Lv4_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "cb898574a56cfb22cff08dd39becfd2ce1a486d24ad515df4d736eb77b37dcd3"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Elyms/Buff_Fork_Elyms_Lv5/Default__Buff_Fork_Elyms_Lv5_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "6d23e3cc4db9791de72272956ffdabbca9fddae98154f59a46778642e680749a"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Fork/Fork_Elyms/Cau_Fork_Elyms_MagUp1/HTCustomCalculateBaseMagnitude.json",
+              "pointer": "/ScriptBytecode",
+              "sha256": "02b1184aa7d7565da04873688f05ac340d1d6d1b227fda254452a8d6a4b0419e"
+            },
+            {
+              "file": "datamine/data/catalogs/DataTable/Fork/CT_ForkBuff.json",
+              "pointer": "/Rows/buff_Elyms_AtkUp",
+              "sha256": "9ba59a3ca782d20aff3182f5ca0141a6e1b758bbc8a5275e37a2f03bd5b5ee07"
+            }
+          ]
+        ]
+      },
+      "team_effects": []
+    },
+    "fork_exe": {
+      "panel_by_level_stage": {
+        "80:6": [
+          {
+            "property_id": "AtkBase",
+            "value": 570,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.48,
+            "percent": true
+          }
+        ]
+      },
+      "level_stats": {
+        "1": [
+          {
+            "property_id": "AtkBase",
+            "value": 37,
+            "percent": false
+          }
+        ],
+        "2": [
+          {
+            "property_id": "AtkBase",
+            "value": 42,
+            "percent": false
+          }
+        ],
+        "3": [
+          {
+            "property_id": "AtkBase",
+            "value": 46,
+            "percent": false
+          }
+        ],
+        "4": [
+          {
+            "property_id": "AtkBase",
+            "value": 51,
+            "percent": false
+          }
+        ],
+        "5": [
+          {
+            "property_id": "AtkBase",
+            "value": 56,
+            "percent": false
+          }
+        ],
+        "6": [
+          {
+            "property_id": "AtkBase",
+            "value": 61,
+            "percent": false
+          }
+        ],
+        "7": [
+          {
+            "property_id": "AtkBase",
+            "value": 66,
+            "percent": false
+          }
+        ],
+        "8": [
+          {
+            "property_id": "AtkBase",
+            "value": 70,
+            "percent": false
+          }
+        ],
+        "9": [
+          {
+            "property_id": "AtkBase",
+            "value": 75,
+            "percent": false
+          }
+        ],
+        "10": [
+          {
+            "property_id": "AtkBase",
+            "value": 80,
+            "percent": false
+          }
+        ],
+        "11": [
+          {
+            "property_id": "AtkBase",
+            "value": 85,
+            "percent": false
+          }
+        ],
+        "12": [
+          {
+            "property_id": "AtkBase",
+            "value": 90,
+            "percent": false
+          }
+        ],
+        "13": [
+          {
+            "property_id": "AtkBase",
+            "value": 94,
+            "percent": false
+          }
+        ],
+        "14": [
+          {
+            "property_id": "AtkBase",
+            "value": 99,
+            "percent": false
+          }
+        ],
+        "15": [
+          {
+            "property_id": "AtkBase",
+            "value": 104,
+            "percent": false
+          }
+        ],
+        "16": [
+          {
+            "property_id": "AtkBase",
+            "value": 109,
+            "percent": false
+          }
+        ],
+        "17": [
+          {
+            "property_id": "AtkBase",
+            "value": 114,
+            "percent": false
+          }
+        ],
+        "18": [
+          {
+            "property_id": "AtkBase",
+            "value": 118,
+            "percent": false
+          }
+        ],
+        "19": [
+          {
+            "property_id": "AtkBase",
+            "value": 123,
+            "percent": false
+          }
+        ],
+        "20": [
+          {
+            "property_id": "AtkBase",
+            "value": 128,
+            "percent": false
+          }
+        ],
+        "21": [
+          {
+            "property_id": "AtkBase",
+            "value": 133,
+            "percent": false
+          }
+        ],
+        "22": [
+          {
+            "property_id": "AtkBase",
+            "value": 138,
+            "percent": false
+          }
+        ],
+        "23": [
+          {
+            "property_id": "AtkBase",
+            "value": 142,
+            "percent": false
+          }
+        ],
+        "24": [
+          {
+            "property_id": "AtkBase",
+            "value": 147,
+            "percent": false
+          }
+        ],
+        "25": [
+          {
+            "property_id": "AtkBase",
+            "value": 152,
+            "percent": false
+          }
+        ],
+        "26": [
+          {
+            "property_id": "AtkBase",
+            "value": 157,
+            "percent": false
+          }
+        ],
+        "27": [
+          {
+            "property_id": "AtkBase",
+            "value": 162,
+            "percent": false
+          }
+        ],
+        "28": [
+          {
+            "property_id": "AtkBase",
+            "value": 166,
+            "percent": false
+          }
+        ],
+        "29": [
+          {
+            "property_id": "AtkBase",
+            "value": 171,
+            "percent": false
+          }
+        ],
+        "30": [
+          {
+            "property_id": "AtkBase",
+            "value": 176,
+            "percent": false
+          }
+        ],
+        "31": [
+          {
+            "property_id": "AtkBase",
+            "value": 181,
+            "percent": false
+          }
+        ],
+        "32": [
+          {
+            "property_id": "AtkBase",
+            "value": 186,
+            "percent": false
+          }
+        ],
+        "33": [
+          {
+            "property_id": "AtkBase",
+            "value": 190,
+            "percent": false
+          }
+        ],
+        "34": [
+          {
+            "property_id": "AtkBase",
+            "value": 195,
+            "percent": false
+          }
+        ],
+        "35": [
+          {
+            "property_id": "AtkBase",
+            "value": 200,
+            "percent": false
+          }
+        ],
+        "36": [
+          {
+            "property_id": "AtkBase",
+            "value": 205,
+            "percent": false
+          }
+        ],
+        "37": [
+          {
+            "property_id": "AtkBase",
+            "value": 210,
+            "percent": false
+          }
+        ],
+        "38": [
+          {
+            "property_id": "AtkBase",
+            "value": 214,
+            "percent": false
+          }
+        ],
+        "39": [
+          {
+            "property_id": "AtkBase",
+            "value": 219,
+            "percent": false
+          }
+        ],
+        "40": [
+          {
+            "property_id": "AtkBase",
+            "value": 224,
+            "percent": false
+          }
+        ],
+        "41": [
+          {
+            "property_id": "AtkBase",
+            "value": 229,
+            "percent": false
+          }
+        ],
+        "42": [
+          {
+            "property_id": "AtkBase",
+            "value": 234,
+            "percent": false
+          }
+        ],
+        "43": [
+          {
+            "property_id": "AtkBase",
+            "value": 238,
+            "percent": false
+          }
+        ],
+        "44": [
+          {
+            "property_id": "AtkBase",
+            "value": 243,
+            "percent": false
+          }
+        ],
+        "45": [
+          {
+            "property_id": "AtkBase",
+            "value": 248,
+            "percent": false
+          }
+        ],
+        "46": [
+          {
+            "property_id": "AtkBase",
+            "value": 253,
+            "percent": false
+          }
+        ],
+        "47": [
+          {
+            "property_id": "AtkBase",
+            "value": 258,
+            "percent": false
+          }
+        ],
+        "48": [
+          {
+            "property_id": "AtkBase",
+            "value": 262,
+            "percent": false
+          }
+        ],
+        "49": [
+          {
+            "property_id": "AtkBase",
+            "value": 267,
+            "percent": false
+          }
+        ],
+        "50": [
+          {
+            "property_id": "AtkBase",
+            "value": 272,
+            "percent": false
+          }
+        ],
+        "51": [
+          {
+            "property_id": "AtkBase",
+            "value": 277,
+            "percent": false
+          }
+        ],
+        "52": [
+          {
+            "property_id": "AtkBase",
+            "value": 282,
+            "percent": false
+          }
+        ],
+        "53": [
+          {
+            "property_id": "AtkBase",
+            "value": 286,
+            "percent": false
+          }
+        ],
+        "54": [
+          {
+            "property_id": "AtkBase",
+            "value": 291,
+            "percent": false
+          }
+        ],
+        "55": [
+          {
+            "property_id": "AtkBase",
+            "value": 296,
+            "percent": false
+          }
+        ],
+        "56": [
+          {
+            "property_id": "AtkBase",
+            "value": 301,
+            "percent": false
+          }
+        ],
+        "57": [
+          {
+            "property_id": "AtkBase",
+            "value": 306,
+            "percent": false
+          }
+        ],
+        "58": [
+          {
+            "property_id": "AtkBase",
+            "value": 310,
+            "percent": false
+          }
+        ],
+        "59": [
+          {
+            "property_id": "AtkBase",
+            "value": 315,
+            "percent": false
+          }
+        ],
+        "60": [
+          {
+            "property_id": "AtkBase",
+            "value": 320,
+            "percent": false
+          }
+        ],
+        "61": [
+          {
+            "property_id": "AtkBase",
+            "value": 325,
+            "percent": false
+          }
+        ],
+        "62": [
+          {
+            "property_id": "AtkBase",
+            "value": 330,
+            "percent": false
+          }
+        ],
+        "63": [
+          {
+            "property_id": "AtkBase",
+            "value": 334,
+            "percent": false
+          }
+        ],
+        "64": [
+          {
+            "property_id": "AtkBase",
+            "value": 339,
+            "percent": false
+          }
+        ],
+        "65": [
+          {
+            "property_id": "AtkBase",
+            "value": 344,
+            "percent": false
+          }
+        ],
+        "66": [
+          {
+            "property_id": "AtkBase",
+            "value": 349,
+            "percent": false
+          }
+        ],
+        "67": [
+          {
+            "property_id": "AtkBase",
+            "value": 354,
+            "percent": false
+          }
+        ],
+        "68": [
+          {
+            "property_id": "AtkBase",
+            "value": 358,
+            "percent": false
+          }
+        ],
+        "69": [
+          {
+            "property_id": "AtkBase",
+            "value": 363,
+            "percent": false
+          }
+        ],
+        "70": [
+          {
+            "property_id": "AtkBase",
+            "value": 368,
+            "percent": false
+          }
+        ],
+        "71": [
+          {
+            "property_id": "AtkBase",
+            "value": 373,
+            "percent": false
+          }
+        ],
+        "72": [
+          {
+            "property_id": "AtkBase",
+            "value": 378,
+            "percent": false
+          }
+        ],
+        "73": [
+          {
+            "property_id": "AtkBase",
+            "value": 382,
+            "percent": false
+          }
+        ],
+        "74": [
+          {
+            "property_id": "AtkBase",
+            "value": 387,
+            "percent": false
+          }
+        ],
+        "75": [
+          {
+            "property_id": "AtkBase",
+            "value": 392,
+            "percent": false
+          }
+        ],
+        "76": [
+          {
+            "property_id": "AtkBase",
+            "value": 397,
+            "percent": false
+          }
+        ],
+        "77": [
+          {
+            "property_id": "AtkBase",
+            "value": 402,
+            "percent": false
+          }
+        ],
+        "78": [
+          {
+            "property_id": "AtkBase",
+            "value": 406,
+            "percent": false
+          }
+        ],
+        "79": [
+          {
+            "property_id": "AtkBase",
+            "value": 411,
+            "percent": false
+          }
+        ],
+        "80": [
+          {
+            "property_id": "AtkBase",
+            "value": 416,
+            "percent": false
+          }
+        ]
+      },
+      "breakthrough_stats": {
+        "0": [
+          {
+            "property_id": "AtkBase",
+            "value": 0,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.192,
+            "percent": true
+          }
+        ],
+        "1": [
+          {
+            "property_id": "AtkBase",
+            "value": 26,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.24,
+            "percent": true
+          }
+        ],
+        "2": [
+          {
+            "property_id": "AtkBase",
+            "value": 51,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.288,
+            "percent": true
+          }
+        ],
+        "3": [
+          {
+            "property_id": "AtkBase",
+            "value": 77,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.336,
+            "percent": true
+          }
+        ],
+        "4": [
+          {
+            "property_id": "AtkBase",
+            "value": 102,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.384,
+            "percent": true
+          }
+        ],
+        "5": [
+          {
+            "property_id": "AtkBase",
+            "value": 128,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.432,
+            "percent": true
+          }
+        ],
+        "6": [
+          {
+            "property_id": "AtkBase",
+            "value": 154,
+            "percent": false
+          },
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.48,
+            "percent": true
+          }
+        ]
+      },
+      "apply_group_type": "CHARACTER_GROUP_TYPE_THREE",
+      "permanent_by_star": {
+        "1": [
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.32,
+            "percent": true
+          }
+        ],
+        "2": [
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.4,
+            "percent": true
+          }
+        ],
+        "3": [
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.48,
+            "percent": true
+          }
+        ],
+        "4": [
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.56,
+            "percent": true
+          }
+        ],
+        "5": [
+          {
+            "property_id": "CritDamageBase",
+            "value": 0.64,
+            "percent": true
+          }
+        ]
+      },
+      "conditional_by_star": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+      },
+      "conditional_note": "Select conditional_effects explicitly. Team/summon modifiers are not unconditional wearer panel stats. Do not count a rule twice through legacy and structured views.",
+      "effects_by_star": {
+        "1": {
+          "parameters": [
+            {
+              "name_id": "buff_Exe_CritDamageUp",
+              "value": 0.32,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_SummonDmgUp",
+              "value": 0.28,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_StackDmgUp",
+              "value": 0.02,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_Stack_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        },
+        "2": {
+          "parameters": [
+            {
+              "name_id": "buff_Exe_CritDamageUp",
+              "value": 0.4,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_SummonDmgUp",
+              "value": 0.35,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_StackDmgUp",
+              "value": 0.025,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_Stack_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        },
+        "3": {
+          "parameters": [
+            {
+              "name_id": "buff_Exe_CritDamageUp",
+              "value": 0.48,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_SummonDmgUp",
+              "value": 0.42,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_StackDmgUp",
+              "value": 0.03,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_Stack_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        },
+        "4": {
+          "parameters": [
+            {
+              "name_id": "buff_Exe_CritDamageUp",
+              "value": 0.56,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_SummonDmgUp",
+              "value": 0.49,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_StackDmgUp",
+              "value": 0.035,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_Stack_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        },
+        "5": {
+          "parameters": [
+            {
+              "name_id": "buff_Exe_CritDamageUp",
+              "value": 0.64,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_SummonDmgUp",
+              "value": 0.56,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_StackDmgUp",
+              "value": 0.04,
+              "is_percent": true
+            },
+            {
+              "name_id": "buff_Exe_Stack_Dur",
+              "value": 20,
+              "is_percent": false
+            }
+          ]
+        }
+      },
+      "conditional_effects": [
+        {
+          "id": "dotted_horizon_wearer_summon_damage",
+          "scope": "wearer_summon_damage",
+          "trigger": "equipped",
+          "requires_damage_tags": [
+            "State.Damage.Summon"
+          ],
+          "parameter": {
+            "name_id": "buff_Exe_SummonDmgUp",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "DamageUpGeneralBase",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection",
+          "provenance": [
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv1/Default__Buff_Fork_Exe_Lv1_C.json",
+              "pointer": "/Properties/CustomApplicationModifierInfos/0/GameplayModifierInfos/0",
+              "sha256": "fe311cafecffa9a61998bbb797152aecf804d2dcf4af7f5005d0c50ec72ae767"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv2/Default__Buff_Fork_Exe_Lv2_C.json",
+              "pointer": "/Properties/CustomApplicationModifierInfos/0/GameplayModifierInfos/0",
+              "sha256": "057faca240eafe29f06512e701f3b494b01c355d06c6540442fcdf780a1e40d1"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv3/Default__Buff_Fork_Exe_Lv3_C.json",
+              "pointer": "/Properties/CustomApplicationModifierInfos/0/GameplayModifierInfos/0",
+              "sha256": "bc0c3b31fe6ad894bc1e49a3ea302bb2c93590bc5af16d55cebf7a05bf325ad5"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv4/Default__Buff_Fork_Exe_Lv4_C.json",
+              "pointer": "/Properties/CustomApplicationModifierInfos/0/GameplayModifierInfos/0",
+              "sha256": "d0142ab2384c952a652c5e4da9afb97649ed720ba2e2e65b07e26184fdd9a31d"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv5/Default__Buff_Fork_Exe_Lv5_C.json",
+              "pointer": "/Properties/CustomApplicationModifierInfos/0/GameplayModifierInfos/0",
+              "sha256": "f71cb60b824b5fb9340ea8555d28eef84f16e8f43cd838d76d2486bb0b051a1b"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Fork/Fork_Exe/Cau_Fork_Exe_SummonDmgUp/HTCustomCalculateBaseMagnitude.json",
+              "pointer": "/ScriptBytecode",
+              "sha256": "104ace0c0900420fdabc30b8c14ceaa047bae83e2dfc5cfd2d21e80aa184d3fe"
+            },
+            {
+              "file": "datamine/data/catalogs/DataTable/Fork/CT_ForkBuff.json",
+              "pointer": "/Rows/buff_Exe_SummonDmgUp",
+              "sha256": "9ba59a3ca782d20aff3182f5ca0141a6e1b758bbc8a5275e37a2f03bd5b5ee07"
+            }
+          ],
+          "legacy_conditional_projection": false
+        },
+        {
+          "id": "dotted_horizon_team_summon_stacks",
+          "scope": "all_field_summon_damage",
+          "trigger": "wearer_deals_chaos_damage",
+          "requires_damage_tags": [
+            "State.Damage.Summon"
+          ],
+          "duration_parameter": "buff_Exe_Stack_Dur",
+          "stack_input": "selected_stack_count",
+          "max_stacks": 10,
+          "mixed_source_policy": "unsupported",
+          "parameter": {
+            "name_id": "buff_Exe_StackDmgUp",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "DamageUpGeneralBase",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection",
+          "provenance": [
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Effect_Stack/Default__Buff_Fork_Exe_Effect_Stack_C.json",
+              "pointer": "/Properties/CustomApplicationModifierInfos/0/GameplayModifierInfos/0",
+              "sha256": "361fa5cf15c00b4b922d6888e226551a8aef58b55015916c64792a76e3df1c17"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Fork/Fork_Exe/Cau_Fork_Exe_StackDmgUp/HTCustomCalculateBaseMagnitude.json",
+              "pointer": "/ScriptBytecode",
+              "sha256": "ee111d695d52f4fd220e38aea1a721dcd7c625bc27086078f50bf787b6fe5863"
+            },
+            {
+              "file": "datamine/data/catalogs/DataTable/Fork/CT_ForkBuff.json",
+              "pointer": "/Rows/buff_Exe_StackDmgUp",
+              "sha256": "9ba59a3ca782d20aff3182f5ca0141a6e1b758bbc8a5275e37a2f03bd5b5ee07"
+            }
+          ],
+          "legacy_conditional_projection": false
+        }
+      ],
+      "projection_provenance": {
+        "configuration": "config/source-arc-projections.json",
+        "game_version_label": "1.5",
+        "permanent_sources": [
+          [
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv1/Default__Buff_Fork_Exe_Lv1_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "fe311cafecffa9a61998bbb797152aecf804d2dcf4af7f5005d0c50ec72ae767"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv2/Default__Buff_Fork_Exe_Lv2_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "057faca240eafe29f06512e701f3b494b01c355d06c6540442fcdf780a1e40d1"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv3/Default__Buff_Fork_Exe_Lv3_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "bc0c3b31fe6ad894bc1e49a3ea302bb2c93590bc5af16d55cebf7a05bf325ad5"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv4/Default__Buff_Fork_Exe_Lv4_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "d0142ab2384c952a652c5e4da9afb97649ed720ba2e2e65b07e26184fdd9a31d"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Buff/Fork/Fork_Exe/Buff_Fork_Exe_Lv5/Default__Buff_Fork_Exe_Lv5_C.json",
+              "pointer": "/Properties/Modifiers/0",
+              "sha256": "f71cb60b824b5fb9340ea8555d28eef84f16e8f43cd838d76d2486bb0b051a1b"
+            },
+            {
+              "file": "datamine/data/abilities/Blueprints/Abilities/Calculation/Fork/Fork_Exe/Cau_Fork_Exe_CritDamage/HTCustomCalculateBaseMagnitude.json",
+              "pointer": "/ScriptBytecode",
+              "sha256": "5bc6e5f98ae46c993d0811720cbda17ccb0aec50e3898e3b3dd85531d85b1865"
+            },
+            {
+              "file": "datamine/data/catalogs/DataTable/Fork/CT_ForkBuff.json",
+              "pointer": "/Rows/buff_Exe_CritDamageUp",
+              "sha256": "9ba59a3ca782d20aff3182f5ca0141a6e1b758bbc8a5275e37a2f03bd5b5ee07"
+            }
+          ]
+        ]
+      },
+      "team_effects": []
+    },
     "fork_jiaojuan": {
       "panel_by_level_stage": {
         "80:6": [

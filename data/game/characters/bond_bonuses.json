@@ -275,6 +275,19 @@
       "conditions": []
     },
     {
+      "character_id": "1074",
+      "likeability_id": "1074",
+      "stats": [
+        {
+          "property_id": "CritDamageBase",
+          "value": 0.08,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
       "character_id": "1075",
       "likeability_id": "1075",
       "stats": [
@@ -294,6 +307,19 @@
         {
           "property_id": "CritBase",
           "value": 0.04,
+          "percent": true,
+          "modifier_op": "MODIFY_MODOP_ADDITIVE"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "character_id": "1090",
+      "likeability_id": "1090",
+      "stats": [
+        {
+          "property_id": "AtkUp",
+          "value": 0.05,
           "percent": true,
           "modifier_op": "MODIFY_MODOP_ADDITIVE"
         }

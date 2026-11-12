@@ -120,6 +120,11 @@
       "character_group_type": "CHARACTER_GROUP_TYPE_FOUR",
       "esper_type": "CHARACTER_ELEMENT_TYPE_COSMOS"
     },
+    "1074": {
+      "codename": "Exe",
+      "character_group_type": "CHARACTER_GROUP_TYPE_THREE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_CHAOS"
+    },
     "1075": {
       "codename": "Oneiroi",
       "character_group_type": "CHARACTER_GROUP_TYPE_TWO",
@@ -128,6 +133,11 @@
     "1076": {
       "codename": "shinku",
       "character_group_type": "CHARACTER_GROUP_TYPE_FIVE",
+      "esper_type": "CHARACTER_ELEMENT_TYPE_COSMOS"
+    },
+    "1090": {
+      "codename": "Elyms",
+      "character_group_type": "CHARACTER_GROUP_TYPE_ONE",
       "esper_type": "CHARACTER_ELEMENT_TYPE_COSMOS"
     },
     "1091": {

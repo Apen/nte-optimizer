@@ -22,10 +22,25 @@ type CharacterCatalog struct {
 }
 
 type CharacterRules struct {
-	SkillLevelSources        map[string]string  `json:"skill_level_sources,omitempty"`
-	SkillLevelSourceStatuses map[string]string  `json:"skill_level_source_statuses,omitempty"`
-	InstanceModifiers        []InstanceModifier `json:"instance_modifiers,omitempty"`
-	DerivedInstances         []DerivedInstance  `json:"derived_instances,omitempty"`
+	SkillLevelSources           map[string]string                     `json:"skill_level_sources,omitempty"`
+	SkillLevelSourceStatuses    map[string]string                     `json:"skill_level_source_statuses,omitempty"`
+	SkillLevelProjectionReviews map[string]SkillLevelProjectionReview `json:"skill_level_projection_reviews,omitempty"`
+	InstanceModifiers           []InstanceModifier                    `json:"instance_modifiers,omitempty"`
+	DerivedInstances            []DerivedInstance                     `json:"derived_instances,omitempty"`
+}
+
+// A selected imported level is not a certificate of native execution.
+type SkillLevelProjectionReview struct {
+	CharacterID              string            `json:"character_id"`
+	AbilityID                string            `json:"ability_id"`
+	SkillLevelSource         string            `json:"skill_level_source"`
+	Status                   string            `json:"status"`
+	Basis                    string            `json:"basis"`
+	NativeExecutionCertified bool              `json:"native_execution_certified"`
+	Reason                   string            `json:"reason"`
+	ExpectedEffectIDs        []string          `json:"expected_effect_ids"`
+	Evidence                 []json.RawMessage `json:"evidence"`
+	Configuration            string            `json:"configuration"`
 }
 
 type InstanceModifier struct {

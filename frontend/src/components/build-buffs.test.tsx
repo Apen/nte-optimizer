@@ -42,6 +42,11 @@ describe('compact teammate buffs',()=>{
     mount(value)
     expect(screen.getByText('+20% ATK')).toBeInTheDocument()
   })
+  it('preserves the precision of fractional percent bonuses',()=>{
+    const value=result();value.ally_buffs![1].value=.0375;value.ally_buffs![1].per_stack=true
+    mount(value)
+    expect(screen.getByText('+3.75% CRIT DMG · per stack')).toBeInTheDocument()
+  })
   it('preserves the previous presentation for saved results without summaries',()=>{
     const value=result();delete value.ally_buffs
     mount(value)

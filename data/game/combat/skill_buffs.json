@@ -18536,6 +18536,551 @@
       "damage_application_requirements": [
         "/Game/Blueprints/Abilities/Condition/Player/Skia/Con_Skia_Passivity2.0"
       ]
+    },
+    {
+      "id": "elyms_passive_critical_damage",
+      "character_id": 1090,
+      "ability_id": "GA_Elyms_Passive2",
+      "skill_level_source": null,
+      "target": {
+        "property_id": "CritDamageBase",
+        "operation": "add",
+        "percent": true,
+        "unit_source_property_id": "CritDamageBase",
+        "unit_status": "source_attribute_metadata"
+      },
+      "calculation": {
+        "kind": "flat_stat",
+        "values_by_level": [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      },
+      "recipients": {
+        "scope": "caster",
+        "include_caster": true
+      },
+      "duration_policy": "infinite",
+      "duration_seconds_by_level": null,
+      "active_window_seconds_by_level": null,
+      "conditions": {
+        "selection": "manual_scenario",
+        "automatic_activation_supported": false,
+        "requires_passive_unlocked": true,
+        "passive_unlock_requirements": [
+          {
+            "level": 0,
+            "required_breakthrough": 4,
+            "required_awakening": 0
+          }
+        ]
+      },
+      "application_requirements": [
+        "/Game/Blueprints/Abilities/Condition/Player/Common/Con_IsServerOrStandalone.0"
+      ],
+      "supersedes_effect_id": null,
+      "combination": null,
+      "application_projection": null,
+      "lifecycle": {
+        "status": "extracted_policies_with_reviewed_native_defaults",
+        "scope": "local_effect_policies_and_guarded_global_callback",
+        "reapplication": {
+          "scope": "same_effect_definition",
+          "duration_refresh_policy": "never_refresh",
+          "period_reset_policy": "never_reset",
+          "applies_to_local_duration": false,
+          "deny_overflow_application": false,
+          "clear_stack_on_overflow": false,
+          "team_timer_refresh_status": "unresolved"
+        },
+        "expiration": {
+          "stack_policy": "clear_entire_stack",
+          "has_expiry_timer": false
+        },
+        "global_propagation": null,
+        "automatic_simulation_supported": false
+      },
+      "level_independent": true,
+      "stacking": {
+        "group_id": "elyms_passive_critical_damage",
+        "effect_stack_limit": 1,
+        "effect_aggregation": "EGameplayEffectStackingType::AggregateByTarget",
+        "same_caster_policy": "do_not_sum",
+        "mixed_sources_policy": "unresolved"
+      },
+      "confidence": {
+        "values": "extracted",
+        "formula": "extracted_modifier",
+        "application": "maintained_scenario",
+        "recipients": "reviewed_manual_target_projection"
+      },
+      "assumptions": [
+        "manual_activation_required",
+        "native_application_and_uptime_not_certified",
+        "mixed_source_stacking_unresolved"
+      ],
+      "source_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      },
+      "target_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      }
+    },
+    {
+      "id": "elyms_charge_team_cosmos_damage",
+      "character_id": 1090,
+      "ability_id": "GA_Elyms_Passive1",
+      "skill_level_source": null,
+      "target": {
+        "property_id": "DamageUpCosmosBase",
+        "operation": "add",
+        "percent": true,
+        "unit_source_property_id": "DamageUpCosmosBase",
+        "unit_status": "source_attribute_metadata"
+      },
+      "calculation": {
+        "kind": "flat_stat",
+        "values_by_level": [
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375,
+          0.0375
+        ]
+      },
+      "recipients": {
+        "scope": "team",
+        "include_caster": true
+      },
+      "duration_policy": "timed",
+      "duration_seconds_by_level": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "active_window_seconds_by_level": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "conditions": {
+        "selection": "manual_scenario",
+        "automatic_activation_supported": false,
+        "trigger": "active_character_gains_ultimate_energy",
+        "requires_passive_unlocked": true,
+        "passive_unlock_requirements": [
+          {
+            "level": 0,
+            "required_breakthrough": 2,
+            "required_awakening": 0
+          }
+        ]
+      },
+      "application_requirements": [],
+      "supersedes_effect_id": null,
+      "combination": null,
+      "application_projection": null,
+      "lifecycle": {
+        "status": "extracted_policies_with_reviewed_native_defaults",
+        "scope": "local_effect_policies_and_guarded_global_callback",
+        "reapplication": {
+          "scope": "same_effect_definition",
+          "duration_refresh_policy": "refresh_on_successful_application",
+          "period_reset_policy": "reset_on_successful_application",
+          "applies_to_local_duration": true,
+          "deny_overflow_application": false,
+          "clear_stack_on_overflow": false,
+          "team_timer_refresh_status": "unresolved"
+        },
+        "expiration": {
+          "stack_policy": "clear_entire_stack",
+          "has_expiry_timer": true
+        },
+        "global_propagation": {
+          "component_flags": {
+            "check_source_death": false,
+            "check_source_unequip": true,
+            "only_main_character_triggered": false,
+            "non_source_remove_all": false
+          },
+          "removal": {
+            "source_gate": "registered_source_only",
+            "action": "request_team_withdrawal_after_retention_guard",
+            "retention_guard_status": "false_for_effective_component_flags",
+            "retention_guard_can_block_withdrawal": false,
+            "transition_order_status": "unresolved",
+            "automatic_simulation_supported": false
+          },
+          "stack_callback_delivery_at_cap": "dispatched_on_successful_reapplication",
+          "stack_callback_scope": "accepted_existing_aggregate_with_registered_listener",
+          "equal_count_recipient_reapplication": {
+            "status": "reviewed_native_application_path",
+            "source_gate": "registered_source_only",
+            "recipient_scope": "other_equipped_characters_with_existing_matching_effect",
+            "count_condition": "recipient_count_equals_new_source_count_and_source_count_did_not_decrease",
+            "request": "same_effect_reapplication",
+            "application_success_status": "unresolved",
+            "automatic_simulation_supported": false
+          }
+        },
+        "automatic_simulation_supported": false
+      },
+      "level_independent": true,
+      "stacking": {
+        "group_id": "elyms_charge_team_cosmos_damage",
+        "effect_stack_limit": 8,
+        "effect_aggregation": "EGameplayEffectStackingType::AggregateByTarget",
+        "same_caster_policy": "multiply_by_selected_stacks",
+        "mixed_sources_policy": "unresolved",
+        "values_per_stack": true
+      },
+      "confidence": {
+        "values": "extracted",
+        "formula": "extracted_modifier",
+        "application": "maintained_scenario",
+        "recipients": "reviewed_manual_target_projection"
+      },
+      "assumptions": [
+        "manual_activation_required",
+        "native_application_and_uptime_not_certified",
+        "mixed_source_stacking_unresolved"
+      ],
+      "source_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      },
+      "target_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      }
+    },
+    {
+      "id": "exe_passive_summon_triggered_damage",
+      "character_id": 1074,
+      "ability_id": "GA_Exe_Passive_2",
+      "skill_level_source": null,
+      "target": {
+        "property_id": "DamageUpGeneralBase",
+        "operation": "add",
+        "percent": true,
+        "unit_source_property_id": "DamageUpGeneralBase",
+        "unit_status": "source_attribute_metadata"
+      },
+      "calculation": {
+        "kind": "flat_stat",
+        "values_by_level": [
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      },
+      "recipients": {
+        "scope": "caster",
+        "include_caster": true
+      },
+      "duration_policy": "infinite",
+      "duration_seconds_by_level": null,
+      "active_window_seconds_by_level": null,
+      "conditions": {
+        "selection": "manual_scenario",
+        "automatic_activation_supported": false,
+        "trigger": "allied_summon_deals_damage",
+        "source_counter_limit": 5,
+        "remove_on_leave_battle": true,
+        "requires_passive_unlocked": true,
+        "passive_unlock_requirements": [
+          {
+            "level": 0,
+            "required_breakthrough": 4,
+            "required_awakening": 0
+          }
+        ]
+      },
+      "application_requirements": [],
+      "supersedes_effect_id": null,
+      "combination": null,
+      "application_projection": null,
+      "lifecycle": {
+        "status": "extracted_policies_with_reviewed_native_defaults",
+        "scope": "local_effect_policies_and_guarded_global_callback",
+        "reapplication": {
+          "scope": "same_effect_definition",
+          "duration_refresh_policy": "refresh_on_successful_application",
+          "period_reset_policy": "reset_on_successful_application",
+          "applies_to_local_duration": false,
+          "deny_overflow_application": false,
+          "clear_stack_on_overflow": false,
+          "team_timer_refresh_status": "unresolved"
+        },
+        "expiration": {
+          "stack_policy": "clear_entire_stack",
+          "has_expiry_timer": false
+        },
+        "global_propagation": null,
+        "automatic_simulation_supported": false
+      },
+      "level_independent": true,
+      "stacking": {
+        "group_id": "exe_passive_summon_triggered_damage",
+        "effect_stack_limit": 20,
+        "effect_aggregation": "EGameplayEffectStackingType::AggregateByTarget",
+        "same_caster_policy": "multiply_by_selected_stacks",
+        "mixed_sources_policy": "unresolved",
+        "values_per_stack": true
+      },
+      "confidence": {
+        "values": "extracted",
+        "formula": "extracted_modifier",
+        "application": "maintained_scenario",
+        "recipients": "reviewed_manual_target_projection"
+      },
+      "assumptions": [
+        "manual_activation_required",
+        "native_application_and_uptime_not_certified",
+        "mixed_source_stacking_unresolved",
+        "five_stacks_per_contributor_is_a_manual_projection_from_the_source_counter_limit",
+        "infinite_effect_serialized_ten_second_magnitude_is_not_a_timed_duration"
+      ],
+      "source_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      },
+      "target_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      },
+      "modifier_scope": "damage_evaluation",
+      "damage_application_requirements": []
+    },
+    {
+      "id": "exe_passive_clone_defense_ignore",
+      "character_id": 1074,
+      "ability_id": "GA_Exe_Passive_2",
+      "skill_level_source": null,
+      "target": {
+        "property_id": "DefIgnore",
+        "operation": "add",
+        "percent": true,
+        "unit_source_property_id": "DefIgnore",
+        "unit_status": "source_attribute_metadata"
+      },
+      "calculation": {
+        "kind": "flat_stat",
+        "values_by_level": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "recipients": {
+        "scope": "caster",
+        "include_caster": true
+      },
+      "duration_policy": "infinite",
+      "duration_seconds_by_level": null,
+      "active_window_seconds_by_level": null,
+      "conditions": {
+        "selection": "manual_scenario",
+        "automatic_activation_supported": false,
+        "required_damage_effect_id": "GE_Player_Exe_CloneAtk_Damage",
+        "requires_passive_unlocked": true,
+        "passive_unlock_requirements": [
+          {
+            "level": 0,
+            "required_breakthrough": 4,
+            "required_awakening": 0
+          }
+        ]
+      },
+      "application_requirements": [],
+      "supersedes_effect_id": null,
+      "combination": null,
+      "application_projection": null,
+      "lifecycle": {
+        "status": "extracted_policies_with_reviewed_native_defaults",
+        "scope": "local_effect_policies_and_guarded_global_callback",
+        "reapplication": {
+          "scope": "same_effect_definition",
+          "duration_refresh_policy": "never_refresh",
+          "period_reset_policy": "never_reset",
+          "applies_to_local_duration": false,
+          "deny_overflow_application": false,
+          "clear_stack_on_overflow": false,
+          "team_timer_refresh_status": "unresolved"
+        },
+        "expiration": {
+          "stack_policy": "clear_entire_stack",
+          "has_expiry_timer": false
+        },
+        "global_propagation": {
+          "component_flags": {
+            "check_source_death": false,
+            "check_source_unequip": true,
+            "only_main_character_triggered": false,
+            "non_source_remove_all": false
+          },
+          "removal": {
+            "source_gate": "registered_source_only",
+            "action": "request_team_withdrawal_after_retention_guard",
+            "retention_guard_status": "false_for_effective_component_flags",
+            "retention_guard_can_block_withdrawal": false,
+            "transition_order_status": "unresolved",
+            "automatic_simulation_supported": false
+          },
+          "stack_callback_delivery_at_cap": "dispatched_on_successful_reapplication",
+          "stack_callback_scope": "accepted_existing_aggregate_with_registered_listener",
+          "equal_count_recipient_reapplication": null
+        },
+        "automatic_simulation_supported": false
+      },
+      "level_independent": true,
+      "stacking": {
+        "group_id": "exe_passive_clone_defense_ignore",
+        "effect_stack_limit": 1,
+        "effect_aggregation": "EGameplayEffectStackingType::AggregateByTarget",
+        "same_caster_policy": "do_not_sum",
+        "mixed_sources_policy": "unresolved"
+      },
+      "confidence": {
+        "values": "extracted",
+        "formula": "extracted_modifier",
+        "application": "maintained_scenario",
+        "recipients": "reviewed_manual_target_projection"
+      },
+      "assumptions": [
+        "manual_activation_required",
+        "native_application_and_uptime_not_certified",
+        "mixed_source_stacking_unresolved"
+      ],
+      "source_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      },
+      "target_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      },
+      "modifier_scope": "damage_evaluation",
+      "damage_application_requirements": [
+        "/Game/Blueprints/Abilities/Condition/Player/Exe/Con_Exe_IsCloneDmg.0"
+      ]
     }
   ],
   "attribute_extraction_effects": [
@@ -18547,7 +19092,7 @@
         "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new_1039_Passive1/HTExtractAttributeGEComp_0.json",
         "pointer": "/Properties"
       },
-      "source_sha256": "a5156884fcb3ab6135a037ab7282fa27a3a68be62141b28309e5f2da50502fd0",
+      "source_sha256": "bc3743e1cabecf8f2e9df43074a91fe30933dee81954a5bd7ec2c6cf43d937e0",
       "component_type": "/Script/HTGame.HTExtractAttributeGEComp",
       "extract_attribute_type": "EExtractAttributeType::EXTRAC_ATTRIBUTE_TYPE_MAXHP",
       "condition_tags": [
@@ -18808,7 +19353,7 @@
       "period_seconds": {
         "scalar": {
           "Value": 1.0,
-          "Curve": {
+          "curve": {
             "CurveTable": {
               "ObjectName": "CurveTable\u0027DT_ReactionEffectFigure\u0027",
               "ObjectPath": "/Game/DataTable/Reaction/DT_ReactionEffectFigure.0"
@@ -18845,7 +19390,7 @@
       "serialized_unused_duration_magnitude": {
         "ScalableFloatMagnitude": {
           "Value": 1.02,
-          "Curve": {
+          "curve": {
             "CurveTable": {
               "ObjectName": "CurveTable\u0027DT_ReactionEffectFigure\u0027",
               "ObjectPath": "/Game/DataTable/Reaction/DT_ReactionEffectFigure.0"
@@ -18875,7 +19420,7 @@
               "CheckTags": [],
               "ModifyDuration": {
                 "Value": 0.0,
-                "Curve": {
+                "curve": {
                   "CurveTable": null,
                   "RowName": "None"
                 },
@@ -18989,7 +19534,7 @@
         "file": "datamine/data/abilities/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction4/New/Buff_Reaction_4_new_1020_Passive1/HTExtractAttributeGEComp_0.json",
         "pointer": "/Properties"
       },
-      "source_sha256": "5d830a2de7b6e6447d1faf8b6265a4002e348c2e6467ddd9f751f22cc695e834",
+      "source_sha256": "e51ffba18aedea873700b37f31da43a4a69ab043c35f03a9fa354ba901d90c4c",
       "component_type": "/Script/HTGame.HTExtractAttributeGEComp",
       "extract_attribute_type": "EExtractAttributeType::EXTRAC_ATTRIBUTE_TYPE_ATK",
       "condition_tags": [
@@ -19264,7 +19809,7 @@
       "period_seconds": {
         "scalar": {
           "Value": 1.0,
-          "Curve": {
+          "curve": {
             "CurveTable": {
               "ObjectName": "CurveTable\u0027DT_ReactionEffectFigure\u0027",
               "ObjectPath": "/Game/DataTable/Reaction/DT_ReactionEffectFigure.0"
@@ -19301,7 +19846,7 @@
       "serialized_unused_duration_magnitude": {
         "ScalableFloatMagnitude": {
           "Value": 1.02,
-          "Curve": {
+          "curve": {
             "CurveTable": {
               "ObjectName": "CurveTable\u0027DT_ReactionEffectFigure\u0027",
               "ObjectPath": "/Game/DataTable/Reaction/DT_ReactionEffectFigure.0"
@@ -19331,7 +19876,7 @@
               "CheckTags": [],
               "ModifyDuration": {
                 "Value": 0.0,
-                "Curve": {
+                "curve": {
                   "CurveTable": null,
                   "RowName": "None"
                 },

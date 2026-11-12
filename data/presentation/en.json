@@ -900,6 +900,7 @@
     "ally_buff_condition_healing": "After healing",
     "ally_buff_condition_remora": "Against a target affected by Remora",
     "ally_buff_condition_eligible_followup": "On eligible follow-up attacks",
+    "ally_buff_condition_active_character_gains_ultimate_energy": "When the active character gains Ultimate Energy",
     "ally_buff_condition_break_damage": "For Break damage"
   }
 }

@@ -23639,24 +23639,24 @@
                       {
                         "file": "datamine/data/abilities/DataTable/Skill/DT_GameplayAbilityTipsData.json",
                         "pointer": "/Rows/GA_Akane_Skill/GALevelUpArray/4/LevelUpData/DamageGEList/0",
-                        "sha256": "6ab1cf7a20ead2b8fb396bc55a4e79b0260cec0fbcbff9de666e20ebba4404cf"
+                        "sha256": "d445efebe2483b46fee990b9e6d1d8e0c4608e8702545b4c790fa1af656894da"
                       },
                       {
                         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
                         "pointer": "/Rows/GE_Player_Akane_UpgradeSkill_DisplayGE/AtkRateBaseArray",
-                        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+                        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
                       },
                       {
                         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
                         "pointer": "/Rows/GE_Player_Akane_UpgradeSkill_DisplayGE/GAName",
-                        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+                        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
                       },
                       {
                         "file": "datamine/data/abilities/DataTable/Skill/DT_GameplayEffectMappingData.json",
                         "pointer": "/Rows",
                         "lookup_key": "GE_Player_Akane_UpgradeSkill_DisplayGE",
                         "lookup_result": "absent",
-                        "sha256": "77fbca70541c463eaff6a39ae65d2483a31ad79984bdae1af27f6e2e66841559"
+                        "sha256": "92656c06dab0c2de10600a9e418d7be29ced22ed6145d2043d426bb86a03f52a"
                       }
                     ]
                   }
@@ -29074,6 +29074,1932 @@
       ],
       "status": "source_skill_cards"
     },
+    "1074": {
+      "abilities": [
+        {
+          "activation_effect": null,
+          "ability_id": "GA_Exe_Melee",
+          "category": "active",
+          "name": {
+            "table": "skill_values",
+            "key": "1074__GA_Exe_Melee__name"
+          },
+          "lines": [
+            {
+              "id": "1074__GA_Exe_Melee__0",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__0__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__0__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee1_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.182,
+                    0.197,
+                    0.212,
+                    0.229,
+                    0.248,
+                    0.267,
+                    0.289,
+                    0.312,
+                    0.337,
+                    0.364,
+                    0.393,
+                    0.424,
+                    0.458
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__1",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__1__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__1__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee1_2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.308,
+                    0.333,
+                    0.359,
+                    0.388,
+                    0.419,
+                    0.453,
+                    0.489,
+                    0.528,
+                    0.57,
+                    0.616,
+                    0.665,
+                    0.718,
+                    0.776
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Melee1_2_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.205,
+                    0.221,
+                    0.239,
+                    0.258,
+                    0.279,
+                    0.301,
+                    0.325,
+                    0.351,
+                    0.379,
+                    0.41,
+                    0.443,
+                    0.478,
+                    0.516
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__2",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__2__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__2__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee1_3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.294,
+                    0.318,
+                    0.343,
+                    0.37,
+                    0.4,
+                    0.432,
+                    0.467,
+                    0.504,
+                    0.544,
+                    0.588,
+                    0.635,
+                    0.686,
+                    0.74
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Melee1_3_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.174,
+                    0.188,
+                    0.203,
+                    0.219,
+                    0.237,
+                    0.256,
+                    0.276,
+                    0.298,
+                    0.322,
+                    0.348,
+                    0.376,
+                    0.406,
+                    0.438
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 2,
+                  "source_id": "GE_Player_Shinku_Melee1_3_2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.197,
+                    0.213,
+                    0.23,
+                    0.248,
+                    0.268,
+                    0.289,
+                    0.313,
+                    0.338,
+                    0.365,
+                    0.394,
+                    0.425,
+                    0.459,
+                    0.496
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 3,
+                  "source_id": "GE_Player_Shinku_Melee1_3_3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.421,
+                    0.455,
+                    0.491,
+                    0.53,
+                    0.573,
+                    0.619,
+                    0.668,
+                    0.722,
+                    0.779,
+                    0.842,
+                    0.909,
+                    0.982,
+                    1.06
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__3",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__3__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__3__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee1_4_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.815,
+                    0.88,
+                    0.951,
+                    1.027,
+                    1.109,
+                    1.198,
+                    1.293,
+                    1.397,
+                    1.509,
+                    1.629,
+                    1.76,
+                    1.9,
+                    2.052
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Melee1_4_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.498,
+                    0.538,
+                    0.581,
+                    0.627,
+                    0.678,
+                    0.732,
+                    0.79,
+                    0.853,
+                    0.922,
+                    0.996,
+                    1.075,
+                    1.161,
+                    1.254
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__4",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__4__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__4__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee1_5_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    1.129,
+                    1.219,
+                    1.317,
+                    1.422,
+                    1.536,
+                    1.659,
+                    1.792,
+                    1.935,
+                    2.09,
+                    2.257,
+                    2.437,
+                    2.632,
+                    2.843
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__5",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__5__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__5__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_AirAttack1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.77,
+                    0.832,
+                    0.898,
+                    0.97,
+                    1.048,
+                    1.131,
+                    1.222,
+                    1.32,
+                    1.425,
+                    1.539,
+                    1.662,
+                    1.795,
+                    1.939
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__6",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__6__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__6__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Branch1_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.096,
+                    0.104,
+                    0.112,
+                    0.121,
+                    0.131,
+                    0.141,
+                    0.152,
+                    0.165,
+                    0.178,
+                    0.192,
+                    0.207,
+                    0.224,
+                    0.242
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Branch1_2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.168,
+                    0.181,
+                    0.196,
+                    0.212,
+                    0.229,
+                    0.247,
+                    0.267,
+                    0.288,
+                    0.311,
+                    0.336,
+                    0.363,
+                    0.392,
+                    0.423
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 2,
+                  "source_id": "GE_Player_Shinku_Branch1_3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.252,
+                    0.272,
+                    0.294,
+                    0.317,
+                    0.343,
+                    0.37,
+                    0.4,
+                    0.432,
+                    0.466,
+                    0.504,
+                    0.544,
+                    0.588,
+                    0.635
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 3,
+                  "source_id": "GE_Player_Shinku_Branch1_4_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.228,
+                    0.246,
+                    0.266,
+                    0.287,
+                    0.31,
+                    0.335,
+                    0.362,
+                    0.391,
+                    0.422,
+                    0.456,
+                    0.492,
+                    0.532,
+                    0.574
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__7",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__7__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__7__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Melee_Heterochrome_Show",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    29,
+                    29,
+                    29,
+                    29,
+                    29,
+                    29,
+                    29,
+                    29,
+                    29,
+                    29,
+                    29,
+                    29,
+                    29
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__8",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__8__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__8__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_PerfectEvadeAttack_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    1.425,
+                    1.539,
+                    1.662,
+                    1.795,
+                    1.939,
+                    2.094,
+                    2.261,
+                    2.442,
+                    2.638,
+                    2.849,
+                    3.076,
+                    3.323,
+                    3.588
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__9",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__9__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__9__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Shinku_Melee_AddQEnergy",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    18,
+                    18,
+                    18,
+                    18,
+                    18,
+                    18,
+                    18,
+                    18,
+                    18,
+                    18,
+                    18,
+                    18,
+                    18
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__10",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__10__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__10__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Shinku_PerfectEvade_AddQEnergy",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__11",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__11__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__11__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee1_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.35,
+                    0.378,
+                    0.408,
+                    0.441,
+                    0.476,
+                    0.514,
+                    0.555,
+                    0.6,
+                    0.648,
+                    0.7,
+                    0.756,
+                    0.816,
+                    0.881
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Melee1_1_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.276,
+                    0.298,
+                    0.322,
+                    0.348,
+                    0.375,
+                    0.406,
+                    0.438,
+                    0.473,
+                    0.511,
+                    0.552,
+                    0.596,
+                    0.644,
+                    0.695
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__12",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__12__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__12__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee2_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.408,
+                    0.441,
+                    0.476,
+                    0.514,
+                    0.555,
+                    0.599,
+                    0.647,
+                    0.699,
+                    0.755,
+                    0.816,
+                    0.881,
+                    0.951,
+                    1.027
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__13",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__13__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__13__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee3_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.254,
+                    0.274,
+                    0.296,
+                    0.32,
+                    0.346,
+                    0.373,
+                    0.403,
+                    0.435,
+                    0.47,
+                    0.508,
+                    0.548,
+                    0.592,
+                    0.64
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Melee3_1_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.078,
+                    0.084,
+                    0.091,
+                    0.098,
+                    0.106,
+                    0.115,
+                    0.124,
+                    0.134,
+                    0.144,
+                    0.156,
+                    0.168,
+                    0.182,
+                    0.196
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__14",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__14__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__14__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee4_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.536,
+                    0.579,
+                    0.625,
+                    0.675,
+                    0.729,
+                    0.788,
+                    0.851,
+                    0.919,
+                    0.992,
+                    1.071,
+                    1.157,
+                    1.25,
+                    1.35
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Melee4_1_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.687,
+                    0.742,
+                    0.801,
+                    0.865,
+                    0.935,
+                    1.009,
+                    1.09,
+                    1.177,
+                    1.272,
+                    1.373,
+                    1.483,
+                    1.602,
+                    1.73
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__15",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__15__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__15__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Melee5_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.465,
+                    0.502,
+                    0.542,
+                    0.586,
+                    0.633,
+                    0.683,
+                    0.738,
+                    0.797,
+                    0.861,
+                    0.93,
+                    1.004,
+                    1.084,
+                    1.171
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__16",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__16__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__16__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_AirAttack_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.6,
+                    0.648,
+                    0.7,
+                    0.756,
+                    0.816,
+                    0.882,
+                    0.952,
+                    1.028,
+                    1.111,
+                    1.199,
+                    1.295,
+                    1.399,
+                    1.511
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__17",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__17__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__17__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Branch1_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.18,
+                    0.194,
+                    0.21,
+                    0.227,
+                    0.245,
+                    0.264,
+                    0.286,
+                    0.308,
+                    0.333,
+                    0.36,
+                    0.389,
+                    0.42,
+                    0.453
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Branch2_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.216,
+                    0.233,
+                    0.252,
+                    0.272,
+                    0.294,
+                    0.317,
+                    0.343,
+                    0.37,
+                    0.4,
+                    0.432,
+                    0.466,
+                    0.504,
+                    0.544
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 2,
+                  "source_id": "GE_Player_Shinku_Branch3_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.24,
+                    0.259,
+                    0.28,
+                    0.302,
+                    0.327,
+                    0.353,
+                    0.381,
+                    0.411,
+                    0.444,
+                    0.48,
+                    0.518,
+                    0.56,
+                    0.604
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 3,
+                  "source_id": "GE_Player_Shinku_Branch4_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.144,
+                    0.156,
+                    0.168,
+                    0.181,
+                    0.196,
+                    0.212,
+                    0.229,
+                    0.247,
+                    0.267,
+                    0.288,
+                    0.311,
+                    0.336,
+                    0.363
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 4,
+                  "source_id": "GE_Player_Shinku_Branch5_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    1.056,
+                    1.14,
+                    1.232,
+                    1.33,
+                    1.437,
+                    1.552,
+                    1.676,
+                    1.81,
+                    1.955,
+                    2.111,
+                    2.28,
+                    2.462,
+                    2.659
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__18",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__18__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__18__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "RangeMelee_Heterochrome_Show",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    22,
+                    22,
+                    22,
+                    22,
+                    22,
+                    22,
+                    22,
+                    22,
+                    22,
+                    22,
+                    22,
+                    22,
+                    22
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__19",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__19__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__19__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_PerfectEvadeAttack_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    1.675,
+                    1.809,
+                    1.954,
+                    2.11,
+                    2.279,
+                    2.461,
+                    2.658,
+                    2.871,
+                    3.1,
+                    3.348,
+                    3.616,
+                    3.905,
+                    4.218
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Melee__20",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__20__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Melee__20__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Shinku_RangeMelee_AddQEnergy",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    13,
+                    13,
+                    13,
+                    13,
+                    13,
+                    13,
+                    13,
+                    13,
+                    13,
+                    13,
+                    13,
+                    13,
+                    13
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "activation_effect": null,
+          "ability_id": "GA_Exe_Skill",
+          "category": "active",
+          "name": {
+            "table": "skill_values",
+            "key": "1074__GA_Exe_Skill__name"
+          },
+          "lines": [
+            {
+              "id": "1074__GA_Exe_Skill__0",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__0__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__0__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Skill1_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.173,
+                    0.187,
+                    0.202,
+                    0.218,
+                    0.235,
+                    0.254,
+                    0.275,
+                    0.296,
+                    0.32,
+                    0.346,
+                    0.373,
+                    0.403,
+                    0.436
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Skill1_2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.231,
+                    0.249,
+                    0.269,
+                    0.291,
+                    0.314,
+                    0.339,
+                    0.367,
+                    0.396,
+                    0.428,
+                    0.462,
+                    0.499,
+                    0.539,
+                    0.582
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 2,
+                  "source_id": "GE_Player_Shinku_Skill1_3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.796,
+                    0.86,
+                    0.928,
+                    1.003,
+                    1.083,
+                    1.17,
+                    1.263,
+                    1.364,
+                    1.473,
+                    1.591,
+                    1.719,
+                    1.856,
+                    2.004
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Skill__1",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__1__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__1__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Shinku_Skill_AddQEnergy",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Skill__2",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__2__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__2__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GA_Shinku_Skill",
+                  "source_kind": "cooldown_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Skill__3",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__3__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__3__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Skill_Heterochrome_Show",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Skill__4",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__4__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__4__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ShinkuSkillEnergyMax",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Skill__5",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__5__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__5__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_Skill1_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.224,
+                    0.242,
+                    0.261,
+                    0.282,
+                    0.305,
+                    0.329,
+                    0.355,
+                    0.384,
+                    0.415,
+                    0.448,
+                    0.484,
+                    0.522,
+                    0.564
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_Skill2_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    2.176,
+                    2.35,
+                    2.538,
+                    2.741,
+                    2.96,
+                    3.197,
+                    3.453,
+                    3.729,
+                    4.028,
+                    4.35,
+                    4.698,
+                    5.074,
+                    5.48
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_Skill__6",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__6__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_Skill__6__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Skill2_Heterochrome_Show",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "activation_effect": null,
+          "ability_id": "GA_Exe_UltraSkill",
+          "category": "active",
+          "name": {
+            "table": "skill_values",
+            "key": "1074__GA_Exe_UltraSkill__name"
+          },
+          "lines": [
+            {
+              "id": "1074__GA_Exe_UltraSkill__0",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__0__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__0__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_UltraSkill1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.185,
+                    0.2,
+                    0.216,
+                    0.233,
+                    0.252,
+                    0.272,
+                    0.294,
+                    0.317,
+                    0.342,
+                    0.37,
+                    0.399,
+                    0.431,
+                    0.466
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_UltraSkill2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    1.2,
+                    1.296,
+                    1.4,
+                    1.512,
+                    1.633,
+                    1.763,
+                    1.904,
+                    2.057,
+                    2.221,
+                    2.399,
+                    2.591,
+                    2.798,
+                    3.022
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 2,
+                  "source_id": "GE_Player_Shinku_UltraSkill3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.55,
+                    0.594,
+                    0.642,
+                    0.693,
+                    0.748,
+                    0.808,
+                    0.873,
+                    0.943,
+                    1.018,
+                    1.099,
+                    1.187,
+                    1.282,
+                    1.385
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 3,
+                  "source_id": "GE_Player_Shinku_UltraSkill4_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    1.44,
+                    1.555,
+                    1.68,
+                    1.814,
+                    1.959,
+                    2.116,
+                    2.285,
+                    2.468,
+                    2.665,
+                    2.879,
+                    3.109,
+                    3.358,
+                    3.626
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 4,
+                  "source_id": "GE_Player_Shinku_UltraSkill5_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.425,
+                    0.459,
+                    0.496,
+                    0.535,
+                    0.578,
+                    0.624,
+                    0.674,
+                    0.728,
+                    0.787,
+                    0.85,
+                    0.918,
+                    0.991,
+                    1.07
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_UltraSkill__1",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__1__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__1__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GA_Shinku_UltraSkill",
+                  "source_kind": "cooldown_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_UltraSkill__2",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__2__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__2__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_UltraSkillPre_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.6,
+                    0.648,
+                    0.7,
+                    0.756,
+                    0.816,
+                    0.882,
+                    0.952,
+                    1.028,
+                    1.111,
+                    1.199,
+                    1.295,
+                    1.399,
+                    1.511
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_UltraSkill__3",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__3__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__3__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_UltraSkill_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.2,
+                    0.216,
+                    0.233,
+                    0.252,
+                    0.272,
+                    0.294,
+                    0.317,
+                    0.343,
+                    0.37,
+                    0.4,
+                    0.432,
+                    0.466,
+                    0.504
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Shinku_UltraSkill2_Rage_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    4.0,
+                    4.32,
+                    4.666,
+                    5.039,
+                    5.442,
+                    5.877,
+                    6.347,
+                    6.855,
+                    7.404,
+                    7.996,
+                    8.636,
+                    9.327,
+                    10.073
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_UltraSkill__4",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__4__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__4__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Shinku_Rage_DmgUp",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_UltraSkill__5",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__5__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__5__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Shinku_Rage_Resist",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1074__GA_Exe_UltraSkill__6",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__6__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_UltraSkill__6__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ShinkuUltraEnergyMax",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    60,
+                    60,
+                    60,
+                    60,
+                    60,
+                    60,
+                    60,
+                    60,
+                    60,
+                    60,
+                    60,
+                    60,
+                    60
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "activation_effect": null,
+          "ability_id": "GA_Exe_QTE",
+          "category": "active",
+          "name": {
+            "table": "skill_values",
+            "key": "1074__GA_Exe_QTE__name"
+          },
+          "lines": [
+            {
+              "id": "1074__GA_Exe_QTE__0",
+              "label": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_QTE__0__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1074__GA_Exe_QTE__0__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Shinku_QTE_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    2.0,
+                    2.16,
+                    2.333,
+                    2.519,
+                    2.721,
+                    2.939,
+                    3.174,
+                    3.428,
+                    3.702,
+                    3.998,
+                    4.318,
+                    4.663,
+                    5.036
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "activation_effect": {
+            "effect_id": "Buff_Exe074_Passive1",
+            "class_id": "Buff_Exe074_Passive1_C",
+            "file": "Blueprints/Abilities/Player/Ability_074_Exe/PassiveEffect/Buff_Exe074_Passive1/Default__Buff_Exe074_Passive1_C.json",
+            "status": "extracted"
+          },
+          "ability_id": "GA_Exe_Passive_1",
+          "category": "passive",
+          "name": {
+            "table": "skill_values",
+            "key": "1074__GA_Exe_Passive_1__name"
+          },
+          "lines": []
+        },
+        {
+          "activation_effect": {
+            "effect_id": "Buff_Exe074_Passive2",
+            "class_id": "Buff_Exe074_Passive2_C",
+            "file": "Blueprints/Abilities/Player/Ability_074_Exe/PassiveEffect/Buff_Exe074_Passive2/Default__Buff_Exe074_Passive2_C.json",
+            "status": "extracted"
+          },
+          "ability_id": "GA_Exe_Passive_2",
+          "category": "passive",
+          "name": {
+            "table": "skill_values",
+            "key": "1074__GA_Exe_Passive_2__name"
+          },
+          "lines": []
+        }
+      ],
+      "status": "source_skill_cards"
+    },
     "1075": {
       "abilities": [
         {
@@ -32384,6 +34310,2155 @@
           "name": {
             "table": "skill_values",
             "key": "1076__GA_Shinku_Passive_2__name"
+          },
+          "lines": []
+        }
+      ],
+      "status": "source_skill_cards"
+    },
+    "1090": {
+      "abilities": [
+        {
+          "activation_effect": null,
+          "ability_id": "GA_Elyms_Melee",
+          "category": "active",
+          "name": {
+            "table": "skill_values",
+            "key": "1090__GA_Elyms_Melee__name"
+          },
+          "lines": [
+            {
+              "id": "1090__GA_Elyms_Melee__0",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__0__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__0__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Melee1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.112,
+                    0.121,
+                    0.131,
+                    0.141,
+                    0.152,
+                    0.165,
+                    0.178,
+                    0.192,
+                    0.207,
+                    0.224,
+                    0.242,
+                    0.261,
+                    0.282
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__1",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__1__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__1__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Melee2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.157,
+                    0.17,
+                    0.183,
+                    0.198,
+                    0.214,
+                    0.231,
+                    0.249,
+                    0.269,
+                    0.291,
+                    0.314,
+                    0.339,
+                    0.366,
+                    0.395
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__2",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__2__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__2__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Melee3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.334,
+                    0.361,
+                    0.39,
+                    0.421,
+                    0.454,
+                    0.491,
+                    0.53,
+                    0.572,
+                    0.618,
+                    0.668,
+                    0.721,
+                    0.779,
+                    0.841
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_Melee3_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.166,
+                    0.179,
+                    0.194,
+                    0.209,
+                    0.226,
+                    0.244,
+                    0.263,
+                    0.284,
+                    0.307,
+                    0.332,
+                    0.358,
+                    0.387,
+                    0.418
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__3",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__3__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__3__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Melee4_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.138,
+                    0.149,
+                    0.161,
+                    0.174,
+                    0.188,
+                    0.203,
+                    0.219,
+                    0.237,
+                    0.255,
+                    0.276,
+                    0.298,
+                    0.322,
+                    0.348
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_Melee4_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.142,
+                    0.153,
+                    0.166,
+                    0.179,
+                    0.193,
+                    0.209,
+                    0.225,
+                    0.243,
+                    0.263,
+                    0.284,
+                    0.307,
+                    0.331,
+                    0.358
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__4",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__4__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__4__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Melee5_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.915,
+                    0.988,
+                    1.067,
+                    1.153,
+                    1.245,
+                    1.344,
+                    1.452,
+                    1.568,
+                    1.694,
+                    1.829,
+                    1.975,
+                    2.133,
+                    2.304
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__5",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__5__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__5__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Branch1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.107,
+                    0.116,
+                    0.125,
+                    0.135,
+                    0.146,
+                    0.157,
+                    0.17,
+                    0.183,
+                    0.198,
+                    0.214,
+                    0.231,
+                    0.249,
+                    0.269
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_Branch2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.107,
+                    0.116,
+                    0.125,
+                    0.135,
+                    0.146,
+                    0.157,
+                    0.17,
+                    0.183,
+                    0.198,
+                    0.214,
+                    0.231,
+                    0.249,
+                    0.269
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 2,
+                  "source_id": "GE_Player_Elyms_Branch3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.128,
+                    0.138,
+                    0.149,
+                    0.161,
+                    0.174,
+                    0.188,
+                    0.203,
+                    0.219,
+                    0.237,
+                    0.256,
+                    0.276,
+                    0.298,
+                    0.322
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__6",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__6__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__6__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Aim_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.12,
+                    0.13,
+                    0.14,
+                    0.151,
+                    0.163,
+                    0.176,
+                    0.19,
+                    0.206,
+                    0.222,
+                    0.24,
+                    0.259,
+                    0.28,
+                    0.302
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__7",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__7__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__7__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_AirAttack_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.296,
+                    0.32,
+                    0.345,
+                    0.373,
+                    0.403,
+                    0.435,
+                    0.47,
+                    0.507,
+                    0.548,
+                    0.592,
+                    0.639,
+                    0.69,
+                    0.745
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__8",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__8__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__8__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_PerfectEvadeAttack_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    1.0,
+                    1.08,
+                    1.166,
+                    1.26,
+                    1.36,
+                    1.469,
+                    1.587,
+                    1.714,
+                    1.851,
+                    1.999,
+                    2.159,
+                    2.332,
+                    2.518
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__9",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__9__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__9__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_MeleeB1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.124,
+                    0.134,
+                    0.145,
+                    0.156,
+                    0.169,
+                    0.182,
+                    0.197,
+                    0.213,
+                    0.23,
+                    0.248,
+                    0.268,
+                    0.289,
+                    0.312
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_MeleeB1_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.135,
+                    0.146,
+                    0.157,
+                    0.17,
+                    0.184,
+                    0.198,
+                    0.214,
+                    0.231,
+                    0.25,
+                    0.27,
+                    0.291,
+                    0.315,
+                    0.34
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__10",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__10__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__10__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_MeleeB2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.093,
+                    0.1,
+                    0.108,
+                    0.117,
+                    0.127,
+                    0.137,
+                    0.148,
+                    0.159,
+                    0.172,
+                    0.186,
+                    0.201,
+                    0.217,
+                    0.234
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_MeleeB2_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.095,
+                    0.103,
+                    0.111,
+                    0.12,
+                    0.129,
+                    0.14,
+                    0.151,
+                    0.163,
+                    0.176,
+                    0.19,
+                    0.205,
+                    0.222,
+                    0.239
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__11",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__11__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__11__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_MeleeB3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.106,
+                    0.114,
+                    0.124,
+                    0.134,
+                    0.144,
+                    0.156,
+                    0.168,
+                    0.182,
+                    0.196,
+                    0.212,
+                    0.229,
+                    0.247,
+                    0.267
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_MeleeB3_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.47,
+                    0.508,
+                    0.548,
+                    0.592,
+                    0.639,
+                    0.691,
+                    0.746,
+                    0.805,
+                    0.87,
+                    0.94,
+                    1.015,
+                    1.096,
+                    1.184
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__12",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__12__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__12__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Elyms_Melee_Heterochrome_Show",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    31,
+                    31,
+                    31,
+                    31,
+                    31,
+                    31,
+                    31,
+                    31,
+                    31,
+                    31,
+                    31,
+                    31,
+                    31
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Melee__13",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__13__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Melee__13__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Elyms_MeleeB_Heterochrome_Show",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "activation_effect": null,
+          "ability_id": "GA_Elyms_Skill",
+          "category": "active",
+          "name": {
+            "table": "skill_values",
+            "key": "1090__GA_Elyms_Skill__name"
+          },
+          "lines": [
+            {
+              "id": "1090__GA_Elyms_Skill__0",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__0__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__0__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Skill1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.269,
+                    0.291,
+                    0.314,
+                    0.339,
+                    0.366,
+                    0.395,
+                    0.427,
+                    0.461,
+                    0.498,
+                    0.538,
+                    0.581,
+                    0.627,
+                    0.677
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_Skill1_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.236,
+                    0.255,
+                    0.275,
+                    0.297,
+                    0.321,
+                    0.347,
+                    0.375,
+                    0.404,
+                    0.437,
+                    0.472,
+                    0.51,
+                    0.55,
+                    0.594
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 2,
+                  "source_id": "GE_Player_Elyms_Skill1_2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.488,
+                    0.527,
+                    0.569,
+                    0.615,
+                    0.664,
+                    0.717,
+                    0.774,
+                    0.836,
+                    0.903,
+                    0.976,
+                    1.054,
+                    1.138,
+                    1.229
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Skill__1",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__1__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__1__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GA_Elyms_Skill",
+                  "source_kind": "cooldown_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    16,
+                    16,
+                    16,
+                    16,
+                    16,
+                    16,
+                    16,
+                    16,
+                    16,
+                    16,
+                    16,
+                    16,
+                    16
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Skill__2",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__2__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__2__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Skill2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.102,
+                    0.11,
+                    0.119,
+                    0.128,
+                    0.139,
+                    0.15,
+                    0.162,
+                    0.175,
+                    0.189,
+                    0.204,
+                    0.22,
+                    0.238,
+                    0.257
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_Skill2_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.488,
+                    0.527,
+                    0.569,
+                    0.615,
+                    0.664,
+                    0.717,
+                    0.774,
+                    0.836,
+                    0.903,
+                    0.976,
+                    1.054,
+                    1.138,
+                    1.229
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Skill__3",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__3__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__3__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsPowerE1Dur",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12,
+                    12
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Skill__4",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__4__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__4__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_Skill3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.131,
+                    0.141,
+                    0.153,
+                    0.165,
+                    0.178,
+                    0.192,
+                    0.208,
+                    0.225,
+                    0.242,
+                    0.262,
+                    0.283,
+                    0.305,
+                    0.33
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_Skill3_1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.622,
+                    0.672,
+                    0.726,
+                    0.784,
+                    0.846,
+                    0.914,
+                    0.987,
+                    1.066,
+                    1.151,
+                    1.243,
+                    1.343,
+                    1.45,
+                    1.566
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Skill__5",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__5__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__5__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsPowerE2Dur",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Skill__6",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__6__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__6__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsPowerE2CoefModify",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Skill__7",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__7__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__7__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsPowerE2DamUpDur",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Skill__8",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__8__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__8__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsP1ToP2Stack",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_Skill__9",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__9__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_Skill__9__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "Elyms_Skill1_Heterochrome_Show",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "activation_effect": null,
+          "ability_id": "GA_Elyms_UltraSkill",
+          "category": "active",
+          "name": {
+            "table": "skill_values",
+            "key": "1090__GA_Elyms_UltraSkill__name"
+          },
+          "lines": [
+            {
+              "id": "1090__GA_Elyms_UltraSkill__0",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__0__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__0__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_UltraSkillA1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.32,
+                    0.346,
+                    0.373,
+                    0.403,
+                    0.435,
+                    0.47,
+                    0.508,
+                    0.548,
+                    0.592,
+                    0.64,
+                    0.691,
+                    0.746,
+                    0.806
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_UltraSkillA2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    3.09,
+                    3.337,
+                    3.604,
+                    3.893,
+                    4.204,
+                    4.54,
+                    4.903,
+                    5.296,
+                    5.719,
+                    6.177,
+                    6.671,
+                    7.205,
+                    7.781
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__1",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__1__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__1__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongCoefModify1",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__2",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__2__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__2__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongCoefModify3",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__3",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__3__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__3__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_UltraSkillB1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.356,
+                    0.384,
+                    0.415,
+                    0.448,
+                    0.484,
+                    0.523,
+                    0.565,
+                    0.61,
+                    0.659,
+                    0.712,
+                    0.769,
+                    0.83,
+                    0.896
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 1,
+                  "source_id": "GE_Player_Elyms_UltraSkillB2_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.698,
+                    0.754,
+                    0.814,
+                    0.879,
+                    0.95,
+                    1.026,
+                    1.108,
+                    1.196,
+                    1.292,
+                    1.395,
+                    1.507,
+                    1.627,
+                    1.758
+                  ],
+                  "status": "resolved"
+                },
+                {
+                  "index": 2,
+                  "source_id": "GE_Player_Elyms_UltraSkillB3_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.64,
+                    0.691,
+                    0.746,
+                    0.806,
+                    0.871,
+                    0.94,
+                    1.016,
+                    1.097,
+                    1.185,
+                    1.279,
+                    1.382,
+                    1.492,
+                    1.612
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__4",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__4__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__4__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongCoefModify2",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__5",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__5__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__5__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongCoefModify4",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__6",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__6__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__6__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GA_Elyms_UltraSkill",
+                  "source_kind": "cooldown_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__7",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__7__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__7__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GA_Elyms_UltraSkill",
+                  "source_kind": "skill_cost",
+                  "percent": false,
+                  "values_by_level": [
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__8",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__8__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__8__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsQAtkUp",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__9",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__9__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__9__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsQZhuijiUp",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__10",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__10__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__10__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsQAtkUpDur",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__11",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__11__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__11__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_XieTongSkillA1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.27,
+                    0.292,
+                    0.315,
+                    0.34,
+                    0.367,
+                    0.397,
+                    0.428,
+                    0.463,
+                    0.5,
+                    0.54,
+                    0.583,
+                    0.63,
+                    0.68
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__12",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__12__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__12__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongCoefModify5",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__13",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__13__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__13__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongCoefModify7",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__14",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__14__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__14__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongAPer",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__15",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__15__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__15__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongAMax",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__16",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__16__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__16__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_XieTongSkillB1_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    0.3,
+                    0.324,
+                    0.35,
+                    0.378,
+                    0.408,
+                    0.441,
+                    0.476,
+                    0.514,
+                    0.555,
+                    0.6,
+                    0.648,
+                    0.699,
+                    0.755
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__17",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__17__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__17__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongCoefModify6",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__18",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__18__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__18__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongCoefModify8",
+                  "source_kind": "effect_curve",
+                  "percent": true,
+                  "values_by_level": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__19",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__19__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__19__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongBPer",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_UltraSkill__20",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__20__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_UltraSkill__20__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsXieTongBMax",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "activation_effect": null,
+          "ability_id": "GA_Elyms_QTE",
+          "category": "active",
+          "name": {
+            "table": "skill_values",
+            "key": "1090__GA_Elyms_QTE__name"
+          },
+          "lines": [
+            {
+              "id": "1090__GA_Elyms_QTE__0",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_QTE__0__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_QTE__0__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "GE_Player_Elyms_QTE_Damage",
+                  "source_kind": "damage_effect",
+                  "percent": true,
+                  "scaling": "attack",
+                  "values_by_level": [
+                    2.0,
+                    2.16,
+                    2.333,
+                    2.519,
+                    2.721,
+                    2.939,
+                    3.174,
+                    3.428,
+                    3.702,
+                    3.998,
+                    4.318,
+                    4.663,
+                    5.036
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_QTE__1",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_QTE__1__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_QTE__1__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsPowerE2DamUpDur",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15,
+                    15
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            },
+            {
+              "id": "1090__GA_Elyms_QTE__2",
+              "label": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_QTE__2__label"
+              },
+              "format": {
+                "table": "skill_values",
+                "key": "1090__GA_Elyms_QTE__2__format"
+              },
+              "status": "resolved",
+              "parameters": [
+                {
+                  "index": 0,
+                  "source_id": "ElymsP1ToP2Stack",
+                  "source_kind": "effect_curve",
+                  "percent": false,
+                  "values_by_level": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ],
+                  "status": "resolved"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "activation_effect": {
+            "effect_id": "Buff_Elyms_Passive1",
+            "class_id": "Buff_Elyms_Passive1_C",
+            "file": "Blueprints/Abilities/Player/Ability_090_Elyms/PassiveEffect/Buff_Elyms_Passive1/Default__Buff_Elyms_Passive1_C.json",
+            "status": "extracted"
+          },
+          "ability_id": "GA_Elyms_Passive1",
+          "category": "passive",
+          "name": {
+            "table": "skill_values",
+            "key": "1090__GA_Elyms_Passive1__name"
+          },
+          "lines": []
+        },
+        {
+          "activation_effect": {
+            "effect_id": "Buff_Elyms_Passive2",
+            "class_id": "Buff_Elyms_Passive2_C",
+            "file": "Blueprints/Abilities/Player/Ability_090_Elyms/PassiveEffect/Buff_Elyms_Passive2/Default__Buff_Elyms_Passive2_C.json",
+            "status": "extracted"
+          },
+          "ability_id": "GA_Elyms_Passive2",
+          "category": "passive",
+          "name": {
+            "table": "skill_values",
+            "key": "1090__GA_Elyms_Passive2__name"
           },
           "lines": []
         }

@@ -52,7 +52,7 @@ export function BuildBuffs({ result }: { result: Result }) {
       <ul className="divide-y divide-slate-800">{allyBuffs.map(buff => <li key={`${buff.character_id}:${buff.id}`} className="grid gap-1 py-3">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><b>{buff.character_name}</b>
           <span className={buff.value === undefined ? 'text-slate-400' : 'font-semibold text-emerald-200'}>
-            {buff.value === undefined ? t('ally_buff_value_unavailable') : buff.value.toLocaleString(currentIntlLocale(),buff.percent ? {style:'percent',maximumFractionDigits:1,signDisplay:'always'} : {maximumFractionDigits:1,signDisplay:'always'})}
+            {buff.value === undefined ? t('ally_buff_value_unavailable') : buff.value.toLocaleString(currentIntlLocale(),buff.percent ? {style:'percent',maximumFractionDigits:2,signDisplay:'always'} : {maximumFractionDigits:1,signDisplay:'always'})}
             {` ${presentation.stats[buff.property_id]?.replace(/\s*%$/, '') || t('other_bonus_fallback')}`}
             {buff.per_stack && ` · ${t('ally_buff_per_stack')}`}
           </span>

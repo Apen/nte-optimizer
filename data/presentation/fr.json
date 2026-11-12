@@ -900,6 +900,7 @@
     "ally_buff_condition_healing": "Après un soin",
     "ally_buff_condition_remora": "Contre une cible sous Remora",
     "ally_buff_condition_eligible_followup": "Sur les attaques de suivi admissibles",
+    "ally_buff_condition_active_character_gains_ultimate_energy": "Lorsque le personnage actif gagne de l’énergie d’ultime",
     "ally_buff_condition_break_damage": "Pour les dégâts de rupture"
   }
 }

@@ -10,13 +10,14 @@ import (
 )
 
 type ForkDefinition struct {
-	PanelByLevelStage map[string][]nte.Stat `json:"panel_by_level_stage"`
-	LevelStats        map[string][]nte.Stat `json:"level_stats,omitempty"`
-	BreakthroughStats map[string][]nte.Stat `json:"breakthrough_stats,omitempty"`
-	PermanentByStar   map[string][]nte.Stat `json:"permanent_by_star"`
-	ConditionalByStar map[string][]nte.Stat `json:"conditional_by_star"`
-	ConditionalNote   string                `json:"conditional_note"`
-	EffectsByStar     map[string]ForkEffect `json:"effects_by_star,omitempty"`
+	PanelByLevelStage  map[string][]nte.Stat   `json:"panel_by_level_stage"`
+	LevelStats         map[string][]nte.Stat   `json:"level_stats,omitempty"`
+	BreakthroughStats  map[string][]nte.Stat   `json:"breakthrough_stats,omitempty"`
+	PermanentByStar    map[string][]nte.Stat   `json:"permanent_by_star"`
+	ConditionalByStar  map[string][]nte.Stat   `json:"conditional_by_star"`
+	ConditionalNote    string                  `json:"conditional_note"`
+	EffectsByStar      map[string]ForkEffect   `json:"effects_by_star,omitempty"`
+	ConditionalEffects []ForkConditionalEffect `json:"conditional_effects,omitempty"`
 }
 
 type ForkEffect struct {

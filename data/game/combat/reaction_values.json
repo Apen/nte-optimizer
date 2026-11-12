@@ -13,7 +13,7 @@
       "ability_id": "GA_Sagiri_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1003/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -56,7 +56,7 @@
       "ability_id": "GA_Lacrimosa_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1004/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -85,7 +85,7 @@
       "ability_id": "GA_Skia_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1008/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -119,7 +119,7 @@
       "ability_id": "GA_Nanally_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1010/ReactionDataArray/0"
       },
       "numeric_parameters": {
@@ -158,7 +158,7 @@
       "ability_id": "GA_Mint_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1019/ReactionDataArray/0"
       },
       "numeric_parameters": {
@@ -196,7 +196,7 @@
       "ability_id": "GA_Haniel_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1020/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -242,7 +242,7 @@
       "ability_id": "GA_Edgar_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1021/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -294,7 +294,7 @@
       "ability_id": "GA_Cang_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1023/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -329,7 +329,7 @@
       "ability_id": "GA_Hathor_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1025/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -372,7 +372,7 @@
       "ability_id": "GA_Adler_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1033/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -435,7 +435,7 @@
       "ability_id": "GA_Zankou_Passive1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1036/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -478,7 +478,7 @@
       "ability_id": "GA_Fadia_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1039/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -524,7 +524,7 @@
       "ability_id": "GA_BlackBird_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1042/ReactionDataArray/0"
       },
       "numeric_parameters": {
@@ -561,7 +561,7 @@
       "ability_id": "GA_BlackBird_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1042/ReactionDataArray/1"
       },
       "numeric_parameters": {
@@ -618,7 +618,7 @@
       "ability_id": "GA_Female_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1046/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -661,7 +661,7 @@
       "ability_id": "GA_Female_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1051/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -704,7 +704,7 @@
       "ability_id": "GA_Jin_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1052/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -738,7 +738,7 @@
       "ability_id": "GA_Daffodill_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1054/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -781,7 +781,7 @@
       "ability_id": "GA_Kuhara_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1055/ReactionDataArray/0"
       },
       "numeric_parameters": {
@@ -818,7 +818,7 @@
       "ability_id": "GA_Kuhara_Passive_2",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1055/ReactionDataArray/1"
       },
       "numeric_parameters": {},
@@ -861,7 +861,7 @@
       "ability_id": "GA_Akane_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1057/ReactionDataArray/0"
       },
       "numeric_parameters": {
@@ -935,7 +935,7 @@
       "ability_id": "GA_Mitsuki_Passive1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1070/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -978,7 +978,7 @@
       "ability_id": "GA_Chaos_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1071/ReactionDataArray/0"
       },
       "numeric_parameters": {},
@@ -1021,11 +1021,11 @@
       "ability_id": "GA_Radio072_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1072/ReactionDataArray/0"
       },
       "numeric_parameters": {
-        "/ExtraDamageRatio": 0.13,
+        "/ExtraDamageRatio": 0.1,
         "/ExtraFuWenDamageRatio": 0
       },
       "asset_references": [
@@ -1036,7 +1036,7 @@
         }
       ],
       "source_fields": {
-        "ExtraDamageRatio": 0.13,
+        "ExtraDamageRatio": 0.1,
         "SouceGEClass": null,
         "ExtraFuWenDamageRatio": 0.0,
         "ReactionAbilityID": "GA_Radio072_Passive_1",
@@ -1061,7 +1061,7 @@
       "ability_id": "GA_Chiichan073_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1073/ReactionDataArray/0"
       },
       "numeric_parameters": {
@@ -1098,7 +1098,7 @@
       "ability_id": "GA_Oneiroi_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1075/ReactionDataArray/0"
       },
       "numeric_parameters": {
@@ -1135,7 +1135,7 @@
       "ability_id": "GA_Oneiroi_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1075/ReactionDataArray/1"
       },
       "numeric_parameters": {
@@ -1181,7 +1181,7 @@
       "ability_id": "GA_Shinku_Passive_1",
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
-        "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
         "pointer": "/Rows/1076/ReactionDataArray/0"
       },
       "numeric_parameters": {
@@ -1213,6 +1213,97 @@
               {
                 "ObjectName": "BlueprintGeneratedClass\u0027Buff_Shinku076_Passive1_C\u0027",
                 "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_076_Shinku/PassiveEffect/Buff_Shinku076_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1090_GA_Elyms_Passive1_0",
+      "character_id": 1090,
+      "ability_id": "GA_Elyms_Passive1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
+        "pointer": "/Rows/1090/ReactionDataArray/0"
+      },
+      "numeric_parameters": {
+        "/ApplyDelay": 7.5,
+        "/TriggerCooldown": 7
+      },
+      "asset_references": [
+        {
+          "pointer": "/SlomoGEClass",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Reaction_3_new_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/Buff_Reaction_3_new.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Elyms_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_090_Elyms/PassiveEffect/Buff_Elyms_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "ApplyDelay": 7.5,
+        "TriggerCooldown": 7.0,
+        "SlomoGEClass": {
+          "ObjectName": "BlueprintGeneratedClass\u0027Buff_Reaction_3_new_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction3/New/Buff_Reaction_3_new.1"
+        },
+        "ReactionAbilityID": "GA_Elyms_Passive1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Elyms_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_090_Elyms/PassiveEffect/Buff_Elyms_Passive1.0"
+              }
+            ]
+          }
+        ]
+      },
+      "automatic_activation_supported": false,
+      "status": "extracted_parameters_and_references_not_execution_certificate",
+      "sparse_defaults_policy": "unserialized_fields_are_unknown_not_implicitly_zero"
+    },
+    {
+      "id": "reaction_extension_1090_GA_Elyms_Passive1_1",
+      "character_id": 1090,
+      "ability_id": "GA_Elyms_Passive1",
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
+        "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0",
+        "pointer": "/Rows/1090/ReactionDataArray/1"
+      },
+      "numeric_parameters": {},
+      "asset_references": [
+        {
+          "pointer": "/TeamDamageBuff",
+          "class_id": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_1090_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_1090.1"
+        },
+        {
+          "pointer": "/ConditionArray/0/GEConditionArray/0",
+          "class_id": "BlueprintGeneratedClass\u0027Buff_Elyms_Passive1_C\u0027",
+          "asset_path": "/Game/Blueprints/Abilities/Player/Ability_090_Elyms/PassiveEffect/Buff_Elyms_Passive1.0"
+        }
+      ],
+      "source_fields": {
+        "TeamDamageBuff": {
+          "ObjectName": "BlueprintGeneratedClass\u0027GE_Reaction_GuangLingXiang_1090_C\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Buff/element/Reaction/ReactionEffect/Reaction7/GE_Reaction_GuangLingXiang_1090.1"
+        },
+        "ReactionAbilityID": "GA_Elyms_Passive1",
+        "ConditionArray": [
+          {
+            "GEConditionArray": [
+              {
+                "ObjectName": "BlueprintGeneratedClass\u0027Buff_Elyms_Passive1_C\u0027",
+                "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_090_Elyms/PassiveEffect/Buff_Elyms_Passive1.0"
               }
             ]
           }
@@ -1315,7 +1406,7 @@
   "effect_curves": {
     "LingZhouCopyCoef": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1328,14 +1419,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/LingZhouCopyCoef"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_AnHun3_AddMaxHPPer_1039": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1348,7 +1439,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun3_AddMaxHPPer_1039"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1368,7 +1459,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun3_AddMaxHPVale_1039"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1388,7 +1479,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun3_LimitMaxHPPer_1039"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1408,7 +1499,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun3_LoseMaxHPPer_1039"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1428,14 +1519,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun3_PeriodTime_1039"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_AnHun4_AddAtkPer_1020": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1448,7 +1539,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun4_AddAtkPer_1020"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1468,14 +1559,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun4_AddAtkVale_1020"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_AnHun4_LimitAtk_1020": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1488,14 +1579,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun4_LimitAtk_1020"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_AnHun4_LimitTargetAtk_1020": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1508,7 +1599,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun4_LimitTargetAtk_1020"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1528,14 +1619,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun4_LoseAtkPer_1020"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_AnHun4_MMOLimitTargetAtk_1020": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1548,7 +1639,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun4_MMOLimitTargetAtk_1020"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1568,14 +1659,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun4_PeriodTime_1020"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_AnHunZhou1_UnbalMaxReduce_1054": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1588,7 +1679,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHunZhou1_UnbalMaxReduce_1054"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1608,7 +1699,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHunZhou1_UnbalMaxReduce_BuffTime_1054"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1628,14 +1719,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun_BuffTime"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_AnHun_BuffTime_1004": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1648,14 +1739,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun_BuffTime_1004"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_AnHun_Period_1004": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1668,7 +1759,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_AnHun_Period_1004"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1688,7 +1779,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_GuangLingXiang1_Recover_1051"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1708,7 +1799,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_GuangLingXiang2_Charge_1021"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1728,8 +1819,48 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_GuangLingXiang2_LimitChargeTime_1021"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangLingXiang5_DamageUpCosmosBase_1090": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 0.0375
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
+        "pointer": "/Rows/Reaction_GuangLingXiang5_DamageUpCosmosBase_1090"
+      },
+      "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
+    },
+    "Reaction_GuangLingXiang5_Time_1090": {
+      "curve": {
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
+        "Keys": [
+          {
+            "Time": 1.0,
+            "Value": 30.0
+          }
+        ],
+        "DefaultValue": 3.4028235E+38,
+        "PreInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant",
+        "PostInfinityExtrap": "ERichCurveExtrapolation::RCCE_Constant"
+      },
+      "source": {
+        "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
+        "pointer": "/Rows/Reaction_GuangLingXiang5_Time_1090"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
@@ -1748,14 +1879,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_GuangLingXiang_Charge"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_GuangLingXiang_ChargeCD": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1768,14 +1899,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_GuangLingXiang_ChargeCD"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_GuangXiang5_CritAdd_1025": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1788,7 +1919,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_GuangXiang5_CritAdd_1025"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1808,7 +1939,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_GuangXiang5_TimeAdd_1025"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1828,7 +1959,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_GuangXiang7_DamageUP_1071"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1848,7 +1979,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_GuangXiang_BuffTime"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1868,7 +1999,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_HunXiang1_Time_1042"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1888,14 +2019,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_HunXiang_BuffTime"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_HunXiang_DamageUP": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1908,7 +2039,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_HunXiang_DamageUP"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -1928,14 +2059,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_LingZhou_BuffTime"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_ZhouAn5_AtkDown_1033": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1948,14 +2079,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_ZhouAn5_AtkDown_1033"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_ZhouAn5_DamageResistDown_1033": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1968,14 +2099,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_ZhouAn5_DamageResistDown_1033"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_ZhouAn5_UnbalAccrueEfficiency_1033": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -1988,7 +2119,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_ZhouAn5_UnbalAccrueEfficiency_1033"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -2008,7 +2139,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_ZhouAn8_DotDamageUP_1003"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -2028,7 +2159,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_ZhouAn8_LimitDotDamageUP_1003"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -2048,7 +2179,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_ZhouAn_BuffTime"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -2068,14 +2199,14 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_ZhouAn_CutPeriodTime_1033"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
     },
     "Reaction_ZhouAn_FixedCritRate_1033": {
       "curve": {
-        "InterpMode": "ERichCurveInterpMode::RCIM_Constant",
+        "InterpMode": "ERichCurveInterpMode::RCIM_Linear",
         "Keys": [
           {
             "Time": 1.0,
@@ -2088,7 +2219,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_ZhouAn_FixedCritRate_1033"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -2108,7 +2239,7 @@
       },
       "source": {
         "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionEffectFigure.json",
-        "sha256": "5089c43890320c3c2278c6d6d35c633c23cf8f7700bc31acec9a3f90347ac306",
+        "sha256": "7925482a6c3458031fb4f0c4367581a165bcaaa0a65cb00271765d62a7644f63",
         "pointer": "/Rows/Reaction_ZhouAn_Period"
       },
       "input_axis": "source_curve_input_not_implicitly_imported_skill_level"
@@ -2350,7 +2481,21 @@
           "kind": "reviewed_description",
           "file": "localization/fr.json",
           "pointer": "/BlackBird_SkillDes/GA_BlackBird_Passive_1_des",
-          "sha256": "32aa6fb1a66ed853f3d5022d95c8c8c48c2bc7b3f3e08397d472e22d24665c06"
+          "sha256": "ed8869ce0a923b6466668919c3f6cc33b432ae1035e9adadeb8d3bfc60840d38",
+          "reviewed_variants": [
+            {
+              "game_version": "1.5",
+              "sha256": "ed8869ce0a923b6466668919c3f6cc33b432ae1035e9adadeb8d3bfc60840d38",
+              "review": "docs/game-1.5-migration.md#reviewed-evidence",
+              "reason": "Reviewed EN/FR typography, terminology and markup changes; numeric amounts, recipients and relevant trigger conditions retained."
+            }
+          ],
+          "selected_review": {
+            "game_version": "1.5",
+            "sha256": "ed8869ce0a923b6466668919c3f6cc33b432ae1035e9adadeb8d3bfc60840d38",
+            "review": "docs/game-1.5-migration.md#reviewed-evidence",
+            "reason": "Reviewed EN/FR typography, terminology and markup changes; numeric amounts, recipients and relevant trigger conditions retained."
+          }
         },
         {
           "kind": "reviewed_blueprint",
@@ -2619,7 +2764,21 @@
           "kind": "reviewed_description",
           "file": "localization/fr.json",
           "pointer": "/Lacrimosa_SkillDes/GA_Lacrimosa_Passive_1_des",
-          "sha256": "2d206be78b1d55eac5ed3cd1b457e2f3d83cf3afa066f51ff9af9fb2e505946c"
+          "sha256": "45256f5624fcabbd16d568070ce69ffb210a10b7f38408fc149f60a40459c7ff",
+          "reviewed_variants": [
+            {
+              "game_version": "1.5",
+              "sha256": "45256f5624fcabbd16d568070ce69ffb210a10b7f38408fc149f60a40459c7ff",
+              "review": "docs/game-1.5-migration.md#reviewed-evidence",
+              "reason": "Reviewed EN/FR typography, terminology and markup changes; numeric amounts, recipients and relevant trigger conditions retained."
+            }
+          ],
+          "selected_review": {
+            "game_version": "1.5",
+            "sha256": "45256f5624fcabbd16d568070ce69ffb210a10b7f38408fc149f60a40459c7ff",
+            "review": "docs/game-1.5-migration.md#reviewed-evidence",
+            "reason": "Reviewed EN/FR typography, terminology and markup changes; numeric amounts, recipients and relevant trigger conditions retained."
+          }
         }
       ]
     },
@@ -2834,7 +2993,21 @@
         {
           "kind": "reviewed_source_mapping",
           "file": "abilities/Blueprints/Character/Player/player_010_nanally/NanallyLogicObj_0.json",
-          "sha256": "b63d34c60d2445d8c22abca18d63513da407e458047827076b82eda90e823f0c"
+          "sha256": "eaa49f483b105ad66daa6fb4f39c226c34f05a0f453fcdad435324db1f2ac081",
+          "reviewed_variants": [
+            {
+              "game_version": "1.5",
+              "sha256": "eaa49f483b105ad66daa6fb4f39c226c34f05a0f453fcdad435324db1f2ac081",
+              "review": "docs/game-1.5-migration.md#reviewed-evidence",
+              "reason": "Only the Outer export index changes from .19 to .20; selected object properties are identical."
+            }
+          ],
+          "selected_review": {
+            "game_version": "1.5",
+            "sha256": "eaa49f483b105ad66daa6fb4f39c226c34f05a0f453fcdad435324db1f2ac081",
+            "review": "docs/game-1.5-migration.md#reviewed-evidence",
+            "reason": "Only the Outer export index changes from .19 to .20; selected object properties are identical."
+          }
         }
       ]
     },
@@ -3239,7 +3412,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/Buff_Reaction_4_new",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3277,7 +3450,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/Buff_Reaction_4_new_1004",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "reaction_name_family_numeric_evidence_only",
       "level_binding_status": "not_required_constant",
@@ -3315,7 +3488,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/Buff_Reaction_5_new",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3353,7 +3526,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/Buff_Reaction_5_new_1036",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "reaction_name_family_numeric_evidence_only",
       "level_binding_status": "not_required_constant",
@@ -3391,7 +3564,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_ActorReaction_1_1019_Damage",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "reaction_name_family_numeric_evidence_only",
       "level_binding_status": "not_required_constant",
@@ -3429,7 +3602,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_ActorReaction_1_Damage",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3467,7 +3640,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_Player_Lacrimosa_AnHunZhouTwo_Damage",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3503,7 +3676,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_Reaction_3_new_1057_Damage",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3539,7 +3712,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_Reaction_3_new_1071_Damage",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3577,7 +3750,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_Reaction_4_new_1070_Damage",
-        "sha256": "20ada9eed9e86a48246ee85b62f2b6bbd36f9c579e0b16f9eafab039ae0d2686"
+        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
       },
       "selection_basis": "reaction_name_family_numeric_evidence_only",
       "level_binding_status": "not_required_constant",
@@ -3935,7 +4108,7 @@
         "source": {
           "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
           "pointer": "/Rows/1010/ReactionDataArray/0",
-          "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4"
+          "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0"
         },
         "native_execution_supported": false,
         "assumptions": [
@@ -3954,7 +4127,7 @@
         "source": {
           "file": "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
           "pointer": "/Rows/1055/ReactionDataArray/0",
-          "sha256": "810c1950d3f94cd267b1d2ab87172c3013bccce1537340223a91cd14c7042ff4"
+          "sha256": "7c0fba15ec668664b619c3d79305263a17b261cc9dc74fbbbbc1ab1d5298cdb0"
         },
         "native_execution_supported": false,
         "assumptions": [

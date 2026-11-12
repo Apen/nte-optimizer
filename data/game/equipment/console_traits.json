@@ -98,6 +98,18 @@
       "value_per_module": 0.1
     },
     {
+      "character_id": 1090,
+      "area": 3,
+      "property_id": "CritBase",
+      "value_per_module": 0.08
+    },
+    {
+      "character_id": 1074,
+      "area": 3,
+      "property_id": "CritBase",
+      "value_per_module": 0.08
+    },
+    {
       "character_id": 1055,
       "area": 2,
       "property_id": "CritBase",

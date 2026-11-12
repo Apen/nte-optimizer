@@ -19,14 +19,24 @@ func TestProductionDecodeCatalogsContainOnlyRuntimeData(t *testing.T) {
 	if err != nil || len(characters.Characters) < 20 || !strings.EqualFold(characters.Characters["1036"].Codename, "Zankou") {
 		t.Fatalf("invalid character decode catalog: count=%d err=%v", len(characters.Characters), err)
 	}
+	for id, name := range map[string]string{"1074": "Exe", "1090": "Elyms"} {
+		if characters.Characters[id].Codename != name {
+			t.Fatalf("missing 1.5 character identity %s", id)
+		}
+	}
 	equipment, err := loadEquipmentCatalog(equipmentPath)
 	if err != nil || len(equipment.Items) < 70 || len(equipment.Attributes) == 0 || len(equipment.Curves) == 0 || len(equipment.Shapes) == 0 || len(equipment.Suits) == 0 {
 		t.Fatalf("invalid equipment decode catalog: %#v err=%v", equipment, err)
 	}
 	forks, err := loadForkCatalog(forksPath)
 	demonBlade := forks.Forks["fork_DemonBlade"]
-	if err != nil || len(forks.Forks) != 51 || demonBlade.Quality == "" || demonBlade.MaxBreakthrough <= 0 || demonBlade.MaxStar <= 0 {
-		t.Fatalf("invalid fork decode catalog: count=%d, want 51, err=%v", len(forks.Forks), err)
+	if err != nil || len(forks.Forks) != 53 || demonBlade.Quality == "" || demonBlade.MaxBreakthrough <= 0 || demonBlade.MaxStar <= 0 {
+		t.Fatalf("invalid fork decode catalog: count=%d, want 53, err=%v", len(forks.Forks), err)
+	}
+	for _, id := range []string{"fork_exe", "fork_elyms"} {
+		if forks.Forks[id].Quality == "" || forks.Forks[id].MaxStar != 5 {
+			t.Fatalf("missing 1.5 Arc decode definition %s", id)
+		}
 	}
 	resources, err := loadResourceCatalog(resourcesPath)
 	if err != nil || len(resources.Items) == 0 {

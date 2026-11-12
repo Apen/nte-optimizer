@@ -155,14 +155,23 @@ func fallbackActionName(labels map[string]string, actionType string) string {
 }
 
 type DamageAnalysis struct {
-	Status         string          `json:"status"`
-	Enemy          damage.Enemy    `json:"enemy"`
-	Build          []damage.Result `json:"build"`
-	Current        []damage.Result `json:"current,omitempty"`
-	MissingInputs  []string        `json:"missing_inputs,omitempty"`
-	CatalogSource  string          `json:"catalog_source"`
-	CatalogVersion string          `json:"catalog_version,omitempty"`
-	Groups         []DamageGroup   `json:"groups,omitempty"`
+	Status                string                                `json:"status"`
+	Enemy                 damage.Enemy                          `json:"enemy"`
+	Build                 []damage.Result                       `json:"build"`
+	Current               []damage.Result                       `json:"current,omitempty"`
+	MissingInputs         []string                              `json:"missing_inputs,omitempty"`
+	CatalogSource         string                                `json:"catalog_source"`
+	CatalogVersion        string                                `json:"catalog_version,omitempty"`
+	Groups                []DamageGroup                         `json:"groups,omitempty"`
+	SkillLevelProjections map[string]DamageSkillLevelProjection `json:"skill_level_projections,omitempty"`
+}
+
+// Projection metadata describes the selected level, independently of damage
+// coefficients and without upgrading an assumed mapping to native confirmation.
+type DamageSkillLevelProjection struct {
+	SourceAbilityID string                             `json:"source_ability_id"`
+	Status          string                             `json:"status"`
+	Review          *damage.SkillLevelProjectionReview `json:"review,omitempty"`
 }
 
 type DamageGroup struct {
@@ -234,7 +243,18 @@ func damageAnalysisFromCatalog(character *decoded.Character, build optimizer.Sta
 	for _, entry := range characterCatalog.Instances {
 		level, known := levels[entry.AbilityID]
 		if !known {
-			level, known = levels[characterCatalog.Rules.SkillLevelSources[entry.AbilityID]]
+			source := characterCatalog.Rules.SkillLevelSources[entry.AbilityID]
+			level, known = levels[source]
+			if known {
+				projection := DamageSkillLevelProjection{SourceAbilityID: source, Status: characterCatalog.Rules.SkillLevelSourceStatuses[entry.AbilityID]}
+				if review, exists := characterCatalog.Rules.SkillLevelProjectionReviews[entry.AbilityID]; exists {
+					projection.Review = &review
+				}
+				if analysis.SkillLevelProjections == nil {
+					analysis.SkillLevelProjections = map[string]DamageSkillLevelProjection{}
+				}
+				analysis.SkillLevelProjections[entry.AbilityID] = projection
+			}
 		}
 		if !known {
 			continue

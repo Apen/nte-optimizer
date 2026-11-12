@@ -4,7 +4,7 @@
     {
       "path": "characters/base_stats.json",
       "schema_version": 1,
-      "sha256": "db987c98db1734bb40a3d1d3469060cf109b38f674d268ff50acc2f0764462ec",
+      "sha256": "921b0bad255cc4cb61294b9e0bfaeb7aac738693b4944f56179c8ae0d808b9f5",
       "sources": [
         "generated/base_stats.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -18,7 +18,7 @@
     {
       "path": "characters/bond_bonuses.json",
       "schema_version": 1,
-      "sha256": "74c3a1ba7146d3df40cae5703ce30fd2c13b041b60cb57724b42cdfcad891928",
+      "sha256": "9d29c8ee9a2a53ea1f421c02620a4cdba9b6a1f87bd0f6125136810816e27213",
       "sources": [
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_LikeabilityModifyData.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -30,7 +30,7 @@
     {
       "path": "characters/decode.json",
       "schema_version": 1,
-      "sha256": "ed6ac48bd7dc5d6d62565177b799b1123c928be3ff37ed7f07c42f2870d730b5",
+      "sha256": "c37365d975a5cf1f8456850b74ae862ddf90ac427f861e51c52d6bc543ef2318",
       "sources": [
         "datamine/data/characters/manifest.json",
         "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
@@ -43,7 +43,7 @@
     {
       "path": "combat/action_evidence.json",
       "schema_version": 1,
-      "sha256": "a2bd67b72950ea2c7b67e686008b5e0bda4cd9052bd278095a80a92315831293",
+      "sha256": "c480a340fba0ce927db7f2e35e1cad359bef66717b6f232ae59ded9548e67899",
       "sources": [
         "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "datamine/data/abilities/DataTable/Skill/DT_GameplayEffectMappingData.json",
@@ -59,7 +59,7 @@
     {
       "path": "combat/damage.json",
       "schema_version": 1,
-      "sha256": "103109ebdbc15b9820eecd685d272ebd951b4994ae4aac59c8be501b9935c7a7",
+      "sha256": "b58705c2103ac6dc2d7fb55705820eae4bdfa64f0547e59521816cd79cd84ced",
       "sources": [
         "generated/combat_catalog_draft.json",
         "datamine/data/characters/manifest.json",
@@ -69,7 +69,8 @@
         "datamine/data/abilities/Blueprints",
         "datamine/data/abilities/Characters/Player",
         "datamine/data/datatables/DataTable/Character/DT_CharacterAbilityConfig.json",
-        "config/skill-level-mechanism.json"
+        "config/skill-level-mechanism.json",
+        "config/builder-level-projections.json"
       ],
       "status": "partial",
       "warnings": [
@@ -79,7 +80,7 @@
     {
       "path": "combat/modifier_values.json",
       "schema_version": 1,
-      "sha256": "bf67ccef1c38589a2832ec995b3b3b4e87cdf8be53a220a90c26f3cb4f3911b0",
+      "sha256": "7db3a0778d1ad718074c6efab7dc3932a3edd8ca852c17986e49c2a636bc56da",
       "sources": [
         "datamine/data/abilities/manifest.json",
         "config/skill-support-buffs.json",
@@ -93,7 +94,7 @@
     {
       "path": "combat/reaction_values.json",
       "schema_version": 1,
-      "sha256": "e770a279f4717a1cc231cc6cb1b8e2f06633a20aa2b1244758b891c962831380",
+      "sha256": "7d49c016700f3537865ec2788986312b0756aedfdc8def8219a18484d09cd8e9",
       "sources": [
         "datamine/data/abilities/DataTable/Reaction/DT_ReactionExtendDataTable.json",
         "datamine/data/abilities/DataTable/Reaction/DT_ReactionDamageData.json",
@@ -119,7 +120,7 @@
     {
       "path": "combat/skill_buffs.json",
       "schema_version": 1,
-      "sha256": "f19a8991801580377ff713d31ee8918d7fcb4549489b1d9ff917badb1fcbdb1f",
+      "sha256": "2717c16ef8347fdcf7464d1df3a40a4622afe7a0f20fcb0ddcf3a6db7fa7343b",
       "sources": [
         "config/skill-support-buffs.json",
         "overrides/team_effect_previews.json",
@@ -139,7 +140,7 @@
     {
       "path": "combat/skill_values.json",
       "schema_version": 1,
-      "sha256": "87418e3189450d5455476a001d69040abac04ddc13a7d8fe88269cc2db22feb9",
+      "sha256": "7b6fcea5277ba78aac425bf4917f88841d385cfd9bc40221a11537a10a6591f5",
       "sources": [
         "config/skill-values.json",
         "datamine/data/abilities/DataTable/Skill/DT_GameplayAbilityTipsData.json",
@@ -176,10 +177,11 @@
     {
       "path": "equipment/arcs.json",
       "schema_version": 1,
-      "sha256": "d9c72dc5964153556ca42f09a36d9f3adb47d940a420e301a7f4c5e831dc9ee3",
+      "sha256": "47a2b7b7789b197f7e62352e810e9891ac3d37b942b4fd3e65bcb193c32bac01",
       "sources": [
         "generated/fork_stats.json",
         "overrides/equipment-projections.json",
+        "config/source-arc-projections.json",
         "config/fork-curve-corrections.json",
         "config/passive-team-effects.json",
         "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json",
@@ -193,7 +195,7 @@
     {
       "path": "equipment/console_traits.json",
       "schema_version": 1,
-      "sha256": "207c1cfd2b2f9a1d06805ba5c00ef13e7c3bba073fd1d4198113251f1703b54d",
+      "sha256": "c1513e6b538a1c6c83c3ba6d78ff924d4e97ee668a1f8c506eea52fc97fcf700",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_CharacterEquipmentSlotsData.json",
         "datamine/data/catalogs/DataTable/PackData/ModifyData/DT_EquipmentModifySlotsEffect.json"
@@ -204,7 +206,7 @@
     {
       "path": "equipment/decode.json",
       "schema_version": 1,
-      "sha256": "59fa21b9319f786d179daeead09f7586945dcf63bd07c222556bbfa366bd712a",
+      "sha256": "032b41d3eeff253e3c4f47cfa037749bbfb758ac14cdb02015c2657a807cab14",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_Equipment.json",
         "datamine/data/catalogs/DataTable/Equipment/CT_EquipmentBaseAttribute.json",
@@ -220,7 +222,7 @@
     {
       "path": "equipment/grids.json",
       "schema_version": 1,
-      "sha256": "796f69327c16d2aeaa78ee7cc5213d24cee2edf66e591c2caaff8df75ee8bbf8",
+      "sha256": "3092287c4556d2c69bb6cc8fa7e4ca7ffe54da6c53a92e74d1af5086085d43d1",
       "sources": [
         "datamine/data/catalogs/DataTable/Equipment/DT_EquipmentPlanData.json"
       ],
@@ -253,7 +255,7 @@
     {
       "path": "forks/decode.json",
       "schema_version": 1,
-      "sha256": "b30ac22e6558aa92fedf6f3920a28f342970c686aea5409179976271a0c8e37f",
+      "sha256": "e936e364c7f64ba0d8f832cf4c0d3775ff58e8d14024e3d3b2f416a2cb953260",
       "sources": [
         "datamine/data/catalogs/DataTable/Fork/DT_ForkItemData.json"
       ],
@@ -275,7 +277,7 @@
     {
       "path": "locales/en.json",
       "schema_version": 1,
-      "sha256": "3ba9aee3bf6d8e508282ddc45947aefd38e79d1a7e733b545d0f2f7f82939b74",
+      "sha256": "73eff921b2704e23ea4bdaafda0c7cdf3b763f5ffb44df36bab237915487e94e",
       "sources": [
         "datamine/data/localization/en.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
@@ -296,7 +298,7 @@
     {
       "path": "locales/fr.json",
       "schema_version": 1,
-      "sha256": "1e74cdebe294b021988c2a9bbf62c16fe745749e3297d2d62a0aaa7bd2c97060",
+      "sha256": "53d58d28288ae6ef7a9c233944a081bac57110c050d7befeeab4d4a941e7cd2c",
       "sources": [
         "datamine/data/localization/fr.json",
         "datamine/data/datatables/DataTable/Character/DT_Character.json",
