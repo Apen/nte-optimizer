@@ -10,11 +10,11 @@ The synchronized snapshot contains these numerical catalogs under `data/game/com
 
 | Catalog | Validation role |
 | --- | --- |
-| `skill_values.json` | 27 character IDs, 150 skill definitions and 704 sheet lines; independent coefficient/scaling cross-checks |
-| `skill_buffs.json` | 139 main definitions and two provisional attribute transfers; units, unlocks, recipients and exclusion contracts |
-| `modifier_values.json` | 401 supplemental records; these are not automatically active buffs |
+| `skill_values.json` | 29 character IDs, 162 skill definitions and 788 sheet lines; independent coefficient/scaling cross-checks |
+| `skill_buffs.json` | 143 main definitions and two provisional attribute transfers; units, unlocks, recipients and exclusion contracts |
+| `modifier_values.json` | 454 supplemental records; these are not automatically active buffs |
 | `reaction_values.json` | Six damage scenarios, two Zero recovery scenarios and summon evidence; selected arithmetic remains separate from standard damage totals |
-| `damage.json` | 713 effects, nine preview exclusions, action splits, critical behavior and explicit hit counts |
+| `damage.json` | 766 effects, preview exclusions, action splits, critical behavior and explicit hit counts |
 | `action_evidence.json` | 14 compact action records and unresolved effect identities |
 
 The snapshot also updates `team_effect_previews.json`, both game locales and the
@@ -30,11 +30,11 @@ synthetic levels 1, 8 and 13 and distinct ATK/HP/DEF values. It verifies:
 - Correct ATK, HP or DEF scaling and fixed critical rates.
 - Explicit repeated-hit totals without duplicate effect identities.
 - Preservation of action splits, conditional variants and preview exclusions.
-- Agreement between 604 sheet damage parameters and their damage-catalog arrays
+- Agreement between 638 sheet damage parameters and their damage-catalog arrays
   and scaling. The explicitly display-only Akane coefficient is kept outside
   executable damage effects.
 
-709 effects have a published binding in this audit. Four constant-coefficient
+762 effects have a published binding in this audit. Four constant-coefficient
 entries have no parent ability or imported-level binding and remain outside the
 standard damage output:
 
@@ -60,7 +60,8 @@ pool limits and projectile counts are diagnostic evidence, not guaranteed hits.
 
 Catalog agreement and passing engine tests verify numerical plumbing. They do not
 independently certify extracted values against the game. The dataminer's 64
-maintained level assumptions and 14 supplemental diagnostics remain explicit.
+maintained level assumptions from 1.4, plus six new assumed 1.5 mappings, remain
+explicit.
 Native lifecycle, mixed-source stacking, automatic timing and final healing
 execution are not certified by these tests.
 
@@ -103,6 +104,53 @@ The Akane review identified changed curves and a sheet-only row:
 The French locale also updates 69 pre-existing values. All existing English labels
 are preserved, and neither language loses existing keys. These translations are
 display data, not formula inputs.
+
+## Version 1.5 boundaries
+
+Exe (1074) and Elyms (1090) have imported identities, exact base stats, console
+traits, skill labels, Arc compatibility, grids and portraits. Their 18 and 35
+own damage effects remain distinct from sheet-reference availability. The six
+new level projections cover 15 effects and retain `assumed` status, source
+fingerprints and `native_execution_certified: false`. Damage diagnostics expose
+the selected level source and review; they do not certify native propagation.
+
+Exe's raw sheet has 45 damage parameters referencing Shinku effects. Numeric
+values remain available, but `Parameter.ResolveDamageEffect` rejects every
+foreign-character binding. The coverage audit pins the complete set by sheet
+line, parameter index and source ID; it still fails on new unmatched associations
+or coefficient/scaling disagreements. No alias, extra hit or cross-character
+damage substitution is introduced.
+
+Four added passive projections retain manual conditions, recipient scope and
+breakthrough unlocks: Elyms's caster CRIT DMG and per-stack team Cosmos DMG,
+Exe's caster damage stacks triggered by allied summons, and Exe's clone-only
+DEF ignore. The last value is deliberately zero. Exe's caster damage bonus is
+not restricted to summon damage merely because summons trigger it. Its infinite
+duration is not replaced by the serialized ten-second magnitude. Per-contributor
+counts and native mixed-source accumulation remain unverified.
+
+`ForkCatalog.ResolveConditionalEffect` resolves Dotted Horizon and Echoes on Hold
+parameters at the exact Arc rank. It requires an explicit selected scenario,
+checks recipients, damage tags and selected stack limits, and returns values
+without modifying panel stats, damage or rankings. Echoes on Hold's extra wearer
+DEF ignore already exists in `conditional_by_star`: selecting that same effect
+again is rejected. Historical maximum-buff projections remain unchanged.
+
+Linko's modifier consumes the explicit `linko_eligible_other_qte_count` native-query
+result, not a count inferred from living teammates. Its arithmetic retains the
+three-player baseline. The reaction extension's extracted `ExtraDamageRatio`
+is 0.10 and remains diagnostic rather than automatically active.
+
+`data/recommendations/targets/elyms.json` supplies the Lost Radiance and Speedy
+Hedgehog search profiles, six recommended Arcs and their published stat targets.
+Integration tests exercise both profiles with every recommended Arc against
+synthetic inventory, including imported levels and the Damage output.
+
+The export still does not include `data/recommendations/targets/exe.json` while
+its source recommendations are unavailable. Imported character views and stat
+calculation work independently of a strategy profile. Exe build searches still
+require authored recommendations; weights, preferred sets and execution/variant
+assumptions are not fabricated from sheet values.
 
 ## Compact teammate summaries
 

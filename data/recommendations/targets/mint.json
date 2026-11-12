@@ -51,7 +51,21 @@
       "percent": true
     }
   ],
-  "arcs": [],
+  "arcs": [
+    {
+      "rank": 1,
+      "name": "Fluff of Fleetness",
+      "refinement": "M5"
+    },
+    {
+      "rank": 3,
+      "name": "Fluff of Fleetness"
+    },
+    {
+      "rank": 4,
+      "name": "Shiny Days"
+    }
+  ],
   "sets": [
     "Fireflies and the Forest",
     "Shadow Creed"

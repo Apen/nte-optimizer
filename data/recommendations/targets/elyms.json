@@ -1,0 +1,160 @@
+{
+  "schema_version": 2,
+  "id": "elyms",
+  "name": "Elyms",
+  "main_stats": [
+    "CritDamageBase",
+    "DamageUpCosmosBase",
+    "AtkUp"
+  ],
+  "stats": [
+    "CritBase",
+    "CritDamageBase",
+    "DamageUpGeneralBase",
+    "AtkUp",
+    "AtkAdd",
+    "MagBase"
+  ],
+  "goals": [
+    {
+      "property_id": "HPFinal",
+      "label": "HP",
+      "minimum": 20000,
+      "percent": false
+    },
+    {
+      "property_id": "AtkFinal",
+      "label": "ATK",
+      "minimum": 2100,
+      "percent": false
+    },
+    {
+      "property_id": "CritBase",
+      "label": "Crit Rate",
+      "minimum": 0.9,
+      "percent": true
+    },
+    {
+      "property_id": "CritDamageBase",
+      "label": "Crit DMG",
+      "minimum": 1.2,
+      "maximum": 1.8,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpGeneralBase",
+      "label": "Universal DMG",
+      "minimum": 0.1,
+      "percent": true
+    },
+    {
+      "property_id": "DamageUpCosmosBase",
+      "label": "Cosmos DMG",
+      "minimum": 0.1,
+      "maximum": 0.45,
+      "percent": true
+    }
+  ],
+  "arcs": [
+    {
+      "rank": 1,
+      "name": "Echoes On Hold",
+      "refinement": "M1",
+      "base_atk": 570,
+      "stats": {
+        "CritBase": 0.24
+      }
+    },
+    {
+      "rank": 2,
+      "name": "Blow up the Crowd",
+      "refinement": "M1",
+      "base_atk": 512
+    },
+    {
+      "rank": 3,
+      "name": "Marching Beyond Time",
+      "refinement": "M1",
+      "base_atk": 570,
+      "stats": {
+        "CritBase": 0.24
+      }
+    },
+    {
+      "rank": 4,
+      "name": "Fluff of Fearlessness",
+      "refinement": "M1"
+    },
+    {
+      "rank": 5,
+      "name": "The Rain That Shook the World",
+      "refinement": "M1",
+      "base_atk": 512,
+      "stats": {
+        "CritBase": 0.22
+      }
+    },
+    {
+      "rank": 6,
+      "name": "The Forgotten",
+      "refinement": "M5"
+    }
+  ],
+  "sets": [
+    "Lost Radiance",
+    "Speedy Hedgehog"
+  ],
+  "character": {
+    "character_id": 1090,
+    "grid_id": "character_1090"
+  },
+  "builds": [
+    {
+      "id": "elyms",
+      "name": "DPS",
+      "main_stats": [
+        "CritDamageBase",
+        "DamageUpCosmosBase",
+        "AtkUp"
+      ],
+      "stats": [
+        "CritBase",
+        "CritDamageBase",
+        "DamageUpGeneralBase",
+        "AtkUp",
+        "AtkAdd",
+        "MagBase"
+      ],
+      "weights": {
+        "AtkAdd": 0.7,
+        "AtkUp": 0.85,
+        "CritBase": 1,
+        "CritDamageBase": 1,
+        "DamageUpGeneralBase": 0.85,
+        "MagBase": 0.55
+      },
+      "variants": [
+        {
+          "id": "elyms",
+          "name": "Elyms — Lost Radiance",
+          "preferred_sets": [
+            {
+              "set_id": "Suit6",
+              "priority": 1
+            }
+          ]
+        },
+        {
+          "id": "elyms_speedy_hedgehog",
+          "name": "Elyms — Speedy Hedgehog",
+          "preferred_sets": [
+            {
+              "set_id": "Suit11",
+              "priority": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

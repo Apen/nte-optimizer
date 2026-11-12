@@ -54,7 +54,24 @@
       "percent": true
     }
   ],
-  "arcs": [],
+  "arcs": [
+    {
+      "rank": 9,
+      "name": "Fluff of Fleetness"
+    },
+    {
+      "rank": 10,
+      "name": "The Last Rose"
+    },
+    {
+      "rank": 11,
+      "name": "Youthful Fantasy"
+    },
+    {
+      "rank": 12,
+      "name": "Shiny Days"
+    }
+  ],
   "sets": [
     "Diabolos",
     "Shadow Creed"

@@ -59,7 +59,35 @@
       "percent": true
     }
   ],
-  "arcs": [],
+  "arcs": [
+    {
+      "rank": 1,
+      "name": "Youthful Fantasy",
+      "refinement": "M5"
+    },
+    {
+      "rank": 2,
+      "name": "Youthful Fantasy",
+      "refinement": "M3"
+    },
+    {
+      "rank": 3,
+      "name": "Fluff of Fleetness",
+      "refinement": "M5"
+    },
+    {
+      "rank": 4,
+      "name": "Youthful Fantasy"
+    },
+    {
+      "rank": 5,
+      "name": "Fluff of Fleetness"
+    },
+    {
+      "rank": 6,
+      "name": "Shiny Days"
+    }
+  ],
   "sets": [
     "Diabolos"
   ],

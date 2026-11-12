@@ -54,7 +54,37 @@
       "percent": true
     }
   ],
-  "arcs": [],
+  "arcs": [
+    {
+      "rank": 2,
+      "name": "The Last Rose",
+      "base_atk": 570,
+      "stats": {
+        "CritBase": 0.24
+      }
+    },
+    {
+      "rank": 3,
+      "name": "Youthful Fantasy",
+      "base_atk": 570,
+      "stats": {
+        "AtkUp": 0.3
+      }
+    },
+    {
+      "rank": 4,
+      "name": "Fluff of Fleetness",
+      "base_atk": 512
+    },
+    {
+      "rank": 5,
+      "name": "Shiny Days",
+      "base_atk": 475,
+      "stats": {
+        "AtkUp": 0.25
+      }
+    }
+  ],
   "sets": [
     "Speedy Hedgehog",
     "Fireflies and the Forest"
