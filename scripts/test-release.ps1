@@ -25,6 +25,7 @@ try {
     $required = @(
         $desktopPath,
         $scannerPath,
+        (Join-Path $smokeRoot "data\game\account\puka_training.json"),
         (Join-Path $smokeRoot "data\optimizer\config.json"),
         (Join-Path $smokeRoot "data\recommendations\targets")
     )
