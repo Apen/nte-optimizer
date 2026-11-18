@@ -138,6 +138,8 @@ The furniture diagnostic distinguishes:
 
 Maximum compressed and decoded byte sizes are recorded. Existing bounds remain
 8,192 compressed bytes, 65,536 decoded bytes and 256 furniture observations.
+The decoder accepts both plain string identifiers with byte-sized flags and
+packed records with dynamic names and one-bit flags.
 The last fully valid furniture payload remains authoritative; a subsequent
 rejected candidate does not overwrite it.
 

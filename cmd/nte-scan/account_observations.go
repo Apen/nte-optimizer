@@ -72,32 +72,55 @@ func parseFurnitureLevels(payload []byte, diagnostics *recordDiagnostics) (_ []n
 	if !ok || count == 0 || count > 256 {
 		return nil, false
 	}
+	// Packed records use dynamic names and one-bit flags. Older records start
+	// with a plain FString and use byte-sized flags throughout the array.
+	first := r
+	firstID, ok := first.fstring(80)
+	packed := !ok || !strings.HasPrefix(firstID, "SF_")
+	flagBits := 8
+	if packed {
+		flagBits = 1
+	}
 	levels := make([]nte.FurnitureLevel, 0, count)
 	seen := map[string]bool{}
 	for index := uint16(0); index < count; index++ {
 		phase = "furniture_id"
-		id, ok := r.fstring(80)
+		var id string
+		if packed {
+			id, ok = r.dynamicName()
+		} else {
+			id, ok = r.fstring(80)
+		}
 		if !ok || !strings.HasPrefix(id, "SF_") || seen[id] {
 			return nil, false
 		}
 		seen[id] = true
 		phase = "furniture_fields"
-		// Only the level is interpreted. Neither observed byte flag has a
+		// Only the level is interpreted. Neither observed flag has a
 		// verified activation meaning, so it must not become confirmation.
-		flag0, ok0 := r.bits(8)
+		flag0, ok0 := r.bits(flagBits)
 		_, ok1 := r.u32()
-		flag5, ok5 := r.bits(8)
+		flag1, okFlag1 := r.bits(flagBits)
 		level, ok2 := r.u32()
 		_, ok3 := r.u32()
 		_, ok4 := r.i64()
-		if !ok0 || !ok1 || !ok5 || !ok2 || !ok3 || !ok4 || flag0 > 1 || flag5 > 1 || level < 1 || level > 100 {
+		if !ok0 || !ok1 || !okFlag1 || !ok2 || !ok3 || !ok4 || flag0 > 1 || flag1 > 1 || level < 1 || level > 100 {
 			return nil, false
 		}
 		levels = append(levels, nte.FurnitureLevel{ProgressionID: id, Level: int(level)})
 	}
 	phase = "furniture_trailer"
-	if _, ok := r.u32(); !ok || r.cursor != r.bitLen {
+	if _, ok := r.u32(); !ok {
 		return nil, false
+	}
+	remaining := r.bitLen - r.cursor
+	if remaining != 0 {
+		if !packed || remaining >= 8 {
+			return nil, false
+		}
+		if padding, _ := r.bits(remaining); padding != 0 {
+			return nil, false
+		}
 	}
 	return levels, true
 }

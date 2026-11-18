@@ -3,7 +3,10 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"slices"
 	"testing"
+
+	"nte-optimizer/internal/nte"
 )
 
 func observationString(b *bytes.Buffer, s string) {
@@ -22,7 +25,10 @@ func furniturePayload(level uint32) []byte {
 	binary.Write(b, binary.LittleEndian, uint32(0))
 	binary.Write(b, binary.LittleEndian, uint64(0))
 	binary.Write(b, binary.LittleEndian, uint32(0))
-	data := b.Bytes()
+	return furnitureLiteralBlock(b.Bytes())
+}
+
+func furnitureLiteralBlock(data []byte) []byte {
 	out := []byte{0xf0}
 	n := len(data) - 15
 	for n >= 255 {
@@ -31,6 +37,50 @@ func furniturePayload(level uint32) []byte {
 	}
 	out = append(out, byte(n))
 	return append(out, data...)
+}
+
+func TestPackedFurnitureLevels(t *testing.T) {
+	encode := func(levels []nte.FurnitureLevel) recordWriter {
+		var w recordWriter
+		w.put(uint64(len(levels)), 16)
+		for i, level := range levels {
+			w.putString(level.ProgressionID)
+			w.put(uint64(i%2), 1)
+			w.put(59, 32)
+			w.put(uint64((i+1)%2), 1)
+			w.put(uint64(level.Level), 32)
+			w.put(0, 32)
+			w.put(1234, 64)
+		}
+		w.put(0, 32)
+		return w
+	}
+	want := []nte.FurnitureLevel{
+		{ProgressionID: "SF_0011", Level: 2},
+		{ProgressionID: "SF_0012", Level: 7},
+		{ProgressionID: "SF_0013", Level: 4},
+	}
+	valid := encode(want)
+	got, ok := parseFurnitureLevels(furnitureLiteralBlock(valid.data), nil)
+	if !ok || !slices.Equal(got, want) {
+		t.Fatalf("packed levels = %v, accepted=%t, want %v", got, ok, want)
+	}
+
+	badPadding := encode(want)
+	badPadding.put(1, 1)
+	duplicate := encode([]nte.FurnitureLevel{want[0], want[0]})
+	for name, data := range map[string][]byte{
+		"nonzero padding": badPadding.data,
+		"extra byte":      append(slices.Clone(valid.data), 0),
+		"truncated":       valid.data[:len(valid.data)-1],
+		"duplicate ID":    duplicate.data,
+	} {
+		t.Run(name, func(t *testing.T) {
+			if got, ok := parseFurnitureLevels(furnitureLiteralBlock(data), nil); ok || got != nil {
+				t.Fatalf("invalid packed levels accepted: %v", got)
+			}
+		})
+	}
 }
 func TestFurnitureLevelsAndUnalignedProperty(t *testing.T) {
 	payload := furniturePayload(3)
