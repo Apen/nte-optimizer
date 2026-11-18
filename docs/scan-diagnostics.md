@@ -30,14 +30,18 @@ last reached stage in the log. The Import page reloads the log after the scan.
   placement candidate.
 - Furniture: channel 4 availability, literal property name detection, envelope
   checks, LZ4 decoding and decompressed record validation.
+- Validation and export: checks the required domains for guided scans and
+  validates record relationships before writing the export. Equipment with an
+  owner missing from the decoded roster is retained as unassigned, without a
+  grid placement. Validation is marked `partial` with the number of affected
+  records, and the export can complete.
 - Import: catalog loading, typed JSON decoding for each domain, export version,
   character identities, equipment validation, Arc links, furniture validation
   and atomic account snapshot publication.
 
-`complete` means the checks for that stage passed. `partial` indicates an
-unavailable domain or optional observation; it does not prevent a valid import.
-Required account domains are still checked separately before export. A failed
-import retains its diagnostic stages without publishing partial account data.
+`complete` means the checks for that stage passed. `partial` indicates missing
+data or an association the scanner can omit while producing a valid import. A
+failed import retains its diagnostic stages without publishing an account snapshot.
 
 ## Interpreting record counters
 

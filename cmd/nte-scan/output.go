@@ -126,16 +126,25 @@ func exportCharacters(characters []characterItem, equipmentByCharacter map[uint3
 	}
 	return out
 }
-func writeOutputDir(dir string, r report) error {
+func writeOutputDir(dir string, r *report) error {
 	return writeOutputDirWithWriter(dir, r, writeJSON)
 }
 
-func writeOutputDirWithWriter(dir string, r report, writer func(string, any) error) error {
+func writeOutputDirWithWriter(dir string, r *report, writer func(string, any) error) error {
 	chars := append([]characterItem(nil), r.UDP.Characters...)
 	weapons := append([]weaponItem(nil), r.UDP.Weapons...)
 	items := append([]inventoryItem(nil), r.UDP.Items...)
-	if err := validateOutputRelations(chars, weapons, items); err != nil {
+	unresolvedOwners, err := validateOutputRelations(chars, weapons, items)
+	if err != nil {
+		r.UDP.diagnostic("validation", "failed", "output_relations_invalid", nil)
 		return fmt.Errorf("validate decoded output: %w", err)
+	}
+	if unresolvedOwners > 0 {
+		r.UDP.diagnostic("validation", "partial", "equipment_owner_unresolved", map[string]int{
+			"unresolved_equipment_owner_links": unresolvedOwners,
+		})
+	} else {
+		r.UDP.diagnostic("validation", "complete", "", nil)
 	}
 	weaponByChar := map[uint32]*weaponItem{}
 	for i := range weapons {
@@ -201,24 +210,31 @@ func writeOutputDirWithWriter(dir string, r report, writer func(string, any) err
 	}
 	resources := domainOutput{resourceStatus, "packet_capture", len(r.UDP.Resources), resourceNote, r.UDP.Resources}
 	characters := characterOutput{r.UDP.FurnitureLevels, "nte-scan-characters", 3, generated, r.Input, "decoded", len(chars), "One entry per character with progression, skills, complete active equipment, and login observations.", characterValidation, exportCharacters(chars, byChar)}
-	return scannerexport.PublishWithWriter(dir, []scannerexport.File{
+	r.UDP.diagnostic("export", "started", "", nil)
+	err = scannerexport.PublishWithWriter(dir, []scannerexport.File{
 		{Name: "character.json", Value: characters},
 		{Name: "weapons.json", Value: weapons},
 		{Name: "equipment.json", Value: items},
 		{Name: "resources.json", Value: resources},
 		{Name: "manifest.json", Value: manifest},
 	}, writer)
+	if err != nil {
+		r.UDP.diagnostic("export", "failed", "export_write_failed", nil)
+		return err
+	}
+	r.UDP.diagnostic("export", "complete", "", nil)
+	return nil
 }
 
-func validateOutputRelations(characters []characterItem, weapons []weaponItem, equipment []inventoryItem) error {
+func validateOutputRelations(characters []characterItem, weapons []weaponItem, equipment []inventoryItem) (int, error) {
 	characterIDs := make(map[uint32]bool, len(characters))
 	characterNetIDs := make(map[itemNetID]bool, len(characters))
 	for _, character := range characters {
 		if character.CharacterID == 0 || characterIDs[character.CharacterID] {
-			return fmt.Errorf("missing or duplicate character id %d", character.CharacterID)
+			return 0, fmt.Errorf("missing or duplicate character id %d", character.CharacterID)
 		}
 		if !validNetID(character.NetID) || characterNetIDs[character.NetID] {
-			return fmt.Errorf("missing or duplicate character network id %+v", character.NetID)
+			return 0, fmt.Errorf("missing or duplicate character network id %+v", character.NetID)
 		}
 		characterIDs[character.CharacterID] = true
 		characterNetIDs[character.NetID] = true
@@ -226,33 +242,38 @@ func validateOutputRelations(characters []characterItem, weapons []weaponItem, e
 	weaponIDs := make(map[itemNetID]bool, len(weapons))
 	for _, weapon := range weapons {
 		if !validNetID(weapon.ID) || weaponIDs[weapon.ID] {
-			return fmt.Errorf("missing or duplicate weapon network id %+v", weapon.ID)
+			return 0, fmt.Errorf("missing or duplicate weapon network id %+v", weapon.ID)
 		}
 		if weapon.ForkID == "" {
-			return fmt.Errorf("weapon %+v has no fork id", weapon.ID)
+			return 0, fmt.Errorf("weapon %+v has no fork id", weapon.ID)
 		}
 		if weapon.EquippedCharacterID != nil && !characterIDs[*weapon.EquippedCharacterID] {
-			return fmt.Errorf("weapon %+v references unknown character %d", weapon.ID, *weapon.EquippedCharacterID)
+			return 0, fmt.Errorf("weapon %+v references unknown character %d", weapon.ID, *weapon.EquippedCharacterID)
 		}
 		weaponIDs[weapon.ID] = true
 	}
 	for _, character := range characters {
 		if character.ForkNetID != nil && !weaponIDs[*character.ForkNetID] {
-			return fmt.Errorf("character %d references missing weapon %+v", character.CharacterID, *character.ForkNetID)
+			return 0, fmt.Errorf("character %d references missing weapon %+v", character.CharacterID, *character.ForkNetID)
 		}
 	}
 	equipmentIDs := make(map[itemNetID]bool, len(equipment))
-	for _, item := range equipment {
+	unresolvedOwners := 0
+	for i := range equipment {
+		item := &equipment[i]
 		if !validNetID(item.ID) || equipmentIDs[item.ID] {
-			return fmt.Errorf("missing or duplicate equipment network id %+v", item.ID)
+			return 0, fmt.Errorf("missing or duplicate equipment network id %+v", item.ID)
 		}
 		if item.Kind != "module" && item.Kind != "core" {
-			return fmt.Errorf("equipment %+v has unknown kind %q", item.ID, item.Kind)
+			return 0, fmt.Errorf("equipment %+v has unknown kind %q", item.ID, item.Kind)
 		}
 		if item.CharacterNetID != nil && !characterNetIDs[*item.CharacterNetID] {
-			return fmt.Errorf("equipment %+v references unknown character %+v", item.ID, *item.CharacterNetID)
+			// Keep the item in the export. Its grid placement is only valid for its owner.
+			item.CharacterNetID = nil
+			item.EquippedPlacement = nil
+			unresolvedOwners++
 		}
 		equipmentIDs[item.ID] = true
 	}
-	return nil
+	return unresolvedOwners, nil
 }

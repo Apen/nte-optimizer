@@ -216,9 +216,6 @@ func main() {
 		})
 		must(fmt.Errorf("incomplete capture: equipment=%d, characters=%d, Arcs=%d; start another guided scan and log in while the capture is active", r.UDP.DecodedItems, len(r.UDP.Characters), len(r.UDP.Weapons)))
 	}
-	if *loginCapture {
-		_ = scanlog.Append(*scanLog, "validation", "complete", nil)
-	}
 	if *inventoryOut != "" {
 		b, err := json.MarshalIndent(r.UDP.Items, "", "  ")
 		must(err)
@@ -266,13 +263,11 @@ func main() {
 	}
 	if *outputDir != "" {
 		mustScanContext(ctx)
-		_ = scanlog.Append(*scanLog, "export", "started", nil)
-		err := writeOutputDir(*outputDir, r)
-		if err != nil {
-			_ = scanlog.AppendWithCode(*scanLog, "export", "failed", "export_write_failed", nil)
+		err := writeOutputDir(*outputDir, &r)
+		if r.UDP.diagnosticErr != nil {
+			fmt.Fprintln(os.Stderr, "diagnostic_log_not_writable")
 		}
 		must(err)
-		_ = scanlog.Append(*scanLog, "export", "complete", nil)
 	}
 	if *loginCapture {
 		err := removeCaptureFiles(*input)
