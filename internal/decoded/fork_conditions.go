@@ -2,6 +2,7 @@ package decoded
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"math"
 	"slices"
@@ -64,10 +65,10 @@ func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected
 	}
 	effect := definition.ConditionalEffects[index]
 	if !selected.ConditionsConfirmed {
-		return ForkConditionalValue{}, fmt.Errorf("Arc effect conditions require manual confirmation")
+		return ForkConditionalValue{}, errors.New("manual confirmation required for Arc effect conditions")
 	}
 	if effect.LegacyConditionalProjection {
-		return ForkConditionalValue{}, fmt.Errorf("Arc effect %s already represented by conditional_by_star", id)
+		return ForkConditionalValue{}, fmt.Errorf("conditional_by_star already represents Arc effect %s", id)
 	}
 	if effect.Parameter.LevelSource != "exact_arc_rank" || effect.Target.Operation != "add" {
 		return ForkConditionalValue{}, fmt.Errorf("unsupported Arc effect contract %s", id)
@@ -75,7 +76,7 @@ func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected
 	switch effect.Scope {
 	case "wearer", "wearer_summon_damage":
 		if !selected.RecipientIsWearer {
-			return ForkConditionalValue{}, fmt.Errorf("Arc effect requires wearer recipient")
+			return ForkConditionalValue{}, errors.New("wearer must be the recipient of the Arc effect")
 		}
 	case "team_including_wearer", "all_field_summon_damage":
 	default:
@@ -94,7 +95,7 @@ func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected
 		limit = effect.MaxStacks
 	}
 	if selected.Stacks < 1 || selected.Stacks > limit {
-		return ForkConditionalValue{}, fmt.Errorf("Arc stack count outside declared bounds")
+		return ForkConditionalValue{}, errors.New("selected Arc stack count is outside declared bounds")
 	}
 	parameters, ok := definition.EffectsByStar[strconv.Itoa(weapon.Star)]
 	if !ok {
@@ -113,7 +114,7 @@ func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected
 		return ForkConditionalValue{}, err
 	}
 	if value.IsPercent != effect.Target.Percent {
-		return ForkConditionalValue{}, fmt.Errorf("Arc effect parameter units disagree")
+		return ForkConditionalValue{}, errors.New("inconsistent units for Arc effect parameter")
 	}
 	out := ForkConditionalValue{ID: id, Scope: effect.Scope, Stat: nte.Stat{PropertyID: effect.Target.PropertyID, Value: value.Value * float64(selected.Stacks), Percent: effect.Target.Percent}}
 	if effect.DurationParameter != "" {

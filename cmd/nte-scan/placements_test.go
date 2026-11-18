@@ -229,7 +229,7 @@ func TestPlacementImportRejectsOwnerMismatchConflictsAndOverlaps(t *testing.T) {
 				second := recordWriter{}
 				putPlacementTestCharacter(&second, owner, "1003")
 				putPlacementCell(&second, "cell_single", id, true, 3, 3)
-				streams = append(streams, invStream{data: second.data, bits: second.bits})
+				streams = append(streams, invStream(second))
 				if scenario == "conflicting snapshots reversed" {
 					streams[0], streams[1] = streams[1], streams[0]
 				}
@@ -239,7 +239,7 @@ func TestPlacementImportRejectsOwnerMismatchConflictsAndOverlaps(t *testing.T) {
 				secondID := itemNetID{Solt: 2, Serial: 10}
 				r.Items = append(r.Items, inventoryItem{ID: secondID, ItemID: "cell_single", Kind: "module", CharacterNetID: &owner})
 				putPlacementCell(&w, "cell_single", secondID, true, 2, 3)
-				streams[0] = invStream{data: w.data, bits: w.bits}
+				streams[0] = invStream(w)
 				want = "modules_overlapping_positions"
 			}
 			if err := attachModulePlacements(context.Background(), &r, nil, streams, nil, equipmentPath, characterPath); err != nil {
