@@ -15,7 +15,7 @@ func TestBridgeContractMatchesSharedFixture(t *testing.T) {
 	values := map[string]any{
 		"module":   nte.Module{LocalID: "synthetic", GameItemID: "synthetic", Quality: "blue", Geometry: "SYNTHETIC", Area: 2, MainStats: []nte.Stat{}, SubStats: []nte.Stat{}},
 		"settings": WeightOverrides{MainStats: []string{"CritBase"}, Weights: map[string]float64{"CritBase": 1}, Goals: map[string]SavedGoalSettings{"CritBase": {Target: .5, Minimum: &minimum, Tolerance: .05, StrictMinimum: true, Custom: true, Percent: true, Label: "Critical rate"}}},
-		"bonuses":  AccountBuffPage{DetectedFurnitureIDs: []string{}, Furniture: []BuffOption{}, Characters: []BuffCharacter{{CharacterID: 42, Name: "Synthetic"}}},
+		"bonuses":  AccountBuffPage{DetectedFurnitureIDs: []string{}, Furniture: []BuffOption{}, Characters: []BuffCharacter{{CharacterID: 42, Name: "Synthetic"}}, PukaTraining: &PukaTrainingBuff{Rank: 0}},
 	}
 	got, err := json.Marshal(values)
 	if err != nil {

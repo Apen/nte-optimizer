@@ -26,7 +26,9 @@ func TestWriteOutputDirMergesCharacterExports(t *testing.T) {
 	characterNetID := itemNetID{Solt: 10, Serial: 20}
 	characterID := uint32(1036)
 	weaponID := itemNetID{Solt: 30, Serial: 40}
+	trainingRank := uint32(0)
 	report := report{Input: "capture.pcapng", UDP: udpReport{
+		PukaTrainingRank: &trainingRank,
 		Characters: []characterItem{{
 			CharacterID: characterID, Name: "zankou", NetID: characterNetID, ForkNetID: &weaponID,
 			BondStageFlags:            []bool{true},
@@ -58,6 +60,9 @@ func TestWriteOutputDirMergesCharacterExports(t *testing.T) {
 	}
 	if output.Count != 1 || len(output.Characters) != 1 || output.Characters[0].Identity.CharacterID != 1036 {
 		t.Fatalf("unexpected merged character output: %#v", output)
+	}
+	if output.PukaTrainingRank == nil || *output.PukaTrainingRank != 0 {
+		t.Fatal("rank zero was lost in the character export")
 	}
 	for _, field := range []string{"savedState", "healthRatio", "loaded", "activeWeaponBuffs"} {
 		if bytes.Contains(b, []byte(`"`+field+`"`)) {

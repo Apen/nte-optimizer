@@ -34,13 +34,16 @@ func TestNewAndSavedBuildUsesScannedAccountBuffsAcrossArcSelection(t *testing.T)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if len(result.Stats.Sources["account_furniture"]) != 0 || len(result.Stats.Sources["account_bond"]) != 0 {
+		if len(result.Stats.Sources["account_furniture"]) != 0 || len(result.Stats.Sources["account_bond"]) != 0 ||
+			len(result.Stats.Sources["account_puka_training"]) != 0 {
 			t.Fatal("bonuses applied without observations")
 		}
 		baseline[arc] = result
 	}
 	state.FurnitureLevels = scannedBuffFixture().FurnitureLevels
 	state.Characters[0].BondLevel = &bondLevel
+	pukaRank := uint32(5)
+	state.PukaTrainingRank = &pukaRank
 	if err := writeAccountData(dir, inv, state); err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +55,10 @@ func TestNewAndSavedBuildUsesScannedAccountBuffsAcrossArcSelection(t *testing.T)
 		if result.CurrentStats == nil {
 			t.Fatal("missing equipped comparison")
 		}
-		for property, bonus := range map[string]float64{"AtkFinal": 4, "DefFinal": 9, "CritDamageBase": .024, "CritBase": .04} {
+		for property, bonus := range map[string]float64{
+			"AtkFinal": 11, "DefFinal": 16, "HPFinal": 100, "CritDamageBase": .036,
+			"CritBase": .047, "MagBase": 3, "UnbalIntensityBase": 3,
+		} {
 			if got := result.Stats.Derived[property] - baseline[arc].Stats.Derived[property]; math.Abs(got-bonus) > 1e-9 {
 				t.Fatalf("Arc %q build %s bonus=%g, want %g", arc, property, got, bonus)
 			}
@@ -60,7 +66,8 @@ func TestNewAndSavedBuildUsesScannedAccountBuffsAcrossArcSelection(t *testing.T)
 				t.Fatalf("Arc %q equipped %s bonus=%g, want %g", arc, property, got, bonus)
 			}
 		}
-		if result.Stats.Sources["account_furniture"]["AtkAdd"] != 4 || result.Stats.Sources["account_bond"]["CritBase"] != .04 {
+		if result.Stats.Sources["account_furniture"]["AtkAdd"] != 4 || result.Stats.Sources["account_bond"]["CritBase"] != .04 ||
+			result.Stats.Sources["account_puka_training"]["CritDamageBase"] != .012 {
 			t.Fatal("missing separately attributed account sources")
 		}
 		if _, err := SaveOptimizationResult(dir, result); err != nil {
@@ -70,7 +77,9 @@ func TestNewAndSavedBuildUsesScannedAccountBuffsAcrossArcSelection(t *testing.T)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if saved.Stats.Sources["account_furniture"]["AtkAdd"] != 4 || saved.Stats.Sources["account_bond"]["CritBase"] != .04 || saved.Stats.Derived["AtkFinal"] != result.Stats.Derived["AtkFinal"] {
+		if saved.Stats.Sources["account_furniture"]["AtkAdd"] != 4 || saved.Stats.Sources["account_bond"]["CritBase"] != .04 ||
+			saved.Stats.Sources["account_puka_training"]["CritDamageBase"] != .012 ||
+			saved.Stats.Derived["AtkFinal"] != result.Stats.Derived["AtkFinal"] {
 			t.Fatal("saved build lost or counted account bonuses twice")
 		}
 	}

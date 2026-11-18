@@ -208,3 +208,26 @@ func TestImportFurnitureObservationsRemainSeparateFromConfirmation(t *testing.T)
 		t.Fatal("accepted invalid furniture level")
 	}
 }
+
+func TestImportPreservesOptionalPukaTrainingRank(t *testing.T) {
+	dir := t.TempDir()
+	writeFixture(t, dir, "manifest.json", Manifest{Format: "nte-scan-output", FormatVersion: 3})
+	writeFixture(t, dir, "equipment.json", []Equipment{})
+	writeFixture(t, dir, "weapons.json", []Weapon{})
+	export := map[string]any{"format": "nte-scan-characters", "formatVersion": 3, "characters": []any{}}
+	dataDir := filepath.Join("..", "..", "data")
+
+	writeFixture(t, dir, "character.json", export)
+	result, err := ImportDirectory(dir, dataDir)
+	if err != nil || result.State.PukaTrainingRank != nil {
+		t.Fatalf("legacy export should have an absent training rank: %v, %v", result.State.PukaTrainingRank, err)
+	}
+	for _, rank := range []uint32{0, 5} {
+		export["pukaTrainingRank"] = rank
+		writeFixture(t, dir, "character.json", export)
+		result, err := ImportDirectory(dir, dataDir)
+		if err != nil || result.State.PukaTrainingRank == nil || *result.State.PukaTrainingRank != rank {
+			t.Fatalf("could not import training rank %d: %v, %v", rank, result.State.PukaTrainingRank, err)
+		}
+	}
+}

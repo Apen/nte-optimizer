@@ -135,6 +135,7 @@ type Resource struct {
 
 type State struct {
 	FurnitureLevels   []nte.FurnitureLevel       `json:"furniture_levels,omitempty"`
+	PukaTrainingRank  *uint32                    `json:"puka_training_rank,omitempty"`
 	SchemaVersion     int                        `json:"schema_version"`
 	ImportedAt        time.Time                  `json:"imported_at"`
 	SourceGeneratedAt time.Time                  `json:"source_generated_at"`

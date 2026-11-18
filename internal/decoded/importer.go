@@ -196,7 +196,8 @@ func ImportDirectory(dir, dataDir string) (result ImportResult, err error) {
 	diagnostics.step("import_furniture")
 	state := State{SchemaVersion: 2, ImportedAt: time.Now().UTC(), SourceGeneratedAt: manifest.GeneratedAt.UTC(), Account: account, Characters: characters, Weapons: weapons, Resources: resources.Data}
 	var observations struct {
-		FurnitureLevels []nte.FurnitureLevel `json:"furnitureLevels"`
+		FurnitureLevels  []nte.FurnitureLevel `json:"furnitureLevels"`
+		PukaTrainingRank *uint32              `json:"pukaTrainingRank"`
 	}
 	if _, err := os.Stat(filepath.Join(dir, "character.json")); err == nil {
 		if err := read(filepath.Join(dir, "character.json"), &observations); err != nil {
@@ -211,6 +212,7 @@ func ImportDirectory(dir, dataDir string) (result ImportResult, err error) {
 			seen[level.ProgressionID] = true
 		}
 		state.FurnitureLevels = observations.FurnitureLevels
+		state.PukaTrainingRank = observations.PukaTrainingRank
 	} else if !os.IsNotExist(err) {
 		return ImportResult{}, err
 	}

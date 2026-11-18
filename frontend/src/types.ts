@@ -68,7 +68,7 @@ export type CurrentCharacter = { characterId:number; name:string; codename:strin
 export type CharacterGameSnapshot = { character:CurrentCharacter; observed_panel_stats?:ObservedPanelStats; weapon?:InventoryArc; cartridges:InventoryCartridge[]; modules:InventoryModule[]; stats?:StatSummary; imported_at?:string }
 export type AccountImportSummary = { has_import:boolean; imported_at?:string; source_generated_at?:string; characters:number; modules:number; cartridges:number; weapons:number; warnings?:string[] }
 export type BuffCharacter = { character_id:number; name:string; bond_level?:number; bond_bonus_active:boolean; bond_stats:Stat[]|null }
-export type AccountBuffPage = { furniture:{id:string;stats:Stat[];level?:number;progression_id?:string}[];detected_furniture_ids?:string[]; characters:BuffCharacter[] }
+export type AccountBuffPage = { furniture:{id:string;stats:Stat[];level?:number;progression_id?:string}[];detected_furniture_ids?:string[]; characters:BuffCharacter[]; puka_training?: {rank:number;stats?:Stat[]} }
 
 export type SavedGoalSettings = {target:number;label?:string;percent?:boolean;custom?:boolean;minimum?:number;maximum?:number;tolerance:number;strict_minimum?:boolean;disabled?:boolean}
 export type ProfileSettings = {main_stats:string[];weights:Record<string,number>;goals?:Record<string,SavedGoalSettings>;arc_fork_id?:string;simulate_cartridge_main_stats?:boolean;team_allies?:TeamAlly[]}

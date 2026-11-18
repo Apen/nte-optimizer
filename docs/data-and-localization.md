@@ -5,6 +5,7 @@ The `data` directory is organized by responsibility and source of truth.
 ```text
 data/
 ├── game/                    generated facts from the game
+│   ├── account/             cumulative Puka Boot Camp rank modifiers
 │   ├── characters/          base stats and character decode projection
 │   ├── combat/              structured damage rules
 │   ├── equipment/           Arcs, traits, grids, sets, shapes, decode data
@@ -76,6 +77,12 @@ account observations. The furniture modifier catalog includes `progression_id`
 and `level`, resolved by the datamine generator through its progression
 configuration. The application maps scanned levels to those catalog records
 without hardcoded furniture-to-stat exceptions.
+
+The Puka Boot Camp catalog projects `PukalandTraining_1` through
+`PukalandTraining_20` from the game's `DT_PukalandTrainingModifyData` table.
+Each row contains the total for its rank. Rank zero has an empty bonus list.
+Data publications must include `account/puka_training.json` and its manifest
+entry.
 
 The builder treats all supported furniture bonuses displayed on Account Buffs
 as active for deployed characters, and applies each displayed level-10 bond

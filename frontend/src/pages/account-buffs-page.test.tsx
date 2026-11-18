@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { applyLocalization } from '../i18n'
 import { PresentationProvider } from '../presentation'
@@ -6,7 +6,7 @@ import type { AccountBuffPage, LocalizationCatalog } from '../types'
 import { AccountBuffsPage } from './account-buffs-page'
 const load=vi.fn()
 vi.mock('../../wailsjs/go/main/DesktopApp',()=>({AccountBuffs:(...args:unknown[])=>load(...args)}))
-const catalog:LocalizationCatalog={locale:'en',ui:{nav_account_buffs:'Account buffs',account_furniture:'Furniture',account_bond:'Bond bonuses',buff_source_scan_level:'Furniture level {level}',buff_bond_source:'Bond level {level}',buff_no_furniture:'Import furniture levels',buff_no_bond:'No level 10 bond bonus'},stats:{AtkAdd:'Flat ATK',DefAdd:'Flat DEF',CritDamageBase:'CRIT DMG',CritBase:'CRIT'},qualities:{},geometries:{},damage:{},stat_sources:{}}
+const catalog:LocalizationCatalog={locale:'en',ui:{nav_account_buffs:'Account buffs',account_furniture:'Furniture',account_bond:'Bond bonuses',buff_source_scan_level:'Furniture level {level}',buff_bond_source:'Bond level {level}',buff_no_furniture:'Import furniture levels',buff_no_bond:'No level 10 bond bonus',account_puka_training:'Puka Boot Camp',buff_puka_rank:'Rank {rank}',buff_puka_rank_missing:'Rank missing from this import'},stats:{AtkAdd:'Flat ATK',DefAdd:'Flat DEF',CritDamageBase:'CRIT DMG',CritBase:'CRIT'},qualities:{},geometries:{},damage:{},stat_sources:{}}
 function fixture():AccountBuffPage {
  const furniture=[{id:'attack',level:2,stats:[{property_id:'AtkAdd',value:4,percent:false}]},{id:'defense',level:3,stats:[{property_id:'DefAdd',value:9,percent:false}]},{id:'critical',level:6,stats:[{property_id:'CritDamageBase',value:.024,percent:true}]},{id:'other-level',level:3,stats:[{property_id:'AtkAdd',value:6,percent:false}]}]
  const character={character_id:1036,name:'Zankou',bond_level:10,bond_bonus_active:true,bond_stats:[{property_id:'CritBase',value:.04,percent:true}]}
@@ -30,7 +30,23 @@ describe('Account buffs page',()=>{
   mount()
   expect(await screen.findByText('Import furniture levels')).toBeInTheDocument()
   expect(screen.getByText('No level 10 bond bonus')).toBeInTheDocument()
+  expect(screen.getByText('Rank missing from this import')).toBeInTheDocument()
   expect(screen.queryByText('Flat ATK')).not.toBeInTheDocument()
+ })
+ it('shows a scanned rank of zero',async()=>{
+  load.mockResolvedValue({...fixture(),puka_training:{rank:0}})
+  mount()
+  const section=await screen.findByRole('region',{name:'Puka Boot Camp'})
+  expect(within(section).getByRole('heading',{name:'Rank 0'})).toBeInTheDocument()
+  expect(within(section).queryByText('Rank missing from this import')).not.toBeInTheDocument()
+ })
+ it('shows the stats supplied by the backend for the scanned rank',async()=>{
+  load.mockResolvedValue({...fixture(),puka_training:{rank:5,stats:[{property_id:'CritDamageBase',value:.012,percent:true}]}})
+  mount()
+  const section=await screen.findByRole('region',{name:'Puka Boot Camp'})
+  expect(within(section).getByRole('heading',{name:'Rank 5'})).toBeInTheDocument()
+  expect(within(section).getByText('CRIT DMG')).toBeInTheDocument()
+  expect(within(section).getByText('+1.2 %')).toBeInTheDocument()
  })
  it('uses backend bond activation rather than inferring it from the display level',async()=>{
   const page=fixture();page.characters[1].bond_level=10;load.mockResolvedValue(page)

@@ -17,16 +17,17 @@ type domainOutput struct {
 	Data   any    `json:"data"`
 }
 type characterOutput struct {
-	FurnitureLevels []nte.FurnitureLevel  `json:"furnitureLevels,omitempty"`
-	Format          string                `json:"format"`
-	FormatVersion   int                   `json:"formatVersion"`
-	GeneratedAt     string                `json:"generatedAt"`
-	Source          string                `json:"source"`
-	Status          string                `json:"status"`
-	Count           int                   `json:"count"`
-	Note            string                `json:"note"`
-	Validation      map[string]int        `json:"validation"`
-	Characters      []characterExportItem `json:"characters"`
+	FurnitureLevels  []nte.FurnitureLevel  `json:"furnitureLevels,omitempty"`
+	PukaTrainingRank *uint32               `json:"pukaTrainingRank,omitempty"`
+	Format           string                `json:"format"`
+	FormatVersion    int                   `json:"formatVersion"`
+	GeneratedAt      string                `json:"generatedAt"`
+	Source           string                `json:"source"`
+	Status           string                `json:"status"`
+	Count            int                   `json:"count"`
+	Note             string                `json:"note"`
+	Validation       map[string]int        `json:"validation"`
+	Characters       []characterExportItem `json:"characters"`
 }
 type characterExportItem struct {
 	Identity        characterIdentity        `json:"identity"`
@@ -209,7 +210,13 @@ func writeOutputDirWithWriter(dir string, r *report, writer func(string, any) er
 		resourceNote = "No validated resource record was found in this capture."
 	}
 	resources := domainOutput{resourceStatus, "packet_capture", len(r.UDP.Resources), resourceNote, r.UDP.Resources}
-	characters := characterOutput{r.UDP.FurnitureLevels, "nte-scan-characters", 3, generated, r.Input, "decoded", len(chars), "One entry per character with progression, skills, complete active equipment, and login observations.", characterValidation, exportCharacters(chars, byChar)}
+	characters := characterOutput{
+		FurnitureLevels: r.UDP.FurnitureLevels, PukaTrainingRank: r.UDP.PukaTrainingRank,
+		Format: "nte-scan-characters", FormatVersion: 3, GeneratedAt: generated, Source: r.Input,
+		Status: "decoded", Count: len(chars),
+		Note:       "One entry per character with progression, skills, complete active equipment, and login observations.",
+		Validation: characterValidation, Characters: exportCharacters(chars, byChar),
+	}
 	r.UDP.diagnostic("export", "started", "", nil)
 	err = scannerexport.PublishWithWriter(dir, []scannerexport.File{
 		{Name: "character.json", Value: characters},

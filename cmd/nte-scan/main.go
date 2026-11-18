@@ -55,6 +55,7 @@ type udpReport struct {
 	diagnosticErr        error
 	Diagnostics          []scanlog.Event      `json:"-"`
 	FurnitureLevels      []nte.FurnitureLevel `json:"furnitureLevels,omitempty"`
+	PukaTrainingRank     *uint32              `json:"pukaTrainingRank,omitempty"`
 	Flow                 string               `json:"flow"`
 	Packets              int                  `json:"packets"`
 	PayloadBytes         int                  `json:"payloadBytes"`

@@ -31,8 +31,7 @@ type staticCatalogs struct {
 	arcs          decoded.ForkCatalog
 	arcErr        error
 	buffOnce      sync.Once
-	buffs         []BuffOption
-	bonds         map[int][]nte.Stat
+	buffs         accountBuffCatalog
 	buffErr       error
 	localeMu      sync.Mutex
 	locales       map[string]localeResult
@@ -70,19 +69,18 @@ func (s OptimizerService) loadArcs() (decoded.ForkCatalog, error) {
 }
 
 func (s OptimizerService) accountBuffSources(state *decoded.State, characterID int, calibration map[string]float64) (map[string][]nte.Stat, error) {
-	var options []BuffOption
-	var bonds map[int][]nte.Stat
+	var catalog accountBuffCatalog
 	var err error
 	if s.static == nil {
-		options, bonds, err = buffOptions(s.DataDir)
+		catalog, err = loadAccountBuffCatalog(s.DataDir)
 	} else {
-		s.static.buffOnce.Do(func() { s.static.buffs, s.static.bonds, s.static.buffErr = buffOptions(s.DataDir) })
-		options, bonds, err = s.static.buffs, s.static.bonds, s.static.buffErr
+		s.static.buffOnce.Do(func() { s.static.buffs, s.static.buffErr = loadAccountBuffCatalog(s.DataDir) })
+		catalog, err = s.static.buffs, s.static.buffErr
 	}
 	if err != nil {
 		return nil, err
 	}
-	return selectedAccountBuffSources(state, options, bonds, characterID, calibration)
+	return selectedAccountBuffSources(state, catalog, characterID, calibration)
 }
 
 func (s OptimizerService) loadCharacters() (map[string]scoring.Character, error) {

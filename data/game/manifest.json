@@ -2,6 +2,16 @@
   "schema_version": 1,
   "files": [
     {
+      "path": "account/puka_training.json",
+      "schema_version": 1,
+      "sha256": "a4e337e761198d34203b437a3c59b4d70b01304c10ff280851ae9eaccb6a920e",
+      "sources": [
+        "HT/Content/DataAssets/DataAssetSet/Tycoon/DT_PukalandTrainingModifyData.uasset"
+      ],
+      "status": "generated",
+      "warnings": []
+    },
+    {
       "path": "characters/base_stats.json",
       "schema_version": 1,
       "sha256": "921b0bad255cc4cb61294b9e0bfaeb7aac738693b4944f56179c8ae0d808b9f5",

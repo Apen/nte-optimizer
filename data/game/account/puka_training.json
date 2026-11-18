@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "ranks": {
+    "0": [],
+    "1": [
+      {"property_id": "AtkAdd", "value": 2, "percent": false},
+      {"property_id": "CritBase", "value": 0.001, "percent": true}
+    ],
+    "2": [
+      {"property_id": "AtkAdd", "value": 2, "percent": false},
+      {"property_id": "DefAdd", "value": 2, "percent": false},
+      {"property_id": "CritBase", "value": 0.001, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.002, "percent": true}
+    ],
+    "3": [
+      {"property_id": "AtkAdd", "value": 2, "percent": false},
+      {"property_id": "DefAdd", "value": 2, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 20, "percent": false},
+      {"property_id": "CritBase", "value": 0.001, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.002, "percent": true},
+      {"property_id": "MagBase", "value": 1, "percent": false}
+    ],
+    "4": [
+      {"property_id": "AtkAdd", "value": 2, "percent": false},
+      {"property_id": "DefAdd", "value": 2, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 20, "percent": false},
+      {"property_id": "CritBase", "value": 0.002, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.002, "percent": true},
+      {"property_id": "MagBase", "value": 1, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 1, "percent": false}
+    ],
+    "5": [
+      {"property_id": "AtkAdd", "value": 7, "percent": false},
+      {"property_id": "DefAdd", "value": 7, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 100, "percent": false},
+      {"property_id": "CritBase", "value": 0.007, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.012, "percent": true},
+      {"property_id": "MagBase", "value": 3, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 3, "percent": false}
+    ],
+    "6": [
+      {"property_id": "AtkAdd", "value": 7, "percent": false},
+      {"property_id": "DefAdd", "value": 9, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 100, "percent": false},
+      {"property_id": "CritBase", "value": 0.007, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.012, "percent": true},
+      {"property_id": "MagBase", "value": 4, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 3, "percent": false}
+    ],
+    "7": [
+      {"property_id": "AtkAdd", "value": 7, "percent": false},
+      {"property_id": "DefAdd", "value": 9, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 120, "percent": false},
+      {"property_id": "CritBase", "value": 0.007, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.012, "percent": true},
+      {"property_id": "MagBase", "value": 4, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 4, "percent": false}
+    ],
+    "8": [
+      {"property_id": "AtkAdd", "value": 7, "percent": false},
+      {"property_id": "DefAdd", "value": 11, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 120, "percent": false},
+      {"property_id": "CritBase", "value": 0.008, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.012, "percent": true},
+      {"property_id": "MagBase", "value": 4, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 4, "percent": false}
+    ],
+    "9": [
+      {"property_id": "AtkAdd", "value": 9, "percent": false},
+      {"property_id": "DefAdd", "value": 11, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 120, "percent": false},
+      {"property_id": "CritBase", "value": 0.008, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.014, "percent": true},
+      {"property_id": "MagBase", "value": 4, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 4, "percent": false}
+    ],
+    "10": [
+      {"property_id": "AtkAdd", "value": 14, "percent": false},
+      {"property_id": "DefAdd", "value": 16, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 200, "percent": false},
+      {"property_id": "CritBase", "value": 0.013, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.024, "percent": true},
+      {"property_id": "MagBase", "value": 6, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 6, "percent": false}
+    ],
+    "11": [
+      {"property_id": "AtkAdd", "value": 14, "percent": false},
+      {"property_id": "DefAdd", "value": 16, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 220, "percent": false},
+      {"property_id": "CritBase", "value": 0.013, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.024, "percent": true},
+      {"property_id": "MagBase", "value": 6, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 7, "percent": false}
+    ],
+    "12": [
+      {"property_id": "AtkAdd", "value": 14, "percent": false},
+      {"property_id": "DefAdd", "value": 16, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 240, "percent": false},
+      {"property_id": "CritBase", "value": 0.014, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.024, "percent": true},
+      {"property_id": "MagBase", "value": 6, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 7, "percent": false}
+    ],
+    "13": [
+      {"property_id": "AtkAdd", "value": 16, "percent": false},
+      {"property_id": "DefAdd", "value": 16, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 240, "percent": false},
+      {"property_id": "CritBase", "value": 0.014, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.026, "percent": true},
+      {"property_id": "MagBase", "value": 6, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 7, "percent": false}
+    ],
+    "14": [
+      {"property_id": "AtkAdd", "value": 16, "percent": false},
+      {"property_id": "DefAdd", "value": 18, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 240, "percent": false},
+      {"property_id": "CritBase", "value": 0.014, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.026, "percent": true},
+      {"property_id": "MagBase", "value": 7, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 7, "percent": false}
+    ],
+    "15": [
+      {"property_id": "AtkAdd", "value": 21, "percent": false},
+      {"property_id": "DefAdd", "value": 23, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 320, "percent": false},
+      {"property_id": "CritBase", "value": 0.019, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.036, "percent": true},
+      {"property_id": "MagBase", "value": 9, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 9, "percent": false}
+    ],
+    "16": [
+      {"property_id": "AtkAdd", "value": 23, "percent": false},
+      {"property_id": "DefAdd", "value": 23, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 320, "percent": false},
+      {"property_id": "CritBase", "value": 0.019, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.038, "percent": true},
+      {"property_id": "MagBase", "value": 9, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 9, "percent": false}
+    ],
+    "17": [
+      {"property_id": "AtkAdd", "value": 23, "percent": false},
+      {"property_id": "DefAdd", "value": 25, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 320, "percent": false},
+      {"property_id": "CritBase", "value": 0.019, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.04, "percent": true},
+      {"property_id": "MagBase", "value": 9, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 9, "percent": false}
+    ],
+    "18": [
+      {"property_id": "AtkAdd", "value": 23, "percent": false},
+      {"property_id": "DefAdd", "value": 25, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 340, "percent": false},
+      {"property_id": "CritBase", "value": 0.019, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.04, "percent": true},
+      {"property_id": "MagBase", "value": 10, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 9, "percent": false}
+    ],
+    "19": [
+      {"property_id": "AtkAdd", "value": 23, "percent": false},
+      {"property_id": "DefAdd", "value": 25, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 340, "percent": false},
+      {"property_id": "CritBase", "value": 0.02, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.04, "percent": true},
+      {"property_id": "MagBase", "value": 10, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 10, "percent": false}
+    ],
+    "20": [
+      {"property_id": "AtkAdd", "value": 28, "percent": false},
+      {"property_id": "DefAdd", "value": 30, "percent": false},
+      {"property_id": "HPMaxAdd", "value": 420, "percent": false},
+      {"property_id": "CritBase", "value": 0.025, "percent": true},
+      {"property_id": "CritDamageBase", "value": 0.05, "percent": true},
+      {"property_id": "MagBase", "value": 12, "percent": false},
+      {"property_id": "UnbalIntensityBase", "value": 12, "percent": false}
+    ]
+  }
+}

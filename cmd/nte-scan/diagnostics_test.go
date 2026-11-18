@@ -8,15 +8,21 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
 	"nte-optimizer/internal/scanlog"
+	scannerunreal "nte-optimizer/internal/scanner/unreal"
 )
 
 func furnitureMessage(payload []byte) completedMessage {
+	return accountPropertyMessage("FurnitureActivateStates", payload)
+}
+
+func accountPropertyMessage(name string, payload []byte) completedMessage {
 	b := new(bytes.Buffer)
-	observationString(b, "FurnitureActivateStates")
+	observationString(b, name)
 	binary.Write(b, binary.LittleEndian, uint32(0))
 	binary.Write(b, binary.LittleEndian, uint32(len(payload)))
 	b.Write(payload)
@@ -64,7 +70,13 @@ func TestFurnitureDiagnosticsDistinguishMissingEnvelopeCompressionAndStructure(t
 		t.Run(tc.name, func(t *testing.T) {
 			r := udpReport{}
 			decodeAccountObservations(&r, tc.messages)
-			event := r.Diagnostics[len(r.Diagnostics)-1]
+			index := slices.IndexFunc(r.Diagnostics, func(event scanlog.Event) bool {
+				return event.Stage == "decode_furniture" && event.Status != "started"
+			})
+			if index < 0 {
+				t.Fatal("missing furniture result")
+			}
+			event := r.Diagnostics[index]
 			if event.Code != tc.code || len(r.FurnitureLevels) != tc.retained || (tc.counter != "" && event.Counts[tc.counter] != 1) {
 				t.Fatalf("unexpected diagnostic: %+v, retained=%d", event, len(r.FurnitureLevels))
 			}
@@ -78,6 +90,32 @@ func TestFurnitureDiagnosticsDistinguishMissingEnvelopeCompressionAndStructure(t
 				}
 			}
 		})
+	}
+}
+
+func TestDecodePukaTrainingRank(t *testing.T) {
+	zero := accountPropertyMessage("PukalandTrainingLevel", []byte{0, 0, 0, 0})
+	ranked := accountPropertyMessage("PukalandTrainingLevel", []byte{5, 0, 0, 0})
+	ranked.data, ranked.bits = scannerunreal.AppendBits([]byte{0}, 3, ranked.data, ranked.bits)
+	invalid := accountPropertyMessage("PukalandTrainingLevel", []byte{1, 0})
+	program := accountPropertyMessage("PukalandLevel", []byte{9, 0, 0, 0})
+	wrongChannel := zero
+	wrongChannel.channel = 5
+
+	absent := udpReport{}
+	decodeAccountObservations(&absent, []completedMessage{wrongChannel, program, invalid})
+	if absent.PukaTrainingRank != nil {
+		t.Fatalf("unobserved training rank = %d", *absent.PukaTrainingRank)
+	}
+	for _, tc := range []struct {
+		message completedMessage
+		rank    uint32
+	}{{zero, 0}, {ranked, 5}} {
+		var r udpReport
+		decodeAccountObservations(&r, []completedMessage{tc.message, program, invalid})
+		if r.PukaTrainingRank == nil || *r.PukaTrainingRank != tc.rank {
+			t.Fatalf("expected observed training rank %d", tc.rank)
+		}
 	}
 }
 

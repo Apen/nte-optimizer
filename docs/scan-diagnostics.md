@@ -32,6 +32,9 @@ last reached stage in the log. The Import page reloads the log after the scan.
   placement candidate.
 - Furniture: channel 4 availability, literal property name detection, envelope
   checks, LZ4 decoding and decompressed record validation.
+- Puka Boot Camp: checks for a four-byte `PukalandTrainingLevel` on channel 4.
+  A rank of zero is retained when observed. The diagnostic logs sightings and
+  rejections without logging the rank itself.
 - Validation and export: checks the required domains for guided scans and
   validates record relationships before writing the export. Equipment with an
   owner missing from the decoded roster is retained as unassigned, without a

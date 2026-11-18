@@ -20,6 +20,18 @@ var errBuffCalibrationConflict = apperrors.New("calibration_conflict", errors.Ne
 type accountBuffSelection struct {
 	FurnitureIDs   []string
 	BondCharacters []int
+	PukaTraining   *PukaTrainingBuff
+}
+
+type accountBuffCatalog struct {
+	furniture    []BuffOption
+	bonds        map[int][]nte.Stat
+	pukaTraining map[uint32][]nte.Stat
+}
+
+type PukaTrainingBuff struct {
+	Rank  uint32     `json:"rank"`
+	Stats []nte.Stat `json:"stats,omitempty"`
 }
 
 type BuffOption struct {
@@ -38,9 +50,10 @@ type BuffCharacter struct {
 }
 
 type AccountBuffPage struct {
-	DetectedFurnitureIDs []string        `json:"detected_furniture_ids"`
-	Furniture            []BuffOption    `json:"furniture"`
-	Characters           []BuffCharacter `json:"characters"`
+	DetectedFurnitureIDs []string          `json:"detected_furniture_ids"`
+	Furniture            []BuffOption      `json:"furniture"`
+	Characters           []BuffCharacter   `json:"characters"`
+	PukaTraining         *PukaTrainingBuff `json:"puka_training,omitempty"`
 }
 
 type bondCatalog struct {
@@ -52,10 +65,11 @@ type bondCatalog struct {
 	} `json:"bonuses"`
 }
 
-func buffOptions(dataDir string) ([]BuffOption, map[int][]nte.Stat, error) {
-	furniture, err := housing.Load(datafiles.New(dataDir).SpecialFurnitureModifiers())
+func loadAccountBuffCatalog(dataDir string) (accountBuffCatalog, error) {
+	layout := datafiles.New(dataDir)
+	furniture, err := housing.Load(layout.SpecialFurnitureModifiers())
 	if err != nil {
-		return nil, nil, err
+		return accountBuffCatalog{}, err
 	}
 	options := []BuffOption{}
 	for _, modifier := range furniture.Modifiers {
@@ -72,20 +86,20 @@ func buffOptions(dataDir string) ([]BuffOption, map[int][]nte.Stat, error) {
 		return options[i].Stats[0].Value < options[j].Stats[0].Value
 	})
 	var bonds bondCatalog
-	if err := readJSON(datafiles.New(dataDir).Game("characters", "bond_bonuses.json"), &bonds); err != nil {
-		return nil, nil, err
+	if err := readJSON(layout.Game("characters", "bond_bonuses.json"), &bonds); err != nil {
+		return accountBuffCatalog{}, err
 	}
 	if bonds.SchemaVersion != 1 {
-		return nil, nil, fmt.Errorf("unsupported bond bonus schema version %d", bonds.SchemaVersion)
+		return accountBuffCatalog{}, fmt.Errorf("unsupported bond bonus schema version %d", bonds.SchemaVersion)
 	}
 	byCharacter := map[int][]nte.Stat{}
 	for _, bonus := range bonds.Bonuses {
 		id, err := strconv.Atoi(bonus.CharacterID)
 		if err != nil || id <= 0 {
-			return nil, nil, fmt.Errorf("invalid bond bonus character ID")
+			return accountBuffCatalog{}, fmt.Errorf("invalid bond bonus character ID")
 		}
 		if _, duplicate := byCharacter[id]; duplicate {
-			return nil, nil, fmt.Errorf("duplicate bond bonus character %d", id)
+			return accountBuffCatalog{}, fmt.Errorf("duplicate bond bonus character %d", id)
 		}
 		if len(bonus.Conditions) != 0 {
 			continue
@@ -93,25 +107,37 @@ func buffOptions(dataDir string) ([]BuffOption, map[int][]nte.Stat, error) {
 		stats := []nte.Stat{}
 		for _, stat := range bonus.Stats {
 			if stat.ModifierOp != "MODIFY_MODOP_ADDITIVE" || stat.PropertyID == "" || !finiteNonNegative(stat.Value) {
-				return nil, nil, fmt.Errorf("unsupported bond bonus stat for character %d", id)
+				return accountBuffCatalog{}, fmt.Errorf("unsupported bond bonus stat for character %d", id)
 			}
 			stats = append(stats, nte.Stat{PropertyID: stat.PropertyID, Value: stat.Value, Percent: stat.Percent})
 		}
 		byCharacter[id] = stats
 	}
-	return options, byCharacter, nil
+	training, err := loadPukaTrainingRanks(layout.Game("account", "puka_training.json"))
+	if err != nil {
+		return accountBuffCatalog{}, err
+	}
+	return accountBuffCatalog{furniture: options, bonds: byCharacter, pukaTraining: training}, nil
 }
 
-// Scanned bonuses are assumed active in projected deployed builds. Furniture is
-// shared; the displayed level-10 bond reward belongs to its own character.
-func scannedBuffSelection(state *decoded.State, options []BuffOption, bonds map[int][]nte.Stat) (accountBuffSelection, error) {
+// Scanned bonuses apply to projected deployed builds. Furniture and Puka
+// training are shared; each level-10 bond reward belongs to its character.
+func scannedBuffSelection(state *decoded.State, catalog accountBuffCatalog) (accountBuffSelection, error) {
 	selection := accountBuffSelection{}
 	if state == nil {
 		return selection, nil
 	}
+	if state.PukaTrainingRank != nil {
+		rank := *state.PukaTrainingRank
+		stats, ok := catalog.pukaTraining[rank]
+		if !ok {
+			return selection, fmt.Errorf("account/puka_training.json: missing rank %d", rank)
+		}
+		selection.PukaTraining = &PukaTrainingBuff{Rank: rank, Stats: stats}
+	}
 	levels := map[string]int{}
 	byProgression := map[string]map[int]string{}
-	for _, option := range options {
+	for _, option := range catalog.furniture {
 		if option.ProgressionID == "" {
 			continue
 		}
@@ -140,7 +166,7 @@ func scannedBuffSelection(state *decoded.State, options []BuffOption, bonds map[
 	}
 	seen := map[int]bool{}
 	for _, character := range state.Characters {
-		if character.BondLevel != nil && *character.BondLevel >= 10 && len(bonds[character.CharacterID]) > 0 && !seen[character.CharacterID] {
+		if character.BondLevel != nil && *character.BondLevel >= 10 && len(catalog.bonds[character.CharacterID]) > 0 && !seen[character.CharacterID] {
 			selection.BondCharacters = append(selection.BondCharacters, character.CharacterID)
 			seen[character.CharacterID] = true
 		}
@@ -150,21 +176,25 @@ func scannedBuffSelection(state *decoded.State, options []BuffOption, bonds map[
 	return selection, nil
 }
 func scannedAccountBuffSources(state *decoded.State, dataDir string, characterID int, calibration map[string]float64) (map[string][]nte.Stat, error) {
-	options, bonds, err := buffOptions(dataDir)
+	catalog, err := loadAccountBuffCatalog(dataDir)
 	if err != nil {
 		return nil, err
 	}
-	return selectedAccountBuffSources(state, options, bonds, characterID, calibration)
+	return selectedAccountBuffSources(state, catalog, characterID, calibration)
 }
 
-func selectedAccountBuffSources(state *decoded.State, options []BuffOption, bonds map[int][]nte.Stat, characterID int, calibration map[string]float64) (map[string][]nte.Stat, error) {
+func selectedAccountBuffSources(state *decoded.State, catalog accountBuffCatalog, characterID int, calibration map[string]float64) (map[string][]nte.Stat, error) {
 	sources := map[string][]nte.Stat{}
-	selection, err := scannedBuffSelection(state, options, bonds)
+	selection, err := scannedBuffSelection(state, catalog)
 	if err != nil {
 		return nil, err
 	}
+	if training := selection.PukaTraining; training != nil && len(training.Stats) > 0 {
+		// Each rank row already contains the total bonus at that rank.
+		sources["account_puka_training"] = append([]nte.Stat(nil), training.Stats...)
+	}
 	byID := map[string]BuffOption{}
-	for _, option := range options {
+	for _, option := range catalog.furniture {
 		byID[option.ID] = option
 	}
 	seen := map[string]bool{}
@@ -182,7 +212,7 @@ func selectedAccountBuffSources(state *decoded.State, options []BuffOption, bond
 	}
 	seenCharacters := map[int]bool{}
 	for _, id := range selection.BondCharacters {
-		stats, ok := bonds[id]
+		stats, ok := catalog.bonds[id]
 		if !ok || len(stats) == 0 || seenCharacters[id] {
 			return nil, fmt.Errorf("invalid or duplicate scanned bond bonus for character %d", id)
 		}
@@ -228,21 +258,21 @@ func selectedAccountBuffSources(state *decoded.State, options []BuffOption, bond
 
 func LoadAccountBuffPage(projectDir, dataDir, language string) (AccountBuffPage, error) {
 	page := AccountBuffPage{Characters: []BuffCharacter{}, DetectedFurnitureIDs: []string{}}
-	var err error
-	var bonds map[int][]nte.Stat
-	page.Furniture, bonds, err = buffOptions(dataDir)
+	catalog, err := loadAccountBuffCatalog(dataDir)
 	if err != nil {
 		return page, err
 	}
+	page.Furniture = catalog.furniture
 	_, state, loaded, err := loadAccountData(projectDir)
 	if err != nil || !loaded {
 		return page, err
 	}
-	selection, err := scannedBuffSelection(&state, page.Furniture, bonds)
+	selection, err := scannedBuffSelection(&state, catalog)
 	if err != nil {
 		return page, err
 	}
 	page.DetectedFurnitureIDs = selection.FurnitureIDs
+	page.PukaTraining = selection.PukaTraining
 	activeBonds := map[int]bool{}
 	for _, id := range selection.BondCharacters {
 		activeBonds[id] = true
@@ -252,7 +282,7 @@ func LoadAccountBuffPage(projectDir, dataDir, language string) (AccountBuffPage,
 		return page, err
 	}
 	for _, character := range state.Characters {
-		page.Characters = append(page.Characters, BuffCharacter{CharacterID: character.CharacterID, Name: cleanCharacterName(labels.CharacterName(character.CharacterID, character.Name)), BondLevel: character.BondLevel, BondStats: bonds[character.CharacterID], BondBonusActive: activeBonds[character.CharacterID]})
+		page.Characters = append(page.Characters, BuffCharacter{CharacterID: character.CharacterID, Name: cleanCharacterName(labels.CharacterName(character.CharacterID, character.Name)), BondLevel: character.BondLevel, BondStats: catalog.bonds[character.CharacterID], BondBonusActive: activeBonds[character.CharacterID]})
 	}
 	sort.Slice(page.Characters, func(i, j int) bool { return page.Characters[i].Name < page.Characters[j].Name })
 	return page, nil

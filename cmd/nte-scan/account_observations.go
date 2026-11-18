@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/binary"
 	"strings"
 
 	"nte-optimizer/internal/nte"
@@ -128,6 +129,7 @@ func parseFurnitureLevels(payload []byte, diagnostics *recordDiagnostics) (_ []n
 func decodeAccountObservations(report *udpReport, messages []completedMessage) {
 	report.diagnostic("decode_furniture", "started", "", nil)
 	diagnostics := &recordDiagnostics{counts: map[string]int{}}
+	trainingDiagnostics := &recordDiagnostics{}
 	for _, message := range messages {
 		if message.channel != 4 {
 			continue
@@ -136,6 +138,14 @@ func decodeAccountObservations(report *udpReport, messages []completedMessage) {
 		for _, payload := range namedBytePayloads(message.data, message.bits, "FurnitureActivateStates", diagnostics) {
 			if levels, ok := parseFurnitureLevels(payload, diagnostics); ok {
 				report.FurnitureLevels = levels
+			}
+		}
+		for _, payload := range namedBytePayloads(message.data, message.bits, "PukalandTrainingLevel", trainingDiagnostics) {
+			valid := len(payload) == 4
+			trainingDiagnostics.record("puka_training_rank", valid)
+			if valid {
+				rank := binary.LittleEndian.Uint32(payload)
+				report.PukaTrainingRank = &rank
 			}
 		}
 	}
@@ -149,6 +159,11 @@ func decodeAccountObservations(report *udpReport, messages []completedMessage) {
 		status, code = "partial", "furniture_rejected"
 	}
 	report.diagnostic("decode_furniture", status, code, diagnostics.counts)
+	if report.PukaTrainingRank == nil {
+		report.diagnostic("decode_puka_training", "partial", "puka_training_rank_missing", trainingDiagnostics.counts)
+	} else {
+		report.diagnostic("decode_puka_training", "complete", "", trainingDiagnostics.counts)
+	}
 }
 
 func readBondStageFlags(reader *invBits) ([]bool, bool) {

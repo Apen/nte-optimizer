@@ -23,6 +23,7 @@ export function AccountBuffsPage({ locale }: { locale: string }) {
   }, [locale])
   const furniture = page?.furniture.filter(option => page.detected_furniture_ids?.includes(option.id)) ?? []
   const characters = page?.characters.filter(character => character.bond_bonus_active && character.bond_stats?.length) ?? []
+  const pukaTraining = page?.puka_training
   return <div className="grid gap-5">
     <header>
       <h1 className="text-3xl font-black">{t('nav_account_buffs')}</h1>
@@ -38,6 +39,14 @@ export function AccountBuffsPage({ locale }: { locale: string }) {
         </div>
         {!furniture.length && <p className="text-sm text-slate-400">{t('buff_no_furniture')}</p>}
       </section>
+      <section className="grid gap-3" aria-labelledby="puka-training-title">
+        <h2 id="puka-training-title" className="text-lg font-bold">{t('account_puka_training')}</h2>
+        {pukaTraining
+          ? <div className="grid gap-3 md:grid-cols-3">
+            <BonusCard name={t('buff_puka_rank', { rank: pukaTraining.rank })} stats={pukaTraining.stats ?? []} />
+          </div>
+          : <p className="text-sm text-slate-400">{t('buff_puka_rank_missing')}</p>}
+      </section>
       <section className="grid gap-3" aria-labelledby="bond-buffs-title">
         <h2 id="bond-buffs-title" className="text-lg font-bold">{t('account_bond')}</h2>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -48,7 +57,7 @@ export function AccountBuffsPage({ locale }: { locale: string }) {
     </>}
   </div>
 }
-function BonusCard({ name, stats, source }: { name?: string; stats: Stat[]; source: string }) {
+function BonusCard({ name, stats, source }: { name?: string; stats: Stat[]; source?: string }) {
   const { stats: labels } = usePresentation()
   return <Card><CardContent className="grid gap-2 pt-5">
     {name && <h3 className="font-bold">{name}</h3>}
@@ -56,6 +65,6 @@ function BonusCard({ name, stats, source }: { name?: string; stats: Stat[]; sour
       <span className="text-sm font-semibold">{labels[stat.property_id] || stat.property_id}</span>
       <strong className="text-xl text-emerald-300">+{formatStat(stat.property_id, stat.value)}</strong>
     </p>)}
-    <p className="text-xs text-slate-400">{source}</p>
+    {source && <p className="text-xs text-slate-400">{source}</p>}
   </CardContent></Card>
 }

@@ -15,7 +15,7 @@ For each character, the application combines:
 5. cartridge stats and activated two-piece or four-piece set bonuses;
 6. the character console trait for the relevant module area;
 7. optional values from `account_overrides.json`;
-8. automatically applied furniture and per-character bond bonuses from the
+8. automatically applied furniture, Puka Boot Camp and per-character bond bonuses from the
    latest imported account and the corresponding game-data catalogs.
 
 The Account Buffs page and the builder use the same backend selection. Furniture
@@ -25,6 +25,12 @@ observed progression contributes one tier, shared by all projected deployed
 characters. Duplicate observations are counted once, conflicting levels are
 rejected, and a missing tier in a supported progression is reported explicitly.
 
+Puka Boot Camp uses the scanned `PukalandTrainingLevel` and the cumulative
+additive modifiers at that rank in `data/game/account/puka_training.json`.
+Rank zero is an observed rank with an empty bonus list. An older import can
+omit the rank. The game limits these bonuses to deployed characters, which
+matches the builds evaluated by the optimizer.
+
 Characters with a scanned bond level of at least 10 receive their own cataloged
 bonus from `data/game/characters/bond_bonuses.json`. Bond-stage flags remain
 available as observations; they do not gate the selected level-10 bonus.
@@ -33,7 +39,8 @@ builds. They do not claim that the scanner has independently decoded furniture
 activation or bond reward claiming.
 
 The bonuses enter search inputs, objectives, final stats, damage estimates, and
-the reconstructed equipped build as `account_furniture` and `account_bond`.
+the reconstructed equipped build as `account_furniture`, `account_puka_training`
+and `account_bond`.
 They survive Arc selection and are included exactly once in saved results. They
 do not add equipment-quality points or alter raw scanned panel observations.
 Overlapping manual panel calibrations are rejected to prevent double counting.
