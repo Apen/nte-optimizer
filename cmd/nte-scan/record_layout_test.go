@@ -4,6 +4,8 @@ import (
 	"math"
 	"reflect"
 	"testing"
+
+	scannerunreal "nte-optimizer/internal/scanner/unreal"
 )
 
 // recordWriter packs fields the way the game serializes inventory records:
@@ -158,6 +160,7 @@ func TestParseRecordLayoutWithAdditionalHeaderField(t *testing.T) {
 	character.put(5, 32)  // breakthrough
 	character.putNetID(itemNetID{})
 	character.put(2, 32) // awaken level
+	extraPanelWordOffset := character.bits + 5*32
 	for i := 0; i < 7; i++ {
 		character.putFloat(float32(i))
 	}
@@ -190,5 +193,22 @@ func TestParseRecordLayoutWithAdditionalHeaderField(t *testing.T) {
 	}
 	if len(characters[0].SkillLevels) != 1 || characters[0].SkillLevels[0].Level != 6 {
 		t.Fatalf("unexpected character skills: %#v", characters[0].SkillLevels)
+	}
+	for _, variant := range []struct {
+		name string
+		word uint64
+	}{{"zero word", 0}, {"nonfinite bit pattern", 0xff800000}} {
+		t.Run(variant.name, func(t *testing.T) {
+			before, _ := extractBitRange(character.data, 0, extraPanelWordOffset)
+			afterBits := character.bits - extraPanelWordOffset
+			after, _ := extractBitRange(character.data, extraPanelWordOffset, afterBits)
+			extended := recordWriter{data: before, bits: extraPanelWordOffset}
+			extended.put(variant.word, 32)
+			extended.data, extended.bits = scannerunreal.AppendBits(extended.data, extended.bits, after, afterBits)
+			decoded := parseCharacters(extended.data, extended.bits, characterCatalog, nil)
+			if !reflect.DeepEqual(decoded, characters) {
+				t.Fatalf("extra panel word shifted the decoded character: %#v", decoded)
+			}
+		})
 	}
 }

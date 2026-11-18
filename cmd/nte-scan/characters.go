@@ -466,62 +466,92 @@ func parseCharacterProbeAt(data []byte, bitLen, off int, c *characterCatalog, di
 		return characterProbe{}, characterItem{}, 0, false
 	}
 	afterAwaken := r.cursor
-	phase = "panel_fields"
-	unknownFloats := make([]float32, 0, 7)
-	for i := 0; i < 7; i++ {
-		v, o := r.f32()
-		if !o || v < 0 || math.IsNaN(float64(v)) || math.IsInf(float64(v), 0) {
-			return characterProbe{}, characterItem{}, 0, false
+	end, details, rejectedPhase := readCharacterDetails(r, false)
+	// An older layout can read a zero count from the added word and miss the
+	// actual skill array. Require a complete nonempty array to select the newer layout.
+	if rejectedPhase != "" || len(details.skills) == 0 {
+		newEnd, newDetails, newRejection := readCharacterDetails(r, true)
+		if newRejection == "" && len(newDetails.skills) != 0 {
+			end, details, rejectedPhase = newEnd, newDetails, ""
 		}
-		unknownFloats = append(unknownFloats, v)
 	}
-	unknownFlag, o := r.boolean()
-	if !o {
+	if rejectedPhase != "" {
+		phase = rejectedPhase
 		return characterProbe{}, characterItem{}, 0, false
-	}
-	n, o := r.i32()
-	if !o || n < 0 {
-		return characterProbe{}, characterItem{}, 0, false
-	}
-	phase = "skills"
-	n16, o := r.u16()
-	if !o || n16 > 64 {
-		return characterProbe{}, characterItem{}, 0, false
-	}
-	skills := make([]characterSkillLevel, 0, n16)
-	for i := uint16(0); i < n16; i++ {
-		ability, ok := r.nameRef()
-		if !ok {
-			return characterProbe{}, characterItem{}, 0, false
-		}
-		category, ok := r.nameRef()
-		if !ok {
-			return characterProbe{}, characterItem{}, 0, false
-		}
-		skillLevel, ok := r.i32()
-		if !ok || skillLevel < 1 || skillLevel > 10 {
-			return characterProbe{}, characterItem{}, 0, false
-		}
-		skills = append(skills, characterSkillLevel{AbilityID: ability, Category: category, Level: skillLevel})
 	}
 	var fp *itemNetID
 	if fork.Solt != 0 || fork.Serial != 0 {
 		x := fork
 		fp = &x
 	}
-	item := characterItem{NetID: net, CharacterID: uint32(id64), Name: def.Codename, Codename: def.Codename, Level: level, BreakthroughLevel: br, AwakenLevel: aw, ForkNetID: fp, SkillLevels: skills, MaxHP: unknownFloats[1]}
-	tailBits := bitLen - r.cursor
+	item := characterItem{NetID: net, CharacterID: uint32(id64), Name: def.Codename, Codename: def.Codename, Level: level, BreakthroughLevel: br, AwakenLevel: aw, ForkNetID: fp, SkillLevels: details.skills, MaxHP: details.floats[1]}
+	tailBits := bitLen - end
 	if tailBits > 8192 {
 		tailBits = 8192
 	}
 	var tailHex string
 	if tailBits > 0 {
-		if tail, ok := extractBitRange(data, r.cursor, tailBits); ok {
+		if tail, ok := extractBitRange(data, end, tailBits); ok {
 			tailHex = hex.EncodeToString(tail)
 		}
 	}
-	probe := characterProbe{NetID: net, CharacterID: uint32(id64), Name: def.Codename, Level: level, Breakthrough: br, CurrentAwaken: aw, RecordStartBit: off, AfterAwakenBit: afterAwaken, RecordEndBit: r.cursor, UnknownFloats: unknownFloats, UnknownFlag: unknownFlag, UnknownInt32: n, UnknownUint16: n16, TailBits: tailBits, TailHex: tailHex, ForkNetID: fp, SkillLevels: skills}
-	return probe, item, r.cursor, true
+	probe := characterProbe{NetID: net, CharacterID: uint32(id64), Name: def.Codename, Level: level, Breakthrough: br, CurrentAwaken: aw, RecordStartBit: off, AfterAwakenBit: afterAwaken, RecordEndBit: end, UnknownFloats: details.floats[:], UnknownFlag: details.flag, UnknownInt32: details.value, UnknownUint16: uint16(len(details.skills)), TailBits: tailBits, TailHex: tailHex, ForkNetID: fp, SkillLevels: details.skills}
+	return probe, item, end, true
+}
+
+type characterDetails struct {
+	floats [7]float32
+	flag   bool
+	value  int32
+	skills []characterSkillLevel
+}
+
+func readCharacterDetails(r invBits, hasExtraWord bool) (int, characterDetails, string) {
+	var details characterDetails
+	for i := 0; i < 7; i++ {
+		// The newer record has an uninterpreted 32-bit word before the
+		// sixth float. Its bit pattern does not have to represent a float.
+		if hasExtraWord && i == 5 {
+			if _, ok := r.u32(); !ok {
+				return 0, characterDetails{}, "panel_fields"
+			}
+		}
+		v, o := r.f32()
+		if !o || v < 0 || math.IsNaN(float64(v)) || math.IsInf(float64(v), 0) {
+			return 0, characterDetails{}, "panel_fields"
+		}
+		details.floats[i] = v
+	}
+	var o bool
+	details.flag, o = r.boolean()
+	if !o {
+		return 0, characterDetails{}, "panel_fields"
+	}
+	details.value, o = r.i32()
+	if !o || details.value < 0 {
+		return 0, characterDetails{}, "panel_fields"
+	}
+	n16, o := r.u16()
+	if !o || n16 > 64 {
+		return 0, characterDetails{}, "skills"
+	}
+	details.skills = make([]characterSkillLevel, 0, n16)
+	for i := uint16(0); i < n16; i++ {
+		ability, ok := r.nameRef()
+		if !ok {
+			return 0, characterDetails{}, "skills"
+		}
+		category, ok := r.nameRef()
+		if !ok {
+			return 0, characterDetails{}, "skills"
+		}
+		skillLevel, ok := r.i32()
+		if !ok || skillLevel < 1 || skillLevel > 10 {
+			return 0, characterDetails{}, "skills"
+		}
+		details.skills = append(details.skills, characterSkillLevel{AbilityID: ability, Category: category, Level: skillLevel})
+	}
+	return r.cursor, details, ""
 }
 
 func parseCharacterProbes(data []byte, bitLen int, c *characterCatalog) []characterProbe {

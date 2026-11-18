@@ -21,6 +21,8 @@ last reached stage in the log. The Import page reloads the log after the scan.
   message counts. Domain parsers continue to use their existing input sources.
 - Equipment, characters, Arcs and resources: recognized-name candidates,
   accepted sightings, unique records retained and rejections by parser phase.
+  Character records can contain an additional opaque word among their panel
+  fields. The scanner checks the following skill array before selecting that layout.
 - Character observations: counts without associated panels, observed bonds or
   skill levels. Missing optional observations are not inferred.
 - Equipment associations: unresolved character/Arc references and equipped
