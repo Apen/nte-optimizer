@@ -12,10 +12,11 @@ import (
 	"nte-optimizer/internal/decoded"
 	ntelocale "nte-optimizer/internal/locale"
 	"nte-optimizer/internal/nte"
+	"nte-optimizer/internal/team"
 )
 
-// AllyBuffSummary describes potential ally contributions. It never adds stats
-// to a build; Included refers only to an existing temporary buff projection.
+// AllyBuffSummary describes potential and applied ally contributions. Stat
+// calculation remains in the team evaluator and temporary buff projection.
 type AllyBuffSummary struct {
 	ID             string   `json:"id"`
 	CharacterID    int      `json:"character_id"`
@@ -41,6 +42,10 @@ func (s OptimizerService) allyBuffSummaries(state *decoded.State, scenario *team
 	if err != nil {
 		return nil, err
 	}
+	resonances, err := s.loadAwakeningResonances()
+	if err != nil {
+		return nil, err
+	}
 	for _, ally := range scenario.allies {
 		index := slices.IndexFunc(state.Characters, func(character decoded.Character) bool { return character.CharacterID == ally.CharacterID })
 		if index < 0 {
@@ -52,7 +57,11 @@ func (s OptimizerService) allyBuffSummaries(state *decoded.State, scenario *team
 			return nil, err
 		}
 		for _, b := range catalog.Effects {
-			if b.CharacterID != ally.CharacterID || b.Recipients.Scope != "team" || !b.Unlocked(actor) {
+			if b.CharacterID != ally.CharacterID || b.Recipients.Scope != "team" {
+				continue
+			}
+			b.Conditions.RequiredAwakening = max(b.Conditions.RequiredAwakening, resonances.effectRank(ally.CharacterID, b.ID))
+			if !b.Unlocked(actor) {
 				continue
 			}
 			if b.Conditions.ActiveCharacterOnly || b.Conditions.RequiresCasterActive {
@@ -63,6 +72,9 @@ func (s OptimizerService) allyBuffSummaries(state *decoded.State, scenario *team
 				ability = b.Conditions.PassiveAbilityID
 			}
 			entry := AllyBuffSummary{ID: b.ID, CharacterID: character.CharacterID, CharacterName: cleanCharacterName(labels.CharacterName(character.CharacterID, character.Name)), AbilityName: localizedAbilityLabel(labels.Abilities, ability), PropertyID: b.Target.PropertyID, Percent: b.Target.Percent, Condition: allyBuffCondition(b, labels), PerStack: b.Stacking.ValuesPerStack, abilityID: ability}
+			entry.Included = slices.ContainsFunc(scenario.resonanceContributions, func(effect team.Contribution) bool {
+				return effect.RuleID == b.ID && slices.Contains(effect.SourceIDs, ally.CharacterID)
+			})
 			if magnitude, err := b.PreviewMagnitude(actor); err == nil {
 				entry.Value = &magnitude.Value
 				entry.Duration = magnitude.Duration
@@ -75,6 +87,11 @@ func (s OptimizerService) allyBuffSummaries(state *decoded.State, scenario *team
 
 func (s OptimizerService) allyBuffActor(character decoded.Character, arc *decoded.Weapon) (combatdata.Actor, error) {
 	actor := combatdata.Actor{CharacterID: character.CharacterID, Level: character.Level, Awakening: character.AwakenLevel, Breakthrough: character.BreakthroughLevel, Levels: map[string]int{}}
+	resonances, err := s.loadAwakeningResonances()
+	if err != nil {
+		return actor, err
+	}
+	resonances.apply(&character)
 	for _, skill := range character.Skills {
 		actor.Levels[skill.AbilityID] = skill.Level
 	}

@@ -19,10 +19,11 @@ type TeamAlly struct {
 }
 
 type teamScenario struct {
-	catalog team.Catalog
-	members []team.Member
-	allies  []TeamAlly
-	gear    map[int]teamGear
+	catalog                team.Catalog
+	members                []team.Member
+	allies                 []TeamAlly
+	gear                   map[int]teamGear
+	resonanceContributions []team.Contribution
 }
 
 func (s *OptimizerService) prepareTeam(inv nte.Inventory, state *decoded.State, activeID int, currentArc *decoded.Weapon) (*teamScenario, error) {
@@ -46,10 +47,15 @@ func (s *OptimizerService) prepareTeam(inv nte.Inventory, state *decoded.State, 
 	if err != nil {
 		return nil, err
 	}
+	resonances, err := s.loadAwakeningResonances()
+	if err != nil {
+		return nil, err
+	}
 	scenario := &teamScenario{catalog: catalog, members: []team.Member{{CharacterID: activeID}}}
 	scenario.gear = make(map[int]teamGear, len(allies))
 	selectedCharacters := map[int]bool{activeID: true}
 	selectedArcs := map[string]bool{}
+	var resonanceStats []nte.Stat
 	reserved := maps.Clone(s.ReservedArcIDs)
 	if reserved == nil {
 		reserved = map[string]bool{}
@@ -60,6 +66,12 @@ func (s *OptimizerService) prepareTeam(inv nte.Inventory, state *decoded.State, 
 			return invalid("duplicate or unavailable ally")
 		}
 		selectedCharacters[ally.CharacterID] = true
+		for _, effect := range resonances.teamStats(state.Characters[index]) {
+			resonanceStats = append(resonanceStats, effect.stat)
+			scenario.resonanceContributions = append(scenario.resonanceContributions, team.Contribution{
+				RuleID: effect.id, SourceIDs: []int{ally.CharacterID}, RecipientID: activeID, Stat: effect.stat,
+			})
+		}
 		member := team.Member{CharacterID: ally.CharacterID}
 		gear := resolveTeamGear(state.Characters[index], s.teamBuilds[strconv.Itoa(ally.CharacterID)], inv, state.Weapons)
 		scenario.gear[ally.CharacterID] = gear
@@ -79,6 +91,9 @@ func (s *OptimizerService) prepareTeam(inv nte.Inventory, state *decoded.State, 
 		scenario.allies = append(scenario.allies, ally)
 		scenario.members = append(scenario.members, member)
 	}
+	if err := validateBuffCalibration(resonanceStats, activeID, state.PanelOverrides[activeID]); err != nil {
+		return nil, err
+	}
 	s.ReservedArcIDs = reserved
 	return scenario, nil
 }
@@ -88,7 +103,12 @@ func (s teamScenario) evaluate(activeArc *decoded.Weapon) (team.Result, error) {
 	if activeArc != nil {
 		members[0].Arc = *activeArc
 	}
-	return s.catalog.Evaluate(members, members[0].CharacterID)
+	result, err := s.catalog.Evaluate(members, members[0].CharacterID)
+	if err != nil {
+		return result, err
+	}
+	result.Contributions = append(result.Contributions, s.resonanceContributions...)
+	return result, nil
 }
 
 func (s teamScenario) apply(activeArc *decoded.Weapon, sources map[string][]nte.Stat) ([]string, error) {

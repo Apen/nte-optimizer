@@ -221,39 +221,37 @@ func selectedAccountBuffSources(state *decoded.State, catalog accountBuffCatalog
 			sources["account_bond"] = append([]nte.Stat(nil), stats...)
 		}
 	}
-	// Calibration is an unclassified residual. Do not combine an overlapping
-	// correction with an identified bonus: its original meaning is unknown.
 	for _, stats := range sources {
-		for _, stat := range stats {
-			family := stat.PropertyID
-			switch family {
-			case "AtkAdd", "AtkUp":
-				family = "Atk"
-			case "DefAdd", "DefUp":
-				family = "Def"
-			case "HPMaxAdd", "HPMaxUp":
-				family = "HP"
-			}
-			for property, value := range calibration {
-				if value == 0 {
-					continue
-				}
-				conflict := property == stat.PropertyID
-				switch family {
-				case "Atk":
-					conflict = property == "AtkAdd" || property == "AtkUp" || property == "AtkBase" || property == "AtkFinal"
-				case "Def":
-					conflict = property == "DefAdd" || property == "DefUp" || property == "DefBase" || property == "DefFinal"
-				case "HP":
-					conflict = property == "HPMaxAdd" || property == "HPMaxUp" || property == "HPMaxBase" || property == "HPFinal"
-				}
-				if conflict {
-					return nil, fmt.Errorf("%w for character %d (%s)", errBuffCalibrationConflict, characterID, property)
-				}
-			}
+		if err := validateBuffCalibration(stats, characterID, calibration); err != nil {
+			return nil, err
 		}
 	}
 	return sources, nil
+}
+
+// Calibration is an unclassified residual. Do not combine it with an
+// overlapping modeled bonus as the calibration may already include it.
+func validateBuffCalibration(stats []nte.Stat, characterID int, calibration map[string]float64) error {
+	for _, stat := range stats {
+		for property, value := range calibration {
+			if value == 0 {
+				continue
+			}
+			conflict := property == stat.PropertyID
+			switch stat.PropertyID {
+			case "AtkAdd", "AtkUp":
+				conflict = property == "AtkAdd" || property == "AtkUp" || property == "AtkBase" || property == "AtkFinal"
+			case "DefAdd", "DefUp":
+				conflict = property == "DefAdd" || property == "DefUp" || property == "DefBase" || property == "DefFinal"
+			case "HPMaxAdd", "HPMaxUp":
+				conflict = property == "HPMaxAdd" || property == "HPMaxUp" || property == "HPMaxBase" || property == "HPFinal"
+			}
+			if conflict {
+				return fmt.Errorf("%w for character %d (%s)", errBuffCalibrationConflict, characterID, property)
+			}
+		}
+	}
+	return nil
 }
 
 func LoadAccountBuffPage(projectDir, dataDir, language string) (AccountBuffPage, error) {

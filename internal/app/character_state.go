@@ -85,11 +85,12 @@ func LoadCharacterGameState(projectDir, dataDir string, characterID int, languag
 			result.Modules = append(result.Modules, module)
 		}
 	}
-	stats, err := service.currentCharacterStats(&state, result.Character, result.Modules, result.Cartridges, language)
+	stats, skills, err := service.currentCharacterStats(&state, result.Character, result.Modules, result.Cartridges, language)
 	if err != nil {
 		return CharacterGameState{}, err
 	}
 	result.Stats = stats
+	result.Character.Skills = skills
 	return result, nil
 }
 
@@ -101,21 +102,22 @@ func hasObservedPanelStats(stats decoded.CharacterStats) bool {
 }
 
 func loadCurrentCharacterStats(dataDir string, state *decoded.State, character decoded.Character, modules []nte.Module, cartridges []nte.Cartridge, language string) (*optimizer.StatSummary, error) {
-	return NewOptimizerService(dataDir).currentCharacterStats(state, character, modules, cartridges, language)
+	stats, _, err := NewOptimizerService(dataDir).currentCharacterStats(state, character, modules, cartridges, language)
+	return stats, err
 }
 
-func (service OptimizerService) currentCharacterStats(state *decoded.State, character decoded.Character, modules []nte.Module, cartridges []nte.Cartridge, language string) (*optimizer.StatSummary, error) {
+func (service OptimizerService) currentCharacterStats(state *decoded.State, character decoded.Character, modules []nte.Module, cartridges []nte.Cartridge, language string) (*optimizer.StatSummary, []decoded.CharacterSkill, error) {
 	profile, err := service.characterInputs(character)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	_, _, _, additional, _, err := service.resolveAccountContext(state, profile, language)
+	currentCharacter, _, _, additional, _, err := service.resolveAccountContext(state, profile, language)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	catalogs, err := service.loadOptimizerCatalog()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	var cartridge *nte.Cartridge
 	if len(cartridges) > 0 {
@@ -132,5 +134,9 @@ func (service OptimizerService) currentCharacterStats(state *decoded.State, char
 	}
 	matched := matchedRequiredGeometries(modules, currentSet.RequiredGeometries)
 	stats := optimizer.BuildStatSummary(profile, modules, cartridge, currentSet, matched, additional)
-	return &stats, nil
+	skills := character.Skills
+	if currentCharacter != nil {
+		skills = currentCharacter.Skills
+	}
+	return &stats, skills, nil
 }

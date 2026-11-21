@@ -138,8 +138,13 @@ func LoadBuildWorkspace(projectDir, dataDir, language string) (BuildWorkspace, e
 	if err != nil {
 		return BuildWorkspace{}, err
 	}
+	resonances, err := readAwakeningResonances(dataDir)
+	if err != nil {
+		return BuildWorkspace{}, err
+	}
 	byID := make(map[int]decoded.Character, len(state.Characters))
 	for _, character := range state.Characters {
+		resonances.apply(&character)
 		byID[character.CharacterID] = character
 	}
 	arcsByID := make(map[string]decoded.Weapon, len(state.Weapons))

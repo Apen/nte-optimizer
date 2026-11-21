@@ -33,6 +33,9 @@ type staticCatalogs struct {
 	buffOnce      sync.Once
 	buffs         accountBuffCatalog
 	buffErr       error
+	resonanceOnce sync.Once
+	resonances    awakeningResonances
+	resonanceErr  error
 	localeMu      sync.Mutex
 	locales       map[string]localeResult
 }

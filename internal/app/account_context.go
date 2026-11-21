@@ -57,6 +57,18 @@ func (s OptimizerService) resolveAccountContext(state *decoded.State, profile sc
 	if err != nil {
 		return nil, nil, "", nil, nil, err
 	}
+	if currentCharacter != nil {
+		resonances, err := s.loadAwakeningResonances()
+		if err != nil {
+			return nil, nil, "", nil, nil, err
+		}
+		if stats := resonances.apply(currentCharacter); len(stats) > 0 {
+			if err := validateBuffCalibration(stats, profile.CharacterID, state.PanelOverrides[profile.CharacterID]); err != nil {
+				return nil, nil, "", nil, nil, err
+			}
+			additional["awakening_resonance"] = stats
+		}
+	}
 	for source, stats := range buffs {
 		additional[source] = stats
 	}

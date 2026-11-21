@@ -258,11 +258,15 @@ type SummonCatalog struct {
 	SpawnPaths       []json.RawMessage          `json:"spawn_paths"`
 }
 type Modifier struct {
-	ID                            string          `json:"id"`
-	CharacterID                   string          `json:"character_id"`
-	EffectID                      string          `json:"effect_id"`
-	PropertyID                    string          `json:"property_id"`
-	Operation                     string          `json:"operation"`
+	ID            string    `json:"id"`
+	CharacterID   string    `json:"character_id"`
+	EffectID      string    `json:"effect_id"`
+	PropertyID    string    `json:"property_id"`
+	Operation     string    `json:"operation"`
+	ValuesByLevel []float64 `json:"values_by_level"`
+	DisplayUnit   struct {
+		Percent *bool `json:"percent"`
+	} `json:"display_unit"`
 	PublishedIDs                  []string        `json:"published_ids"`
 	Status                        string          `json:"status"`
 	SourceKind                    string          `json:"source_kind"`
@@ -319,6 +323,17 @@ func LoadBuffs(dataDir string) (BuffCatalog, error) {
 	}
 	if catalog.SchemaVersion != 1 {
 		return catalog, fmt.Errorf("unsupported skill buff schema")
+	}
+	return catalog, nil
+}
+
+func LoadModifiers(dataDir string) (ModifierCatalog, error) {
+	var catalog ModifierCatalog
+	if err := read(datafiles.New(dataDir).Game("combat", "modifier_values.json"), &catalog); err != nil {
+		return catalog, err
+	}
+	if catalog.SchemaVersion != 1 {
+		return catalog, fmt.Errorf("unsupported modifier value schema")
 	}
 	return catalog, nil
 }

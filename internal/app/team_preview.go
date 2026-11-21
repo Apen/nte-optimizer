@@ -209,6 +209,11 @@ func (s OptimizerService) conditionalTeamEffects(state *decoded.State, scenario 
 func (s OptimizerService) previewSkillAttackBonus(definition teamPreviewDefinition, character decoded.Character, weapon *decoded.Weapon) (*float64, error) {
 	ratio := definition.BaseAttackRatio
 	if len(definition.RatiosByLevel) > 0 {
+		resonances, err := s.loadAwakeningResonances()
+		if err != nil {
+			return nil, err
+		}
+		resonances.apply(&character)
 		index := slices.IndexFunc(character.Skills, func(skill decoded.CharacterSkill) bool {
 			return skill.AbilityID == definition.ID
 		})

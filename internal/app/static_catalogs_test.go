@@ -22,7 +22,7 @@ func TestCurrentStatsDoNotRequireACharacterStrategy(t *testing.T) {
 		}
 	}
 	c := decoded.Character{CharacterID: 1004, Level: 80, BreakthroughLevel: 6}
-	stats, err := s.currentCharacterStats(&decoded.State{Characters: []decoded.Character{c}}, c, nil, nil, "en")
+	stats, _, err := s.currentCharacterStats(&decoded.State{Characters: []decoded.Character{c}}, c, nil, nil, "en")
 	if err != nil || stats == nil || stats.Derived["AtkFinal"] != 636 {
 		t.Fatalf("strategy-independent stats: %+v %v", stats, err)
 	}
