@@ -18,7 +18,7 @@ const catalog: LocalizationCatalog = {
     AtkBase: 'Base ATK', AtkFinal: 'ATK', AtkUp: 'ATK %', AtkAdd: 'Flat ATK',
     DefBase: 'Base DEF', DefFinal: 'DEF', DefUp: 'DEF %', DefAdd: 'Flat DEF', Endurance: 'Endurance',
     HPMaxBase: 'Base HP', HPFinal: 'HP', HPMaxUp: 'HP %', HPMaxAdd: 'Flat HP', HPUp: 'HP %',
-    CritDamageBase: 'CRIT DMG', MagBase: 'Cycle Intensity', ElementalDMGBonus: 'Elemental DMG',
+    CritDamageBase: 'CRIT DMG', MagBase: 'Cycle Intensity', ElementalDMGBonus: 'Elemental DMG', DefenseIgnoreBase: 'DEF Ignore',
   },
   qualities: {},
   geometries: {},
@@ -57,6 +57,18 @@ describe('CurrentGameStats', () => {
     expect(screen.queryByText(/Max effects/)).not.toBeInTheDocument()
     expect(screen.queryByText('1,230')).not.toBeInTheDocument()
     expect(screen.queryByText('468')).not.toBeInTheDocument()
+  })
+
+  it('keeps defense ignore from awakening resonances out of the calculated panel', () => {
+    const shinkuStats: StatSummary = {
+      ...stats,
+      derived: { ...stats.derived, CritBase: .83, DefenseIgnoreBase: .15 },
+    }
+    render(<PresentationProvider catalog={catalog}><CurrentGameStats calculatedStats={shinkuStats} /></PresentationProvider>)
+
+    expect(screen.getByText('83.0 %')).toBeInTheDocument()
+    expect(screen.queryByText('DEF Ignore')).not.toBeInTheDocument()
+    expect(screen.queryByText('15.0 %')).not.toBeInTheDocument()
   })
 
   it('prefers final values observed by the scanner over the calculated estimate', () => {

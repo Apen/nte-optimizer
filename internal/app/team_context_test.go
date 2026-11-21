@@ -103,6 +103,80 @@ func TestBuilderAppliesSelectedTeamToSearchAndComparison(t *testing.T) {
 	}
 }
 
+func TestHanielR3UsesEffectiveSkillLevelInTeamPreviewAndAllySummary(t *testing.T) {
+	const haniel = 1020
+	const ability = "GA_Haniel_Skill"
+	projectDir := t.TempDir()
+	if err := ensureWorkspace(projectDir); err != nil {
+		t.Fatal(err)
+	}
+	state := decoded.State{Characters: []decoded.Character{
+		{CharacterID: 1036, Level: 80, BreakthroughLevel: 6},
+		{CharacterID: haniel, Level: 70, BreakthroughLevel: 5,
+			Skills: []decoded.CharacterSkill{{AbilityID: ability, Level: 10}}},
+	}}
+	inv := nte.Inventory{
+		Modules: []nte.Module{{LocalID: "synthetic-module", Geometry: "H_2", Area: 2, Level: 20, EquippedCharacterID: 1036}},
+		Cartridges: []nte.Cartridge{{LocalID: "synthetic-cartridge", SetID: "Suit2", Level: 20, EquippedCharacterID: 1036,
+			MainStats: []nte.Stat{{PropertyID: "CritBase", Value: .3, Percent: true}}}},
+	}
+	service := NewOptimizerService(filepath.Join("..", "..", "data"))
+	allies := []TeamAlly{{CharacterID: haniel}}
+	service.WeightOverrides = &WeightOverrides{
+		MainStats:  []string{"CritBase"},
+		Weights:    map[string]float64{"CritBase": 1},
+		TeamAllies: allies,
+	}
+	base, err := service.requiredCharacterBaseStats(haniel, 70, 5)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if base["AtkBase"] <= 0 {
+		t.Fatal("missing Haniel base attack")
+	}
+	for _, check := range []struct {
+		rank  int
+		ratio float64
+	}{{2, .19}, {3, .20}} {
+		t.Run(fmt.Sprintf("R%d", check.rank), func(t *testing.T) {
+			state.Characters[1].AwakenLevel = check.rank
+			if err := writeAccountData(projectDir, inv, state); err != nil {
+				t.Fatal(err)
+			}
+			want := base["AtkBase"] * check.ratio
+			preview, err := service.PreviewTeam(projectDir, "zankou", "en", NoArcForkSelection, allies)
+			if err != nil {
+				t.Fatal(err)
+			}
+			idx := slices.IndexFunc(preview.Conditional, func(effect TeamPreviewEffect) bool {
+				return effect.CharacterID == haniel && effect.ID == ability
+			})
+			if idx < 0 {
+				t.Fatal("Haniel skill is missing from the team preview")
+			}
+			bonus := preview.Conditional[idx].Bonus
+			if bonus == nil || bonus.PropertyID != "AtkAdd" || bonus.Percent || math.Abs(bonus.Value-want) > 1e-9 {
+				t.Fatalf("team preview bonus = %+v, want %g flat attack", bonus, want)
+			}
+
+			result, err := service.OptimizeFlexibleProjectWithArc(context.Background(), projectDir, "zankou", true, "en", "score", nil, NoArcForkSelection)
+			if err != nil {
+				t.Fatal(err)
+			}
+			idx = slices.IndexFunc(result.AllyBuffs, func(buff AllyBuffSummary) bool {
+				return buff.CharacterID == haniel && buff.ID == "haniel_skill_attack"
+			})
+			if idx < 0 {
+				t.Fatal("Haniel skill is missing from the ally summary")
+			}
+			buff := result.AllyBuffs[idx]
+			if buff.Value == nil || buff.PropertyID != "AtkAdd" || buff.Percent || math.Abs(*buff.Value-want) > 1e-9 {
+				t.Fatalf("ally summary bonus = %+v, want %g flat attack", buff, want)
+			}
+		})
+	}
+}
+
 func TestTeamPreviewCalculatesBaseAttackAndGroupsNonStackingSets(t *testing.T) {
 	dir := t.TempDir()
 	if err := ensureWorkspace(dir); err != nil {

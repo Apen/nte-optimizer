@@ -6,8 +6,12 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"slices"
+	"strconv"
+	"strings"
 	"testing"
 
+	"nte-optimizer/internal/combatdata"
 	"nte-optimizer/internal/damage"
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
@@ -38,6 +42,30 @@ func TestAwakeningResonancesCoverPublishedCharacterIDs(t *testing.T) {
 	}
 }
 
+func TestAwakeningResonanceSkillsBelongToPublishedCharacter(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	resonances, err := readAwakeningResonances(dataDir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	combat, err := combatdata.Load(dataDir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for id, ranks := range resonances {
+		abilities := combat.Skills.Characters[strconv.Itoa(id)].Abilities
+		for _, rank := range ranks {
+			for abilityID := range rank.SkillLevels {
+				if !slices.ContainsFunc(abilities, func(ability combatdata.Ability) bool {
+					return ability.ID == abilityID
+				}) {
+					t.Errorf("character %d R%d references unknown skill %q", id, rank.RequiredAwakening, abilityID)
+				}
+			}
+		}
+	}
+}
+
 func TestReadAwakeningResonancesRejectsInvalidBonuses(t *testing.T) {
 	for _, test := range []struct {
 		name, resonances string
@@ -56,6 +84,38 @@ func TestReadAwakeningResonancesRejectsInvalidBonuses(t *testing.T) {
 			writeTestFile(t, path, `{"schema_version":1,"characters":{"1003":`+test.resonances+`}}`)
 			if _, err := readAwakeningResonances(dataDir); err == nil {
 				t.Fatal("invalid resonance catalog was accepted")
+			}
+		})
+	}
+}
+
+func TestResolveAwakeningResonancesRejectsConditionalHanielEffect(t *testing.T) {
+	dataDir := t.TempDir()
+	layout := datafiles.New(dataDir)
+	published := datafiles.New(filepath.Join("..", "..", "data"))
+	resonancesPath := layout.Game("characters", "awakening_resonances.json")
+	for _, dir := range []string{filepath.Dir(resonancesPath), layout.Game("combat")} {
+		if err := os.MkdirAll(dir, 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, name := range []string{"skill_buffs.json", "modifier_values.json"} {
+		raw, err := os.ReadFile(published.Game("combat", name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		writeTestFile(t, layout.Game("combat", name), string(raw))
+	}
+	for _, test := range []struct {
+		name, reference, reason string
+	}{
+		{"reviewed buff", `{"id":"haniel_awakening3_critical_rate"}`, "invalid permanent awakening resonance effect"},
+		{"raw modifier", `{"id":"Buff_Haniel020_Level3_CritDamageUp__Modifiers_0","source":"modifier_values"}`, "use its published buff"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			writeTestFile(t, resonancesPath, `{"schema_version":1,"characters":{"1020":[{"required_awakening":3,"stat_effects":[`+test.reference+`]}]}}`)
+			if _, err := resolveAwakeningResonances(dataDir); err == nil || !strings.Contains(err.Error(), test.reason) {
+				t.Fatalf("expected conditional effect to be rejected, got %v", err)
 			}
 		})
 	}
@@ -121,6 +181,35 @@ func TestBuilderAppliesNanallyDamageBonusAtR6(t *testing.T) {
 		}
 		if delta := check.after.Derived[property] - check.before.Derived[property]; math.Abs(delta-.15) > 1e-9 {
 			t.Errorf("%s damage bonus increased by %g at R6, want .15", check.name, delta)
+		}
+	}
+}
+
+func TestShinkuR6DefenseIgnoreAffectsEquippedAndOptimizedDamage(t *testing.T) {
+	character := decoded.Character{CharacterID: 1076, Level: 80, BreakthroughLevel: 6,
+		Skills: []decoded.CharacterSkill{{AbilityID: "GA_Shinku_Melee", Level: 10}}}
+	for _, check := range []struct {
+		rank   int
+		ignore float64
+	}{{5, 0}, {6, .15}} {
+		character.AwakenLevel = check.rank
+		result := optimizeResonanceTestCharacter(t, character, "shinku", "Suit6", "CritBase")
+		if result.Damage == nil || result.Damage.Status != "atomic_preview" {
+			t.Fatalf("R%d damage preview is unavailable: %+v", check.rank, result.Damage)
+		}
+		want, _ := damage.DefenseMultiplier(character.Level, result.Damage.Enemy, check.ignore, 0)
+		for _, preview := range []struct {
+			name      string
+			instances []damage.Result
+		}{{"equipped", result.Damage.Current}, {"optimized", result.Damage.Build}} {
+			if len(preview.instances) == 0 {
+				t.Fatalf("R%d %s damage preview is empty", check.rank, preview.name)
+			}
+			for _, hit := range preview.instances {
+				if math.Abs(hit.Factors.DefenseZone-want) > 1e-9 {
+					t.Errorf("R%d %s %s defense multiplier = %g, want %g", check.rank, preview.name, hit.InstanceID, hit.Factors.DefenseZone, want)
+				}
+			}
 		}
 	}
 }

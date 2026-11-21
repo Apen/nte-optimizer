@@ -4,11 +4,13 @@ import { usePresentation } from '../presentation'
 import type { ObservedPanelStats, StatSummary } from '../types'
 import { Card, CardContent, CardHeader } from './ui/card'
 
-// These inputs are already represented by the final panel values below.
-const panelStatComponents = new Set([
+const hiddenPanelStats = new Set([
+  // These inputs are represented by the final panel values.
   'AtkBase', 'AtkUp', 'AtkAdd',
   'DefBase', 'DefUp', 'DefAdd',
   'HPMaxBase', 'HPMaxUp', 'HPMaxAdd', 'HPUp',
+  // Defense ignore is used in damage calculations.
+  'DefenseIgnoreBase',
 ])
 
 const roundedPanelStats = new Set(['HPFinal', 'AtkFinal', 'DefFinal', 'Endurance', 'MagBase', 'UnbalIntensityBase'])
@@ -45,7 +47,7 @@ export function CurrentGameStats({
     }
   }
   const calculatedEntries: [string, number][] = Object.entries(calculatedStats?.derived || {})
-    .filter(([property, value]) => Number.isFinite(value) && !panelStatComponents.has(property))
+    .filter(([property, value]) => Number.isFinite(value) && !hiddenPanelStats.has(property))
   const entries: [string, number][] = (observedPanelStats ? observedEntries : calculatedEntries)
     .sort(([left], [right]) => (labels[left] || left).localeCompare(labels[right] || right, currentIntlLocale()))
 

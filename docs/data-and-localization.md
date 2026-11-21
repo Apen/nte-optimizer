@@ -41,6 +41,41 @@ contain only identifiers, limits, curves, geometry, and other fields consumed
 by network decoding. Unused descriptions, duplicate translations, and source
 metadata stay in canonical generated catalogs instead.
 
+### Awakening resonance export
+
+Publish `characters/awakening_resonances.json` with the other character data.
+The optimizer accepts older datasets without this file, so the publication must
+include it and its schema version, source revisions, and SHA-256 in
+`manifest.json`.
+
+The schema v1 `characters` object is keyed by the numeric IDs from
+`characters/decode.json`. Include every ID, using an empty array when there is
+no supported projection. In `DataTable/Character/Awaken/<ID>AwakenEffect.json`,
+read `AwakenEffectStructList` entries of type
+`EAwakenEffect::Awaken_Resonance`. The suffix of `EffectID=resonance_N` gives
+`required_awakening`, the number of awakened nodes required.
+
+- Map each `ModifyDataList` entry's `SkillName` to its positive `SkillLevel`
+  increment in `skill_levels`. Check that the ability belongs to the same
+  character in `combat/skill_values.json`. The application adds the increment
+  to the imported skill level.
+- Resolve granted `Buff.AssetPathName` references to verified permanent effects
+  in `combat/skill_buffs.json`. Put their published IDs in `stat_effects`. For
+  a verified personal, additive, level-independent entry without a published
+  buff ID, use its ID from `combat/modifier_values.json` with
+  `"source": "modifier_values"`.
+- Preserve scope, units, and values in the referenced catalogs. Use the
+  optional `property_id` only to normalize a stat key for the optimizer. For
+  Shinku R6, the permanent ignore DEF effect uses `DefenseIgnoreBase` for damage
+  calculations. The character stat panel omits that combat-only property.
+- Exclude effects tied to a combat state, timing, or specific attacks from
+  this permanent projection. For example, Haniel R3's CRIT Rate requires
+  Paranormal Ace. The optimizer rejects that effect in the permanent catalog.
+  Record unresolved references and known coverage limits in the manifest.
+
+After deployment, run `go test ./internal/datafiles ./internal/app` in the
+optimizer to verify the manifest and how the builder consumes the catalog.
+
 ## Localization
 
 The interface supports English and French through two independent sources:

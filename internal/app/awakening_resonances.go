@@ -118,13 +118,7 @@ func resolveAwakeningResonances(dataDir string) (awakeningResonances, error) {
 					continue
 				}
 				effect, ok := byID[ref.ID]
-				team := effect.Recipients.Scope == "team"
-				validRecipient := effect.Recipients.Scope == "caster" || (team &&
-					(effect.Conditions.ReviewedCondition == "caster_on_team" || effect.Conditions.ReviewedCondition == "caster_on_team_and_alive"))
-				if ref.Source != "" || !ok || !effect.Unlocked(actor) || !validRecipient ||
-					effect.DurationPolicy != "infinite" || effect.Calculation.Kind != "flat_stat" || !effect.LevelIndependent ||
-					effect.Conditions.ActiveCharacterOnly || effect.Conditions.RequiresCasterActive || effect.Conditions.RequiresSourceTags ||
-					len(effect.Requirements) > 0 || len(effect.DamageRequirements) > 0 {
+				if ref.Source != "" || !ok || !effect.Unlocked(actor) || !isPermanentResonanceBuff(effect) {
 					return nil, fmt.Errorf("invalid permanent awakening resonance effect %q for character %d", ref.ID, characterID)
 				}
 				value, err := effect.PreviewMagnitude(actor)
@@ -135,6 +129,7 @@ func resolveAwakeningResonances(dataDir string) (awakeningResonances, error) {
 				if property == "" {
 					property = value.Target.PropertyID
 				}
+				team := effect.Recipients.Scope == "team"
 				resonance.stats = append(resonance.stats, resonanceStat{
 					id:   ref.ID,
 					stat: nte.Stat{PropertyID: property, Value: value.Value, Percent: value.Target.Percent},
@@ -147,7 +142,40 @@ func resolveAwakeningResonances(dataDir string) (awakeningResonances, error) {
 	return catalog, nil
 }
 
+func isPermanentResonanceBuff(effect combatdata.Buff) bool {
+	conditions := effect.Conditions
+	switch effect.Recipients.Scope {
+	case "caster":
+		if conditions.ReviewedCondition != "" {
+			return false
+		}
+	case "team":
+		if conditions.ReviewedCondition != "caster_on_team" && conditions.ReviewedCondition != "caster_on_team_and_alive" {
+			return false
+		}
+	default:
+		return false
+	}
+
+	if effect.DurationPolicy != "infinite" || len(effect.Durations) > 0 || len(effect.ActiveWindows) > 0 ||
+		effect.Calculation.Kind != "flat_stat" || !effect.LevelIndependent || effect.Stacking.ValuesPerStack {
+		return false
+	}
+	if effect.Trigger != "" || conditions.Trigger != "" || conditions.TargetState != "" ||
+		conditions.ExclusiveGroup != "" || conditions.RandomOutcomeGroup != "" || conditions.SelectedRandomOutcome != "" ||
+		conditions.ActiveCharacterOnly || conditions.RequiresCasterActive || conditions.RequiresPassive ||
+		conditions.SourceCounterLimit != 0 || conditions.RemoveOnLeaveBattle || len(effect.Requirements) > 0 {
+		return false
+	}
+	return !conditions.RequiresSourceTags && conditions.DamageFamily == "" && conditions.DamageApplicationFilter == "" &&
+		conditions.RequiredDamageEffectID == "" && len(conditions.RequiredDamageTags) == 0 &&
+		len(conditions.RequiredSpawnAbilityTags) == 0 && len(effect.DamageEffectIDs) == 0 && len(effect.DamageRequirements) == 0
+}
+
 func permanentResonanceModifier(entry combatdata.Modifier, characterID int) (nte.Stat, error) {
+	if len(entry.PublishedIDs) > 0 {
+		return nte.Stat{}, fmt.Errorf("use its published buff to validate the modifier's conditions")
+	}
 	if entry.CharacterID != strconv.Itoa(characterID) || entry.PropertyID == "" || entry.Operation != "EGameplayModOp::Additive" ||
 		entry.DisplayUnit.Percent == nil || len(entry.ValuesByLevel) == 0 {
 		return nte.Stat{}, fmt.Errorf("expected an additive modifier with known units for character %d", characterID)
