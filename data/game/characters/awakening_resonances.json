@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "characters": {
+    "1003": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Sagiri_Melee": 1,
+          "GA_Sagiri_Skill": 1,
+          "GA_Sagiri_UltraSkill": 1
+        }
+      }
+    ],
+    "1004": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Lacrimosa_Melee": 1,
+          "GA_Lacrimosa_Skill": 1,
+          "GA_Lacrimosa_UltraSkill": 1
+        }
+      }
+    ],
+    "1008": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Skia_Melee": 1,
+          "GA_Skia_Skill": 1,
+          "GA_Skia_UltraSkill": 1
+        }
+      }
+    ],
+    "1010": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Nanally_Melee": 1,
+          "GA_Nanally_Skill": 1,
+          "GA_Nanally_UltraSkill": 1
+        }
+      },
+      {
+        "required_awakening": 6,
+        "stat_effects": [
+          {
+            "id": "nanally_extra_damage"
+          }
+        ]
+      }
+    ],
+    "1019": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Mint019_Melee": 1,
+          "GA_Mint019_Skill": 1,
+          "GA_Mint019_UltraSkill": 1
+        }
+      }
+    ],
+    "1020": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Haniel_Melee": 1,
+          "GA_Haniel_Skill": 1,
+          "GA_Haniel_UltraSkill": 1
+        }
+      }
+    ],
+    "1021": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Edgar_QTE": 1,
+          "GA_Edgar_Skill": 1,
+          "GA_Edgar_UltraSkill": 1
+        }
+      }
+    ],
+    "1023": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Cang_Melee": 1,
+          "GA_Cang_Skill": 1,
+          "GA_Cang_UltraSkill": 1
+        }
+      }
+    ],
+    "1025": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Hathor_Melee": 1,
+          "GA_Hathor_Skill": 1,
+          "GA_Hathor_UltraSkill": 1
+        }
+      }
+    ],
+    "1033": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Adler_Melee": 1,
+          "GA_Adler_Skill": 1,
+          "GA_Adler_UltraSkill": 1
+        }
+      }
+    ],
+    "1036": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Zankou_Melee": 1,
+          "GA_Zankou_Skill": 1,
+          "GA_Zankou_UltraSkill": 1
+        }
+      }
+    ],
+    "1039": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Fadia_Melee": 1,
+          "GA_Fadia_Skill": 1,
+          "GA_Fadia_UltraSkill": 1
+        }
+      },
+      {
+        "required_awakening": 6,
+        "stat_effects": [
+          {
+            "id": "fadia_extra_health"
+          }
+        ]
+      }
+    ],
+    "1042": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_BlackBird_Melee": 1,
+          "GA_BlackBird_Skill": 1,
+          "GA_BlackBird_UltraSkill": 1
+        }
+      },
+      {
+        "required_awakening": 6,
+        "stat_effects": [
+          {
+            "id": "blackbird_extra_critical_damage"
+          }
+        ]
+      }
+    ],
+    "1046": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Female046_Melee": 1,
+          "GA_Female046_Skill": 1,
+          "GA_Female046_UltraSkill": 1
+        }
+      }
+    ],
+    "1051": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Female051_Melee": 1,
+          "GA_Female051_Skill": 1,
+          "GA_Female051_UltraSkill": 1
+        }
+      }
+    ],
+    "1052": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Jin_Melee": 1,
+          "GA_Jin_Skill": 1,
+          "GA_Jin_UltraSkill": 1
+        }
+      },
+      {
+        "required_awakening": 6,
+        "stat_effects": [
+          {
+            "id": "hotori_extra_attack"
+          }
+        ]
+      }
+    ],
+    "1054": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Daffodill_Melee": 1,
+          "GA_Daffodill_Skill": 1,
+          "GA_Daffodill_UltraSkill": 1
+        }
+      }
+    ],
+    "1055": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Kuhara_Melee": 1,
+          "GA_Kuhara_Skill": 1,
+          "GA_Kuhara_UltraSkill": 1
+        }
+      }
+    ],
+    "1056": [],
+    "1057": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Akane_Melee": 1,
+          "GA_Akane_Skill": 1,
+          "GA_Akane_UltraSkill": 1
+        }
+      }
+    ],
+    "1070": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Mitsuki_Melee": 1,
+          "GA_Mitsuki_Skill": 1,
+          "GA_Mitsuki_UltraSkill": 1
+        }
+      }
+    ],
+    "1071": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Chaos071_Melee": 1,
+          "GA_Chaos071_Skill": 1,
+          "GA_Chaos071_UltraSkill": 1
+        }
+      }
+    ],
+    "1072": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Radio072_QTE": 1,
+          "GA_Radio072_Skill": 1,
+          "GA_Radio072_UltraSkill": 1
+        },
+        "stat_effects": [
+          {
+            "id": "linko_extra_attack"
+          }
+        ]
+      }
+    ],
+    "1073": [],
+    "1074": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Exe_Melee": 1,
+          "GA_Exe_Skill": 1,
+          "GA_Exe_UltraSkill": 1
+        },
+        "stat_effects": [
+          {
+            "id": "Buff_Exe074_Level3_extra__Modifiers_0",
+            "source": "modifier_values"
+          }
+        ]
+      }
+    ],
+    "1075": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Oneiroi_Melee": 1,
+          "GA_Oneiroi_Skill": 1,
+          "GA_Oneiroi_UltraSkill": 1
+        },
+        "stat_effects": [
+          {
+            "id": "oneiroi_awakening2_defense"
+          }
+        ]
+      },
+      {
+        "required_awakening": 6,
+        "stat_effects": [
+          {
+            "id": "oneiroi_extra_critical_damage"
+          }
+        ]
+      }
+    ],
+    "1076": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Shinku_Melee": 1,
+          "GA_Shinku_Skill": 1,
+          "GA_Shinku_UltraSkill": 1
+        }
+      },
+      {
+        "required_awakening": 6,
+        "stat_effects": [
+          {
+            "id": "shinku_extra_critical_rate"
+          },
+          {
+            "id": "buff_shinku076_level6_extra_def_ignore_g0",
+            "property_id": "DefenseIgnoreBase"
+          }
+        ]
+      }
+    ],
+    "1090": [
+      {
+        "required_awakening": 3,
+        "skill_levels": {
+          "GA_Elyms_Melee": 1,
+          "GA_Elyms_Skill": 1,
+          "GA_Elyms_UltraSkill": 1
+        }
+      }
+    ],
+    "1091": []
+  }
+}

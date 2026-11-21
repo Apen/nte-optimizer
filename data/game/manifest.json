@@ -12,6 +12,22 @@
       "warnings": []
     },
     {
+      "path": "characters/awakening_resonances.json",
+      "schema_version": 1,
+      "sha256": "e2b667389802e6fb30fb3b39340dd69e32ebd203ee81c76d8a2be2cfa3e18ed6",
+      "sources": [
+        "Waifus-Grace/NTE_Assets@c457cb6a549e5034fa2d8b7a808e8e6b49e8d00e:DataTable/Character/Awaken",
+        "characters/decode.json",
+        "combat/skill_buffs.json",
+        "combat/modifier_values.json"
+      ],
+      "status": "partial",
+      "warnings": [
+        "Only imported skill upgrades and verified permanent stats are projected. Effects that require combat states, timings or action filters are excluded from panel stats.",
+        "Lacrimosa's alternate identifiers have no separate imported combat skills."
+      ]
+    },
+    {
       "path": "characters/base_stats.json",
       "schema_version": 1,
       "sha256": "921b0bad255cc4cb61294b9e0bfaeb7aac738693b4944f56179c8ae0d808b9f5",

@@ -6,7 +6,7 @@ The `data` directory is organized by responsibility and source of truth.
 data/
 ├── game/                    generated facts from the game
 │   ├── account/             cumulative Puka Boot Camp rank modifiers
-│   ├── characters/          base stats and character decode projection
+│   ├── characters/          base stats, awakening resonances and character decode projection
 │   ├── combat/              structured damage rules
 │   ├── equipment/           Arcs, traits, grids, sets, shapes, decode data
 │   ├── forks/               Arc network decode projection
