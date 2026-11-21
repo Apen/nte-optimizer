@@ -138,15 +138,26 @@ The furniture diagnostic distinguishes:
    payload is incompatible with the supported envelope.
 4. A bounded payload was extracted, but LZ4 decoding failed or exceeded the
    decompression limit.
-5. LZ4 succeeded, but the furniture count, identifier uniqueness, record fields,
+5. LZ4 succeeded, but the furniture count, identifier format, record fields,
    level range or final trailer did not match the supported structure.
 
 Maximum compressed and decoded byte sizes are recorded. Existing bounds remain
 8,192 compressed bytes, 65,536 decoded bytes and 256 furniture observations.
 The decoder accepts both plain string identifiers with byte-sized flags and
-packed records with dynamic names and one-bit flags.
-The last fully valid furniture payload remains authoritative; a subsequent
-rejected candidate does not overwrite it.
+packed records with dynamic names and one-bit flags. The scanner keeps the
+observations from the latest structurally valid payload.
+
+A furniture payload can repeat the same progression ID. The scanner keeps one
+observation when all entries for that ID agree on the level. If the levels
+conflict, it omits that ID and retains the other progressions. The diagnostic
+counts omitted IDs per valid payload under `furniture_level_conflicts`. If the
+latest valid payload has no unambiguous levels, it reports
+`furniture_levels_conflicted`.
+
+An ambiguous exploration bonus, such as reduced stamina use while climbing,
+can therefore coexist with valid ATK, DEF and CRIT DMG progressions in the same
+payload. The builder resolves these stat bonuses from the
+[furniture modifier catalog](../data/game/housing/special_furniture_modifiers.json).
 
 ## Privacy and reproduction
 

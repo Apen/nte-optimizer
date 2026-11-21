@@ -15,17 +15,8 @@ func observationString(b *bytes.Buffer, s string) {
 	b.WriteByte(0)
 }
 func furniturePayload(level uint32) []byte {
-	b := new(bytes.Buffer)
-	binary.Write(b, binary.LittleEndian, uint16(1))
-	observationString(b, "SF_test")
-	b.WriteByte(0)
-	binary.Write(b, binary.LittleEndian, uint32(0))
-	b.WriteByte(1)
-	binary.Write(b, binary.LittleEndian, level)
-	binary.Write(b, binary.LittleEndian, uint32(0))
-	binary.Write(b, binary.LittleEndian, uint64(0))
-	binary.Write(b, binary.LittleEndian, uint32(0))
-	return furnitureLiteralBlock(b.Bytes())
+	encoded := encodeFurnitureLevels([]nte.FurnitureLevel{{ProgressionID: "SF_test", Level: int(level)}}, false)
+	return furnitureLiteralBlock(encoded.data)
 }
 
 func furnitureLiteralBlock(data []byte) []byte {
@@ -39,45 +30,94 @@ func furnitureLiteralBlock(data []byte) []byte {
 	return append(out, data...)
 }
 
-func TestPackedFurnitureLevels(t *testing.T) {
-	encode := func(levels []nte.FurnitureLevel) recordWriter {
-		var w recordWriter
-		w.put(uint64(len(levels)), 16)
-		for i, level := range levels {
+func encodeFurnitureLevels(levels []nte.FurnitureLevel, packed bool) recordWriter {
+	var w recordWriter
+	w.put(uint64(len(levels)), 16)
+	for i, level := range levels {
+		flagBits := 8
+		if packed {
 			w.putString(level.ProgressionID)
-			w.put(uint64(i%2), 1)
-			w.put(59, 32)
-			w.put(uint64((i+1)%2), 1)
-			w.put(uint64(level.Level), 32)
-			w.put(0, 32)
-			w.put(1234, 64)
+			flagBits = 1
+		} else {
+			var name bytes.Buffer
+			observationString(&name, level.ProgressionID)
+			for _, b := range name.Bytes() {
+				w.put(uint64(b), 8)
+			}
 		}
+		w.put(uint64(i%2), flagBits)
+		w.put(59, 32)
+		w.put(uint64((i+1)%2), flagBits)
+		w.put(uint64(level.Level), 32)
 		w.put(0, 32)
-		return w
+		w.put(1234, 64)
 	}
+	w.put(0, 32)
+	return w
+}
+
+func TestPackedFurnitureLevels(t *testing.T) {
 	want := []nte.FurnitureLevel{
 		{ProgressionID: "SF_0011", Level: 2},
 		{ProgressionID: "SF_0012", Level: 7},
 		{ProgressionID: "SF_0013", Level: 4},
 	}
-	valid := encode(want)
+	valid := encodeFurnitureLevels(want, true)
 	got, ok := parseFurnitureLevels(furnitureLiteralBlock(valid.data), nil)
 	if !ok || !slices.Equal(got, want) {
 		t.Fatalf("packed levels = %v, accepted=%t, want %v", got, ok, want)
 	}
 
-	badPadding := encode(want)
+	badPadding := encodeFurnitureLevels(want, true)
 	badPadding.put(1, 1)
-	duplicate := encode([]nte.FurnitureLevel{want[0], want[0]})
 	for name, data := range map[string][]byte{
 		"nonzero padding": badPadding.data,
 		"extra byte":      append(slices.Clone(valid.data), 0),
 		"truncated":       valid.data[:len(valid.data)-1],
-		"duplicate ID":    duplicate.data,
 	} {
 		t.Run(name, func(t *testing.T) {
 			if got, ok := parseFurnitureLevels(furnitureLiteralBlock(data), nil); ok || got != nil {
 				t.Fatalf("invalid packed levels accepted: %v", got)
+			}
+		})
+	}
+}
+
+func TestFurnitureDuplicateProgressions(t *testing.T) {
+	want := []nte.FurnitureLevel{
+		{ProgressionID: "SF_0011", Level: 2},
+		{ProgressionID: "SF_0012", Level: 7},
+		{ProgressionID: "SF_0013", Level: 4},
+	}
+	observed := []nte.FurnitureLevel{
+		want[0],
+		want[0],
+		{ProgressionID: "SF_exploration", Level: 3},
+		{ProgressionID: "SF_exploration", Level: 2},
+		{ProgressionID: "SF_exploration", Level: 3},
+		want[1],
+		want[2],
+	}
+	for _, tc := range []struct {
+		name   string
+		packed bool
+	}{{"packed", true}, {"legacy", false}} {
+		t.Run(tc.name, func(t *testing.T) {
+			diagnostics := &recordDiagnostics{}
+			encoded := encodeFurnitureLevels(observed, tc.packed)
+			got, ok := parseFurnitureLevels(furnitureLiteralBlock(encoded.data), diagnostics)
+			if !ok || !slices.Equal(got, want) {
+				t.Fatalf("levels = %v, accepted=%t, want %v", got, ok, want)
+			}
+			if diagnostics.counts["furniture_level_conflicts"] != 1 {
+				t.Fatalf("expected one conflicting progression: %v", diagnostics.counts)
+			}
+
+			invalid := slices.Clone(observed)
+			invalid[1].Level = 101
+			encoded = encodeFurnitureLevels(invalid, tc.packed)
+			if got, ok := parseFurnitureLevels(furnitureLiteralBlock(encoded.data), nil); ok || got != nil {
+				t.Fatalf("accepted malformed duplicate: %v", got)
 			}
 		})
 	}

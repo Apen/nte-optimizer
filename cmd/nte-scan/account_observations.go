@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"slices"
 	"strings"
 
 	"nte-optimizer/internal/nte"
@@ -83,7 +84,7 @@ func parseFurnitureLevels(payload []byte, diagnostics *recordDiagnostics) (_ []n
 		flagBits = 1
 	}
 	levels := make([]nte.FurnitureLevel, 0, count)
-	seen := map[string]bool{}
+	levelByID := make(map[string]int, count)
 	for index := uint16(0); index < count; index++ {
 		phase = "furniture_id"
 		var id string
@@ -92,10 +93,9 @@ func parseFurnitureLevels(payload []byte, diagnostics *recordDiagnostics) (_ []n
 		} else {
 			id, ok = r.fstring(80)
 		}
-		if !ok || !strings.HasPrefix(id, "SF_") || seen[id] {
+		if !ok || !strings.HasPrefix(id, "SF_") {
 			return nil, false
 		}
-		seen[id] = true
 		phase = "furniture_fields"
 		// Only the level is interpreted. Neither observed flag has a
 		// verified activation meaning, so it must not become confirmation.
@@ -108,7 +108,15 @@ func parseFurnitureLevels(payload []byte, diagnostics *recordDiagnostics) (_ []n
 		if !ok0 || !ok1 || !okFlag1 || !ok2 || !ok3 || !ok4 || flag0 > 1 || flag1 > 1 || level < 1 || level > 100 {
 			return nil, false
 		}
-		levels = append(levels, nte.FurnitureLevel{ProgressionID: id, Level: int(level)})
+		previous, seen := levelByID[id]
+		if !seen {
+			levelByID[id] = int(level)
+			levels = append(levels, nte.FurnitureLevel{ProgressionID: id, Level: int(level)})
+		} else if previous != int(level) {
+			// There is no verified way to choose between conflicting levels.
+			// Zero keeps this ID ambiguous even if a later record agrees with the first.
+			levelByID[id] = 0
+		}
 	}
 	phase = "furniture_trailer"
 	if _, ok := r.u32(); !ok {
@@ -122,6 +130,12 @@ func parseFurnitureLevels(payload []byte, diagnostics *recordDiagnostics) (_ []n
 		if padding, _ := r.bits(remaining); padding != 0 {
 			return nil, false
 		}
+	}
+	levels = slices.DeleteFunc(levels, func(level nte.FurnitureLevel) bool {
+		return levelByID[level.ProgressionID] == 0
+	})
+	if conflicts := len(levelByID) - len(levels); conflicts > 0 {
+		diagnostics.add("furniture_level_conflicts", conflicts)
 	}
 	return levels, true
 }
@@ -155,6 +169,8 @@ func decodeAccountObservations(report *udpReport, messages []completedMessage) {
 		status, code = "partial", "channel4_absent"
 	} else if diagnostics.counts["property_matches"] == 0 {
 		status, code = "partial", "furniture_property_absent"
+	} else if len(report.FurnitureLevels) == 0 && diagnostics.counts["accepted_sightings"] > 0 {
+		status, code = "partial", "furniture_levels_conflicted"
 	} else if len(report.FurnitureLevels) == 0 {
 		status, code = "partial", "furniture_rejected"
 	}

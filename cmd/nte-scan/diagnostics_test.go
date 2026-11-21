@@ -12,6 +12,7 @@ import (
 	"strings"
 	"testing"
 
+	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/scanlog"
 	scannerunreal "nte-optimizer/internal/scanner/unreal"
 )
@@ -52,6 +53,10 @@ func TestFurnitureDiagnosticsDistinguishMissingEnvelopeCompressionAndStructure(t
 	oversized := furnitureMessage(make([]byte, 8193))
 	wrongChannel := valid
 	wrongChannel.channel = 5
+	conflict := furnitureMessage(furnitureLiteralBlock(encodeFurnitureLevels([]nte.FurnitureLevel{
+		{ProgressionID: "SF_test", Level: 4},
+		{ProgressionID: "SF_test", Level: 5},
+	}, true).data))
 	for _, tc := range []struct {
 		name          string
 		messages      []completedMessage
@@ -65,6 +70,7 @@ func TestFurnitureDiagnosticsDistinguishMissingEnvelopeCompressionAndStructure(t
 		{"lz4 rejected", []completedMessage{furnitureMessage([]byte{0xff})}, "furniture_rejected", "rejected_lz4", 0},
 		{"level rejected", []completedMessage{furnitureMessage(furniturePayload(101))}, "furniture_rejected", "rejected_furniture_fields", 0},
 		{"valid then invalid", []completedMessage{valid, furnitureMessage(furniturePayload(0))}, "furniture_decoded", "rejected_furniture_fields", 1},
+		{"valid then conflict", []completedMessage{valid, conflict}, "furniture_levels_conflicted", "furniture_level_conflicts", 0},
 		{"valid", []completedMessage{valid}, "furniture_decoded", "accepted_sightings", 1},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
