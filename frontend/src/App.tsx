@@ -101,7 +101,7 @@ export function App() {
   const arcOptions = arcPreview?.scope === arcConditionScope ? arcPreview.options : []
   const confirmedArcStacks = arcSelection?.scope === arcConditionScope ? arcSelection.stacks : {}
   useEffect(() => {
-    if (page !== 'builds' || !profile || !selectedArcForkID || loadedProfile !== profile) return
+    if (page !== 'builds' || !profile || !catalogLoaded || loadedProfile !== profile) return
     let active = true
     PreviewTeam(profile, locale, selectedArcForkID, teamAllies).then(preview => {
       if (active) setArcPreview({ scope: arcConditionScope, options: preview.arc_conditions ?? [] })
@@ -111,7 +111,7 @@ export function App() {
       console.error('Failed to load Arc conditions', error)
     })
     return () => { active = false }
-  }, [arcConditionScope, loadedProfile, locale, page, profile, selectedArcForkID, teamAllies])
+  }, [arcConditionScope, catalogLoaded, loadedProfile, locale, page, profile, selectedArcForkID, teamAllies])
   const availableMainStats=useMemo(()=>Array.from(new Set(catalog.cartridges.flatMap(item=>item.main_stats.map(stat=>stat.property_id)))),[catalog.cartridges])
   const availableGoalDefinitions=useMemo(()=>{
     const observedUnits=new Map<string,boolean>()

@@ -127,22 +127,42 @@ func TestElymsArcWearerBonusRequiresConfirmationAndIsCountedOnce(t *testing.T) {
 	}
 	service := NewOptimizerService(filepath.Join("..", "..", "data"))
 	service.WeightOverrides = &WeightOverrides{MainStats: []string{"CritBase"}, Weights: map[string]float64{"CritBase": 1}}
+	workspace := t.TempDir()
+	if err := ensureWorkspace(workspace); err != nil {
+		t.Fatal(err)
+	}
+	if err := writeAccountData(workspace, inv, state); err != nil {
+		t.Fatal(err)
+	}
+	key := ArcConditionKey{CharacterID: elymsID, ForkID: "fork_elyms", Trigger: "three_followup_hits_after_ultimate_or_enter_combat"}
+	for _, proposed := range []string{"", NoArcForkSelection} {
+		preview, err := service.PreviewTeam(workspace, "elyms", "en", proposed, nil)
+		if err != nil || !slices.ContainsFunc(preview.ArcConditions, func(option ArcConditionOption) bool {
+			return option.ArcConditionKey == key
+		}) {
+			t.Fatalf("proposed Arc %q: equipped Arc option missing: %+v (%v)", proposed, preview.ArcConditions, err)
+		}
+	}
 	for _, want := range []float64{0, .22} {
 		if want > 0 {
-			service.WeightOverrides.ArcConditions = []ArcConditionSelection{
-				{ArcConditionKey: ArcConditionKey{CharacterID: elymsID, ForkID: "fork_elyms", Trigger: "three_followup_hits_after_ultimate_or_enter_combat"}, Stacks: 1},
+			service.WeightOverrides.ArcConditions = []ArcConditionSelection{{ArcConditionKey: key, Stacks: 1}}
+		}
+		for _, proposed := range []string{"", NoArcForkSelection} {
+			result, err := service.optimizeTunedWithArc(context.Background(), inv, "elyms", &state, true, "en", "score", nil, nil, proposed)
+			if err != nil || result.CurrentStats == nil {
+				t.Fatalf("proposed Arc %q: equipped build is missing (%v)", proposed, err)
 			}
-		}
-		result, err := service.optimizeTunedWithArc(context.Background(), inv, "elyms", &state, true, "en", "score", nil, nil, "fork_elyms")
-		if err != nil {
-			t.Fatal(err)
-		}
-		if result.CurrentStats == nil {
-			t.Fatal("equipped build is missing")
-		}
-		for _, stats := range []optimizer.StatSummary{result.Stats, *result.CurrentStats} {
-			if stats.WithConditions["DefIgnore"] != 0 || math.Abs(stats.WithConditions["DefenseIgnoreBase"]-want) > 1e-9 {
-				t.Fatalf("expected %g DEF Ignore exactly once for the wearer, got %v", want, stats.WithConditions)
+			wantProposed := want
+			if proposed == NoArcForkSelection {
+				wantProposed = 0
+			}
+			for _, check := range []struct {
+				stats optimizer.StatSummary
+				want  float64
+			}{{result.Stats, wantProposed}, {*result.CurrentStats, want}} {
+				if check.stats.WithConditions["DefIgnore"] != 0 || math.Abs(check.stats.WithConditions["DefenseIgnoreBase"]-check.want) > 1e-9 {
+					t.Fatalf("proposed Arc %q: expected %g DEF Ignore exactly once, got %v", proposed, check.want, check.stats.WithConditions)
+				}
 			}
 		}
 	}

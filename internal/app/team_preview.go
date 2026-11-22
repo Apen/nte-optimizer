@@ -55,9 +55,6 @@ type teamPreviewDefinition struct {
 
 func (s OptimizerService) PreviewTeam(projectDir, profileID, language, arcForkID string, allies []TeamAlly) (TeamPreview, error) {
 	preview := TeamPreview{Applied: []TeamPreviewBonus{}, Conditional: []TeamPreviewEffect{}}
-	if len(allies) == 0 && arcForkID == NoArcForkSelection {
-		return preview, nil
-	}
 	profiles, err := s.loadCharacters()
 	if err != nil {
 		return preview, err
@@ -71,6 +68,9 @@ func (s OptimizerService) PreviewTeam(projectDir, profileID, language, arcForkID
 		return preview, err
 	}
 	if !loaded {
+		if len(allies) == 0 && arcForkID == NoArcForkSelection {
+			return preview, nil
+		}
 		return preview, apperrors.New("account_required", fmt.Errorf("no account has been imported"))
 	}
 	builds, err := loadLocalBuilds(projectDir, true)
@@ -115,7 +115,7 @@ func (s OptimizerService) PreviewTeam(projectDir, profileID, language, arcForkID
 			return preview, err
 		}
 	}
-	if activeArc != nil || scenario != nil {
+	if activeArc != nil || currentArc != nil || scenario != nil {
 		catalog, err := s.loadArcs()
 		if err != nil {
 			return preview, err
@@ -127,6 +127,13 @@ func (s OptimizerService) PreviewTeam(projectDir, profileID, language, arcForkID
 		effects, err := s.collectArcScenarioEffects(catalog, profile.CharacterID, activeArc, scenario)
 		if err != nil {
 			return preview, err
+		}
+		if currentArc != nil && (activeArc == nil || currentArc.ID != activeArc.ID) {
+			currentEffects, err := s.collectArcScenarioEffects(catalog, profile.CharacterID, currentArc, nil)
+			if err != nil {
+				return preview, err
+			}
+			effects = append(effects, currentEffects...)
 		}
 		preview.ArcConditions = arcConditionOptions(effects, labels)
 	}

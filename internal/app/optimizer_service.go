@@ -352,15 +352,15 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 		if err != nil {
 			return OptimizationResult{}, err
 		}
-		selected, err := arcConditionSelections(buildEffects, confirmations, displayCatalog)
+		currentEffects, err := s.collectArcScenarioEffects(catalog, profile.CharacterID, currentWeapon, scenario)
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		selected, err := arcConditionSelections(slices.Concat(buildEffects, currentEffects), confirmations, displayCatalog)
 		if err != nil {
 			return OptimizationResult{}, err
 		}
 		buildArcScenario, err = applyArcScenario(catalog, profile.CharacterID, buildEffects, selected, displayCatalog, additional)
-		if err != nil {
-			return OptimizationResult{}, err
-		}
-		currentEffects, err := s.collectArcScenarioEffects(catalog, profile.CharacterID, currentWeapon, scenario)
 		if err != nil {
 			return OptimizationResult{}, err
 		}

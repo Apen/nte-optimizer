@@ -1,17 +1,17 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { App } from './App'
-import type { TeamAlly, WorkspaceCharacter } from './types'
+import type { InventoryArc, TeamAlly, WorkspaceCharacter } from './types'
 
 const api = vi.hoisted(() => ({
-  save: vi.fn(), target: vi.fn(), preview: vi.fn(), optimize: vi.fn(), teams: new Map<string, TeamAlly[]>(),
+  save: vi.fn(), target: vi.fn(), preview: vi.fn(), optimize: vi.fn(), teams: new Map<string, TeamAlly[]>(), arcs: [] as InventoryArc[],
 }))
 vi.mock('../wailsjs/go/main/DesktopApp', () => ({
   Profiles: async () => [1036, 1004].map(id => ({ id: `p${id}`, character_id: id, name: `P${id}`, main_stats: [], weights: { CritBase: 1 }, team_allies: api.teams.get(`p${id}`) })),
   BuildWorkspace: async () => ({ characters: [1036, 1004].map(id => ({ character_id: id, name: `C${id}`, level: 80, awaken_level: 0, priority: 1 })) }),
-  EquipmentCatalog: async () => ({ modules: [], cartridges: [], arcs: [], resources: [] }),
+  EquipmentCatalog: async () => ({ modules: [], cartridges: [], arcs: api.arcs, resources: [] }),
   Localization: async () => ({ locale: 'en', ui: {
-    team_ally: 'Ally {number}', find_best_build: 'Find best build', team_trigger_redirect_skill_or_enter_combat: 'After a Redirect Skill or on entering combat',
+    team_ally: 'Ally {number}', find_best_build: 'Find best build', team_trigger_redirect_skill_or_enter_combat: 'After a Redirect Skill or on entering combat', team_trigger_ultimate: 'After Ultimate',
   }, stats: {}, qualities: {}, geometries: {}, stat_sources: {}, damage: {} }),
   AccountImportStatus: async () => ({ has_import: false }), CheckForUpdate: async () => ({ available: false }),
   Target: (...args: unknown[]) => api.target(...args), SaveProfileSettings: (...args: unknown[]) => api.save(...args),
@@ -32,6 +32,7 @@ vi.mock('./components/optimizer-configuration', async importOriginal => {
 
 beforeEach(() => {
   api.teams.clear()
+  api.arcs = []
   api.save.mockReset().mockResolvedValue({})
   api.target.mockReset().mockResolvedValue({ name: 'Target', goals: [{ property_id: 'CritBase', minimum: .5, percent: true }] })
   api.preview.mockReset().mockResolvedValue({ applied: [], conditional: [] })
@@ -58,6 +59,22 @@ it('sends an Arc condition only when the user confirms it', async () => {
   expect(api.optimize.mock.calls[1][7].arc_conditions).toEqual([
     { character_id: 1004, fork_id: 'fork_elyms', trigger, stacks: 1 },
   ])
+})
+
+it('loads Arc conditions for the default equipped Arc with compatible copies available', async () => {
+  api.arcs = [{
+    id: { solt: 1, serial: 1 }, forkId: 'fork_twinbirds', name: 'Crime and Punishment', quality: 'S',
+    level: 80, breakthrough: 6, star: 1, equippedCharacterId: 1036, compatible_characters: [{ character_id: 1036, name: 'C1036' }],
+  }]
+  api.preview.mockResolvedValue({
+    applied: [], conditional: [], arc_conditions: [{
+      character_id: 1036, fork_id: 'fork_twinbirds', arc_name: 'Crime and Punishment', trigger: 'ultimate', max_stacks: 1,
+    }],
+  })
+  render(<App />)
+  fireEvent.click(await screen.findByText('Open 1036'))
+  expect(await screen.findByLabelText(/Crime and Punishment.*Ultimate/)).not.toBeChecked()
+  expect(api.preview).toHaveBeenCalledWith('p1036', 'en', '', [])
 })
 afterEach(() => vi.useRealTimers())
 
