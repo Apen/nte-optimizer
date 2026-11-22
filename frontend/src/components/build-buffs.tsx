@@ -14,7 +14,7 @@ export function BuildBuffs({ result }: { result: Result }) {
     (buff.character_id === effect.character_id || effect.source_ids?.includes(buff.character_id)),
   ))
   const personal = Object.entries(result.stats.sources).filter(([source, stats]) =>
-    source.endsWith('_conditional') && Object.values(stats).some(value => value !== 0),
+    source !== 'arc_scenario_conditional' && source.endsWith('_conditional') && Object.values(stats).some(value => value !== 0),
   )
   const included = effects.filter(effect => effect.included)
   const informational = effects.filter(effect => !effect.included)
@@ -25,7 +25,7 @@ export function BuildBuffs({ result }: { result: Result }) {
     const source = effect.equipment_name || presentation.abilities?.[effect.id] || t(`team_source_${effect.kind}`)
     const description = effect.kind === 'set'
       ? presentation.set_effects?.[`${effect.id}_${effect.pieces}`]
-      : t(`team_effect_${effect.detail}`)
+      : effect.detail ? t(`team_effect_${effect.detail}`) : undefined
     const stats = effect.bonus ? [effect.bonus] : effect.projected_stats ?? []
     return <li key={`${effect.character_id}:${effect.id}`} className="grid gap-1 py-2 sm:grid-cols-2">
       <div>
@@ -39,6 +39,7 @@ export function BuildBuffs({ result }: { result: Result }) {
         </p>}
         {description && (effect.kind !== 'skill' || stats.length === 0) && <GameEffectText text={description}
           parameters={presentation.fork_effect_parameters?.[`${effect.id}_${effect.star}`]} className="text-slate-400" />}
+        {!!effect.damage_tags?.length && <p className="text-slate-400">{t('arc_condition_matching_damage')}</p>}
         {effect.non_stacking && <p className="text-amber-200">{t('team_effect_non_stacking')}</p>}
       </div>
     </li>

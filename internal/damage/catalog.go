@@ -66,6 +66,7 @@ type AwakeningBonus struct {
 }
 
 type TieredInstance struct {
+	DamageTags                  []string         `json:"damage_tags,omitempty"`
 	ActionCondition             *ActionCondition `json:"action_condition,omitempty"`
 	ID                          string           `json:"id"`
 	AbilityID                   string           `json:"ability_id"`

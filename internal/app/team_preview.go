@@ -12,8 +12,9 @@ import (
 )
 
 type TeamPreview struct {
-	Applied     []TeamPreviewBonus  `json:"applied"`
-	Conditional []TeamPreviewEffect `json:"conditional"`
+	Applied       []TeamPreviewBonus   `json:"applied"`
+	Conditional   []TeamPreviewEffect  `json:"conditional"`
+	ArcConditions []ArcConditionOption `json:"arc_conditions,omitempty"`
 }
 
 type TeamPreviewBonus struct {
@@ -28,6 +29,7 @@ type TeamPreviewEffect struct {
 	ProjectedStats  []nte.Stat `json:"projected_stats,omitempty"`
 	SourceNames     []string   `json:"source_names,omitempty"`
 	EquipmentName   string     `json:"equipment_name,omitempty"`
+	DamageTags      []string   `json:"damage_tags,omitempty"`
 	projection      []nte.Stat
 	projectionGroup string
 	Kind            string    `json:"kind"`
@@ -45,17 +47,15 @@ type TeamPreviewEffect struct {
 
 type teamPreviewDefinition struct {
 	TeamPreviewEffect
-	DurationParameter string            `json:"duration_parameter"`
-	BaseAttackRatio   float64           `json:"base_attack_ratio"`
-	RatiosByLevel     []float64         `json:"base_attack_ratios_by_level"`
-	Parameters        map[string]string `json:"projection_parameters"`
-	ProjectionGroup   string            `json:"projection_group"`
-	MaxAttackBonus    float64           `json:"max_attack_bonus"`
+	BaseAttackRatio float64   `json:"base_attack_ratio"`
+	RatiosByLevel   []float64 `json:"base_attack_ratios_by_level"`
+	ProjectionGroup string    `json:"projection_group"`
+	MaxAttackBonus  float64   `json:"max_attack_bonus"`
 }
 
 func (s OptimizerService) PreviewTeam(projectDir, profileID, language, arcForkID string, allies []TeamAlly) (TeamPreview, error) {
 	preview := TeamPreview{Applied: []TeamPreviewBonus{}, Conditional: []TeamPreviewEffect{}}
-	if len(allies) == 0 {
+	if len(allies) == 0 && arcForkID == NoArcForkSelection {
 		return preview, nil
 	}
 	profiles, err := s.loadCharacters()
@@ -100,17 +100,37 @@ func (s OptimizerService) PreviewTeam(projectDir, profileID, language, arcForkID
 		weapon := arcs.weapons[arcs.option.ID]
 		activeArc = &weapon
 	}
-	evaluated, err := scenario.evaluate(activeArc)
-	if err != nil {
-		return preview, err
-	}
-	for _, bonus := range evaluated.Contributions {
-		if bonus.RecipientID == profile.CharacterID {
-			preview.Applied = append(preview.Applied, TeamPreviewBonus{RuleID: bonus.RuleID, SourceIDs: bonus.SourceIDs, Stat: bonus.Stat})
+	if scenario != nil {
+		evaluated, err := scenario.evaluate(activeArc)
+		if err != nil {
+			return preview, err
+		}
+		for _, bonus := range evaluated.Contributions {
+			if bonus.RecipientID == profile.CharacterID {
+				preview.Applied = append(preview.Applied, TeamPreviewBonus{RuleID: bonus.RuleID, SourceIDs: bonus.SourceIDs, Stat: bonus.Stat})
+			}
+		}
+		preview.Conditional, err = s.conditionalTeamEffects(&state, scenario, catalogs.sets)
+		if err != nil {
+			return preview, err
 		}
 	}
-	preview.Conditional, err = s.conditionalTeamEffects(&state, scenario, catalogs.sets)
-	return preview, err
+	if activeArc != nil || scenario != nil {
+		catalog, err := s.loadArcs()
+		if err != nil {
+			return preview, err
+		}
+		labels, err := s.loadLocale(language)
+		if err != nil {
+			return preview, err
+		}
+		effects, err := s.collectArcScenarioEffects(catalog, profile.CharacterID, activeArc, scenario)
+		if err != nil {
+			return preview, err
+		}
+		preview.ArcConditions = arcConditionOptions(effects, labels)
+	}
+	return preview, nil
 }
 
 func (s OptimizerService) conditionalTeamEffects(state *decoded.State, scenario *teamScenario, sets optimizer.SetCatalog) ([]TeamPreviewEffect, error) {
@@ -146,26 +166,6 @@ func (s OptimizerService) conditionalTeamEffects(state *decoded.State, scenario 
 					}
 					if attack != nil {
 						effect.Bonus = &nte.Stat{PropertyID: "AtkAdd", Value: *attack}
-					}
-				}
-			case "arc":
-				if gear.arc == nil || gear.arc.ForkID != effect.ID {
-					continue
-				}
-				effect.Star = gear.arc.Star
-				if len(definition.Parameters) > 0 || definition.DurationParameter != "" {
-					arcs, err := s.loadArcs()
-					if err != nil {
-						return nil, err
-					}
-					rank := arcs.Forks[gear.arc.ForkID].EffectsByStar[fmt.Sprint(gear.arc.Star)]
-					for _, parameter := range rank.OrderedParameters {
-						if definition.DurationParameter != "" && parameter.NameID == definition.DurationParameter && !parameter.IsPercent {
-							effect.Duration = int(parameter.Value)
-						}
-						if property := definition.Parameters[parameter.NameID]; property != "" {
-							effect.projection = append(effect.projection, nte.Stat{PropertyID: property, Value: parameter.Value, Percent: parameter.IsPercent})
-						}
 					}
 				}
 			case "set":

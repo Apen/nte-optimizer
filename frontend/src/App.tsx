@@ -1,8 +1,9 @@
 import { TeamSelection, teamArcKey } from './components/team-selection'
+import { ArcConditions, arcConditionKey } from './components/arc-conditions'
 import { ResultView } from './components/build-results'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Ban, CheckCircle2, CircleAlert, ChevronDown, LockKeyhole, Play, Square, X } from 'lucide-react'
-import { AccountImportStatus, BuildWorkspace, CheckForUpdate, EquipmentCatalog, EquipBuildResult, LastOptimizationLog, Localization, OptimizeFlexibleSelection, Profiles, ResetProfileStrategy, SaveProfileSettings, SavedBuildResult, SetCharacterPriority, StopOptimization, Target } from '../wailsjs/go/main/DesktopApp'
+import { AccountImportStatus, BuildWorkspace, CheckForUpdate, EquipmentCatalog, EquipBuildResult, LastOptimizationLog, Localization, OptimizeFlexibleSelection, PreviewTeam, Profiles, ResetProfileStrategy, SaveProfileSettings, SavedBuildResult, SetCharacterPriority, StopOptimization, Target } from '../wailsjs/go/main/DesktopApp'
 import { AppSidebar, MobileNavigation, type Page } from './components/app-navigation'
 import { SearchStatus, StatsEditor, normalizeGoalWeights, weightForGoal, weightKeyForGoal } from './components/optimizer-configuration'
 import { OptimizationLogDialog } from './components/optimization-log-dialog'
@@ -17,7 +18,7 @@ import { ArcsPage, CartridgesPage, ModulesPage, ResourcesPage } from './pages/in
 import { errorMessage } from './lib/errors'
 import { ProfileAutosave, RequestScope } from './lib/profile-autosave'
 import { PresentationProvider } from './presentation'
-import type { AccountImportSummary, BuildWorkspace as Workspace, EquipmentCatalog as Catalog, InventoryArc, LocalizationCatalog, OptimizationLog, Profile, Result, SavedBuild, SearchProgress, TargetGoal, TargetPreset, TeamAlly } from './types'
+import type { AccountImportSummary, ArcConditionOption, BuildWorkspace as Workspace, EquipmentCatalog as Catalog, InventoryArc, LocalizationCatalog, OptimizationLog, Profile, Result, SavedBuild, SearchProgress, TargetGoal, TargetPreset, TeamAlly } from './types'
 import { applyLocalization, currentIntlLocale, initialLocale, setActiveLocale, t, type Locale } from './i18n'
 
 const unavailableObjectiveProperties = new Set([
@@ -92,6 +93,25 @@ export function App() {
   },[catalog.arcs,selectedCharacter,teamAllies,workspace.characters])
   const savedArcForkID=selectedProfile?.arc_fork_id||''
   const selectedArcForkID=savedArcForkID===noArcForkSelection||compatibleArcs.some(arc=>arc.forkId===savedArcForkID)?savedArcForkID:catalogLoaded&&compatibleArcs.length===0?noArcForkSelection:''
+  const arcConditionScope = JSON.stringify([profile, selectedArcForkID, teamAllies.map(ally =>
+    [ally.character_id, workspace.characters.find(character => character.character_id === ally.character_id)?.team_gear?.arc_id],
+  )])
+  const [arcPreview, setArcPreview] = useState<{ scope: string; options: ArcConditionOption[]; failed?: boolean }>()
+  const [arcSelection, setArcSelection] = useState<{ scope: string; stacks: Record<string, number> }>()
+  const arcOptions = arcPreview?.scope === arcConditionScope ? arcPreview.options : []
+  const confirmedArcStacks = arcSelection?.scope === arcConditionScope ? arcSelection.stacks : {}
+  useEffect(() => {
+    if (page !== 'builds' || !profile || !selectedArcForkID || loadedProfile !== profile) return
+    let active = true
+    PreviewTeam(profile, locale, selectedArcForkID, teamAllies).then(preview => {
+      if (active) setArcPreview({ scope: arcConditionScope, options: preview.arc_conditions ?? [] })
+    }).catch(error => {
+      if (!active) return
+      setArcPreview({ scope: arcConditionScope, options: [], failed: true })
+      console.error('Failed to load Arc conditions', error)
+    })
+    return () => { active = false }
+  }, [arcConditionScope, loadedProfile, locale, page, profile, selectedArcForkID, teamAllies])
   const availableMainStats=useMemo(()=>Array.from(new Set(catalog.cartridges.flatMap(item=>item.main_stats.map(stat=>stat.property_id)))),[catalog.cartridges])
   const availableGoalDefinitions=useMemo(()=>{
     const observedUnits=new Map<string,boolean>()
@@ -222,7 +242,11 @@ export function App() {
       if(!await persistSettings()||!requests.current(ticket))return
       const baseGoalIDs=new Set((preset?.goals||[]).map(goal=>goal.property_id))
       const tuned=Object.fromEntries(goalDefinitions.filter(goal=>!disabledGoals.includes(goal.property_id)).map(goal=>[goal.property_id,{target:(goals[goal.property_id]||0)/(goal.percent?100:1),maximum:(maximums[goal.property_id]||0)/(goal.percent?100:1),tolerance:(tolerances[goal.property_id]||0)/100,importance:importances[goal.property_id]??1,minimum:strictGoals.includes(goal.property_id)?(strictMinimums[goal.property_id]||0)/(goal.percent?100:1):0,strict_minimum:strictGoals.includes(goal.property_id),...(baseGoalIDs.has(goal.property_id)?{}:{custom:true,label:presentation.stats[goal.property_id]||goal.label,percent:goal.percent})}]))
-      const value=await OptimizeFlexibleSelection(profile,false,locale,searchMode,tuned,pinnedModules,excludedModules,{...weights,simulate_cartridge_main_stats:true,team_allies:teamAllies,exclude_equipped:excludeEquipped},selectedArcForkID)
+      const arcConditions = arcOptions.flatMap(option => {
+        const stacks = confirmedArcStacks[arcConditionKey(option)]
+        return stacks ? [{ character_id: option.character_id, fork_id: option.fork_id, trigger: option.trigger, stacks }] : []
+      })
+      const value=await OptimizeFlexibleSelection(profile,false,locale,searchMode,tuned,pinnedModules,excludedModules,{...weights,simulate_cartridge_main_stats:true,team_allies:teamAllies,exclude_equipped:excludeEquipped,...(arcConditions.length ? {arc_conditions:arcConditions} : {})},selectedArcForkID)
       if(requests.current(ticket))setResult(value)
     } catch(error) { if(!requests.current(ticket))return;setOptimizationError(errorMessage(error));setSettingsOpen(true);console.error('Optimization failed',error) } finally { if(requests.current(ticket)){try{const log=await LastOptimizationLog();if(requests.current(ticket))setOptimizationLog(log)}catch(error){console.error('Failed to load optimization log',error)}if(requests.current(ticket)){setRunning(false);setStopping(false)}} }
   }
@@ -257,6 +281,11 @@ export function App() {
      <fieldset disabled={running||loadedProfile!==profile} className="configuration-panel mb-3">
       <div className="strategy-field">{workspace.characters.find(character=>character.character_id===selectedCharacter)&&<img className="strategy-character-image" src={`/game_ui/characters/${selectedCharacter}.png`} alt=""/>}<Field label={t('profile')}><select disabled={!compatibleProfiles.length} value={profile} onChange={e=>{setSavedBuildSelection(undefined);setProfile(e.target.value)}}>{compatibleProfiles.length?compatibleProfiles.map(item=><option key={item.id} value={item.id}>{item.name||item.id}</option>):<option>{t('no_profile')}</option>}</select></Field><Field label={t('arc')}><select disabled={!profile||!catalogLoaded} value={selectedArcForkID} onChange={event=>changeArc(event.target.value)}><option value="" disabled>{t('select_arc')}</option>{compatibleArcs.map(arc=><option key={arc.forkId} value={arc.forkId}>{arc.name||arc.forkId} · {t('level')} {arc.level}</option>)}<option value={noArcForkSelection}>{t('no_arc')}</option></select></Field><Field label={t('search_method')}><select value={searchMode} onChange={event=>{setSearchMode(event.target.value as 'fast'|'beta');setResult(undefined)}}><option value="fast">{t('search_fast')}</option><option value="beta">{t('search_beta')}</option></select></Field><Button className="strategy-search-button" disabled={!profile||!selectedArcForkID} onClick={optimize}><Play className="mr-2 size-4"/>{t('find_best_build')}</Button></div>
       <TeamSelection activeID={selectedCharacter} characters={workspace.characters} arcs={catalog.arcs} allies={teamAllies} onChange={changeTeam}>
+        {arcPreview?.scope === arcConditionScope && arcPreview.failed && <p className="mt-2 text-sm text-amber-200" role="status">{t('team_preview_failed')}</p>}
+        <ArcConditions options={arcOptions} selected={confirmedArcStacks} characters={workspace.characters} onChange={(key, stacks) => {
+          setArcSelection({ scope: arcConditionScope, stacks: { ...confirmedArcStacks, [key]: stacks } })
+          setResult(undefined)
+        }}/>
       </TeamSelection>
     </fieldset>
      {(pinnedModules.length>0||excludedModules.length>0)&&<Card className="mb-5 border-amber-900/60"><CardContent className="flex flex-wrap items-center gap-2 pt-5"><div className="mr-2"><strong>{t('piece_constraints')}</strong><p className="text-xs text-slate-500">{t('constraints_next_calculation')}</p></div>{pinnedModules.map(id=><ConstraintChip key={id} id={id} kind="locked" onRemove={()=>togglePinned(id)}/>) }{excludedModules.map(id=><ConstraintChip key={id} id={id} kind="excluded" onRemove={()=>toggleExcluded(id)}/>) }<Button className="ml-auto" variant="secondary" onClick={()=>{setPinnedModules([]);setExcludedModules([])}}><X className="mr-2 size-3"/>{t('clear_all')}</Button></CardContent></Card>}

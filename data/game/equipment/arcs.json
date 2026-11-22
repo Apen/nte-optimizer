@@ -8830,7 +8830,48 @@
           ]
         }
       },
-      "team_effects": []
+      "team_effects": [],
+      "conditional_effects": [
+        {
+          "id": "the_wrong_gate_allies_damage",
+          "scope": "other_allies",
+          "trigger": "healing",
+          "duration_parameter": "buff_Door_CD",
+          "parameter": {
+            "name_id": "buff_Door_OtherUp",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "DamageUpGeneralBase",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection",
+          "mixed_source_policy": "non_stacking"
+        },
+        {
+          "id": "the_wrong_gate_wearer_anima_damage",
+          "scope": "wearer",
+          "trigger": "healing",
+          "duration_parameter": "buff_Door_CD",
+          "parameter": {
+            "name_id": "buff_Door_Up",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "DamageUpNatureBase",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection"
+        }
+      ]
     },
     "fork_GoldRecord": {
       "panel_by_level_stage": {
@@ -24654,6 +24695,7 @@
           },
           "target": {
             "property_id": "DefIgnore",
+            "projection_property_id": "DefenseIgnoreBase",
             "operation": "add",
             "percent": true
           },
@@ -24692,6 +24734,7 @@
           },
           "target": {
             "property_id": "DefIgnore",
+            "projection_property_id": "DefenseIgnoreBase",
             "operation": "add",
             "percent": true
           },
@@ -24729,6 +24772,7 @@
           },
           "target": {
             "property_id": "DamagePenetrateCosmos",
+            "projection_property_id": "ResistanceIgnoreCosmosBase",
             "operation": "add",
             "percent": true
           },
@@ -30472,7 +30516,50 @@
           ]
         }
       },
-      "team_effects": []
+      "team_effects": [],
+      "conditional_effects": [
+        {
+          "id": "good_boys_grand_adventure_team_attack",
+          "scope": "team_including_wearer",
+          "trigger": "ultimate",
+          "duration_parameter": "buff_mofeikesi_CD",
+          "parameter": {
+            "name_id": "buff_mofeikesi_Atk",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "AtkUp",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection",
+          "mixed_source_policy": "non_stacking"
+        },
+        {
+          "id": "good_boys_grand_adventure_control_attack",
+          "scope": "team_including_wearer",
+          "trigger": "ultimate_control",
+          "duration_parameter": "buff_mofeikesi_CD",
+          "parameter": {
+            "name_id": "buff_mofeikesi_Up",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "AtkUp",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection",
+          "mixed_source_policy": "non_stacking",
+          "confirms_trigger": "ultimate"
+        }
+      ]
     },
     "fork_moon": {
       "panel_by_level_stage": {
@@ -37690,7 +37777,47 @@
           ]
         }
       },
-      "team_effects": []
+      "team_effects": [],
+      "conditional_effects": [
+        {
+          "id": "crime_and_punishment_team_crit_damage",
+          "scope": "team_including_wearer",
+          "trigger": "ultimate",
+          "duration_parameter": "buff_TwinBirds_CritUp1_CD",
+          "parameter": {
+            "name_id": "buff_TwinBirds_CritUp1",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "CritDamageBase",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection"
+        },
+        {
+          "id": "crime_and_punishment_wearer_crit_damage",
+          "scope": "wearer",
+          "trigger": "ultimate",
+          "duration_parameter": "buff_TwinBirds_CritUp1_CD",
+          "parameter": {
+            "name_id": "buff_TwinBirds_CritUp3",
+            "level_source": "exact_arc_rank"
+          },
+          "target": {
+            "property_id": "CritDamageBase",
+            "operation": "add",
+            "percent": true
+          },
+          "manual_selection_required": true,
+          "native_execution_supported": false,
+          "automatic_activation_supported": false,
+          "status": "reviewed_manual_source_projection"
+        }
+      ]
     },
     "fork_vine": {
       "panel_by_level_stage": {

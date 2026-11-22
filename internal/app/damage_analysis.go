@@ -10,6 +10,7 @@ import (
 	"nte-optimizer/internal/datafiles"
 	"nte-optimizer/internal/decoded"
 	ntelocale "nte-optimizer/internal/locale"
+	"nte-optimizer/internal/nte"
 	"nte-optimizer/internal/optimizer"
 )
 
@@ -22,6 +23,7 @@ type damageBatch struct {
 	labelsErr     error
 	current       []damage.Result
 	currentBuffed []damage.Result
+	buildArcBuffs []taggedArcBuff
 }
 
 func (s OptimizerService) prepareDamageBatch(character *decoded.Character, current *optimizer.StatSummary, language string) damageBatch {
@@ -29,18 +31,18 @@ func (s OptimizerService) prepareDamageBatch(character *decoded.Character, curre
 	labels, labelsErr := ntelocale.LoadPresentation(s.DataDir, language)
 	batch := damageBatch{character: character, catalog: catalog, catalogErr: catalogErr, labels: labels, labelsErr: labelsErr}
 	if current != nil {
-		batch.currentBuffed = batch.calculate(*current, true).Build
-		batch.current = batch.calculate(*current, false).Build
+		batch.currentBuffed = batch.calculate(*current, true, nil).Build
+		batch.current = batch.calculate(*current, false, nil).Build
 	}
 	return batch
 }
 
 func (batch damageBatch) evaluate(build optimizer.StatSummary) *DamageAnalysis {
-	analysis := batch.calculate(build, false)
+	analysis := batch.calculate(build, false, nil)
 	analysis.Current = batch.current
 	if analysis.Status == "atomic_preview" {
 		analysis.Groups = groupDamageResults(batch.character.CharacterID, analysis.Build, analysis.Current, nil)
-		buffed := batch.calculate(build, true)
+		buffed := batch.calculate(build, true, batch.buildArcBuffs)
 		groups := groupDamageResults(batch.character.CharacterID, buffed.Build, batch.currentBuffed, nil)
 		byID := make(map[string]DamageGroup, len(groups))
 		for _, group := range groups {
@@ -85,13 +87,13 @@ func (batch damageBatch) evaluate(build optimizer.StatSummary) *DamageAnalysis {
 	return analysis
 }
 
-func (batch damageBatch) calculate(stats optimizer.StatSummary, buffed bool) *DamageAnalysis {
+func (batch damageBatch) calculate(stats optimizer.StatSummary, buffed bool, tagged []taggedArcBuff) *DamageAnalysis {
 	if buffed && stats.DerivedWithAllBuffs != nil {
 		stats.DerivedConditional = stats.DerivedWithAllBuffs
 	} else if !buffed && stats.Derived != nil {
 		stats.DerivedConditional = stats.Derived
 	}
-	return damageAnalysisFromCatalog(batch.character, stats, nil, batch.catalog, batch.catalogErr)
+	return damageAnalysisWithArcBuffs(batch.character, stats, nil, batch.catalog, batch.catalogErr, tagged)
 }
 
 func localizedAbilityLabel(labels map[string]string, abilityID string) string {
@@ -209,6 +211,10 @@ func (s OptimizerService) damageAnalysis(character *decoded.Character, build opt
 }
 
 func damageAnalysisFromCatalog(character *decoded.Character, build optimizer.StatSummary, current *optimizer.StatSummary, catalog damage.Catalog, err error) *DamageAnalysis {
+	return damageAnalysisWithArcBuffs(character, build, current, catalog, err, nil)
+}
+
+func damageAnalysisWithArcBuffs(character *decoded.Character, build optimizer.StatSummary, current *optimizer.StatSummary, catalog damage.Catalog, err error, tagged []taggedArcBuff) *DamageAnalysis {
 	analysis := &DamageAnalysis{Status: "unavailable"}
 	if character == nil {
 		analysis.MissingInputs = append(analysis.MissingInputs, "missing_character")
@@ -260,7 +266,17 @@ func damageAnalysisFromCatalog(character *decoded.Character, build optimizer.Sta
 			continue
 		}
 		instance := entry.Resolve(strconv.Itoa(character.CharacterID), level)
-		stats := damage.StatsFromOptimizer(build.DerivedConditional, entry.Element, true)
+		values := build.DerivedConditional
+		var applicable []nte.Stat
+		for _, buff := range tagged {
+			if matchesDamageTags(entry.DamageTags, buff.tags) {
+				applicable = append(applicable, buff.stat)
+			}
+		}
+		if len(applicable) > 0 {
+			values = optimizer.DeriveWithBonuses(values, applicable)
+		}
+		stats := damage.StatsFromOptimizer(values, entry.Element, true)
 		buildInstance := instance
 		applyCombatRules(character.AwakenLevel, characterCatalog.Rules, &stats, &buildInstance)
 		analysis.Build = append(analysis.Build, damage.Calculate(character.Level, stats, enemy, buildInstance))

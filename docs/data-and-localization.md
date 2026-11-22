@@ -199,6 +199,20 @@ the game, and verify conditional effects separately. Agreement on the visible
 attributes does not establish correctness for unobserved attributes or combat
 states.
 
+### Arc effects in a combat scenario
+
+The builder lists the modeled Arc conditions for the selected character and
+the selected allies' resolved gear. A confirmed condition uses the exact rank
+of each Arc and its catalog recipient scope. Confirmed panel-wide modifiers
+are included in objective ranking and the buffed damage preview. Damage-tagged
+modifiers only enter damage calculations for matching catalog instances.
+
+The catalog in `equipment/arcs.json` keeps the source attribute in
+`target.property_id` and can supply `target.projection_property_id` for the
+equivalent optimizer attribute. `confirms_trigger` records an implication
+between conditions on the same equipped Arc. A structured record can replace
+a legacy projection so the same stat only enters the calculation once.
+
 ### Reconciling extracted effect curves
 
 An extracted curve, a display description, and a runtime effect can disagree

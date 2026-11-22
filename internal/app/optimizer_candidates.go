@@ -43,7 +43,7 @@ func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile 
 		eligible: make([]optimizer.Candidate, 0, len(modules)),
 		raw:      make([]optimizer.Candidate, 0, len(modules)),
 	}
-	baselineStats := optimizer.BuildStatSummary(profile, nil, nil, optimizer.SetDefinition{}, 0, additional).Derived
+	baselineStats := optimizer.BuildStatSummary(profile, nil, nil, optimizer.SetDefinition{}, 0, additional).RankingStats()
 	pool.baselineStats = baselineStats
 	pool.selectionObjectives = objectivesStillMissing(baselineStats, objectives)
 	pool.strictObjectives = strictObjectivesStillMissing(baselineStats, objectives)
@@ -71,12 +71,12 @@ func (s OptimizerService) prepareModuleCandidates(modules []nte.Module, profile 
 		pool.raw = append(pool.raw, optimizer.Candidate{Module: module, Score: searchScore})
 		candidate := optimizer.Candidate{Module: module, Score: searchScore}
 		if len(objectives) > 0 {
-			summary := optimizer.BuildStatSummary(profile, []nte.Module{module}, nil, optimizer.SetDefinition{}, 0, additional)
+			values := optimizer.BuildStatSummary(profile, []nte.Module{module}, nil, optimizer.SetDefinition{}, 0, additional).RankingStats()
 			candidate.ObjectiveValues = make(map[string]float64, len(objectives))
 			for _, goal := range objectives {
-				candidate.ObjectiveValues[goal.PropertyID] = summary.Derived[goal.PropertyID] - baselineStats[goal.PropertyID]
+				candidate.ObjectiveValues[goal.PropertyID] = values[goal.PropertyID] - baselineStats[goal.PropertyID]
 			}
-			candidate.Priority = optimizer.ObjectiveScore(summary.Derived, objectives) - baselineObjective + score*optimizer.EquipmentTieBreakScale
+			candidate.Priority = optimizer.ObjectiveScore(values, objectives) - baselineObjective + score*optimizer.EquipmentTieBreakScale
 			if requiredGeometry[module.Geometry] {
 				candidate.Priority += 25
 			}

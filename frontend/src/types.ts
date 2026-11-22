@@ -74,7 +74,11 @@ export type SavedGoalSettings = {target:number;label?:string;percent?:boolean;cu
 export type ProfileSettings = {main_stats:string[];weights:Record<string,number>;goals?:Record<string,SavedGoalSettings>;arc_fork_id?:string;simulate_cartridge_main_stats?:boolean;team_allies?:TeamAlly[]}
 export type GoalTuning = {target:number;maximum:number;tolerance:number;importance:number;minimum?:number;strict_minimum?:boolean;custom?:boolean;label?:string;percent?:boolean}
 export type UpdateInfo = {available:boolean;current_version:string;latest_version?:string;download_url?:string}
+export type ArcConditionKey = { character_id: number; fork_id: string; trigger: string }
+export type ArcConditionOption = ArcConditionKey & { arc_name: string; max_stacks: number }
+export type ArcConditionSelection = ArcConditionKey & { stacks: number }
 export type TeamPreview = {
   applied: { rule_id: string; source_ids: number[]; stat: Stat }[]
-  conditional: { kind: 'skill' | 'arc' | 'set'; id: string; character_id: number; detail: string; trigger: string; star?: number; pieces?: number; source_ids?: number[]; non_stacking?: boolean; duration_seconds?: number; rotation_action?: string; bonus?: Stat; included?: boolean; projected_stats?: Stat[]; source_names?: string[]; equipment_name?: string }[]
+  conditional: { kind: 'skill' | 'arc' | 'set'; id: string; character_id: number; detail: string; trigger: string; star?: number; pieces?: number; source_ids?: number[]; non_stacking?: boolean; duration_seconds?: number; rotation_action?: string; bonus?: Stat; included?: boolean; projected_stats?: Stat[]; source_names?: string[]; equipment_name?: string; damage_tags?: string[] }[]
+  arc_conditions?: ArcConditionOption[]
 }

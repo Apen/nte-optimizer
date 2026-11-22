@@ -253,6 +253,11 @@ func TestTeamPreviewCalculatesBaseAttackAndGroupsNonStackingSets(t *testing.T) {
 			t.Fatalf("expected one row for %s, got %d", id, counts[id])
 		}
 	}
+	if !slices.ContainsFunc(preview.ArcConditions, func(option ArcConditionOption) bool {
+		return option.ArcConditionKey == (ArcConditionKey{CharacterID: 1075, ForkID: "fork_Door", Trigger: "healing"})
+	}) {
+		t.Fatal("missing Iroi's Arc condition")
+	}
 	withoutSet := optimizer.StatSummary{
 		WithConditions: map[string]float64{"AtkBase": 1000},
 		Derived:        map[string]float64{"AtkFinal": 1000},
@@ -265,7 +270,7 @@ func TestTeamPreviewCalculatesBaseAttackAndGroupsNonStackingSets(t *testing.T) {
 	projectTeamBuffs(&withSet, preview.Conditional, optimizer.SetDefinition{InventorySetID: "Suit11"}, 4)
 	if withoutSet.DerivedWithAllBuffs["AtkFinal"] <= 1000 ||
 		withoutSet.DerivedWithAllBuffs["AtkFinal"] != withSet.DerivedWithAllBuffs["AtkFinal"] ||
-		withoutSet.DerivedWithAllBuffs["DamageUpGeneralBase"] != .15 {
+		withoutSet.DerivedWithAllBuffs["DamageUpGeneralBase"] != 0 {
 		t.Fatalf("unexpected team projections without set %+v and with set %+v", withoutSet, withSet)
 	}
 	if withSet.Derived["AtkFinal"] != 1000 || withSet.WithConditions["AtkUp"] != .15 {

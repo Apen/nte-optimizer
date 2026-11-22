@@ -297,10 +297,11 @@ func (e CartridgeSetEvaluator) evaluateSingle(placements []Placement) BonusResul
 				}
 			}
 			summary := BuildStatSummary(e.character, selected, &set.cartridge, set.definition, len(matched), e.additional)
-			if e.exact && (exceedsMaximum(summary.Derived, e.objectives) || belowAnyToleranceFloor(summary.Derived, e.objectives)) {
+			values := summary.RankingStats()
+			if e.exact && (exceedsMaximum(values, e.objectives) || belowAnyToleranceFloor(values, e.objectives)) {
 				continue
 			}
-			utility := ObjectiveScore(summary.Derived, e.objectives)
+			utility := ObjectiveScore(values, e.objectives)
 			if e.sourceWeighted() {
 				utility, _ = SourceObjectiveScore(summary.Unconditional, selected, &set.cartridge, e.character, e.objectives)
 			}

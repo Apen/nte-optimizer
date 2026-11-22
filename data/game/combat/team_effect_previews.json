@@ -2,39 +2,6 @@
   "schema_version": 1,
   "effects": [
     {
-      "kind": "arc",
-      "id": "fork_mofeikesi",
-      "detail": "sakiri_arc",
-      "trigger": "ultimate_control",
-      "rotation_action": "ultimate",
-      "duration_parameter": "buff_mofeikesi_CD",
-      "projection_parameters": {
-        "buff_mofeikesi_Atk": "AtkUp",
-        "buff_mofeikesi_Up": "AtkUp"
-      }
-    },
-    {
-      "kind": "arc",
-      "id": "fork_twinbirds",
-      "detail": "blackbird_arc",
-      "trigger": "ultimate",
-      "duration_parameter": "buff_TwinBirds_CritUp1_CD",
-      "projection_parameters": {
-        "buff_TwinBirds_CritUp1": "CritDamageBase"
-      }
-    },
-    {
-      "kind": "arc",
-      "id": "fork_Door",
-      "detail": "iroi_arc",
-      "trigger": "healing",
-      "rotation_action": "redirect_press",
-      "duration_parameter": "buff_Door_CD",
-      "projection_parameters": {
-        "buff_Door_OtherUp": "DamageUpGeneralBase"
-      }
-    },
-    {
       "kind": "set",
       "id": "Suit11",
       "pieces": 4,

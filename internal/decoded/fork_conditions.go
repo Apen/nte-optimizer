@@ -21,14 +21,16 @@ type ForkConditionalEffect struct {
 	StackInput         string   `json:"stack_input"`
 	MaxStacks          int      `json:"max_stacks"`
 	MixedSourcePolicy  string   `json:"mixed_source_policy"`
+	ConfirmsTrigger    string   `json:"confirms_trigger"`
 	Parameter          struct {
 		NameID      string `json:"name_id"`
 		LevelSource string `json:"level_source"`
 	} `json:"parameter"`
 	Target struct {
-		PropertyID string `json:"property_id"`
-		Operation  string `json:"operation"`
-		Percent    bool   `json:"percent"`
+		PropertyID           string `json:"property_id"`
+		ProjectionPropertyID string `json:"projection_property_id"`
+		Operation            string `json:"operation"`
+		Percent              bool   `json:"percent"`
 	} `json:"target"`
 	ManualSelectionRequired      bool              `json:"manual_selection_required"`
 	NativeExecutionSupported     bool              `json:"native_execution_supported"`
@@ -43,6 +45,7 @@ type ForkEffectSelection struct {
 	RecipientIsWearer   bool
 	DamageTags          []string
 	Stacks              int
+	ReplaceLegacy       bool
 }
 
 type ForkConditionalValue struct {
@@ -53,7 +56,7 @@ type ForkConditionalValue struct {
 }
 
 // ResolveConditionalEffect resolves exact rank parameters without applying them.
-// Legacy projections remain exclusively in Stats' conditional_by_star output.
+// Callers replacing a legacy projection must remove the original contribution.
 func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected ForkEffectSelection) (ForkConditionalValue, error) {
 	definition, ok := c.Forks[weapon.ForkID]
 	if !ok {
@@ -67,7 +70,7 @@ func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected
 	if !selected.ConditionsConfirmed {
 		return ForkConditionalValue{}, errors.New("manual confirmation required for Arc effect conditions")
 	}
-	if effect.LegacyConditionalProjection {
+	if effect.LegacyConditionalProjection && !selected.ReplaceLegacy {
 		return ForkConditionalValue{}, fmt.Errorf("conditional_by_star already represents Arc effect %s", id)
 	}
 	if effect.Parameter.LevelSource != "exact_arc_rank" || effect.Target.Operation != "add" {
@@ -77,6 +80,10 @@ func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected
 	case "wearer", "wearer_summon_damage":
 		if !selected.RecipientIsWearer {
 			return ForkConditionalValue{}, errors.New("wearer must be the recipient of the Arc effect")
+		}
+	case "other_allies":
+		if selected.RecipientIsWearer {
+			return ForkConditionalValue{}, errors.New("wearer is not a recipient of the Arc effect")
 		}
 	case "team_including_wearer", "all_field_summon_damage":
 	default:

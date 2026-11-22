@@ -19,7 +19,7 @@ export function OpenDownloadURL(url:string):Promise<void>;
 export function ScanAndImportAccount(language:string,seconds:number,retainCapture:boolean):Promise<AccountImportSummary>;
 export function RecoverAndScanAccount(language:string,seconds:number,retainCapture:boolean):Promise<AccountImportSummary>;
 export function LastScanLog():Promise<ScanLogEvent[]>;
-export function OptimizeFlexibleSelection(profileID:string,ignorePriority:boolean,language:string,mode:string,goals:Record<string,GoalTuning>,pinnedModuleIDs:string[],excludedModuleIDs:string[],weights:ProfileSettings & {exclude_equipped?:boolean},arcForkID:string):Promise<Result>;
+export function OptimizeFlexibleSelection(profileID:string,ignorePriority:boolean,language:string,mode:string,goals:Record<string,GoalTuning>,pinnedModuleIDs:string[],excludedModuleIDs:string[],weights:ProfileSettings & {exclude_equipped?:boolean;arc_conditions?:import('../../../src/types').ArcConditionSelection[]},arcForkID:string):Promise<Result>;
 export function StopOptimization():Promise<boolean>;
 export function LastOptimizationLog():Promise<OptimizationLog>;
 export function AccountBuffs(language:string):Promise<AccountBuffPage>;

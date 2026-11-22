@@ -3,7 +3,6 @@ package optimizer
 import (
 	"math"
 	"sort"
-	"strings"
 )
 
 // prepareBlueprintEvaluator compiles the invariant geometry/set work once.
@@ -83,15 +82,12 @@ func (e CartridgeSetEvaluator) prepareBlueprintEvaluations(geometries []string) 
 		addStats(prepared.sub, set.cartridge.SubStats)
 		keys := []string{}
 		for key := range summaries[i].Sources {
-			if !strings.HasSuffix(key, "_conditional") {
+			if includesRankingSource(key) {
 				keys = append(keys, key)
 			}
 		}
 		sort.Strings(keys)
 		for _, key := range keys {
-			if strings.HasSuffix(key, "_conditional") {
-				continue
-			}
 			if key == "modules" {
 				prepared.moduleSource = len(prepared.sources)
 			}

@@ -21,6 +21,7 @@ import (
 type WeightOverrides struct {
 	ExcludeEquipped            bool                         `json:"exclude_equipped,omitempty"`
 	TeamAllies                 []TeamAlly                   `json:"team_allies,omitempty"`
+	ArcConditions              []ArcConditionSelection      `json:"arc_conditions,omitempty"`
 	SimulateCartridgeMainStats bool                         `json:"simulate_cartridge_main_stats,omitempty"`
 	MainStats                  []string                     `json:"main_stats"`
 	Weights                    map[string]float64           `json:"weights"`
@@ -314,17 +315,15 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 	}
 	additional := arcs.additional[""]
 	var arcOption *optimizer.ArcOption
+	var buildArc *decoded.Weapon
 	if arcs.option != nil {
 		arcOption = arcs.option
 		additional = arcOption.Additional
+		weapon := arcs.weapons[arcOption.ID]
+		buildArc = &weapon
 	}
 	var teamWarnings []string
 	if scenario != nil {
-		var buildArc *decoded.Weapon
-		if arcOption != nil {
-			weapon := arcs.weapons[arcOption.ID]
-			buildArc = &weapon
-		}
 		teamWarnings, err = scenario.apply(buildArc, additional)
 		if err != nil {
 			return OptimizationResult{}, err
@@ -337,6 +336,37 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 			if !slices.Contains(teamWarnings, warning) {
 				teamWarnings = append(teamWarnings, warning)
 			}
+		}
+	}
+	var confirmations []ArcConditionSelection
+	if s.WeightOverrides != nil {
+		confirmations = s.WeightOverrides.ArcConditions
+	}
+	var buildArcScenario, currentArcScenario arcScenarioResult
+	if buildArc != nil || currentWeapon != nil || scenario != nil || len(confirmations) > 0 {
+		catalog, err := s.loadArcs()
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		buildEffects, err := s.collectArcScenarioEffects(catalog, profile.CharacterID, buildArc, scenario)
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		selected, err := arcConditionSelections(buildEffects, confirmations, displayCatalog)
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		buildArcScenario, err = applyArcScenario(catalog, profile.CharacterID, buildEffects, selected, displayCatalog, additional)
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		currentEffects, err := s.collectArcScenarioEffects(catalog, profile.CharacterID, currentWeapon, scenario)
+		if err != nil {
+			return OptimizationResult{}, err
+		}
+		currentArcScenario, err = applyArcScenario(catalog, profile.CharacterID, currentEffects, selected, displayCatalog, currentAdditional)
+		if err != nil {
+			return OptimizationResult{}, err
 		}
 	}
 	if currentCharacter != nil {
@@ -429,17 +459,17 @@ func (s OptimizerService) optimizeTunedWithArc(ctx context.Context, inv nte.Inve
 			}
 			gear := scenario.gear[effect.CharacterID]
 			switch effect.Kind {
-			case "arc":
-				effect.EquipmentName = cleanArcName(displayCatalog.ItemName(effect.ID, gear.arc.Name))
 			case "set":
 				effect.EquipmentName = displayCatalog.SetName(effect.ID, gear.cartridge.SetName)
 			}
 		}
 	}
 	result := s.buildOptimizationResult(optimizationReportInput{
-		teamEffects:      teamEffects,
-		currentInventory: &actualInventory,
-		inventory:        inv, profileID: profileID, language: language, plan: plan, profile: profile, refs: refs,
+		teamEffects:        teamEffects,
+		buildArcScenario:   buildArcScenario,
+		currentArcScenario: currentArcScenario,
+		currentInventory:   &actualInventory,
+		inventory:          inv, profileID: profileID, language: language, plan: plan, profile: profile, refs: refs,
 		setCatalog: setCatalog, displayCatalog: displayCatalog, currentCharacter: currentCharacter, selectedWeapon: selectedWeaponPtr,
 		weaponNote: arcs.notes[execution.solution.SelectedWeaponID], additional: selectedAdditional, currentAdditional: currentAdditional,
 		arcWeapons: arcs.weapons, arcNotes: arcs.notes, arcAdditional: arcs.additional, characterNames: characterNames, buildTarget: buildTarget,
@@ -497,6 +527,7 @@ func appendCustomTargetGoals(buildTarget *target.BuildTarget, tunings map[string
 
 type alternativeBuildContext struct {
 	teamEffects      []TeamPreviewEffect
+	arcEffects       []TeamPreviewEffect
 	moduleByID       map[string]nte.Module
 	cartridges       []nte.Cartridge
 	profile          scoring.Character
@@ -542,7 +573,8 @@ func (s OptimizerService) buildAlternatives(solutions []optimizer.Solution, ctx 
 		if ctx.teamEffects != nil {
 			buffEffects = projectTeamBuffs(&stats, ctx.teamEffects, setDefinition, solution.SetMatchedCount)
 		}
-		explainRanking(&solution, stats.Derived, ctx.objectives, ctx.mode)
+		buffEffects = append(buffEffects, ctx.arcEffects...)
+		explainRanking(&solution, stats.RankingStats(), ctx.objectives, ctx.mode)
 		var weapon *decoded.Weapon
 		if selected, exists := ctx.arcWeapons[solution.SelectedWeaponID]; exists {
 			copy := selected

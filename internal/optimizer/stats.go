@@ -20,12 +20,29 @@ type StatSummary struct {
 	DerivedConditional  map[string]float64            `json:"derived_conditional"`
 }
 
+const ArcScenarioSource = "arc_scenario_conditional"
+
+func (s StatSummary) RankingStats() map[string]float64 {
+	if len(s.Sources[ArcScenarioSource]) == 0 {
+		return s.Derived
+	}
+	return derive(sumSources(s.Sources, includesRankingSource))
+}
+
+func includesRankingSource(source string) bool {
+	return source == ArcScenarioSource || !strings.HasSuffix(source, "_conditional")
+}
+
 // ProjectTeamBuffs derives a display-only snapshot from the modeled personal
 // conditions and temporary team effects.
 func (s *StatSummary) ProjectTeamBuffs(buffs []nte.Stat) {
-	values := cloneValues(s.WithConditions)
+	s.DerivedWithAllBuffs = DeriveWithBonuses(s.WithConditions, buffs)
+}
+
+func DeriveWithBonuses(base map[string]float64, buffs []nte.Stat) map[string]float64 {
+	values := cloneValues(base)
 	addStats(values, buffs)
-	s.DerivedWithAllBuffs = derive(values)
+	return derive(values)
 }
 
 func BuildStatSummary(character scoring.Character, modules []nte.Module, cartridge *nte.Cartridge, set SetDefinition, matched int, additional ...map[string][]nte.Stat) StatSummary {
@@ -75,8 +92,8 @@ func BuildStatSummary(character scoring.Character, modules []nte.Module, cartrid
 	if len(s.Sources["weapon"]) > 0 {
 		s.MissingSources = without(s.MissingSources, "weapon/Arc")
 	}
-	s.Unconditional = sumSources(s.Sources, false)
-	s.WithConditions = sumSources(s.Sources, true)
+	s.Unconditional = sumSources(s.Sources, func(source string) bool { return !strings.HasSuffix(source, "_conditional") })
+	s.WithConditions = sumSources(s.Sources, func(string) bool { return true })
 	s.Derived = derive(s.Unconditional)
 	s.DerivedConditional = derive(s.WithConditions)
 	return s
@@ -104,7 +121,7 @@ func cloneValues(src map[string]float64) map[string]float64 {
 	}
 	return dst
 }
-func sumSources(sources map[string]map[string]float64, conditional bool) map[string]float64 {
+func sumSources(sources map[string]map[string]float64, include func(string) bool) map[string]float64 {
 	out := map[string]float64{}
 	keys := make([]string, 0, len(sources))
 	for key := range sources {
@@ -112,7 +129,7 @@ func sumSources(sources map[string]map[string]float64, conditional bool) map[str
 	}
 	sort.Strings(keys)
 	for _, source := range keys {
-		if strings.HasSuffix(source, "_conditional") && !conditional {
+		if !include(source) {
 			continue
 		}
 		for key, value := range sources[source] {

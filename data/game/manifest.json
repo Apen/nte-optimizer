@@ -184,7 +184,7 @@
     {
       "path": "combat/team_effect_previews.json",
       "schema_version": 1,
-      "sha256": "83b5479a45ef78b46450d54c83c76cb0083866fb3525e0aff852c6ce6265e7d5",
+      "sha256": "33af2160aa087c68dc4bd463163406f5453dfb0c9ffe2883f02d83576ff828ec",
       "sources": [
         "config/skill-support-buffs.json",
         "overrides/team_effect_previews.json",
@@ -203,7 +203,7 @@
     {
       "path": "equipment/arcs.json",
       "schema_version": 1,
-      "sha256": "47a2b7b7789b197f7e62352e810e9891ac3d37b942b4fd3e65bcb193c32bac01",
+      "sha256": "d3c38edcd2b2fc6c8efdcc13c9dcd8b99417d988c61df2a6560a52b05e702e03",
       "sources": [
         "generated/fork_stats.json",
         "overrides/equipment-projections.json",

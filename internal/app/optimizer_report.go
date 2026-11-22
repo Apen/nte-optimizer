@@ -10,35 +10,37 @@ import (
 )
 
 type optimizationReportInput struct {
-	teamEffects       []TeamPreviewEffect
-	currentInventory  *nte.Inventory
-	inventory         nte.Inventory
-	profileID         string
-	language          string
-	plan              searchPlan
-	profile           scoring.Character
-	refs              scoring.References
-	setCatalog        optimizer.SetCatalog
-	displayCatalog    ntelocale.Catalog
-	currentCharacter  *decoded.Character
-	selectedWeapon    *decoded.Weapon
-	weaponNote        string
-	additional        map[string][]nte.Stat
-	currentAdditional map[string][]nte.Stat
-	arcWeapons        map[string]decoded.Weapon
-	arcNotes          map[string]string
-	arcAdditional     map[string]map[string][]nte.Stat
-	characterNames    map[int]string
-	buildTarget       *target.BuildTarget
-	objectives        []optimizer.ObjectiveGoal
-	candidates        []optimizer.Candidate
-	selected          []optimizer.Candidate
-	solution          optimizer.Solution
-	grid              optimizer.GridDefinition
-	timeoutSeconds    int
-	excludedEquipped  int
-	includeEquipped   bool
-	phaseMilliseconds map[string]int64
+	teamEffects        []TeamPreviewEffect
+	buildArcScenario   arcScenarioResult
+	currentArcScenario arcScenarioResult
+	currentInventory   *nte.Inventory
+	inventory          nte.Inventory
+	profileID          string
+	language           string
+	plan               searchPlan
+	profile            scoring.Character
+	refs               scoring.References
+	setCatalog         optimizer.SetCatalog
+	displayCatalog     ntelocale.Catalog
+	currentCharacter   *decoded.Character
+	selectedWeapon     *decoded.Weapon
+	weaponNote         string
+	additional         map[string][]nte.Stat
+	currentAdditional  map[string][]nte.Stat
+	arcWeapons         map[string]decoded.Weapon
+	arcNotes           map[string]string
+	arcAdditional      map[string]map[string][]nte.Stat
+	characterNames     map[int]string
+	buildTarget        *target.BuildTarget
+	objectives         []optimizer.ObjectiveGoal
+	candidates         []optimizer.Candidate
+	selected           []optimizer.Candidate
+	solution           optimizer.Solution
+	grid               optimizer.GridDefinition
+	timeoutSeconds     int
+	excludedEquipped   int
+	includeEquipped    bool
+	phaseMilliseconds  map[string]int64
 }
 
 func (s OptimizerService) buildOptimizationResult(input optimizationReportInput) OptimizationResult {
@@ -54,13 +56,14 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 	if input.teamEffects != nil {
 		buffEffects = projectTeamBuffs(&stats, input.teamEffects, setDefinition, input.solution.SetMatchedCount)
 	}
+	buffEffects = append(buffEffects, input.buildArcScenario.rows...)
 	displaySetDefinition := localizedSetDefinition(setDefinition, input.displayCatalog)
 	mode := publicOptimizationMode(input.plan)
 	if input.plan.approximate {
 		input.solution.Complete = false
 	}
 	normalizePublicScore(&input.solution, optimizedModules, cartridgeBreakdown)
-	explainRanking(&input.solution, stats.Derived, input.objectives, mode)
+	explainRanking(&input.solution, stats.RankingStats(), input.objectives, mode)
 	currentAdditional := input.currentAdditional
 	if currentAdditional == nil {
 		currentAdditional = input.additional
@@ -72,8 +75,13 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 	currentStats := buildCurrentEquipmentStats(currentInventory, input.profile, input.setCatalog, currentAdditional, input.teamEffects)
 	goals, currentGoals, conditionalGoals, currentConditionalGoals := compareBuildGoals(input.buildTarget, stats, currentStats)
 	damageBatch := s.prepareDamageBatch(input.currentCharacter, currentStats, input.language)
+	damageBatch.buildArcBuffs = input.buildArcScenario.tagged
+	if currentStats != nil && len(input.currentArcScenario.tagged) > 0 {
+		damageBatch.currentBuffed = damageBatch.calculate(*currentStats, true, input.currentArcScenario.tagged).Build
+	}
 	alternatives := s.buildAlternatives(input.solution.Alternatives, alternativeBuildContext{
 		teamEffects:    input.teamEffects,
+		arcEffects:     input.buildArcScenario.rows,
 		damageForBuild: damageBatch.evaluate, moduleByID: moduleByID, cartridges: input.inventory.Cartridges, profile: input.profile, refs: input.refs,
 		characterNames: input.characterNames, setCatalog: input.setCatalog, additional: input.additional,
 		objectives: input.objectives, mode: mode, approximate: input.plan.approximate, buildTarget: input.buildTarget,

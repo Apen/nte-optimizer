@@ -3,16 +3,22 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { App } from './App'
 import type { TeamAlly, WorkspaceCharacter } from './types'
 
-const api = vi.hoisted(() => ({ save: vi.fn(), target: vi.fn(), teams: new Map<string, TeamAlly[]>() }))
+const api = vi.hoisted(() => ({
+  save: vi.fn(), target: vi.fn(), preview: vi.fn(), optimize: vi.fn(), teams: new Map<string, TeamAlly[]>(),
+}))
 vi.mock('../wailsjs/go/main/DesktopApp', () => ({
   Profiles: async () => [1036, 1004].map(id => ({ id: `p${id}`, character_id: id, name: `P${id}`, main_stats: [], weights: { CritBase: 1 }, team_allies: api.teams.get(`p${id}`) })),
   BuildWorkspace: async () => ({ characters: [1036, 1004].map(id => ({ character_id: id, name: `C${id}`, level: 80, awaken_level: 0, priority: 1 })) }),
   EquipmentCatalog: async () => ({ modules: [], cartridges: [], arcs: [], resources: [] }),
-  Localization: async () => ({ locale: 'en', ui: { team_ally: 'Ally {number}' }, stats: {}, qualities: {}, geometries: {}, stat_sources: {}, damage: {} }),
+  Localization: async () => ({ locale: 'en', ui: {
+    team_ally: 'Ally {number}', find_best_build: 'Find best build', team_trigger_redirect_skill_or_enter_combat: 'After a Redirect Skill or on entering combat',
+  }, stats: {}, qualities: {}, geometries: {}, stat_sources: {}, damage: {} }),
   AccountImportStatus: async () => ({ has_import: false }), CheckForUpdate: async () => ({ available: false }),
   Target: (...args: unknown[]) => api.target(...args), SaveProfileSettings: (...args: unknown[]) => api.save(...args),
   StopOptimization: async () => false,
-  PreviewTeam: async () => ({ applied: [], conditional: [] }),
+  PreviewTeam: (...args: unknown[]) => api.preview(...args),
+  OptimizeFlexibleSelection: (...args: unknown[]) => api.optimize(...args),
+  LastOptimizationLog: async () => undefined,
 }))
 vi.mock('./components/app-navigation', () => ({
   AppSidebar: ({ onPage }: { onPage: (page: string) => void }) => <button onClick={() => onPage('characters')}>Characters</button>,
@@ -28,7 +34,30 @@ beforeEach(() => {
   api.teams.clear()
   api.save.mockReset().mockResolvedValue({})
   api.target.mockReset().mockResolvedValue({ name: 'Target', goals: [{ property_id: 'CritBase', minimum: .5, percent: true }] })
+  api.preview.mockReset().mockResolvedValue({ applied: [], conditional: [] })
+  api.optimize.mockReset().mockResolvedValue(undefined)
   Object.defineProperty(window, 'runtime', { configurable: true, value: { EventsOn: () => () => {} } })
+})
+
+it('sends an Arc condition only when the user confirms it', async () => {
+  const trigger = 'redirect_skill_or_enter_combat'
+  api.teams.set('p1036', [{ character_id: 1004 }])
+  api.preview.mockResolvedValue({
+    applied: [], conditional: [],
+    arc_conditions: [{ character_id: 1004, fork_id: 'fork_elyms', arc_name: 'Echoes on Hold', trigger, max_stacks: 1 }],
+  })
+  render(<App />)
+  fireEvent.click(await screen.findByText('Open 1036'))
+  const condition = await screen.findByLabelText(/Echoes on Hold.*Redirect Skill/)
+  expect(condition).not.toBeChecked()
+  const search = screen.getByRole('button', { name: 'Find best build' })
+  await act(async () => fireEvent.click(search))
+  expect(api.optimize.mock.calls[0][7]).not.toHaveProperty('arc_conditions')
+  fireEvent.click(condition)
+  await act(async () => fireEvent.click(search))
+  expect(api.optimize.mock.calls[1][7].arc_conditions).toEqual([
+    { character_id: 1004, fork_id: 'fork_elyms', trigger, stacks: 1 },
+  ])
 })
 afterEach(() => vi.useRealTimers())
 
