@@ -18,7 +18,7 @@ func TestGame15PassiveProjectionsKeepUnlocksRecipientsFiltersAndSourceZero(t *te
 		{"elyms_passive_critical_damage", 1090, 4, 1090, 1, .1, "CritDamageBase"},
 		{"elyms_charge_team_cosmos_damage", 1090, 2, 1036, 8, .3, "DamageUpCosmosBase"},
 		{"elyms_charge_team_cosmos_damage", 1090, 2, 1090, 1, .0375, "DamageUpCosmosBase"},
-		{"exe_passive_summon_triggered_damage", 1074, 4, 1074, 20, 1, "DamageUpGeneralBase"},
+		{"exe_passive_summon_triggered_damage", 1074, 4, 1074, 8, 2, "DamageUpGeneralBase"},
 		{"exe_passive_clone_defense_ignore", 1074, 4, 1074, 1, 0, "DefIgnore"},
 	} {
 		b := buff(t, c, tc.id)
@@ -52,7 +52,7 @@ func TestGame15PassiveProjectionsKeepUnlocksRecipientsFiltersAndSourceZero(t *te
 	}
 	bonus := buff(t, c, "exe_passive_summon_triggered_damage")
 	value, err := bonus.Evaluate(BuffSelection{Stacks: 1, ConditionsConfirmed: true, DamageEffectIDs: []string{"GE_Player_Exe_Melee2_Damage"}}, Actor{CharacterID: 1074, Breakthrough: 4}, 1074, 1074)
-	if err != nil || value.Value != .05 || bonus.Conditions.SourceCounterLimit != 5 || !bonus.Conditions.RemoveOnLeaveBattle {
+	if err != nil || value.Value != .25 || bonus.Conditions.SourceCounterLimit != 3 || !bonus.Conditions.RemoveOnLeaveBattle {
 		t.Fatal("summon trigger became summon-only damage or lost contributor evidence")
 	}
 	if _, err := bonus.Evaluate(BuffSelection{Stacks: 1, ConditionsConfirmed: true, DamageEffectIDs: []string{"selected_damage"}}, Actor{CharacterID: 1074, Breakthrough: 4}, 1090, 1090); err == nil {

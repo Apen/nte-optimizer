@@ -129,12 +129,13 @@ not restricted to summon damage merely because summons trigger it. Its infinite
 duration is not replaced by the serialized ten-second magnitude. Per-contributor
 counts and native mixed-source accumulation remain unverified.
 
-`ForkCatalog.ResolveConditionalEffect` resolves Dotted Horizon and Echoes on Hold
-parameters at the exact Arc rank. It requires an explicit selected scenario,
-checks recipients, damage tags and selected stack limits, and returns values
-without modifying panel stats, damage or rankings. Echoes on Hold's extra wearer
-DEF ignore already exists in `conditional_by_star`: selecting that same effect
-again is rejected. Historical maximum-buff projections remain unchanged.
+`ForkCatalog.ResolveConditionalEffect` resolves modeled Arc effects at the exact
+rank and checks recipients, damage filters and stack limits. The builder projects
+confirmed panel-wide modifiers into the ranking and buffed preview. It applies
+hit-specific modifiers to matching damage instances. For Echoes on Hold, the
+builder removes the old wearer DEF-ignore contribution from `conditional_by_star`
+before applying its confirmed value.
+[Arc effects in a combat scenario](data-and-localization.md#arc-effects-in-a-combat-scenario)
 
 Linko's modifier consumes the explicit `linko_eligible_other_qte_count` native-query
 result, not a count inferred from living teammates. Its arithmetic retains the

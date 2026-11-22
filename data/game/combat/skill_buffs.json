@@ -18838,19 +18838,19 @@
       "calculation": {
         "kind": "flat_stat",
         "values_by_level": [
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25
         ]
       },
       "recipients": {
@@ -18864,8 +18864,8 @@
         "selection": "manual_scenario",
         "automatic_activation_supported": false,
         "trigger": "allied_summon_deals_damage",
-        "source_counter_limit": 5,
         "remove_on_leave_battle": true,
+        "source_counter_limit": 3,
         "requires_passive_unlocked": true,
         "passive_unlock_requirements": [
           {
@@ -18901,7 +18901,7 @@
       "level_independent": true,
       "stacking": {
         "group_id": "exe_passive_summon_triggered_damage",
-        "effect_stack_limit": 20,
+        "effect_stack_limit": 8,
         "effect_aggregation": "EGameplayEffectStackingType::AggregateByTarget",
         "same_caster_policy": "multiply_by_selected_stacks",
         "mixed_sources_policy": "unresolved",
@@ -18917,7 +18917,7 @@
         "manual_activation_required",
         "native_application_and_uptime_not_certified",
         "mixed_source_stacking_unresolved",
-        "five_stacks_per_contributor_is_a_manual_projection_from_the_source_counter_limit",
+        "per_contributor_cap_is_a_manual_projection_from_the_source_counter_limit",
         "infinite_effect_serialized_ten_second_magnitude_is_not_a_timed_duration"
       ],
       "source_tag_requirements": {

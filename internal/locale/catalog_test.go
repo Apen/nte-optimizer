@@ -25,6 +25,37 @@ func TestCatalogUsesStableFallbackForUnknownGameObject(t *testing.T) {
 	}
 }
 
+func TestPublishedArcConditionsHaveLocalizedTriggersAndStats(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	arcs, err := decoded.LoadForkCatalog(filepath.Join(dataDir, "game", "equipment", "arcs.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, language := range Supported {
+		t.Run(language, func(t *testing.T) {
+			catalog, err := Load(dataDir, language)
+			if err != nil {
+				t.Fatal(err)
+			}
+			for forkID, arc := range arcs.Forks {
+				for _, effect := range arc.ConditionalEffects {
+					key := "team_trigger_" + effect.Trigger
+					if label := strings.TrimSpace(catalog.UI[key]); label == "" || label == key {
+						t.Errorf("%s/%s requires a label for %s", forkID, effect.ID, key)
+					}
+					property := effect.Target.ProjectionPropertyID
+					if property == "" {
+						property = effect.Target.PropertyID
+					}
+					if label := strings.TrimSpace(catalog.Stats[property]); label == "" || label == property {
+						t.Errorf("%s/%s requires a stat label for %s", forkID, effect.ID, property)
+					}
+				}
+			}
+		})
+	}
+}
+
 func TestProductionCatalogLoadsSkillLabelsFromGameLocale(t *testing.T) {
 	dataDir := filepath.Join("..", "..", "data")
 	required := []string{

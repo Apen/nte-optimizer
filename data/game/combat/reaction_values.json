@@ -3412,7 +3412,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/Buff_Reaction_4_new",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3450,7 +3450,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/Buff_Reaction_4_new_1004",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "reaction_name_family_numeric_evidence_only",
       "level_binding_status": "not_required_constant",
@@ -3488,7 +3488,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/Buff_Reaction_5_new",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3526,7 +3526,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/Buff_Reaction_5_new_1036",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "reaction_name_family_numeric_evidence_only",
       "level_binding_status": "not_required_constant",
@@ -3564,7 +3564,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_ActorReaction_1_1019_Damage",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "reaction_name_family_numeric_evidence_only",
       "level_binding_status": "not_required_constant",
@@ -3602,7 +3602,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_ActorReaction_1_Damage",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3640,7 +3640,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_Player_Lacrimosa_AnHunZhouTwo_Damage",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3676,7 +3676,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_Reaction_3_new_1057_Damage",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3712,7 +3712,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_Reaction_3_new_1071_Damage",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "referenced_by_reaction_table",
       "level_binding_status": "not_required_constant",
@@ -3750,7 +3750,7 @@
       "source": {
         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
         "pointer": "/Rows/GE_Reaction_4_new_1070_Damage",
-        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
       },
       "selection_basis": "reaction_name_family_numeric_evidence_only",
       "level_binding_status": "not_required_constant",

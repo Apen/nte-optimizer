@@ -32,9 +32,10 @@ type ArcConditionOption struct {
 }
 
 type arcScenarioEffect struct {
-	key    ArcConditionKey
-	weapon decoded.Weapon
-	effect decoded.ForkConditionalEffect
+	key          ArcConditionKey
+	weapon       decoded.Weapon
+	effect       decoded.ForkConditionalEffect
+	matchingTags []string
 }
 
 func (s OptimizerService) collectArcScenarioEffects(catalog decoded.ForkCatalog, activeID int, activeArc *decoded.Weapon, team *teamScenario) ([]arcScenarioEffect, error) {
@@ -49,7 +50,7 @@ func (s OptimizerService) collectArcScenarioEffects(catalog decoded.ForkCatalog,
 		}
 		for _, effect := range definition.ConditionalEffects {
 			switch effect.Scope {
-			case "wearer", "wearer_summon_damage":
+			case "wearer", "wearer_summon_damage", "wearer_filtered_damage":
 				if characterID != activeID {
 					continue
 				}
@@ -73,7 +74,7 @@ func (s OptimizerService) collectArcScenarioEffects(catalog decoded.ForkCatalog,
 			add(ally.CharacterID, team.gear[ally.CharacterID].arc)
 		}
 	}
-	if !slices.ContainsFunc(effects, func(effect arcScenarioEffect) bool { return len(effect.effect.RequiredDamageTags) > 0 }) {
+	if !slices.ContainsFunc(effects, func(effect arcScenarioEffect) bool { return effect.effect.HasTags() }) {
 		return effects, nil
 	}
 	damageCatalog, err := damage.ReadCatalog(datafiles.New(s.DataDir).Damage())
@@ -81,16 +82,20 @@ func (s OptimizerService) collectArcScenarioEffects(catalog decoded.ForkCatalog,
 		return nil, err
 	}
 	instances := damageCatalog.Characters[strconv.Itoa(activeID)].Instances
-	return slices.DeleteFunc(effects, func(effect arcScenarioEffect) bool {
-		tags := effect.effect.RequiredDamageTags
-		return len(tags) > 0 && !slices.ContainsFunc(instances, func(instance damage.TieredInstance) bool {
-			return matchesDamageTags(instance.DamageTags, tags)
-		})
-	}), nil
-}
-
-func matchesDamageTags(actual, required []string) bool {
-	return !slices.ContainsFunc(required, func(tag string) bool { return !slices.Contains(actual, tag) })
+	eligible := effects[:0]
+	for _, entry := range effects {
+		if entry.effect.HasTags() {
+			index := slices.IndexFunc(instances, func(instance damage.TieredInstance) bool {
+				return entry.effect.Matches(instance.DamageTags)
+			})
+			if index < 0 {
+				continue
+			}
+			entry.matchingTags = instances[index].DamageTags
+		}
+		eligible = append(eligible, entry)
+	}
+	return eligible, nil
 }
 
 func arcConditionOptions(effects []arcScenarioEffect, labels ntelocale.Catalog) []ArcConditionOption {
@@ -102,7 +107,7 @@ func arcConditionOptions(effects []arcScenarioEffect, labels ntelocale.Catalog) 
 		options = append(options, ArcConditionOption{
 			ArcConditionKey: effect.key,
 			ArcName:         cleanArcName(labels.ItemName(effect.weapon.ForkID, effect.weapon.Name)),
-			MaxStacks:       max(1, effect.effect.MaxStacks),
+			MaxStacks:       effect.effect.SelectableStacks(),
 		})
 	}
 	return options
@@ -131,8 +136,9 @@ type arcScenarioResult struct {
 }
 
 type taggedArcBuff struct {
-	tags []string
-	stat nte.Stat
+	filter       decoded.ForkDamageFilter
+	stat         nte.Stat
+	alwaysActive bool
 }
 
 func applyArcScenario(catalog decoded.ForkCatalog, activeID int, effects []arcScenarioEffect, selected map[ArcConditionKey]int, labels ntelocale.Catalog, sources map[string][]nte.Stat) (arcScenarioResult, error) {
@@ -156,13 +162,20 @@ func applyArcScenario(catalog decoded.ForkCatalog, activeID int, effects []arcSc
 		if effect.Trigger == "equipped" {
 			stacks = 1
 		}
+		if effect.SupersededByTrigger != "" {
+			superseding := entry.key
+			superseding.Trigger = effect.SupersededByTrigger
+			if confirmed[superseding] > 0 {
+				stacks = 0
+			}
+		}
 		if stacks == 0 && !effect.LegacyConditionalProjection {
 			continue
 		}
 		value, err := catalog.ResolveConditionalEffect(entry.weapon, effect.ID, decoded.ForkEffectSelection{
 			ConditionsConfirmed: true,
 			RecipientIsWearer:   entry.key.CharacterID == activeID,
-			DamageTags:          effect.RequiredDamageTags,
+			DamageTags:          entry.matchingTags,
 			Stacks:              max(stacks, 1),
 			ReplaceLegacy:       effect.LegacyConditionalProjection,
 		})
@@ -192,10 +205,12 @@ func applyArcScenario(catalog decoded.ForkCatalog, activeID int, effects []arcSc
 		if effect.Target.ProjectionPropertyID != "" {
 			stat.PropertyID = effect.Target.ProjectionPropertyID
 		}
-		if len(effect.RequiredDamageTags) == 0 {
-			sources[optimizer.ArcScenarioSource] = append(sources[optimizer.ArcScenarioSource], stat)
+		if effect.HasTags() {
+			result.tagged = append(result.tagged, taggedArcBuff{
+				filter: effect.ForkDamageFilter, stat: stat, alwaysActive: effect.Trigger == "equipped",
+			})
 		} else {
-			result.tagged = append(result.tagged, taggedArcBuff{tags: effect.RequiredDamageTags, stat: stat})
+			sources[optimizer.ArcScenarioSource] = append(sources[optimizer.ArcScenarioSource], stat)
 		}
 		name := labels.CharacterName(entry.key.CharacterID, "")
 		row := TeamPreviewEffect{
@@ -203,7 +218,8 @@ func applyArcScenario(catalog decoded.ForkCatalog, activeID int, effects []arcSc
 			Star: entry.weapon.Star, SourceNames: []string{cleanCharacterName(name)},
 			EquipmentName: cleanArcName(labels.ItemName(entry.weapon.ForkID, entry.weapon.Name)),
 			Included:      true, ProjectedStats: []nte.Stat{stat},
-			DamageTags: effect.RequiredDamageTags, NonStacking: effect.MixedSourcePolicy == "non_stacking",
+			DamageTags: effect.RequiredDamageTags, AnyDamageTags: effect.AnyDamageTags,
+			NonStacking: effect.MixedSourcePolicy == "non_stacking",
 		}
 		if value.Duration != nil {
 			row.Duration = int(*value.Duration)

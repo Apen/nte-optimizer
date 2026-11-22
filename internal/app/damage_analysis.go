@@ -30,15 +30,19 @@ func (s OptimizerService) prepareDamageBatch(character *decoded.Character, curre
 	catalog, catalogErr := damage.ReadCatalog(datafiles.New(s.DataDir).Damage())
 	labels, labelsErr := ntelocale.LoadPresentation(s.DataDir, language)
 	batch := damageBatch{character: character, catalog: catalog, catalogErr: catalogErr, labels: labels, labelsErr: labelsErr}
-	if current != nil {
-		batch.currentBuffed = batch.calculate(*current, true, nil).Build
-		batch.current = batch.calculate(*current, false, nil).Build
-	}
+	batch.setCurrent(current, nil)
 	return batch
 }
 
+func (batch *damageBatch) setCurrent(current *optimizer.StatSummary, tagged []taggedArcBuff) {
+	if current != nil {
+		batch.currentBuffed = batch.calculate(*current, true, tagged).Build
+		batch.current = batch.calculate(*current, false, tagged).Build
+	}
+}
+
 func (batch damageBatch) evaluate(build optimizer.StatSummary) *DamageAnalysis {
-	analysis := batch.calculate(build, false, nil)
+	analysis := batch.calculate(build, false, batch.buildArcBuffs)
 	analysis.Current = batch.current
 	if analysis.Status == "atomic_preview" {
 		analysis.Groups = groupDamageResults(batch.character.CharacterID, analysis.Build, analysis.Current, nil)
@@ -90,8 +94,17 @@ func (batch damageBatch) evaluate(build optimizer.StatSummary) *DamageAnalysis {
 func (batch damageBatch) calculate(stats optimizer.StatSummary, buffed bool, tagged []taggedArcBuff) *DamageAnalysis {
 	if buffed && stats.DerivedWithAllBuffs != nil {
 		stats.DerivedConditional = stats.DerivedWithAllBuffs
-	} else if !buffed && stats.Derived != nil {
-		stats.DerivedConditional = stats.Derived
+	} else if !buffed {
+		if stats.Derived != nil {
+			stats.DerivedConditional = stats.Derived
+		}
+		var equipped []taggedArcBuff
+		for _, buff := range tagged {
+			if buff.alwaysActive {
+				equipped = append(equipped, buff)
+			}
+		}
+		tagged = equipped
 	}
 	return damageAnalysisWithArcBuffs(batch.character, stats, nil, batch.catalog, batch.catalogErr, tagged)
 }
@@ -269,7 +282,7 @@ func damageAnalysisWithArcBuffs(character *decoded.Character, build optimizer.St
 		values := build.DerivedConditional
 		var applicable []nte.Stat
 		for _, buff := range tagged {
-			if matchesDamageTags(entry.DamageTags, buff.tags) {
+			if buff.filter.Matches(entry.DamageTags) {
 				applicable = append(applicable, buff.stat)
 			}
 		}

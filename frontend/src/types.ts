@@ -79,6 +79,6 @@ export type ArcConditionOption = ArcConditionKey & { arc_name: string; max_stack
 export type ArcConditionSelection = ArcConditionKey & { stacks: number }
 export type TeamPreview = {
   applied: { rule_id: string; source_ids: number[]; stat: Stat }[]
-  conditional: { kind: 'skill' | 'arc' | 'set'; id: string; character_id: number; detail: string; trigger: string; star?: number; pieces?: number; source_ids?: number[]; non_stacking?: boolean; duration_seconds?: number; rotation_action?: string; bonus?: Stat; included?: boolean; projected_stats?: Stat[]; source_names?: string[]; equipment_name?: string; damage_tags?: string[] }[]
+  conditional: { kind: 'skill' | 'arc' | 'set'; id: string; character_id: number; detail: string; trigger: string; star?: number; pieces?: number; source_ids?: number[]; non_stacking?: boolean; duration_seconds?: number; rotation_action?: string; bonus?: Stat; included?: boolean; projected_stats?: Stat[]; source_names?: string[]; equipment_name?: string; damage_tags?: string[]; damage_tags_any?: string[] }[]
   arc_conditions?: ArcConditionOption[]
 }

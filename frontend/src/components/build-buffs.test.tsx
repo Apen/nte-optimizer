@@ -61,4 +61,13 @@ describe('compact teammate buffs',()=>{
     expect(screen.getByText('+25 ATK')).toBeInTheDocument()
     expect(screen.getByText('Teammate buffs')).toBeInTheDocument()
   })
+  it('labels effects with alternative damage tags as limited to matching hits', () => {
+    const value = result()
+    value.buff_effects = [{
+      kind: 'arc', id: 'filtered', character_id: 1057, detail: '', trigger: 'redirect_skill', included: true,
+      damage_tags_any: ['State.Damage.Melee', 'State.Damage.Branch'],
+    }]
+    mount(value)
+    expect(screen.getByText(en.ui.arc_condition_matching_damage)).toBeInTheDocument()
+  })
 })

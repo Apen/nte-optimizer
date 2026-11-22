@@ -7,22 +7,25 @@ import (
 	"math"
 	"slices"
 	"strconv"
+	"strings"
 
 	"nte-optimizer/internal/nte"
 )
 
 // Conditional effects describe selected scenarios, not additional panel stats.
 type ForkConditionalEffect struct {
-	ID                 string   `json:"id"`
-	Scope              string   `json:"scope"`
-	Trigger            string   `json:"trigger"`
-	RequiredDamageTags []string `json:"requires_damage_tags"`
-	DurationParameter  string   `json:"duration_parameter"`
-	StackInput         string   `json:"stack_input"`
-	MaxStacks          int      `json:"max_stacks"`
-	MixedSourcePolicy  string   `json:"mixed_source_policy"`
-	ConfirmsTrigger    string   `json:"confirms_trigger"`
-	Parameter          struct {
+	ID      string `json:"id"`
+	Scope   string `json:"scope"`
+	Trigger string `json:"trigger"`
+	ForkDamageFilter
+	DurationParameter   string `json:"duration_parameter"`
+	StackInput          string `json:"stack_input"`
+	MaxStacks           int    `json:"max_stacks"`
+	FixedStacks         int    `json:"fixed_stacks,omitempty"`
+	MixedSourcePolicy   string `json:"mixed_source_policy"`
+	ConfirmsTrigger     string `json:"confirms_trigger"`
+	SupersededByTrigger string `json:"superseded_by_trigger,omitempty"`
+	Parameter           struct {
 		NameID      string `json:"name_id"`
 		LevelSource string `json:"level_source"`
 	} `json:"parameter"`
@@ -38,6 +41,40 @@ type ForkConditionalEffect struct {
 	LegacyConditionalProjection  bool              `json:"legacy_conditional_projection"`
 	Status                       string            `json:"status"`
 	Provenance                   []json.RawMessage `json:"provenance"`
+}
+
+// SelectableStacks is the upper bound on user input. Fixed stack effects
+// use a single confirmation and take their count from the Arc catalog.
+func (effect ForkConditionalEffect) SelectableStacks() int {
+	if effect.StackInput == "selected_stack_count" {
+		return max(1, effect.MaxStacks)
+	}
+	return 1
+}
+
+type ForkDamageFilter struct {
+	RequiredDamageTags []string `json:"requires_damage_tags,omitempty"`
+	AnyDamageTags      []string `json:"requires_any_damage_tags,omitempty"`
+}
+
+func (f ForkDamageFilter) HasTags() bool {
+	return len(f.RequiredDamageTags) > 0 || len(f.AnyDamageTags) > 0
+}
+
+// Matches uses gameplay tag ancestry. A child tag satisfies its parent
+// filter, while a parent tag does not satisfy a child filter.
+func (f ForkDamageFilter) Matches(tags []string) bool {
+	matches := func(required string) bool {
+		return required != "" && slices.ContainsFunc(tags, func(tag string) bool {
+			return tag == required || strings.HasPrefix(tag, required+".")
+		})
+	}
+	for _, required := range f.RequiredDamageTags {
+		if !matches(required) {
+			return false
+		}
+	}
+	return len(f.AnyDamageTags) == 0 || slices.ContainsFunc(f.AnyDamageTags, matches)
 }
 
 type ForkEffectSelection struct {
@@ -77,7 +114,7 @@ func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected
 		return ForkConditionalValue{}, fmt.Errorf("unsupported Arc effect contract %s", id)
 	}
 	switch effect.Scope {
-	case "wearer", "wearer_summon_damage":
+	case "wearer", "wearer_summon_damage", "wearer_filtered_damage":
 		if !selected.RecipientIsWearer {
 			return ForkConditionalValue{}, errors.New("wearer must be the recipient of the Arc effect")
 		}
@@ -89,19 +126,31 @@ func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected
 	default:
 		return ForkConditionalValue{}, fmt.Errorf("unsupported Arc recipient scope %s", effect.Scope)
 	}
-	for _, tag := range effect.RequiredDamageTags {
-		if !slices.Contains(selected.DamageTags, tag) {
-			return ForkConditionalValue{}, fmt.Errorf("missing required damage tag %s", tag)
-		}
+	if effect.Scope == "wearer_filtered_damage" && !effect.HasTags() {
+		return ForkConditionalValue{}, fmt.Errorf("missing damage filter for scoped Arc effect %s", id)
 	}
-	limit := 1
-	if effect.StackInput != "" {
-		if effect.StackInput != "selected_stack_count" || effect.MaxStacks < 1 {
-			return ForkConditionalValue{}, fmt.Errorf("unsupported Arc stack contract")
-		}
-		limit = effect.MaxStacks
+	if !effect.Matches(selected.DamageTags) {
+		return ForkConditionalValue{}, fmt.Errorf("damage tags do not match Arc effect %s", id)
 	}
-	if selected.Stacks < 1 || selected.Stacks > limit {
+	stacks := selected.Stacks
+	switch effect.StackInput {
+	case "":
+		if effect.FixedStacks != 0 {
+			return ForkConditionalValue{}, errors.New("fixed Arc stacks require fixed_stack_count")
+		}
+	case "selected_stack_count":
+		if effect.MaxStacks < 1 || effect.FixedStacks != 0 {
+			return ForkConditionalValue{}, errors.New("invalid selectable Arc stack contract")
+		}
+	case "fixed_stack_count":
+		if effect.FixedStacks < 1 || (effect.MaxStacks > 0 && effect.FixedStacks > effect.MaxStacks) {
+			return ForkConditionalValue{}, errors.New("invalid fixed Arc stack count")
+		}
+		stacks = effect.FixedStacks
+	default:
+		return ForkConditionalValue{}, errors.New("unsupported Arc stack contract")
+	}
+	if selected.Stacks < 1 || selected.Stacks > effect.SelectableStacks() {
 		return ForkConditionalValue{}, errors.New("selected Arc stack count is outside declared bounds")
 	}
 	parameters, ok := definition.EffectsByStar[strconv.Itoa(weapon.Star)]
@@ -123,7 +172,7 @@ func (c ForkCatalog) ResolveConditionalEffect(weapon Weapon, id string, selected
 	if value.IsPercent != effect.Target.Percent {
 		return ForkConditionalValue{}, errors.New("inconsistent units for Arc effect parameter")
 	}
-	out := ForkConditionalValue{ID: id, Scope: effect.Scope, Stat: nte.Stat{PropertyID: effect.Target.PropertyID, Value: value.Value * float64(selected.Stacks), Percent: effect.Target.Percent}}
+	out := ForkConditionalValue{ID: id, Scope: effect.Scope, Stat: nte.Stat{PropertyID: effect.Target.PropertyID, Value: value.Value * float64(stacks), Percent: effect.Target.Percent}}
 	if effect.DurationParameter != "" {
 		duration, err := parameter(effect.DurationParameter)
 		if err != nil {

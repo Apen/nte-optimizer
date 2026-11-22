@@ -169,24 +169,69 @@ func TestElymsArcWearerBonusRequiresConfirmationAndIsCountedOnce(t *testing.T) {
 }
 
 func TestArcDamageTagsRestrictDamageBonusToMatchingHits(t *testing.T) {
-	const summon = "State.Damage.Summon"
+	const summon, melee, branch = "State.Damage.Summon", "State.Damage.Melee", "State.Damage.Branch"
 	base := damage.TieredInstance{ID: "untagged", AbilityID: "test", Element: "DAMAGE_TYPE_COSMOS", Category: damage.CategoryDirect, Scaling: damage.ScalingAttack, Coefficients: []float64{1}}
-	tagged := base
-	tagged.ID = "summon"
-	tagged.DamageTags = []string{summon}
-	catalog := damage.Catalog{Characters: map[string]damage.CharacterCatalog{"1": {Instances: []damage.TieredInstance{base, tagged}}}}
+	instances := []damage.TieredInstance{base}
+	for id, tags := range map[string][]string{
+		"summon": {summon}, "melee": {melee}, "branch": {branch},
+		"overlap": {melee, branch}, "child_overlap": {melee, branch + ".AirAttack"},
+	} {
+		hit := base
+		hit.ID, hit.DamageTags = id, tags
+		instances = append(instances, hit)
+	}
+	catalog := damage.Catalog{Characters: map[string]damage.CharacterCatalog{"1": {Instances: instances}}}
 	character := &decoded.Character{CharacterID: 1, Level: 80, Skills: []decoded.CharacterSkill{{AbilityID: "test", Level: 1}}}
 	stats := optimizer.StatSummary{DerivedConditional: map[string]float64{"AtkBase": 100, "AtkFinal": 100}}
 	result := damageAnalysisWithArcBuffs(character, stats, nil, catalog, nil, []taggedArcBuff{
-		{tags: []string{summon}, stat: nte.Stat{PropertyID: "DamageUpGeneralBase", Value: .2, Percent: true}},
+		{filter: decoded.ForkDamageFilter{RequiredDamageTags: []string{summon}}, stat: nte.Stat{PropertyID: "DamageUpGeneralBase", Value: .2, Percent: true}},
+		{filter: decoded.ForkDamageFilter{AnyDamageTags: []string{melee, branch}}, stat: nte.Stat{PropertyID: "DamageUpGeneralBase", Value: .5, Percent: true}},
 	})
-	want := map[string]float64{"untagged": 1, "summon": 1.2}
+	want := map[string]float64{"untagged": 1, "summon": 1.2, "melee": 1.5, "branch": 1.5, "overlap": 1.5, "child_overlap": 1.5}
 	if len(result.Build) != len(want) {
 		t.Fatalf("unexpected per-hit buffs: %+v", result.Build)
 	}
 	for _, hit := range result.Build {
 		if hit.Factors.DamageZone != want[hit.InstanceID] {
 			t.Fatalf("unexpected damage multiplier for %s: %g", hit.InstanceID, hit.Factors.DamageZone)
+		}
+	}
+}
+
+func TestEquippedHitScopedArcBonusesApplyInBothDamagePreviews(t *testing.T) {
+	const skill = "State.Damage.Skill"
+	eligible := damage.TieredInstance{ID: "eligible", AbilityID: "test", Category: damage.CategoryDirect, Scaling: damage.ScalingAttack, Coefficients: []float64{1}, DamageTags: []string{skill}}
+	other := eligible
+	other.ID, other.DamageTags = "other", nil
+	catalog := damage.Catalog{Characters: map[string]damage.CharacterCatalog{"1": {Instances: []damage.TieredInstance{eligible, other}}}}
+	character := &decoded.Character{CharacterID: 1, Level: 80, Skills: []decoded.CharacterSkill{{AbilityID: "test", Level: 1}}}
+	stats := optimizer.StatSummary{DerivedConditional: map[string]float64{"AtkBase": 100, "AtkFinal": 100}}
+	buff := func(value float64, alwaysActive bool) taggedArcBuff {
+		return taggedArcBuff{
+			filter:       decoded.ForkDamageFilter{AnyDamageTags: []string{skill}},
+			stat:         nte.Stat{PropertyID: "DamageUpGeneralBase", Value: value, Percent: true},
+			alwaysActive: alwaysActive,
+		}
+	}
+	batch := damageBatch{
+		character: character, catalog: catalog,
+		buildArcBuffs: []taggedArcBuff{buff(.2, true), buff(.5, false)},
+	}
+	batch.setCurrent(&stats, []taggedArcBuff{buff(.1, true), buff(.4, false)})
+	report := batch.evaluate(stats)
+	for _, tc := range []struct {
+		name string
+		hits []damage.Result
+		want float64
+	}{
+		{"planned", report.Build, 1.2},
+		{"equipped", report.Current, 1.1},
+		{"planned with buffs", batch.calculate(stats, true, batch.buildArcBuffs).Build, 1.7},
+		{"equipped with buffs", batch.currentBuffed, 1.5},
+	} {
+		if len(tc.hits) != 2 || tc.hits[0].InstanceID != "eligible" ||
+			math.Abs(tc.hits[0].Factors.DamageZone-tc.want) > 1e-9 || tc.hits[1].Factors.DamageZone != 1 {
+			t.Errorf("%s damage projection = %+v, want %g on eligible hits only", tc.name, tc.hits, tc.want)
 		}
 	}
 }

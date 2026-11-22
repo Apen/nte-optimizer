@@ -312,11 +312,11 @@
         "required_awakening": 6,
         "stat_effects": [
           {
-            "id": "shinku_extra_critical_rate"
-          },
-          {
             "id": "buff_shinku076_level6_extra_def_ignore_g0",
             "property_id": "DefenseIgnoreBase"
+          },
+          {
+            "id": "shinku_extra_critical_rate"
           }
         ]
       }

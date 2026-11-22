@@ -14,7 +14,7 @@ func TestProductionForkCatalogResolvesZankouWeapon(t *testing.T) {
 		t.Fatal(err)
 	}
 	panel, permanent, conditional, _ := catalog.Stats(Weapon{ForkID: "fork_DemonBlade", Level: 80, Breakthrough: 6, Star: 1})
-	if len(panel) != 2 || panel[0].PropertyID != "AtkBase" || panel[0].Value != 570 || len(permanent) != 1 || permanent[0].Value != .16 || len(conditional) != 1 || conditional[0].Value != .63 {
+	if len(panel) != 2 || panel[0].PropertyID != "AtkBase" || panel[0].Value != 570 || len(permanent) != 1 || permanent[0].Value != .16 || len(conditional) != 0 {
 		t.Fatalf("unexpected fork stats: %#v %#v %#v", panel, permanent, conditional)
 	}
 }

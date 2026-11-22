@@ -74,11 +74,9 @@ func (s OptimizerService) buildOptimizationResult(input optimizationReportInput)
 	}
 	currentStats := buildCurrentEquipmentStats(currentInventory, input.profile, input.setCatalog, currentAdditional, input.teamEffects)
 	goals, currentGoals, conditionalGoals, currentConditionalGoals := compareBuildGoals(input.buildTarget, stats, currentStats)
-	damageBatch := s.prepareDamageBatch(input.currentCharacter, currentStats, input.language)
+	damageBatch := s.prepareDamageBatch(input.currentCharacter, nil, input.language)
 	damageBatch.buildArcBuffs = input.buildArcScenario.tagged
-	if currentStats != nil && len(input.currentArcScenario.tagged) > 0 {
-		damageBatch.currentBuffed = damageBatch.calculate(*currentStats, true, input.currentArcScenario.tagged).Build
-	}
+	damageBatch.setCurrent(currentStats, input.currentArcScenario.tagged)
 	alternatives := s.buildAlternatives(input.solution.Alternatives, alternativeBuildContext{
 		teamEffects:    input.teamEffects,
 		arcEffects:     input.buildArcScenario.rows,

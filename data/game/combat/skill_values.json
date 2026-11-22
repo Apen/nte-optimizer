@@ -23644,19 +23644,19 @@
                       {
                         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
                         "pointer": "/Rows/GE_Player_Akane_UpgradeSkill_DisplayGE/AtkRateBaseArray",
-                        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+                        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
                       },
                       {
                         "file": "datamine/data/abilities/DataTable/Skill/DT_SkillDamageData.json",
                         "pointer": "/Rows/GE_Player_Akane_UpgradeSkill_DisplayGE/GAName",
-                        "sha256": "63792fb0296f584cd9cec9eaef056d9394e7cd0146d98765f5fcffda65fcf526"
+                        "sha256": "652219e5b3e0d7fa68e4ccb9c832af99b292bc0fd051f5900e2fc550e976e9a2"
                       },
                       {
                         "file": "datamine/data/abilities/DataTable/Skill/DT_GameplayEffectMappingData.json",
                         "pointer": "/Rows",
                         "lookup_key": "GE_Player_Akane_UpgradeSkill_DisplayGE",
                         "lookup_result": "absent",
-                        "sha256": "92656c06dab0c2de10600a9e418d7be29ced22ed6145d2043d426bb86a03f52a"
+                        "sha256": "9428b1b0a282053224c48a39da8aa0316a71472fea79410076213c6796011fa5"
                       }
                     ]
                   }

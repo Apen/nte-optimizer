@@ -9,12 +9,12 @@
   },
   "counts": {
     "outside_builder_damage_and_stat_scope": 18,
-    "outside_roster_or_shared_context": 27,
+    "outside_roster_or_shared_context": 28,
     "published_skill_buff": 142,
     "shared_inherited_combat_modifier": 3,
     "unassigned_reaction_execution_parameter": 10,
     "unassigned_reaction_modifier": 16,
-    "unprojected_combat_modifier": 163,
+    "unprojected_combat_modifier": 160,
     "unprojected_execution_parameter": 75
   },
   "entries": [
@@ -84985,7 +84985,7 @@
                 1
               ]
             },
-            "value": 0.08,
+            "value": 0.1,
             "return_offset": 1608
           },
           {
@@ -85025,7 +85025,7 @@
                 }
               ]
             },
-            "value": 0.1,
+            "value": 0.12,
             "return_offset": 1608
           },
           {
@@ -85088,7 +85088,7 @@
                 }
               ]
             },
-            "value": 0.12,
+            "value": 0.15,
             "return_offset": 1608
           },
           {
@@ -85174,7 +85174,7 @@
                 }
               ]
             },
-            "value": 0.15,
+            "value": 0.2,
             "return_offset": 1608
           },
           {
@@ -85283,7 +85283,7 @@
                 }
               ]
             },
-            "value": 0.2,
+            "value": 0.3,
             "return_offset": 1608
           },
           {
@@ -85415,7 +85415,7 @@
                 }
               ]
             },
-            "value": 0.3,
+            "value": 0.5,
             "return_offset": 1608
           },
           {
@@ -85762,19 +85762,19 @@
       },
       "status": "unprojected_combat_modifier",
       "values_by_level": [
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
       ],
       "id": "Buff_Exe_ChaosDmgUp_L1__Modifiers_0",
       "automatic_application_supported": false,
@@ -85786,199 +85786,7 @@
       "application_policy": "manual_evidence_review_required"
     },
     {
-      "source_sha256": "32d135f54690db63a2707aa224799d6976b8bc40356212ccb54e1a58106e68d6",
-      "character_id": "1074",
-      "effect_id": "Buff_Exe_DmgResistDownChaosL3",
-      "source_family": "player",
-      "property_id": "DamageResistChaosBase",
-      "operation": "EGameplayModOp::Additive",
-      "magnitude": {
-        "MagnitudeCalculationType": "EGameplayEffectMagnitudeCalculation::ScalableFloat",
-        "ScalableFloatMagnitude": {
-          "Value": 1.0,
-          "curve": {
-            "CurveTable": {
-              "ObjectName": "CurveTable\u0027DT_ExeEffectFigure\u0027",
-              "ObjectPath": "/Game/DataTable/Skill/GlobalCharacterData/DT_ExeEffectFigure.0"
-            },
-            "RowName": "Exe_DmgResistDownChaosL3"
-          },
-          "RegistryType": {
-            "Name": "None"
-          }
-        },
-        "AttributeBasedMagnitude": {
-          "Coefficient": {
-            "Value": 1.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PreMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PostMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "BackingAttribute": {
-            "AttributeToCapture": {
-              "AttributeName": "",
-              "Attribute": {
-                "Path": [],
-                "ResolvedOwner": null
-              },
-              "AttributeOwner": null
-            },
-            "AttributeSource": "EGameplayEffectAttributeCaptureSource::Source",
-            "bSnapshot": false
-          },
-          "AttributeCurve": {
-            "CurveTable": null,
-            "RowName": "None"
-          },
-          "AttributeCalculationType": "EAttributeBasedFloatCalculationType::AttributeMagnitude",
-          "FinalChannel": "EGameplayModEvaluationChannel::Channel0",
-          "SourceTagFilter": [],
-          "TargetTagFilter": []
-        },
-        "CustomMagnitude": {
-          "CalculationClassMagnitude": null,
-          "Coefficient": {
-            "Value": 1.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PreMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PostMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "FinalLookupCurve": {
-            "CurveTable": null,
-            "RowName": "None"
-          }
-        },
-        "SetByCallerMagnitude": {
-          "DataName": "None",
-          "DataTag": {
-            "TagName": "None"
-          }
-        }
-      },
-      "source_tag_requirements": {
-        "RequireTags": [],
-        "IgnoreTags": [],
-        "TagQuery": {
-          "TokenStreamVersion": 0,
-          "TagDictionary": [],
-          "QueryTokenStream": [],
-          "UserDescription": "",
-          "AutoDescription": ""
-        }
-      },
-      "target_tag_requirements": {
-        "RequireTags": [],
-        "IgnoreTags": [],
-        "TagQuery": {
-          "TokenStreamVersion": 0,
-          "TagDictionary": [],
-          "QueryTokenStream": [],
-          "UserDescription": "",
-          "AutoDescription": ""
-        }
-      },
-      "application_component_references": [
-        {
-          "ObjectName": "AssetTagsGameplayEffectComponent\u0027Default__Buff_Exe_DmgResistDownChaosL3_C:AssetTagsGameplayEffectComponent_0\u0027",
-          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_074_Exe/Buff/Buff_Exe_DmgResistDownChaosL3.0"
-        },
-        {
-          "ObjectName": "TargetTagsGameplayEffectComponent\u0027Default__Buff_Exe_DmgResistDownChaosL3_C:TargetTagsGameplayEffectComponent_0\u0027",
-          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_074_Exe/Buff/Buff_Exe_DmgResistDownChaosL3.4"
-        },
-        {
-          "ObjectName": "CustomCanApplyGameplayEffectComponent\u0027Default__Buff_Exe_DmgResistDownChaosL3_C:CustomCanApplyGameplayEffectComponent_0\u0027",
-          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_074_Exe/Buff/Buff_Exe_DmgResistDownChaosL3.3"
-        }
-      ],
-      "condition_projection_status": "raw_references_only_not_evaluated",
-      "damage_application_requirements": null,
-      "source_kind": "damage_evaluation_modifier",
-      "in_published_damage_catalog": false,
-      "display_unit": {
-        "percent": true,
-        "status": "reviewed_same_attribute_unit",
-        "reviewed_effect_ids": [
-          "blackbird_target_chaos_resistance",
-          "daffodill_broken_chaos_resistance",
-          "linko_synced_strike_chaos_resistance_reduction"
-        ]
-      },
-      "status": "unprojected_combat_modifier",
-      "values_by_level": [
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1,
-        -0.1
-      ],
-      "id": "Buff_Exe_DmgResistDownChaosL3__CustomApplicationModifierInfos_0_GameplayModifierInfos_0",
-      "automatic_application_supported": false,
-      "value_availability": "exact_scalable_values",
-      "source": {
-        "file": "datamine/data/abilities/Blueprints/Abilities/Player/Ability_074_Exe/Buff/Buff_Exe_DmgResistDownChaosL3/Default__Buff_Exe_DmgResistDownChaosL3_C.json",
-        "pointer": "/Properties/CustomApplicationModifierInfos/0/GameplayModifierInfos/0"
-      },
-      "application_policy": "manual_evidence_review_required"
-    },
-    {
-      "source_sha256": "32d135f54690db63a2707aa224799d6976b8bc40356212ccb54e1a58106e68d6",
+      "source_sha256": "8447dbd9431ba50f69c107e32090fd89fd89a5166c9bbbd5e0568326207dbf39",
       "character_id": "1074",
       "effect_id": "Buff_Exe_DmgResistDownChaosL3",
       "source_family": "player",
@@ -86170,7 +85978,7 @@
       "application_policy": "manual_evidence_review_required"
     },
     {
-      "source_sha256": "a15571efdc9f00f321efdc375d69f050ad863dc31cdbbf4bd85588bb24410c7d",
+      "source_sha256": "a4f14d379c8dac06853207a87259773f9b1cefca0bd42f1c2acdf401356f462c",
       "character_id": "1074",
       "effect_id": "Buff_Exe_DmgUp_Pas2",
       "source_family": "player",
@@ -86328,19 +86136,19 @@
         "1074"
       ],
       "values_by_level": [
-        0.05,
-        0.05,
-        0.05,
-        0.05,
-        0.05,
-        0.05,
-        0.05,
-        0.05,
-        0.05,
-        0.05,
-        0.05,
-        0.05,
-        0.05
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25
       ],
       "id": "Buff_Exe_DmgUp_Pas2__CustomApplicationModifierInfos_0_GameplayModifierInfos_0",
       "automatic_application_supported": false,
@@ -86610,7 +86418,7 @@
                 }
               ]
             },
-            "value": 0.30000000000000004,
+            "value": 0.8,
             "return_offset": 945
           },
           {
@@ -86653,7 +86461,7 @@
                 }
               ]
             },
-            "value": 0.1,
+            "value": 0.2,
             "return_offset": 945
           },
           {
@@ -87497,358 +87305,6 @@
       "value_availability": "exact_scalable_values",
       "source": {
         "file": "datamine/data/abilities/Blueprints/Abilities/Player/Ability_074_Exe/Upgrade/Buff_Exe074_Level3_extra/Default__Buff_Exe074_Level3_extra_C.json",
-        "pointer": "/Properties/Modifiers/0"
-      },
-      "application_policy": "manual_evidence_review_required"
-    },
-    {
-      "source_sha256": "2201869cc35babeae3473fb2f7b6683b0058fd1809922e7e02bc3e18e1a2b1f7",
-      "character_id": "1074",
-      "effect_id": "Buff_Exe074_Level6_extra",
-      "source_family": "player",
-      "property_id": "DefIgnore",
-      "operation": "EGameplayModOp::Additive",
-      "magnitude": {
-        "MagnitudeCalculationType": "EGameplayEffectMagnitudeCalculation::ScalableFloat",
-        "ScalableFloatMagnitude": {
-          "Value": 1.0,
-          "curve": {
-            "CurveTable": {
-              "ObjectName": "CurveTable\u0027DT_ShinkuEffectFigure\u0027",
-              "ObjectPath": "/Game/DataTable/Skill/GlobalCharacterData/DT_ShinkuEffectFigure.0"
-            },
-            "RowName": "Shinku_DefIgnore_L6Extra"
-          },
-          "RegistryType": {
-            "Name": "None"
-          }
-        },
-        "AttributeBasedMagnitude": {
-          "Coefficient": {
-            "Value": 1.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PreMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PostMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "BackingAttribute": {
-            "AttributeToCapture": {
-              "AttributeName": "",
-              "Attribute": {
-                "Path": [],
-                "ResolvedOwner": null
-              },
-              "AttributeOwner": null
-            },
-            "AttributeSource": "EGameplayEffectAttributeCaptureSource::Source",
-            "bSnapshot": false
-          },
-          "AttributeCurve": {
-            "CurveTable": null,
-            "RowName": "None"
-          },
-          "AttributeCalculationType": "EAttributeBasedFloatCalculationType::AttributeMagnitude",
-          "FinalChannel": "EGameplayModEvaluationChannel::Channel0",
-          "SourceTagFilter": [],
-          "TargetTagFilter": []
-        },
-        "CustomMagnitude": {
-          "CalculationClassMagnitude": null,
-          "Coefficient": {
-            "Value": 1.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PreMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PostMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "FinalLookupCurve": {
-            "CurveTable": null,
-            "RowName": "None"
-          }
-        },
-        "SetByCallerMagnitude": {
-          "DataName": "None",
-          "DataTag": {
-            "TagName": "None"
-          }
-        }
-      },
-      "source_tag_requirements": {
-        "RequireTags": [],
-        "IgnoreTags": [],
-        "TagQuery": {
-          "TokenStreamVersion": 0,
-          "TagDictionary": [],
-          "QueryTokenStream": [],
-          "UserDescription": "",
-          "AutoDescription": ""
-        }
-      },
-      "target_tag_requirements": {
-        "RequireTags": [],
-        "IgnoreTags": [],
-        "TagQuery": {
-          "TokenStreamVersion": 0,
-          "TagDictionary": [],
-          "QueryTokenStream": [],
-          "UserDescription": "",
-          "AutoDescription": ""
-        }
-      },
-      "application_component_references": null,
-      "condition_projection_status": "raw_references_only_not_evaluated",
-      "damage_application_requirements": null,
-      "source_kind": "damage_evaluation_modifier",
-      "in_published_damage_catalog": false,
-      "display_unit": {
-        "percent": true,
-        "status": "source_attribute_metadata",
-        "source_file": "catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
-        "source_pointer": "/Rows/DefIgnore/bShowPercent"
-      },
-      "status": "unprojected_combat_modifier",
-      "values_by_level": [
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15,
-        0.15
-      ],
-      "id": "Buff_Exe074_Level6_extra__CustomApplicationModifierInfos_0_GameplayModifierInfos_0",
-      "automatic_application_supported": false,
-      "value_availability": "exact_scalable_values",
-      "source": {
-        "file": "datamine/data/abilities/Blueprints/Abilities/Player/Ability_074_Exe/Upgrade/Buff_Exe074_Level6_extra/Default__Buff_Exe074_Level6_extra_C.json",
-        "pointer": "/Properties/CustomApplicationModifierInfos/0/GameplayModifierInfos/0"
-      },
-      "application_policy": "manual_evidence_review_required"
-    },
-    {
-      "source_sha256": "2201869cc35babeae3473fb2f7b6683b0058fd1809922e7e02bc3e18e1a2b1f7",
-      "character_id": "1074",
-      "effect_id": "Buff_Exe074_Level6_extra",
-      "source_family": "player",
-      "property_id": "CritBase",
-      "operation": "EGameplayModOp::Additive",
-      "magnitude": {
-        "MagnitudeCalculationType": "EGameplayEffectMagnitudeCalculation::ScalableFloat",
-        "ScalableFloatMagnitude": {
-          "Value": 1.0,
-          "curve": {
-            "CurveTable": {
-              "ObjectName": "CurveTable\u0027DT_ShinkuEffectFigure\u0027",
-              "ObjectPath": "/Game/DataTable/Skill/GlobalCharacterData/DT_ShinkuEffectFigure.0"
-            },
-            "RowName": "Shinku_CritUp_L6Ex"
-          },
-          "RegistryType": {
-            "Name": "None"
-          }
-        },
-        "AttributeBasedMagnitude": {
-          "Coefficient": {
-            "Value": 1.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PreMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PostMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "BackingAttribute": {
-            "AttributeToCapture": {
-              "AttributeName": "",
-              "Attribute": {
-                "Path": [],
-                "ResolvedOwner": null
-              },
-              "AttributeOwner": null
-            },
-            "AttributeSource": "EGameplayEffectAttributeCaptureSource::Source",
-            "bSnapshot": false
-          },
-          "AttributeCurve": {
-            "CurveTable": null,
-            "RowName": "None"
-          },
-          "AttributeCalculationType": "EAttributeBasedFloatCalculationType::AttributeMagnitude",
-          "FinalChannel": "EGameplayModEvaluationChannel::Channel0",
-          "SourceTagFilter": [],
-          "TargetTagFilter": []
-        },
-        "CustomMagnitude": {
-          "CalculationClassMagnitude": null,
-          "Coefficient": {
-            "Value": 1.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PreMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "PostMultiplyAdditiveValue": {
-            "Value": 0.0,
-            "curve": {
-              "CurveTable": null,
-              "RowName": "None"
-            },
-            "RegistryType": {
-              "Name": "None"
-            }
-          },
-          "FinalLookupCurve": {
-            "CurveTable": null,
-            "RowName": "None"
-          }
-        },
-        "SetByCallerMagnitude": {
-          "DataName": "None",
-          "DataTag": {
-            "TagName": "None"
-          }
-        }
-      },
-      "source_tag_requirements": {
-        "RequireTags": [],
-        "IgnoreTags": [],
-        "TagQuery": {
-          "TokenStreamVersion": 0,
-          "TagDictionary": [],
-          "QueryTokenStream": [],
-          "UserDescription": "",
-          "AutoDescription": ""
-        }
-      },
-      "target_tag_requirements": {
-        "RequireTags": [],
-        "IgnoreTags": [],
-        "TagQuery": {
-          "TokenStreamVersion": 0,
-          "TagDictionary": [],
-          "QueryTokenStream": [],
-          "UserDescription": "",
-          "AutoDescription": ""
-        }
-      },
-      "application_component_references": null,
-      "condition_projection_status": "raw_references_only_not_evaluated",
-      "damage_application_requirements": null,
-      "source_kind": "actor_modifier",
-      "in_published_damage_catalog": false,
-      "display_unit": {
-        "percent": true,
-        "status": "source_attribute_metadata",
-        "source_file": "catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
-        "source_pointer": "/Rows/CritBase/bShowPercent"
-      },
-      "status": "unprojected_combat_modifier",
-      "values_by_level": [
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.1
-      ],
-      "id": "Buff_Exe074_Level6_extra__Modifiers_0",
-      "automatic_application_supported": false,
-      "value_availability": "exact_scalable_values",
-      "source": {
-        "file": "datamine/data/abilities/Blueprints/Abilities/Player/Ability_074_Exe/Upgrade/Buff_Exe074_Level6_extra/Default__Buff_Exe074_Level6_extra_C.json",
         "pointer": "/Properties/Modifiers/0"
       },
       "application_policy": "manual_evidence_review_required"
@@ -101436,6 +100892,241 @@
       "value_availability": "exact_scalable_values",
       "source": {
         "file": "datamine/data/abilities/Blueprints/Abilities/Player/Ability_078_Nitsa/Buff/Buff_Nitsa_Hit_SuperSkill_into/Default__Buff_Nitsa_Hit_SuperSkill_into_C.json",
+        "pointer": "/Properties/Modifiers/0"
+      },
+      "application_policy": "outside_builder_scope"
+    },
+    {
+      "source_sha256": "1f08c95c2a2e3904c1910feec0b8850b104a7a4fe4db8f50ec3cbecfa9350e35",
+      "character_id": "1078",
+      "effect_id": "Buff_Nitsa_Remove_SuperSkill",
+      "source_family": "player",
+      "property_id": "DefUp",
+      "operation": "EGameplayModOp::Additive",
+      "magnitude": {
+        "MagnitudeCalculationType": "EGameplayEffectMagnitudeCalculation::CustomCalculationClass",
+        "ScalableFloatMagnitude": {
+          "Value": 0.0,
+          "curve": {
+            "CurveTable": null,
+            "RowName": "None"
+          },
+          "RegistryType": {
+            "Name": "None"
+          }
+        },
+        "AttributeBasedMagnitude": {
+          "Coefficient": {
+            "Value": 1.0,
+            "curve": {
+              "CurveTable": null,
+              "RowName": "None"
+            },
+            "RegistryType": {
+              "Name": "None"
+            }
+          },
+          "PreMultiplyAdditiveValue": {
+            "Value": 0.0,
+            "curve": {
+              "CurveTable": null,
+              "RowName": "None"
+            },
+            "RegistryType": {
+              "Name": "None"
+            }
+          },
+          "PostMultiplyAdditiveValue": {
+            "Value": 0.0,
+            "curve": {
+              "CurveTable": null,
+              "RowName": "None"
+            },
+            "RegistryType": {
+              "Name": "None"
+            }
+          },
+          "BackingAttribute": {
+            "AttributeToCapture": {
+              "AttributeName": "",
+              "Attribute": {
+                "Path": [],
+                "ResolvedOwner": null
+              },
+              "AttributeOwner": null
+            },
+            "AttributeSource": "EGameplayEffectAttributeCaptureSource::Source",
+            "bSnapshot": false
+          },
+          "AttributeCurve": {
+            "CurveTable": null,
+            "RowName": "None"
+          },
+          "AttributeCalculationType": "EAttributeBasedFloatCalculationType::AttributeMagnitude",
+          "FinalChannel": "EGameplayModEvaluationChannel::Channel0",
+          "SourceTagFilter": [],
+          "TargetTagFilter": []
+        },
+        "CustomMagnitude": {
+          "CalculationClassMagnitude": {
+            "ObjectName": "BlueprintGeneratedClass\u0027Calc_BlackBird_Level2_DefUP_C\u0027",
+            "ObjectPath": "/Game/Blueprints/Abilities/Calculation/BlackBird/Calc_BlackBird_Level2_DefUP.0"
+          },
+          "Coefficient": {
+            "Value": 1.0,
+            "curve": {
+              "CurveTable": null,
+              "RowName": "None"
+            },
+            "RegistryType": {
+              "Name": "None"
+            }
+          },
+          "PreMultiplyAdditiveValue": {
+            "Value": 0.0,
+            "curve": {
+              "CurveTable": null,
+              "RowName": "None"
+            },
+            "RegistryType": {
+              "Name": "None"
+            }
+          },
+          "PostMultiplyAdditiveValue": {
+            "Value": 0.0,
+            "curve": {
+              "CurveTable": null,
+              "RowName": "None"
+            },
+            "RegistryType": {
+              "Name": "None"
+            }
+          },
+          "FinalLookupCurve": {
+            "CurveTable": null,
+            "RowName": "None"
+          }
+        },
+        "SetByCallerMagnitude": {
+          "DataName": "None",
+          "DataTag": {
+            "TagName": "None"
+          }
+        }
+      },
+      "source_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      },
+      "target_tag_requirements": {
+        "RequireTags": [],
+        "IgnoreTags": [],
+        "TagQuery": {
+          "TokenStreamVersion": 0,
+          "TagDictionary": [],
+          "QueryTokenStream": [],
+          "UserDescription": "",
+          "AutoDescription": ""
+        }
+      },
+      "application_component_references": [
+        {
+          "ObjectName": "HTAbilitiesGameplayEffectComponent\u0027Default__Buff_Nitsa_Remove_SuperSkill_C:HTAbilitiesGameplayEffectComponent_0\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_078_Nitsa/Buff/Buff_Nitsa_Remove_SuperSkill.3"
+        },
+        {
+          "ObjectName": "AssetTagsGameplayEffectComponent\u0027Default__Buff_Nitsa_Remove_SuperSkill_C:AssetTagsGameplayEffectComponent_0\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_078_Nitsa/Buff/Buff_Nitsa_Remove_SuperSkill.0"
+        },
+        {
+          "ObjectName": "TargetTagsGameplayEffectComponent\u0027Default__Buff_Nitsa_Remove_SuperSkill_C:TargetTagsGameplayEffectComponent_0\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_078_Nitsa/Buff/Buff_Nitsa_Remove_SuperSkill.5"
+        },
+        {
+          "ObjectName": "ImmunityGameplayEffectComponent\u0027Default__Buff_Nitsa_Remove_SuperSkill_C:ImmunityGameplayEffectComponent_1\u0027",
+          "ObjectPath": "/Game/Blueprints/Abilities/Player/Ability_078_Nitsa/Buff/Buff_Nitsa_Remove_SuperSkill.4"
+        }
+      ],
+      "condition_projection_status": "raw_references_only_not_evaluated",
+      "damage_application_requirements": null,
+      "source_kind": "actor_modifier",
+      "in_published_damage_catalog": false,
+      "display_unit": {
+        "percent": true,
+        "status": "source_attribute_metadata",
+        "source_file": "catalogs/DataTable/PackData/ModifyData/DT_AttributeStaticData.json",
+        "source_pointer": "/Rows/DefUp/bShowPercent"
+      },
+      "status": "outside_roster_or_shared_context",
+      "magnitude_transform": {
+        "input": "effect_spec_level_not_implicitly_imported_skill_level",
+        "coefficient_by_effect_level": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "pre_multiply_additive_by_effect_level": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "post_multiply_additive_by_effect_level": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "final_lookup": {
+          "CurveTable": null,
+          "RowName": "None"
+        }
+      },
+      "calculation_class": {
+        "ObjectName": "BlueprintGeneratedClass\u0027Calc_BlackBird_Level2_DefUP_C\u0027",
+        "ObjectPath": "/Game/Blueprints/Abilities/Calculation/BlackBird/Calc_BlackBird_Level2_DefUP.0"
+      },
+      "value_status": "custom_calculation",
+      "id": "Buff_Nitsa_Remove_SuperSkill__Modifiers_0",
+      "automatic_application_supported": false,
+      "value_availability": "unresolved_custom_calculation",
+      "source": {
+        "file": "datamine/data/abilities/Blueprints/Abilities/Player/Ability_078_Nitsa/Buff/Buff_Nitsa_Remove_SuperSkill/Default__Buff_Nitsa_Remove_SuperSkill_C.json",
         "pointer": "/Properties/Modifiers/0"
       },
       "application_policy": "outside_builder_scope"

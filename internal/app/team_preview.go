@@ -30,6 +30,7 @@ type TeamPreviewEffect struct {
 	SourceNames     []string   `json:"source_names,omitempty"`
 	EquipmentName   string     `json:"equipment_name,omitempty"`
 	DamageTags      []string   `json:"damage_tags,omitempty"`
+	AnyDamageTags   []string   `json:"damage_tags_any,omitempty"`
 	projection      []nte.Stat
 	projectionGroup string
 	Kind            string    `json:"kind"`

@@ -45,7 +45,7 @@ func TestPublishedNumericalContractsAndLocaleReferences(t *testing.T) {
 	if len(c.Skills.Characters) != 29 || cards != 162 || lines != 788 || resolved != 765 || literal != 21 || scenario != 2 {
 		t.Fatalf("published skill coverage: %d characters, %d cards, %d lines (%d/%d/%d)", len(c.Skills.Characters), cards, lines, resolved, literal, scenario)
 	}
-	if len(c.Buffs.Effects) != 143 || len(c.Buffs.AttributeExtractions) != 2 || len(c.Modifiers.Entries) != 454 || len(c.Reactions.DamageScenarios) != 6 || len(c.Reactions.SupportScenarios) != 2 || len(c.Reactions.Summons.Profiles) != 2 || len(c.Reactions.Summons.SelectedVariants) != 3 {
+	if len(c.Buffs.Effects) != 143 || len(c.Buffs.AttributeExtractions) != 2 || len(c.Modifiers.Entries) != 452 || len(c.Reactions.DamageScenarios) != 6 || len(c.Reactions.SupportScenarios) != 2 || len(c.Reactions.Summons.Profiles) != 2 || len(c.Reactions.Summons.SelectedVariants) != 3 {
 		t.Fatal("incomplete numerical catalogs")
 	}
 	for _, id := range []string{"1056", "1091"} {

@@ -39,7 +39,7 @@ export function BuildBuffs({ result }: { result: Result }) {
         </p>}
         {description && (effect.kind !== 'skill' || stats.length === 0) && <GameEffectText text={description}
           parameters={presentation.fork_effect_parameters?.[`${effect.id}_${effect.star}`]} className="text-slate-400" />}
-        {!!effect.damage_tags?.length && <p className="text-slate-400">{t('arc_condition_matching_damage')}</p>}
+        {Boolean(effect.damage_tags?.length || effect.damage_tags_any?.length) && <p className="text-slate-400">{t('arc_condition_matching_damage')}</p>}
         {effect.non_stacking && <p className="text-amber-200">{t('team_effect_non_stacking')}</p>}
       </div>
     </li>

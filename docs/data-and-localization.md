@@ -201,17 +201,33 @@ states.
 
 ### Arc effects in a combat scenario
 
-The builder lists the modeled Arc conditions for the selected character and
-the selected allies' resolved gear. A confirmed condition uses the exact rank
-of each Arc and its catalog recipient scope. Confirmed panel-wide modifiers
+The builder lists the modeled conditions for the equipped and proposed Arcs and
+the selected allies' resolved gear. A confirmation applies to each build that
+includes its source Arc, at that build's exact Arc rank and within the catalog
+recipient scope. Confirmed panel-wide modifiers
 are included in objective ranking and the buffed damage preview. Damage-tagged
 modifiers only enter damage calculations for matching catalog instances.
+`wearer_filtered_damage` rules require a filter and apply only to the
+wearer's hits. A hit must match every tag in `requires_damage_tags` and, if
+`requires_any_damage_tags` is present, at least one tag in that list. An
+instance's child tag matches its parent filter. Each matching hit receives
+the effect once, even when several alternatives match.
+Hit-scoped rules with the `equipped` trigger apply in both damage previews.
+Rules that require event confirmation apply in the buffed damage preview.
+For an event that grants a source-verified number of stacks,
+`stack_input: "fixed_stack_count"` uses the catalog's `fixed_stacks` and a
+single user confirmation. `selected_stack_count` uses the active stack count
+selected by the user, within the catalog's stack limit. The builder does not
+infer stacks from a combat rotation.
 
 The catalog in `equipment/arcs.json` keeps the source attribute in
 `target.property_id` and can supply `target.projection_property_id` for the
 equivalent optimizer attribute. `confirms_trigger` records an implication
 between conditions on the same equipped Arc. A structured record can replace
 a legacy projection so the same stat only enters the calculation once.
+`superseded_by_trigger` gives another confirmed trigger from the same wearer
+and Arc precedence, for example when a fixed grant fills a manually selected
+effect's entire stack pool.
 
 ### Reconciling extracted effect curves
 
