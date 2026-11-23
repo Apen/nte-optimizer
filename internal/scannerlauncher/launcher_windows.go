@@ -4,44 +4,44 @@ package scannerlauncher
 
 import (
 	"fmt"
-	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"syscall"
+	"unsafe"
 
+	"golang.org/x/sys/windows"
 	"nte-optimizer/internal/scanlog"
 )
 
 func runElevated(helper, projectDir, outputDir, cancelFile string, seconds int) error {
-	return runElevatedWithRunner(helper, projectDir, outputDir, cancelFile, seconds, runPowerShell)
+	return runElevatedWithRunner(helper, projectDir, outputDir, cancelFile, seconds, runElevatedProcess)
 }
 
 func runElevatedWithRecovery(helper, projectDir, outputDir, cancelFile string, seconds int, stopPktmonFirst bool) error {
-	return runElevatedWithRecoveryWithRunner(helper, projectDir, outputDir, cancelFile, seconds, stopPktmonFirst, runPowerShell)
+	return runElevatedWithRecoveryWithRunner(helper, projectDir, outputDir, cancelFile, seconds, stopPktmonFirst, runElevatedProcess)
 }
 
-func runElevatedWithRunner(helper, projectDir, outputDir, cancelFile string, seconds int, run func(string) ([]byte, error)) error {
+func runElevatedWithRunner(helper, projectDir, outputDir, cancelFile string, seconds int, run func(string, string, string) ([]byte, error)) error {
 	return runElevatedWithRecoveryWithRunner(helper, projectDir, outputDir, cancelFile, seconds, false, run)
 }
 
-func runElevatedWithRecoveryWithRunner(helper, projectDir, outputDir, cancelFile string, seconds int, stopPktmonFirst bool, run func(string) ([]byte, error)) error {
+func runElevatedWithRecoveryWithRunner(helper, projectDir, outputDir, cancelFile string, seconds int, stopPktmonFirst bool, run func(string, string, string) ([]byte, error)) error {
 	return runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile, Options{Seconds: seconds, StopPktmonFirst: stopPktmonFirst}, run)
 }
 
 func runElevatedWithOptions(helper, projectDir, outputDir, cancelFile string, options Options) error {
-	return runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile, options, runPowerShell)
+	return runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile, options, runElevatedProcess)
 }
 
-func runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile string, options Options, run func(string) ([]byte, error)) error {
-	quote := func(value string) string { return "'" + strings.ReplaceAll(value, "'", "''") + "'" }
-	commandLineQuote := func(value string) string { return `"` + strings.ReplaceAll(value, `"`, `\"`) + `"` }
+func runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile string, options Options, run func(string, string, string) ([]byte, error)) error {
 	argumentList := []string{
 		"-login-capture",
 		"-login-seconds", strconv.Itoa(options.Seconds),
-		"-output-dir", commandLineQuote(outputDir),
-		"-cancel-file", commandLineQuote(cancelFile),
-		"-scan-log", commandLineQuote(scanlog.Path(filepath.Dir(filepath.Dir(outputDir)))),
+		"-output-dir", syscall.EscapeArg(outputDir),
+		"-cancel-file", syscall.EscapeArg(cancelFile),
+		"-scan-log", syscall.EscapeArg(scanlog.Path(filepath.Dir(filepath.Dir(outputDir)))),
 	}
 	if options.StopPktmonFirst {
 		argumentList = append(argumentList, "-stop-pktmon-first")
@@ -50,11 +50,7 @@ func runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile stri
 		argumentList = append(argumentList, "-retain-capture")
 	}
 	arguments := strings.Join(argumentList, " ")
-	script := fmt.Sprintf(
-		"$p = Start-Process -FilePath %s -WorkingDirectory %s -ArgumentList %s -Verb RunAs -Wait -PassThru; exit $p.ExitCode",
-		quote(helper), quote(projectDir), quote(arguments),
-	)
-	if output, err := run(script); err != nil {
+	if output, err := run(helper, projectDir, arguments); err != nil {
 		message := strings.TrimSpace(string(output))
 		if message == "" {
 			message = err.Error()
@@ -115,10 +111,88 @@ func scannerHelperFailureCode(message string) string {
 	}
 }
 
-func runPowerShell(script string) ([]byte, error) {
-	cmd := exec.Command("powershell.exe", "-NoProfile", "-NonInteractive", "-Command", script)
-	// PowerShell only brokers UAC and waits for the real scanner process. Hide
-	// this intermediary console while keeping the useful nte-scan console open.
-	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-	return cmd.CombinedOutput()
+const (
+	seeMaskNoCloseProcess = 0x00000040
+	swShowNormal          = 1
+)
+
+var shellExecuteEx = windows.NewLazySystemDLL("shell32.dll").NewProc("ShellExecuteExW")
+
+type shellExecuteInfo struct {
+	cbSize        uint32
+	fMask         uint32
+	hwnd          uintptr
+	verb          *uint16
+	file          *uint16
+	parameters    *uint16
+	directory     *uint16
+	nShow         int32
+	hInstApp      uintptr
+	idList        uintptr
+	class         *uint16
+	hkeyClass     uintptr
+	hotKey        uint32
+	iconOrMonitor uintptr
+	process       windows.Handle
+}
+
+func runElevatedProcess(helper, projectDir, arguments string) ([]byte, error) {
+	verb, err := windows.UTF16PtrFromString("runas")
+	if err != nil {
+		return nil, err
+	}
+	file, err := windows.UTF16PtrFromString(helper)
+	if err != nil {
+		return nil, err
+	}
+	parameters, err := windows.UTF16PtrFromString(arguments)
+	if err != nil {
+		return nil, err
+	}
+	directory, err := windows.UTF16PtrFromString(projectDir)
+	if err != nil {
+		return nil, err
+	}
+
+	info := shellExecuteInfo{
+		cbSize:     uint32(unsafe.Sizeof(shellExecuteInfo{})),
+		fMask:      seeMaskNoCloseProcess,
+		verb:       verb,
+		file:       file,
+		parameters: parameters,
+		directory:  directory,
+		nShow:      swShowNormal,
+	}
+	result, _, callErr := shellExecuteEx.Call(uintptr(unsafe.Pointer(&info)))
+	runtime.KeepAlive(verb)
+	runtime.KeepAlive(file)
+	runtime.KeepAlive(parameters)
+	runtime.KeepAlive(directory)
+	runtime.KeepAlive(info)
+	if result == 0 {
+		if callErr == nil || callErr == syscall.Errno(0) {
+			callErr = windows.ERROR_GEN_FAILURE
+		}
+		return nil, callErr
+	}
+	if info.process == 0 {
+		return nil, fmt.Errorf("administrator scanner process handle is unavailable")
+	}
+	defer windows.CloseHandle(info.process)
+
+	waitResult, err := windows.WaitForSingleObject(info.process, windows.INFINITE)
+	if err != nil {
+		return nil, fmt.Errorf("wait for administrator scanner: %w", err)
+	}
+	if waitResult != windows.WAIT_OBJECT_0 {
+		return nil, fmt.Errorf("wait for administrator scanner returned %d", waitResult)
+	}
+	var exitCode uint32
+	if err := windows.GetExitCodeProcess(info.process, &exitCode); err != nil {
+		return nil, fmt.Errorf("read administrator scanner exit code: %w", err)
+	}
+	if exitCode != 0 {
+		return nil, fmt.Errorf("exit status %d", exitCode)
+	}
+	return nil, nil
 }

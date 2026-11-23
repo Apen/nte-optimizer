@@ -172,3 +172,9 @@ release source and security model before choosing whether to run it.
 The network format or game catalogs may have changed. Keep the previous export,
 report the affected record, and update the generated game data or decoder before
 trusting the new value.
+
+### A VPN interferes with the scan
+
+VPN software can interfere with packet capture or hide the game traffic from
+the scanner. If a guided scan remains incomplete, temporarily disconnect the
+VPN or set up split tunnel and try the scan again.
