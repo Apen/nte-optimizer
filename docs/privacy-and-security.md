@@ -33,9 +33,9 @@ through the Windows UAC prompt because `pktmon` capture requires elevated
 rights. The elevated helper is responsible only for capture, decoding,
 validation, and publishing the scanner export.
 
-The hidden PowerShell process only brokers the UAC launch and waits for the
-helper. The visible scanner console belongs to `nte-scan.exe`. Closing the
-desktop application signals the elevated helper to stop; the helper performs an
+The desktop waits for the helper through the native Windows process handle.
+The visible scanner console belongs to `nte-scan.exe`. Closing the desktop
+application signals the elevated helper to stop. The helper performs an
 idempotent `pktmon stop` cleanup before exiting.
 
 ## Files written locally

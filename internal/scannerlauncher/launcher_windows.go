@@ -3,6 +3,7 @@
 package scannerlauncher
 
 import (
+	"errors"
 	"fmt"
 	"path/filepath"
 	"runtime"
@@ -12,6 +13,7 @@ import (
 	"unsafe"
 
 	"golang.org/x/sys/windows"
+
 	"nte-optimizer/internal/scanlog"
 )
 
@@ -51,27 +53,16 @@ func runElevatedOptionsWithRunner(helper, projectDir, outputDir, cancelFile stri
 	}
 	arguments := strings.Join(argumentList, " ")
 	if output, err := run(helper, projectDir, arguments); err != nil {
+		if errors.Is(err, windows.ERROR_CANCELLED) {
+			return &DiagnosticError{Code: "uac_cancelled", Err: fmt.Errorf("start administrator scanner: %w", err)}
+		}
 		message := strings.TrimSpace(string(output))
 		if message == "" {
 			message = err.Error()
 		}
-		code := scannerHelperFailureCode(message)
-		if isUACCancellation(message) {
-			code = "uac_cancelled"
-		}
-		return &DiagnosticError{Code: code, Err: fmt.Errorf("the administrator scanner did not finish successfully: %s", message)}
+		return &DiagnosticError{Code: scannerHelperFailureCode(message), Err: fmt.Errorf("the administrator scanner did not finish successfully: %s", message)}
 	}
 	return nil
-}
-
-func isUACCancellation(message string) bool {
-	message = strings.ToLower(message)
-	for _, marker := range []string{"operation was canceled", "operation was cancelled", "annulé par", "annulée par", "annule par", "annulee par", "0x4c7", "1223"} {
-		if strings.Contains(message, marker) {
-			return true
-		}
-	}
-	return false
 }
 
 func scannerHelperFailureCode(message string) string {
@@ -113,6 +104,7 @@ func scannerHelperFailureCode(message string) string {
 
 const (
 	seeMaskNoCloseProcess = 0x00000040
+	seeMaskNoAsync        = 0x00000100
 	swShowNormal          = 1
 )
 
@@ -156,7 +148,7 @@ func runElevatedProcess(helper, projectDir, arguments string) ([]byte, error) {
 
 	info := shellExecuteInfo{
 		cbSize:     uint32(unsafe.Sizeof(shellExecuteInfo{})),
-		fMask:      seeMaskNoCloseProcess,
+		fMask:      seeMaskNoCloseProcess | seeMaskNoAsync,
 		verb:       verb,
 		file:       file,
 		parameters: parameters,

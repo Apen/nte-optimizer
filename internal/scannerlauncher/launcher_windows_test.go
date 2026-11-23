@@ -4,8 +4,11 @@ package scannerlauncher
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"testing"
+
+	"golang.org/x/sys/windows"
 )
 
 func TestRunElevatedBuildsNativeProcessRequest(t *testing.T) {
@@ -31,10 +34,19 @@ func TestRunElevatedBuildsNativeProcessRequest(t *testing.T) {
 
 func TestRunElevatedReportsRunnerOutput(t *testing.T) {
 	err := runElevatedWithRunner("scanner", "project", "output", "cancel", 30, func(string, string, string) ([]byte, error) {
-		return []byte("operation cancelled by the user"), errors.New("exit status 1")
+		return []byte("pktmon is already capturing"), errors.New("exit status 1")
 	})
-	if err == nil || !strings.Contains(err.Error(), "operation cancelled by the user") {
+	if ErrorCode(err) != "pktmon_already_running" || !strings.Contains(err.Error(), "pktmon is already capturing") {
 		t.Fatalf("runElevatedWithRunner() error = %v", err)
+	}
+}
+
+func TestRunElevatedRecognizesNativeUACCancellation(t *testing.T) {
+	err := runElevatedWithRunner("scanner", "project", "output", "cancel", 30, func(string, string, string) ([]byte, error) {
+		return nil, fmt.Errorf("ShellExecuteExW: %w", windows.ERROR_CANCELLED)
+	})
+	if ErrorCode(err) != "uac_cancelled" || !errors.Is(err, windows.ERROR_CANCELLED) {
+		t.Fatalf("runElevatedWithRunner() error = %v, code = %q", err, ErrorCode(err))
 	}
 }
 
