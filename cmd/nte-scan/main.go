@@ -195,6 +195,9 @@ func main() {
 	unique := dedupe(packets)
 	_ = scanlog.Append(*scanLog, "packet_read", "complete", map[string]int{"raw_packets": len(packets), "unique_packets": len(unique)})
 	must(scanlog.AppendWithCode(*scanLog, "packet_selection", "complete", "capture_protocol_selection", map[string]int{"source_packets": selection.SourcePackets, "selected_packets": selection.SelectedPackets, "filtered_packets": selection.SourcePackets - selection.SelectedPackets}))
+	if len(selection.Formats) > 0 {
+		must(scanlog.AppendWithCode(*scanLog, "packet_formats", "complete", "capture_link_formats", selection.Formats))
+	}
 	coverage := captureCoverage(selection, *loginCapture, *loginSeconds)
 	must(scanlog.AppendEvent(*scanLog, coverage))
 	r := report{Input: *input, RawPackets: len(packets), UniquePackets: len(unique), DuplicateAppearances: len(packets) - len(unique)}

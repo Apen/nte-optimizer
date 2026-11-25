@@ -25,6 +25,38 @@ type SelectionSummary struct {
 	SelectedBytes   int64
 	FirstTimestamp  float64
 	LastTimestamp   float64
+	// Link-layer format counts for the scan log (no addresses or payloads).
+	Formats map[string]int
+}
+
+func (s *SelectionSummary) countFormat(key string) {
+	if s.Formats == nil {
+		s.Formats = map[string]int{}
+	}
+	s.Formats[key]++
+}
+
+func (s *SelectionSummary) countFrame(linkType uint16, kind string, frame []byte) {
+	s.countFormat("link_type_" + linkTypeName(linkType))
+	s.countFormat("frame_" + kind)
+	if len(frame) < 14 {
+		s.countFormat("other_ethertype")
+		return
+	}
+	switch binary.BigEndian.Uint16(frame[12:14]) {
+	case 0x0800:
+		s.countFormat("ipv4")
+		if len(frame) >= 24 && frame[23] == 17 {
+			s.countFormat("udp_ipv4")
+		}
+	case 0x86dd:
+		s.countFormat("ipv6")
+		if len(frame) >= 21 && frame[20] == 17 {
+			s.countFormat("udp_ipv6")
+		}
+	default:
+		s.countFormat("other_ethertype")
+	}
 }
 
 // ReadFileSelected streams a bounded source instead of allocating the complete
@@ -52,6 +84,8 @@ func ReadFileSelected(path string, keep func([]byte) bool) ([]Packet, SelectionS
 	var header [12]byte
 	var order binary.ByteOrder = binary.LittleEndian
 	var scales []float64
+	var linkTypes []uint16
+	var scratch []byte
 	var packets []Packet
 	var block []byte
 	var consumed int64
@@ -74,6 +108,7 @@ func ReadFileSelected(path string, keep func([]byte) bool) ([]Packet, SelectionS
 				return nil, summary, fmt.Errorf("invalid PCAPNG byte order")
 			}
 			scales = nil
+			linkTypes = nil
 		}
 		length := int(order.Uint32(header[4:8]))
 		if length < 12 || length%4 != 0 || length > maxStreamBlockBytes {
@@ -102,6 +137,7 @@ func ReadFileSelected(path string, keep func([]byte) bool) ([]Packet, SelectionS
 				return nil, summary, fmt.Errorf("invalid PCAPNG interface table")
 			}
 			scales = append(scales, interfaceTimestampScale(body, order))
+			linkTypes = append(linkTypes, order.Uint16(body[0:2]))
 		case 6:
 			if len(body) < 20 {
 				return nil, summary, fmt.Errorf("truncated enhanced packet block")
@@ -124,7 +160,16 @@ func ReadFileSelected(path string, keep func([]byte) bool) ([]Packet, SelectionS
 			summary.FirstTimestamp = min(summary.FirstTimestamp, ts)
 			summary.LastTimestamp = max(summary.LastTimestamp, ts)
 			summary.SourcePackets++
-			data := body[20 : 20+captured]
+			linkType := uint16(linkTypeEthernet)
+			if uint64(iface) < uint64(len(linkTypes)) {
+				linkType = linkTypes[iface]
+			}
+			data, kind := normalizeFrame(linkType, body[20:20+captured], scratch)
+			if kind != frameEthernet && kind != frameUnrecognised {
+				scratch = data[:cap(data)]
+			}
+			captured = len(data)
+			summary.countFrame(linkType, kind, data)
 			if keep != nil && !keep(data) {
 				continue
 			}
