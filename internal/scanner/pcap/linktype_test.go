@@ -83,10 +83,11 @@ func TestNormalizeRefusesProtectedAndNullFrames(t *testing.T) {
 	}
 }
 
-func TestNormalizeRadiotap(t *testing.T) {
-	rt := []byte{0, 0, 8, 0, 0, 0, 0, 0} // version, pad, length 8, no fields
-	out, kind := normalizeFrame(linkTypeRadiotap, append(rt, ieee80211Frame(0x08, 0x02, 0)...), nil)
-	if kind != frameRadiotap {
+func TestNormalize80211WhoseAddressLooksLikeEtherType(t *testing.T) {
+	frame := ieee80211Frame(0x88, 0x02, 2)
+	copy(frame[10:16], []byte{0x02, 0x22, 0x08, 0x06, 0x22, 0x22}) // bytes 12-13 read as ARP
+	out, kind := normalizeFrame(linkTypeEthernet, frame, nil)
+	if kind != frameIEEE80211 {
 		t.Fatalf("kind=%s", kind)
 	}
 	assertEthernetIPv4UDP(t, out)
@@ -115,8 +116,6 @@ func TestNormalizeLeavesTruncatedFrames(t *testing.T) {
 	}{
 		{linkTypeIEEE80211, ieee80211Frame(0x08, 0x02, 0)[:28]},
 		{linkTypeIEEE80211, ieee80211Frame(0x88, 0x03, 8)[:34]},
-		{linkTypeRadiotap, []byte{0, 0, 64, 0, 0, 0, 0, 0}},
-		{linkTypeRadiotap, []byte{0, 0}},
 		{linkTypeRaw, nil},
 	} {
 		if out, kind := normalizeFrame(tc.linkType, tc.data, nil); kind != frameUnrecognised || !bytes.Equal(out, tc.data) {

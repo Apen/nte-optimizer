@@ -3,15 +3,14 @@ package pcap
 import "encoding/binary"
 
 // On Wi-Fi adapters pktmon can record native 802.11 frames while labelling the
-// interface as Ethernet. The decoders expect Ethernet II, so 802.11 data,
-// radiotap and raw IP frames are rewritten with an Ethernet header. Protected
-// and unrecognised frames are left unchanged.
+// interface as Ethernet. The decoders expect Ethernet II, so 802.11 data and
+// raw IP frames are rewritten with an Ethernet header. Protected and
+// unrecognised frames are left unchanged.
 
 const (
 	linkTypeEthernet  = 1
 	linkTypeRaw       = 101
 	linkTypeIEEE80211 = 105
-	linkTypeRadiotap  = 127
 	linkTypeIPv4      = 228
 	linkTypeIPv6      = 229
 )
@@ -22,8 +21,6 @@ func linkTypeName(linkType uint16) string {
 		return "ethernet"
 	case linkTypeIEEE80211:
 		return "ieee80211"
-	case linkTypeRadiotap:
-		return "radiotap"
 	case linkTypeRaw, linkTypeIPv4, linkTypeIPv6:
 		return "raw_ip"
 	}
@@ -41,7 +38,6 @@ func plausibleEtherType(t uint16) bool {
 const (
 	frameEthernet     = "ethernet"
 	frameIEEE80211    = "ieee80211"
-	frameRadiotap     = "radiotap"
 	frameRawIP        = "raw_ip"
 	frameUnrecognised = "unrecognised"
 )
@@ -63,23 +59,15 @@ func normalizeFrame(linkType uint16, data []byte, scratch []byte) (frame []byte,
 		if out, ok := ieee80211ToEthernet(data, scratch); ok {
 			return out, frameIEEE80211
 		}
-	case linkTypeRadiotap:
-		if len(data) >= 4 {
-			n := int(binary.LittleEndian.Uint16(data[2:4]))
-			if n >= 8 && n <= len(data) {
-				if out, ok := ieee80211ToEthernet(data[n:], scratch); ok {
-					return out, frameRadiotap
-				}
-			}
-		}
 	default:
-		// Ethernet (or an unknown type): keep real Ethernet frames, but accept
-		// 802.11 data frames that were labelled as Ethernet.
-		if len(data) >= 14 && plausibleEtherType(binary.BigEndian.Uint16(data[12:14])) {
-			return data, frameEthernet
-		}
+		// Ethernet (or an unknown type) may still carry 802.11 frames. Check for
+		// an 802.11 data header with LLC/SNAP first: bytes 12-13 of such a frame
+		// are part of an address and can look like an EtherType.
 		if out, ok := ieee80211ToEthernet(data, scratch); ok {
 			return out, frameIEEE80211
+		}
+		if len(data) >= 14 && plausibleEtherType(binary.BigEndian.Uint16(data[12:14])) {
+			return data, frameEthernet
 		}
 		// Raw IP labelled as Ethernet: an IPv4/IPv6 header at offset 0.
 		if len(data) >= 20 && (data[0] == 0x45 || data[0]>>4 == 6) {
